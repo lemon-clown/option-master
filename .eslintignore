@@ -1,0 +1,6 @@
+lib/
+dist/
+demo/
+build/
+.vscode/
+node_modules/

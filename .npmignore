@@ -1,0 +1,13 @@
+.idea/
+.vscode/
+.git/
+demo/
+test/
+src/
+script/
+node_modules/
+tsconfig.json
+.eslintignore
+.eslintrc
+*.js.map
+*.ts.map
