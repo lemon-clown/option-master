@@ -33,10 +33,10 @@ export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     const result: ObjectDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
 
     // required 的默认值为 false
-    const required = result.parseProperty<boolean>(rawSchema, 'required', coverBoolean, false)
+    const required = result.parseProperty<boolean>('required', coverBoolean, false)
 
     // allowAdditionalProperties 的默认值为 false
-    const allowAdditionalProperties = result.parseProperty<boolean>(rawSchema, 'allowAdditionalProperties', coverBoolean, false)
+    const allowAdditionalProperties = result.parseProperty<boolean>('allowAdditionalProperties', coverBoolean, false)
 
     // 检查 defaultValue 是否为对象
     let defaultValue: ObjectDataSchema['default'] = undefined

@@ -27,13 +27,13 @@ export class IntegerDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
     const result: IntegerDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
 
     // required 的默认值为 false
-    const required = result.parseProperty<boolean>(rawSchema, 'required', coverBoolean, false)
-    const defaultValue = result.parseProperty<V>(rawSchema, 'default', coverInteger)
-    const minimum = result.parseProperty<number>(rawSchema, 'minimum', coverInteger)
-    const maximum = result.parseProperty<number>(rawSchema, 'maximum', coverInteger)
-    const exclusiveMinimum = result.parseProperty<number>(rawSchema, 'exclusiveMinimum', coverInteger)
-    const exclusiveMaximum = result.parseProperty<number>(rawSchema, 'exclusiveMaximum', coverInteger)
-    const enumValue = result.parseProperty<number[]>(rawSchema, 'enum', coverArray<number>(coverInteger))
+    const required = result.parseProperty<boolean>('required', coverBoolean, false)
+    const defaultValue = result.parseProperty<V>('default', coverInteger)
+    const minimum = result.parseProperty<number>('minimum', coverInteger)
+    const maximum = result.parseProperty<number>('maximum', coverInteger)
+    const exclusiveMinimum = result.parseProperty<number>('exclusiveMinimum', coverInteger)
+    const exclusiveMaximum = result.parseProperty<number>('exclusiveMaximum', coverInteger)
+    const enumValue = result.parseProperty<number[]>('enum', coverArray<number>(coverInteger))
 
     const ceil = (x?: number) => x == null ? x : Math.ceil(x)
     const floor = (x?: number) => x == null ? x : Math.floor(x)

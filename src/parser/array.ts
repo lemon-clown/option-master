@@ -32,10 +32,10 @@ export class ArrayDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     const result: ArrayDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
 
     // required 的默认值为 false
-    const required = result.parseProperty<boolean>(rawSchema, 'required', coverBoolean, false)
+    const required = result.parseProperty<boolean>('required', coverBoolean, false)
 
     // unique 的默认值为 false
-    const unique = result.parseProperty<boolean>(rawSchema, 'unique', coverBoolean, false)
+    const unique = result.parseProperty<boolean>('unique', coverBoolean, false)
 
     // 检查 defaultValue 是否为数组
     let defaultValue = undefined

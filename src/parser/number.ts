@@ -25,13 +25,13 @@ export class NumberDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     const result: NumberDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
 
     // required 的默认值为 false
-    const required = result.parseProperty<boolean>(rawSchema, 'required', coverBoolean, false)
-    const defaultValue = result.parseProperty<V>(rawSchema, 'default', coverNumber)
-    const minimum = result.parseProperty<number>(rawSchema, 'minimum', coverNumber)
-    const maximum = result.parseProperty<number>(rawSchema, 'maximum', coverNumber)
-    const exclusiveMinimum = result.parseProperty<number>(rawSchema, 'exclusiveMinimum', coverNumber)
-    const exclusiveMaximum = result.parseProperty<number>(rawSchema, 'exclusiveMaximum', coverNumber)
-    const enumValue = result.parseProperty<number[]>(rawSchema, 'enum', coverArray<number>(coverNumber))
+    const required = result.parseProperty<boolean>('required', coverBoolean, false)
+    const defaultValue = result.parseProperty<V>('default', coverNumber)
+    const minimum = result.parseProperty<number>('minimum', coverNumber)
+    const maximum = result.parseProperty<number>('maximum', coverNumber)
+    const exclusiveMinimum = result.parseProperty<number>('exclusiveMinimum', coverNumber)
+    const exclusiveMaximum = result.parseProperty<number>('exclusiveMaximum', coverNumber)
+    const enumValue = result.parseProperty<number[]>('enum', coverArray<number>(coverNumber))
 
     // NumberDataSchema
     const schema: DS = {

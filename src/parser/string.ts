@@ -25,10 +25,10 @@ export class StringDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     const result: StringDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
 
     // required 的默认值为 false
-    const required = result.parseProperty<boolean>(rawSchema, 'required', coverBoolean, false)
-    const defaultValue = result.parseProperty<V>(rawSchema, 'default', coverString)
-    const pattern = result.parseProperty<RegExp>(rawSchema, 'pattern', coverRegex)
-    const enumValue = result.parseProperty<string[]>(rawSchema, 'enum', coverArray<string>(coverString))
+    const required = result.parseProperty<boolean>('required', coverBoolean, false)
+    const defaultValue = result.parseProperty<V>('default', coverString)
+    const pattern = result.parseProperty<RegExp>('pattern', coverRegex)
+    const enumValue = result.parseProperty<string[]>('enum', coverArray<string>(coverString))
 
     // StringDataSchema
     const schema: DS = {

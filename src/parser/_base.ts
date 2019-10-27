@@ -85,20 +85,17 @@ export class DataSchemaParseResult<
   /**
    * 解析给定 RawDataSchema 中的属性的值
    *
-   * @param rawSchema     用户给定的 RawDataSchema
    * @param propertyName  RawDataSchema 中定义的属性名
    * @param coverFunc     覆盖属性的函数
    * @param defaultValue  属性的默认值
-   * @template T  typeof rawSchema.type
-   * @template V  Exclude<typeof rawSchema.default, undefined>
    * @template P  typeof rawSchema[propertyName]
    */
   public parseProperty<P> (
-    rawSchema: RDS,
     propertyName: keyof RDS,
     coverFunc: CoverOperationFunc<P>,
     defaultValue?: P,
   ): CoverOperationResult<P> {
+    const rawSchema = this._rawSchema
     const result = coverFunc(defaultValue, rawSchema[propertyName])
     if (result.errors.length > 0) {
       this.addError({
