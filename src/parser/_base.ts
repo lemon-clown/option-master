@@ -57,6 +57,13 @@ export class DataSchemaParseResult<
   }
 
   /**
+   * 错误信息汇总
+   */
+  public get errorSummary(): string {
+    return '[' + this._errors.map(error => `${ error.constraint }: ${ error.reason }`).join(',\n') + ']'
+  }
+
+  /**
    * 设置解析结果
    * @param schema
    */
