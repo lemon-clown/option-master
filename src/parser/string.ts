@@ -1,6 +1,6 @@
 import { DataSchemaParser, DataSchemaParseResult } from './_base'
 import { STRING_V_TYPE as V, STRING_T_TYPE as T, RawStringDataSchema as RDS, StringDataSchema as DS } from '../schema/string'
-import { coverString, coverBoolean, coverArray, coverRegex } from '../cover-util'
+import { coverString, coverBoolean, coverArray, coverRegex } from '../_util/cover-util'
 
 
 /**

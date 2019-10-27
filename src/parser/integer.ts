@@ -1,6 +1,6 @@
 import { DataSchemaParser, DataSchemaParseResult } from './_base'
 import { INTEGER_V_TYPE as V, INTEGER_T_TYPE as T, RawIntegerDataSchema as RDS, IntegerDataSchema as DS } from '../schema/integer'
-import { coverInteger, coverBoolean, coverArray } from '../cover-util'
+import { coverInteger, coverBoolean, coverArray } from '../_util/cover-util'
 
 
 /**

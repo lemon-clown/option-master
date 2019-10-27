@@ -1,5 +1,5 @@
 import { RawDataSchema, DataSchema } from '../schema/_base'
-import { CoverOperationFunc, CoverOperationResult } from '../cover-util'
+import { CoverOperationFunc, CoverOperationResult } from '../_util/cover-util'
 
 
 /**
