@@ -98,6 +98,22 @@ export class DataValidationResult<T extends string, V, DS extends DataSchema<T, 
 
     return data
   }
+
+  /**
+   * 确保指定的属性值为对象
+   * @param constraint  约束项的名字，此处仅用于在发生异常时记录消息用
+   * @param data        要校验的数据
+   */
+  public ensureObject (constraint: string, data: any): boolean {
+    if (!isObject(data)) {
+      this.addError({
+        constraint,
+        reason: `expected an object, but got ${ stringify(data) }`
+      })
+      return false
+    }
+    return true
+  }
 }
 
 
