@@ -45,6 +45,13 @@ export class DataValidationResult<T extends string, V, DS extends DataSchema<T, 
   }
 
   /**
+   * 错误信息汇总
+   */
+  public get errorSummary(): string {
+    return '[' + this._errors.map(error => `${ error.constraint }: ${ error.reason }`).join(',\n') + ']'
+  }
+
+  /**
    * 设置值
    * @param value
    */
