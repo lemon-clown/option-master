@@ -58,7 +58,7 @@ export class ArrayDataValidator implements DataValidator<T, V, DS> {
     for (let i = 0; i < data.length; ++i) {
       const d = data[i]
       const xValidateResult: DValidationResult = this.validatorMaster.validate(schema, d)
-      if (xValidateResult.errors.length > 0) {
+      if (xValidateResult.hasError) {
         return result.addError({
           constraint: 'items',
           reason: `index(${ i }): ` + xValidateResult.errorSummary,

@@ -35,10 +35,10 @@ export class BooleanDataValidator implements DataValidator<T, V, DS> {
 
     // 检查是否为布尔值
     const booleanValue = coverBoolean(undefined, data)
-    if (booleanValue.errors.length > 0) {
+    if (booleanValue.hasError) {
       return result.addError({
         constraint: 'type',
-        reason: `expected a ${ T }, but got ${ stringify(data) }.\n` + booleanValue.errors.join('\n'),
+        reason: `expected a ${ T }, but got ${ stringify(data) }.\n` + booleanValue.errorSummary,
       })
     }
 

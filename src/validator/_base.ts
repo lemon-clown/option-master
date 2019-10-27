@@ -1,9 +1,10 @@
 import { DataSchema } from '../schema/_base'
-import { stringify } from '../_util/type-util'
+import { stringify, isObject } from '../_util/type-util'
+import { HandleResult } from '../_util/handle-result'
 
 
 /**
- * 校验不通过时的错误信息对象
+ * 校验时的错误信息对象
  */
 export interface DataValidationError {
   /**
@@ -18,16 +19,26 @@ export interface DataValidationError {
 
 
 /**
- * 数据项的校验结果
+ * 校验时的警告信息对象
  */
-export class DataValidationResult<T extends string, V, DS extends DataSchema<T, V>> {
+export type DataValidationWarning = DataValidationError
+
+
+/**
+ * 数据项的校验结果
+ *
+ * @template T    typeof <X>DataSchema.type
+ * @template V    typeof <X>DataSchema.V
+ * @template DS   typeof <X>DataSchema
+ */
+export class DataValidationResult<T extends string, V, DS extends DataSchema<T, V>>
+  extends HandleResult<DataValidationError, DataValidationWarning> {
   private _value?: V
-  private readonly _errors: DataValidationError[]
   public readonly _schema: DS
 
-  public constructor (schema: DS) {
+  public constructor(schema: DS) {
+    super()
     this._schema = schema
-    this._errors = []
   }
 
   /**
@@ -39,17 +50,17 @@ export class DataValidationResult<T extends string, V, DS extends DataSchema<T, 
   }
 
   /**
-   * 错误消息
-   */
-  public get errors(): DataValidationError[] {
-    return this._errors
-  }
-
-  /**
    * 错误信息汇总
    */
   public get errorSummary(): string {
     return '[' + this._errors.map(error => `${ error.constraint }: ${ error.reason }`).join(',\n') + ']'
+  }
+
+  /**
+   * 警告消息汇总
+   */
+  public get warningSummary(): string {
+    return '[' + this._warnings.map(warning=> `${ warning.constraint }: ${ warning.reason }`).join(',\n') + ']'
   }
 
   /**
@@ -58,15 +69,6 @@ export class DataValidationResult<T extends string, V, DS extends DataSchema<T, 
    */
   public setValue(value: V): this {
     this._value = value
-    return this
-  }
-
-  /**
-   * 追加校验错误信息对象
-   * @param error
-   */
-  public addError (...errors: DataValidationError[]): this {
-    this.errors.push(...errors)
     return this
   }
 

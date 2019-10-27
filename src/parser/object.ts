@@ -56,7 +56,7 @@ export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
           const propertyParserResult = this.parserMaster.parse(propertyValue)
 
           // 如果存在错误，则忽略此属性
-          if (propertyParserResult.errors.length > 0) {
+          if (propertyParserResult.hasError) {
             result.addError({
               constraint: 'properties',
               reason: `${ propertyName }: ` + propertyParserResult.errorSummary,

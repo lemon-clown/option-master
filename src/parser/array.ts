@@ -60,7 +60,7 @@ export class ArrayDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
 
     // 解析 items
     const items = this.parserMaster.parse(rawSchema.items)
-    if (items.errors.length > 0) {
+    if (items.hasError) {
       return result.addError({
         constraint: 'items',
         reason: items.errorSummary,

@@ -35,10 +35,10 @@ export class NumberDataValidator implements DataValidator<T, V, DS> {
 
     // 检查是否为数字
     const numberValue = coverNumber(undefined, data)
-    if (numberValue.errors.length > 0) {
+    if (numberValue.hasError) {
       return result.addError({
         constraint: 'type',
-        reason: `expected a ${ T }, but got ${ stringify(data) }.\n` + numberValue.errors.join('\n'),
+        reason: `expected a ${ T }, but got ${ stringify(data) }.\n` + numberValue.errorSummary,
       })
     }
 

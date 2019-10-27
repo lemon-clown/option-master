@@ -1,6 +1,7 @@
 import { RawDataSchema, DataSchema } from '../schema/_base'
 import { CoverOperationFunc, CoverOperationResult } from '../_util/cover-util'
 import { isObject, stringify } from '../_util/type-util'
+import { HandleResult } from '../_util/handle-result'
 
 
 /**
@@ -19,6 +20,12 @@ export interface DataSchemaParseError {
 
 
 /**
+ * 解析时的警告信息对象
+ */
+export type DataSchemaParseWarning = DataSchemaParseError
+
+
+/**
  * DataSchema 的解析结果
  * 当 errors 为空数组时，schema 应不为 undefined
  *
@@ -32,15 +39,14 @@ export class DataSchemaParseResult<
   V,
   RDS extends RawDataSchema<T, V>,
   DS extends DataSchema<T, V>,
-> {
+> extends HandleResult<DataSchemaParseError, DataSchemaParseWarning> {
   private _schema?: DS
-  private readonly _errors: DataSchemaParseError[]
   public readonly _rawSchema: RDS
 
   public constructor (rawSchema: RDS, schema?: DS) {
+    super()
     this._schema = schema
     this._rawSchema = rawSchema
-    this._errors = []
   }
 
   /**
@@ -51,17 +57,17 @@ export class DataSchemaParseResult<
   }
 
   /**
-   * 错误信息
-   */
-  public get errors(): DataSchemaParseError[] {
-    return this._errors
-  }
-
-  /**
    * 错误信息汇总
    */
   public get errorSummary(): string {
     return '[' + this._errors.map(error => `${ error.constraint }: ${ error.reason }`).join(',\n') + ']'
+  }
+
+  /**
+   * 警告消息汇总
+   */
+  public get warningSummary(): string {
+    return '[' + this._warnings.map(error => `${ error.constraint }: ${ error.reason }`).join(',\n') + ']'
   }
 
   /**
@@ -70,15 +76,6 @@ export class DataSchemaParseResult<
    */
   public setSchema(schema: DS): this {
     this._schema = schema
-    return this
-  }
-
-  /**
-   * 追加解析错误的错误信息对象
-   * @param errors
-   */
-  public addError (...errors: DataSchemaParseError[]): this {
-    this.errors.push(...errors)
     return this
   }
 
@@ -97,10 +94,10 @@ export class DataSchemaParseResult<
   ): CoverOperationResult<P> {
     const rawSchema = this._rawSchema
     const result = coverFunc(defaultValue, rawSchema[propertyName])
-    if (result.errors.length > 0) {
+    if (result.hasError) {
       this.addError({
         constraint: propertyName as string,
-        reason: result.errors.join('\n'),
+        reason: result.errorSummary,
       })
     }
     return result

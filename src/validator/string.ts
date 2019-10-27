@@ -35,10 +35,10 @@ export class StringDataValidator implements DataValidator<T, V, DS> {
 
     // 检查是否为字符串
     const stringValue = coverString(undefined, data)
-    if (stringValue.errors.length > 0) {
+    if (stringValue.hasError) {
       return result.addError({
         constraint: 'type',
-        reason: `expected a ${ T }, but got ${ stringify(data) }.\n` + stringValue.errors.join('\n'),
+        reason: `expected a ${ T }, but got ${ stringify(data) }.\n` + stringValue.errorSummary,
       })
     }
 

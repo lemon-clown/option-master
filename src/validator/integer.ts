@@ -35,10 +35,10 @@ export class IntegerDataValidator implements DataValidator<T, V, DS> {
 
     // 检查是否为整数
     const integerValue = coverInteger(undefined, data)
-    if (integerValue.errors.length > 0) {
+    if (integerValue.hasError) {
       return result.addError({
         constraint: 'type',
-        reason: `expected a ${ T }, but got ${ stringify(data) }.\n` + integerValue.errors.join('\n'),
+        reason: `expected a ${ T }, but got ${ stringify(data) }.\n` + integerValue.errorSummary,
       })
     }
 

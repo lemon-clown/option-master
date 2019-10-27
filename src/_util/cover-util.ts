@@ -1,12 +1,26 @@
 import { convertToNumber, isString, isArray, stringify } from './type-util'
+import { HandleResult } from './handle-result'
 
 
 /**
  * CoverOperationResult 实现类
  */
-export class CoverOperationResult<T> {
+export class CoverOperationResult<T> extends HandleResult<string, string> {
   private _value?: T
-  private readonly _errors: string[] = []
+
+  /**
+   * 错误信息汇总
+   */
+  public get errorSummary(): string {
+    return '[' + this._errors.join(',\n') + ']'
+  }
+
+  /**
+   * 警告消息汇总
+   */
+  public get warningSummary(): string {
+    return '[' + this._warnings.join(',\n') + ']'
+  }
 
   /**
    * 最终的值
@@ -16,27 +30,11 @@ export class CoverOperationResult<T> {
   }
 
   /**
-   * 错误信息列表
-   */
-  public get errors(): string[] {
-    return this._errors
-  }
-
-  /**
    * 设置值，并返回当前对象
    * @param value
    */
   public setValue (value?: T): this {
     this._value =value
-    return this
-  }
-
-  /**
-   * 添加错误信息，并返回当前对象
-   * @param error
-   */
-  public addError (...errors: string[]): this {
-    this._errors.push(...errors)
     return this
   }
 }
@@ -188,8 +186,8 @@ export function coverArray<T> (elemCoverFunc: CoverOperationFunc<T>): CoverOpera
       const xResult = elemCoverFunc(undefined, v)
 
       // 忽略错误的值
-      if (xResult.errors.length > 0) {
-        result.addError(`index(${ i }): ` + xResult.errors.join('\n'))
+      if (xResult.hasError) {
+        result.addError(`index(${ i }): ` + xResult.errorSummary)
         continue
       }
 
