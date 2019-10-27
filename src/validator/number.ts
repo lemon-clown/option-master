@@ -28,9 +28,9 @@ export class NumberDataValidator implements DataValidator<T, V, DS> {
    * 包装 NumberDataSchema 的实例，使其具备校验给定数据是否为合法数字的能力
    * @param data
    */
-  public validate (data: any): DataValidationResult<T, V, DS> {
+  public validate (data: any): NumberDataValidationResult {
     const { schema } = this
-    const result = new DataValidationResult<T, V, DS>(schema)
+    const result: NumberDataValidationResult = new DataValidationResult(schema)
     data = result.baseValidate(data)
 
     // 若未设置值，则无需进一步校验

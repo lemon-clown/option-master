@@ -24,7 +24,7 @@ export class IntegerDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
    * @param rawSchema
    */
   public parse (rawSchema: RDS): IntegerDataSchemaParserResult {
-    const result = new DataSchemaParseResult<T, V, RDS, DS>(rawSchema)
+    const result: IntegerDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
 
     // required 的默认值为 false
     const required = result.parseProperty<boolean>(rawSchema, 'required', coverBoolean, false)

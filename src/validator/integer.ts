@@ -28,9 +28,9 @@ export class IntegerDataValidator implements DataValidator<T, V, DS> {
    * 包装 IntegerDataSchema 的实例，使其具备校验给定数据是否为合法整数的能力
    * @param data
    */
-  public validate (data: any): DataValidationResult<T, V, DS> {
+  public validate (data: any): IntegerDataValidationResult {
     const { schema } = this
-    const result = new DataValidationResult<T, V, DS>(schema)
+    const result: IntegerDataValidationResult = new DataValidationResult(schema)
     data = result.baseValidate(data)
 
     // 若未设置值，则无需进一步校验
