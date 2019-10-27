@@ -16,11 +16,7 @@ export class BooleanDataValidator implements DataValidator<T, V, DS> {
   private readonly schema: DS
   public readonly type: T = T
 
-  public static create (schema: DS) {
-    return new BooleanDataValidator(schema)
-  }
-
-  private constructor (schema: DS) {
+  public constructor (schema: DS) {
     this.schema = schema
   }
 
@@ -54,6 +50,12 @@ export class BooleanDataValidator implements DataValidator<T, V, DS> {
 
 
 /**
- * 布尔值类型的校验器的工厂对象实例
+ * 布尔值类型的校验器的工厂对象
  */
-export const booleanDataValidatorFactory: DataValidatorFactory<T, V, DS> = BooleanDataValidator
+export class BooleanDataValidatorFactory implements DataValidatorFactory<T, V, DS> {
+  public readonly type: T = T
+
+  public create(schema: DS) {
+    return new BooleanDataValidator(schema)
+  }
+}

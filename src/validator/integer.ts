@@ -16,11 +16,7 @@ export class IntegerDataValidator implements DataValidator<T, V, DS> {
   private readonly schema: DS
   public readonly type: T = T
 
-  public static create (schema: DS) {
-    return new IntegerDataValidator(schema)
-  }
-
-  private constructor (schema: DS) {
+  public constructor (schema: DS) {
     this.schema = schema
   }
 
@@ -94,6 +90,12 @@ export class IntegerDataValidator implements DataValidator<T, V, DS> {
 
 
 /**
- * 整数类型的校验器的工厂对象实例
+ * 整数类型的校验器的工厂对象
  */
-export const integerDataValidatorFactory: DataValidatorFactory<T, V, DS> = IntegerDataValidator
+export class IntegerDataValidatorFactory implements DataValidatorFactory<T, V, DS> {
+  public readonly type: T = T
+
+  public create(schema: DS) {
+    return new IntegerDataValidator(schema)
+  }
+}
