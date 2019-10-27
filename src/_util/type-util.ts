@@ -34,6 +34,14 @@ export function isArray(x: any): x is any[] {
   return Array.isArray(x)
 }
 
+/**
+ * 判断是否为对象
+ * @param x
+ */
+export function isObject(x: any): x is object {
+  return x != null && typeof x === 'object'
+}
+
 
 /**
  * 将字符串转为数字，要求整个字符串的内容为合法的数字，否则返回 NaN

@@ -1,5 +1,6 @@
 import { RawDataSchema, DataSchema } from '../schema/_base'
 import { CoverOperationFunc, CoverOperationResult } from '../_util/cover-util'
+import { isObject, stringify } from '../_util/type-util'
 
 
 /**
@@ -106,6 +107,22 @@ export class DataSchemaParseResult<
       })
     }
     return result
+  }
+
+  /**
+   * 确保指定的属性值为对象
+   * @param propertyName
+   */
+  public ensureObject (propertyName: keyof RDS): boolean {
+    const rawSchema = this._rawSchema
+    if (!isObject(rawSchema[propertyName])) {
+      this.addError({
+        constraint: propertyName as string,
+        reason: `${ propertyName } must be an object, but got ${ stringify(rawSchema[propertyName]) }`
+      })
+      return false
+    }
+    return true
   }
 }
 
