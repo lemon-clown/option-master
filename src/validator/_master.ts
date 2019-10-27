@@ -1,5 +1,6 @@
 import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
 import { DataSchema } from '../schema/_base'
+import { stringify } from '../_util/type-util'
 
 
 type T = string
@@ -53,7 +54,7 @@ export class DataValidatorMaster {
       const result: DValidationResult = new DataValidationResult(schema)
       return result.addError({
         constraint: 'type',
-        reason: `unknown schema type: ${ schema.type }.`
+        reason: `unknown schema type: ${ stringify(schema.type) }.`
       })
     }
 

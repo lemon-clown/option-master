@@ -1,4 +1,5 @@
 import { DataSchema } from '../schema/_base'
+import { stringify } from '../_util/type-util'
 
 
 /**
@@ -89,7 +90,7 @@ export class DataValidationResult<T extends string, V, DS extends DataSchema<T, 
     if (schema.required && data == null) {
       this.addError({
         constraint: 'required',
-        reason: `required, but got ${ data }.`
+        reason: `required, but got ${ stringify(data) }.`
       })
     }
 

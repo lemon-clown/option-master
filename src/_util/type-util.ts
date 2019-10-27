@@ -42,3 +42,14 @@ export function isArray(x: any): x is any[] {
 export function convertToNumber(x: string | number): number {
   return Number(x)
 }
+
+
+/**
+ * 将对象内容转成字符串
+ * @param x
+ */
+export function stringify (x: any) {
+  if (x == null) return '' + x
+  if (typeof x === 'object') return JSON.stringify(x)
+  return '' + x
+}

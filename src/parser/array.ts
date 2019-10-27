@@ -2,7 +2,7 @@ import { DataSchemaParser, DataSchemaParseResult } from './_base'
 import { DataSchemaParserMaster } from './_master'
 import { ARRAY_V_TYPE as V, ARRAY_T_TYPE as T, RawArrayDataSchema as RDS, ArrayDataSchema as DS } from '../schema/array'
 import { coverBoolean } from '../_util/cover-util'
-import { isArray } from '../_util/type-util'
+import { isArray, stringify } from '../_util/type-util'
 
 
 /**
@@ -14,7 +14,7 @@ export type ArrayDataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
 /**
  * 数组类型的模式的解析器
  *
- * enum 将忽略所有非数组（或数组字符串）的值
+ * enum 将忽略所有非数组的值
  */
 export class ArrayDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
   private readonly parserMaster: DataSchemaParserMaster
@@ -43,7 +43,7 @@ export class ArrayDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
       if (isArray(rawSchema.default)) {
         result.addError({
           constraint: 'default',
-          reason: `expected an array, but got ${rawSchema.default}`
+          reason: `expected an array, but got ${ stringify(rawSchema.default) }`
         })
       } else {
         defaultValue = rawSchema.default
@@ -54,7 +54,7 @@ export class ArrayDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     if (rawSchema.items == null) {
       return result.addError({
         constraint: 'items',
-        reason: `'items' is required, but got ${ rawSchema.items }.`
+        reason: `'items' is required, but got ${ stringify(rawSchema.items) }.`
       })
     }
 

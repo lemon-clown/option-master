@@ -1,6 +1,7 @@
 import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
 import { BOOLEAN_V_TYPE as V, BOOLEAN_T_TYPE as T, BooleanDataSchema as DS } from '../schema/boolean'
 import { coverBoolean } from '../_util/cover-util'
+import { stringify } from '../_util/type-util'
 
 
 /**
@@ -37,7 +38,7 @@ export class BooleanDataValidator implements DataValidator<T, V, DS> {
     if (booleanValue.errors.length > 0) {
       return result.addError({
         constraint: 'type',
-        reason: `expected a ${ T }, but got ${ data }.\n` + booleanValue.errors.join('\n'),
+        reason: `expected a ${ T }, but got ${ stringify(data) }.\n` + booleanValue.errors.join('\n'),
       })
     }
 

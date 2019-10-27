@@ -1,4 +1,4 @@
-import { convertToNumber, isString, isArray } from './type-util'
+import { convertToNumber, isString, isArray, stringify } from './type-util'
 
 
 /**
@@ -65,7 +65,7 @@ export type CoverOperationFunc<T> = (defaultValue?: T, value?: any) => CoverOper
   value = convertToNumber(value)
   if (Number.isNaN(value)) {
     return result
-      .addError(`(${ value }) is not a valid number (or number string)`)
+      .addError(`(${ stringify(value) }) is not a valid number (or number string)`)
       .setValue(defaultValue)
   }
 
@@ -87,13 +87,13 @@ export const coverInteger: CoverOperationFunc<number> = (defaultValue, value) =>
   value = convertToNumber(value)
   if (Number.isNaN(value)) {
     return result
-      .addError(`(${ value }) is not a valid number (or number string)`)
+      .addError(`(${ stringify(value) }) is not a valid number (or number string)`)
       .setValue(defaultValue)
   }
 
   if (!Number.isInteger(value)) {
     result
-      .addError(`(${ value }) is not a valid integer (or integer string)`)
+      .addError(`(${ stringify(value) }) is not a valid integer (or integer string)`)
   }
   return result.setValue(value)
 }
@@ -137,7 +137,7 @@ export const coverString: CoverOperationFunc<string> = (defaultValue, value) => 
   // 检查是否为字符串
   if (!isString(value)) {
     return result
-      .addError(`${value} is not a valid string`)
+      .addError(`${ stringify(value) } is not a valid string`)
       .setValue(defaultValue)
   }
 
@@ -158,7 +158,7 @@ export const coverRegex: CoverOperationFunc<RegExp> = (defaultValue, value) => {
     result.setValue(regex)
   } catch (error) {
     result
-      .addError(error.message || `${ value } is not a valid regex.`)
+      .addError(error.message || `${ stringify(value) } is not a valid regex.`)
       .setValue(defaultValue)
   }
 
@@ -178,7 +178,7 @@ export function coverArray<T> (elemCoverFunc: CoverOperationFunc<T>): CoverOpera
     // 如果不是数组，则直接置为默认值，并添加错误信息
     if (isArray(value)) {
       return result
-        .addError(`${ value } is not a valid array`)
+        .addError(`${ stringify(value) } is not a valid array`)
         .setValue(defaultValue)
     }
 

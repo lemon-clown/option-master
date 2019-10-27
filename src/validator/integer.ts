@@ -1,6 +1,7 @@
 import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
 import { INTEGER_V_TYPE as V, INTEGER_T_TYPE as T, IntegerDataSchema as DS } from '../schema/integer'
 import { coverInteger } from '../_util/cover-util'
+import { stringify } from '../_util/type-util'
 
 
 /**
@@ -37,7 +38,7 @@ export class IntegerDataValidator implements DataValidator<T, V, DS> {
     if (integerValue.errors.length > 0) {
       return result.addError({
         constraint: 'type',
-        reason: `expected a ${ T }, but got ${ data }.\n` + integerValue.errors.join('\n'),
+        reason: `expected a ${ T }, but got ${ stringify(data) }.\n` + integerValue.errors.join('\n'),
       })
     }
 
@@ -47,7 +48,7 @@ export class IntegerDataValidator implements DataValidator<T, V, DS> {
     if (schema.minimum != null && schema.minimum > value) {
       return result.addError({
         constraint: 'minimum',
-        reason: `minimum value expected is ${ schema.minimum }, but got ${ value }.`
+        reason: `minimum value expected is ${ schema.minimum }, but got ${ stringify(value) }.`
       })
     }
 
@@ -55,7 +56,7 @@ export class IntegerDataValidator implements DataValidator<T, V, DS> {
     if (schema.maximum != null && schema.maximum < value) {
       return result.addError({
         constraint: 'maximum',
-        reason: `maximum value expected is ${ schema.minimum }, but got ${ value }.`
+        reason: `maximum value expected is ${ schema.minimum }, but got ${ stringify(value) }.`
       })
     }
 
@@ -63,7 +64,7 @@ export class IntegerDataValidator implements DataValidator<T, V, DS> {
     if (schema.exclusiveMinimum != null && schema.exclusiveMinimum >= value) {
       return result.addError({
         constraint: 'exclusiveMinimum',
-        reason: `exclusiveMinimum value expected is ${ schema.minimum }, but got ${ value }.`
+        reason: `exclusiveMinimum value expected is ${ schema.minimum }, but got ${ stringify(value) }.`
       })
     }
 
@@ -71,7 +72,7 @@ export class IntegerDataValidator implements DataValidator<T, V, DS> {
     if (schema.exclusiveMaximum != null && schema.exclusiveMaximum >= value) {
       return result.addError({
         constraint: 'exclusiveMaximum',
-        reason: `exclusiveMaximum value expected is ${ schema.minimum }, but got ${ value }.`
+        reason: `exclusiveMaximum value expected is ${ schema.minimum }, but got ${ stringify(value) }.`
       })
     }
 
@@ -79,7 +80,7 @@ export class IntegerDataValidator implements DataValidator<T, V, DS> {
     if (schema.enum != null && schema.enum.length > 0 && schema.enum.indexOf(value) < 0) {
       return result.addError({
         constraint: 'enum',
-        reason: `expected values are ${ schema.enum }, but got ${ value }.`
+        reason: `expected values are ${ schema.enum }, but got ${ stringify(value) }.`
       })
     }
 

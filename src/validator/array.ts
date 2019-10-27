@@ -1,7 +1,6 @@
 import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
 import { ARRAY_V_TYPE as V, ARRAY_T_TYPE as T, ArrayDataSchema as DS } from '../schema/array'
-import { coverArray } from '../_util/cover-util'
-import { isArray } from '../_util/type-util'
+import { isArray, stringify } from '../_util/type-util'
 import { DValidationResult, DataValidatorMaster } from './_master'
 
 
@@ -40,7 +39,7 @@ export class ArrayDataValidator implements DataValidator<T, V, DS> {
     if (!isArray(data)) {
       return result.addError({
         constraint: 'type',
-        reason: `expected a ${ T }, but got ${ data }.\n`,
+        reason: `expected a ${ T }, but got ${ stringify(data) }.\n`,
       })
     }
 
@@ -50,7 +49,7 @@ export class ArrayDataValidator implements DataValidator<T, V, DS> {
       if (valueSet.size !== data.length) {
         return result.addError({
           constraint: 'unique',
-          reason: `expected a unique array, but got ${ data }`
+          reason: `expected a unique array, but got ${ stringify(data) }`
         })
       }
     }

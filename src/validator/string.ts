@@ -1,6 +1,7 @@
 import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
 import { STRING_V_TYPE as V, STRING_T_TYPE as T, StringDataSchema as DS } from '../schema/string'
 import { coverString } from '../_util/cover-util'
+import { stringify } from '../_util/type-util'
 
 
 /**
@@ -37,7 +38,7 @@ export class StringDataValidator implements DataValidator<T, V, DS> {
     if (stringValue.errors.length > 0) {
       return result.addError({
         constraint: 'type',
-        reason: `expected a ${ T }, but got ${ data }.\n` + stringValue.errors.join('\n'),
+        reason: `expected a ${ T }, but got ${ stringify(data) }.\n` + stringValue.errors.join('\n'),
       })
     }
 
@@ -47,7 +48,7 @@ export class StringDataValidator implements DataValidator<T, V, DS> {
     if (schema.pattern != null && !schema.pattern.test(value)) {
       return result.addError({
         constraint: 'pattern',
-        reason: `expected value pattern is ${ schema.pattern.source }, but got ${ value }.`
+        reason: `expected value pattern is ${ schema.pattern.source }, but got ${ stringify(value) }.`
       })
     }
 
@@ -55,7 +56,7 @@ export class StringDataValidator implements DataValidator<T, V, DS> {
     if (schema.enum != null && schema.enum.length > 0 && schema.enum.indexOf(value) < 0) {
       return result.addError({
         constraint: 'enum',
-        reason: `expected values are ${ schema.enum }, but got ${ value }.`
+        reason: `expected values are ${ schema.enum }, but got ${ stringify(value) }.`
       })
     }
 

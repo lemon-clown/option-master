@@ -1,6 +1,6 @@
 import { DataSchemaParser, DataSchemaParseResult } from './_base'
 import { RawDataSchema, DataSchema } from '../schema/_base'
-import { isString } from '../_util/type-util'
+import { isString, stringify } from '../_util/type-util'
 
 
 type T = string
@@ -60,7 +60,7 @@ export class DataSchemaParserMaster {
       const result: DSParserResult = new DataSchemaParseResult(rawDataSchema)
       return result.addError({
         constraint: 'type',
-        reason: `unknown schema type: ${ rawDataSchema.type }.`
+        reason: `unknown schema type: ${ stringify(rawDataSchema.type) }.`
       })
     }
 
