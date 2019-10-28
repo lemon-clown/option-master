@@ -1,7 +1,7 @@
 /**
  * 处理结果的信息对象
  */
-export class HandleResult <E, W> {
+export abstract class HandleResult <E, W> {
   protected readonly _errors: E[]
   protected readonly _warnings: W[]
 
@@ -18,6 +18,11 @@ export class HandleResult <E, W> {
   }
 
   /**
+   * 获取错误消息的汇总
+   */
+  public abstract get errorSummary(): string
+
+  /**
    * 检查是否存在错误消息
    */
   public get hasError (): boolean {
@@ -30,6 +35,11 @@ export class HandleResult <E, W> {
   public get warnings (): W[] {
     return this.warnings
   }
+
+  /**
+   * 获取警告消息的汇总
+   */
+  public abstract get warningSummary(): string
 
   /**
    * 检查是否存在警告消息
