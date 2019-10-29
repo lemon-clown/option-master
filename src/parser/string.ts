@@ -19,10 +19,11 @@ export class StringDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
 
   /**
    * parse RawSchema to Schema
+   * @param path
    * @param rawSchema
    */
-  public parse (rawSchema: RDS): StringDataSchemaParserResult {
-    const result: StringDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
+  public parse (path: string, rawSchema: RDS): StringDataSchemaParserResult {
+    const result: StringDataSchemaParserResult = new DataSchemaParseResult(path, rawSchema)
 
     // required 的默认值为 false
     const required = result.parseProperty<boolean>('required', coverBoolean, false)
@@ -33,6 +34,7 @@ export class StringDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     // StringDataSchema
     const schema: DS = {
       type: this.type,
+      path,
       required: Boolean(required.value),
       default: defaultValue.value,
       pattern: pattern.value,

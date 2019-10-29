@@ -13,6 +13,10 @@ export interface DataSchemaParseError {
    */
   constraint: string
   /**
+   * 属性路径；考虑到数组和对象可能会导致实际属性值未属性树的非根节点，因此记录属性路径是必要的
+   */
+  property: string
+  /**
    * 错误原因
    */
   reason: string
@@ -43,10 +47,15 @@ export class DataSchemaParseResult<
   private _schema?: DS
   public readonly _rawSchema: RDS
 
-  public constructor (rawSchema: RDS, schema?: DS) {
+  /**
+   *
+   * @param path      当前待解析的 RawDataSchema 在其所定义的数据类型树中的路径
+   * @param rawSchema 待解析的 RawDataSchema
+   */
+  public constructor (path: string, rawSchema: RDS) {
     super()
-    this._schema = schema
     this._rawSchema = rawSchema
+    this._rawSchema.path = path
   }
 
   /**
@@ -68,6 +77,32 @@ export class DataSchemaParseResult<
    */
   public get warningSummary(): string {
     return '[' + this._warnings.map(error => `${ error.constraint }: ${ error.reason }`).join(',\n') + ']'
+  }
+
+  /**
+   * 追加校验错误信息对象
+   * @param errors
+   */
+  public addError (...errors: PickPartial<DataSchemaParseError, 'property'>[]): this {
+    const property = this._rawSchema.path || ''
+    for (const error of errors) {
+      const e: DataSchemaParseError = { property, ...error }
+      this._errors.push(e)
+    }
+    return this
+  }
+
+  /**
+   * 追加校验警告信息对象
+   * @param warnings
+   */
+  public addWarning (...warnings: PickPartial<DataSchemaParseWarning, 'property'>[]): this {
+    const property = this._rawSchema.path || ''
+    for (const warning of warnings) {
+      const w: DataSchemaParseWarning = { property, ...warning }
+      this._warnings.push(w)
+    }
+    return this
   }
 
   /**
@@ -143,7 +178,8 @@ export interface DataSchemaParser<
 
   /**
    * parse RawSchema to Schema
-   * @param rawSchema
+   * @param path        当前待解析的 RawDataSchema 在其所定义的数据类型树中的路径
+   * @param rawSchema   待解析的 RawDataSchema
    */
-  parse (rawSchema: RawDataSchema<T, V>): DataSchemaParseResult<T, V, RDS, DS>
+  parse (path: string, rawSchema: RawDataSchema<T, V>): DataSchemaParseResult<T, V, RDS, DS>
 }

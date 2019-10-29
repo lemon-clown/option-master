@@ -50,6 +50,7 @@ export class ObjectDataValidator implements DataValidator<T, V, DS> {
           if (!schema.allowAdditionalProperties) {
             result.addWarning({
               constraint: 'properties',
+              property: schema.path + '.' + propertyName,
               reason: `property(${ propertyName }) is not defined, ignore (allowAdditionalProperties is false).`
             })
             continue
@@ -90,6 +91,7 @@ export class ObjectDataValidator implements DataValidator<T, V, DS> {
             if (value[v] == null) {
               return result.addError({
                 constraint: 'dependencies',
+                property: schema.path + '.' + propertyName,
                 reason: `${ propertyName } depend on ${ stringify(propertyValue) }, but ${ v } is absent.`
               })
             }

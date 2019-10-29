@@ -26,10 +26,11 @@ export class ArrayDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
 
   /**
    * parse RawSchema to Schema
+   * @param path
    * @param rawSchema
    */
-  public parse (rawSchema: RDS): ArrayDataSchemaParserResult {
-    const result: ArrayDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
+  public parse (path: string, rawSchema: RDS): ArrayDataSchemaParserResult {
+    const result: ArrayDataSchemaParserResult = new DataSchemaParseResult(path, rawSchema)
 
     // required 的默认值为 false
     const required = result.parseProperty<boolean>('required', coverBoolean, false)
@@ -59,7 +60,7 @@ export class ArrayDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     }
 
     // 解析 items
-    const items = this.parserMaster.parse(rawSchema.items)
+    const items = this.parserMaster.parse(path + '.$items', rawSchema.items)
     if (items.hasError) {
       return result.addError({
         constraint: 'items',
@@ -70,6 +71,7 @@ export class ArrayDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     // ArrayDataSchema
     const schema: DS = {
       type: this.type,
+      path,
       required: Boolean(required.value),
       default: defaultValue,
       items: items.schema!,

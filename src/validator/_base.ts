@@ -12,6 +12,10 @@ export interface DataValidationError {
    */
   constraint: string
   /**
+   * 属性路径；考虑到数组和对象可能会导致实际属性值未属性树的非根节点，因此记录属性路径是必要的
+   */
+  property: string
+  /**
    * 错误原因
    */
   reason: string
@@ -54,6 +58,32 @@ export class DataValidationResult<T extends string, V, DS extends DataSchema<T, 
    */
   public get errorSummary(): string {
     return '[' + this._errors.map(error => `${ error.constraint }: ${ error.reason }`).join(',\n') + ']'
+  }
+
+  /**
+   * 追加校验错误信息对象
+   * @param errors
+   */
+  public addError (...errors: PickPartial<DataValidationError, 'property'>[]): this {
+    const property = this._schema.path
+    for (const error of errors) {
+      const e: DataValidationError = { property, ...error }
+      this._errors.push(e)
+    }
+    return this
+  }
+
+  /**
+   * 追加校验警告信息对象
+   * @param warnings
+   */
+  public addWarning (...warnings: PickPartial<DataValidationWarning, 'property'>[]): this {
+    const property = this._schema.path
+    for (const warning of warnings) {
+      const w: DataValidationWarning = { property, ...warning }
+      this._warnings.push(w)
+    }
+    return this
   }
 
   /**

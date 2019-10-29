@@ -19,10 +19,11 @@ export class NumberDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
 
   /**
    * parse RawSchema to Schema
+   * @param path
    * @param rawSchema
    */
-  public parse (rawSchema: RDS): NumberDataSchemaParserResult {
-    const result: NumberDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
+  public parse (path: string, rawSchema: RDS): NumberDataSchemaParserResult {
+    const result: NumberDataSchemaParserResult = new DataSchemaParseResult(path, rawSchema)
 
     // required 的默认值为 false
     const required = result.parseProperty<boolean>('required', coverBoolean, false)
@@ -36,6 +37,7 @@ export class NumberDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     // NumberDataSchema
     const schema: DS = {
       type: this.type,
+      path,
       required: Boolean(required.value),
       default: defaultValue.value,
       minimum: minimum.value,

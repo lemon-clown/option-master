@@ -27,10 +27,11 @@ export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
 
   /**
    * parse RawSchema to Schema
+   * @param path
    * @param rawSchema
    */
-  public parse (rawSchema: RDS): ObjectDataSchemaParserResult {
-    const result: ObjectDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
+  public parse (path: string, rawSchema: RDS): ObjectDataSchemaParserResult {
+    const result: ObjectDataSchemaParserResult = new DataSchemaParseResult(path, rawSchema)
 
     // required 的默认值为 false
     const required = result.parseProperty<boolean>('required', coverBoolean, false)
@@ -53,7 +54,7 @@ export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
         properties = {}
         for (const propertyName of Object.getOwnPropertyNames(rawSchema.properties)) {
           const propertyValue = rawSchema.properties[propertyName]
-          const propertyParserResult = this.parserMaster.parse(propertyValue)
+          const propertyParserResult = this.parserMaster.parse(path + '.' + propertyName, propertyValue)
 
           // 如果存在错误，则忽略此属性
           if (propertyParserResult.hasError) {
@@ -79,7 +80,7 @@ export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
           reason: `propertyNames must be a StringDataSchema, but got ${ stringify(rawSchema.propertyNames) }.`
         })
       } else {
-        const propertyNamesParserResult = this.parserMaster.parse(rawSchema.propertyNames)
+        const propertyNamesParserResult = this.parserMaster.parse(path + '.$propertyNames', rawSchema.propertyNames)
         propertyNames = propertyNamesParserResult.schema as StringDataSchema
       }
     }
@@ -106,6 +107,7 @@ export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     // ObjectDataSchema
     const schema: DS = {
       type: this.type,
+      path,
       required: Boolean(required.value),
       default: defaultValue,
       allowAdditionalProperties: Boolean(allowAdditionalProperties.value),

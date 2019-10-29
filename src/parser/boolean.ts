@@ -17,10 +17,11 @@ export class BooleanDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
 
   /**
    * parse RawSchema to Schema
+   * @param path
    * @param rawSchema
    */
-  public parse (rawSchema: RDS): BooleanDataSchemaParserResult {
-    const result: BooleanDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
+  public parse (path: string, rawSchema: RDS): BooleanDataSchemaParserResult {
+    const result: BooleanDataSchemaParserResult = new DataSchemaParseResult(path, rawSchema)
 
     // required 的默认值为 false
     const required = result.parseProperty<boolean>('required', coverBoolean, false)
@@ -29,6 +30,7 @@ export class BooleanDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
     // BooleanDataSchema
     const schema: DS = {
       type: this.type,
+      path,
       required: Boolean(required.value),
       default: defaultValue.value,
     }

@@ -44,11 +44,12 @@ export class DataSchemaParserMaster {
 
   /**
    * 执行解析操作
-   * @param rawDataSchema
+   * @param path        当前待解析的 RawDataSchema 在其所定义的数据类型树中的路径
+   * @param rawSchema   待解析的 RawDataSchema
    */
-  public parse(rawDataSchema: RDS): DSParserResult {
+  public parse(path: string, rawDataSchema: RDS): DSParserResult {
     if (rawDataSchema == null || !isString(rawDataSchema.type)) {
-      const result: DSParserResult = new DataSchemaParseResult(rawDataSchema)
+      const result: DSParserResult = new DataSchemaParseResult(path, rawDataSchema)
       return result.addError({
         constraint: 'type',
         reason: '`schema.type` must be a string.'
@@ -57,13 +58,13 @@ export class DataSchemaParserMaster {
 
     const parser = this.parserMap.get(rawDataSchema.type)
     if (parser == null) {
-      const result: DSParserResult = new DataSchemaParseResult(rawDataSchema)
+      const result: DSParserResult = new DataSchemaParseResult(path, rawDataSchema)
       return result.addError({
         constraint: 'type',
-        reason: `unknown schema type: ${ stringify(rawDataSchema.type) }.`
+        reason: `unknown \`schema.type\`: ${ stringify(rawDataSchema.type) }.`
       })
     }
 
-    return parser.parse(rawDataSchema)
+    return parser.parse(path, rawDataSchema)
   }
 }

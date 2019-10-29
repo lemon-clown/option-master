@@ -61,6 +61,7 @@ export class ArrayDataValidator implements DataValidator<T, V, DS> {
       if (xValidateResult.hasError) {
         return result.addError({
           constraint: 'items',
+          property: schema.path + '.' + i,
           reason: `index(${ i }): ` + xValidateResult.errorSummary,
         })
       }
