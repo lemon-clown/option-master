@@ -94,6 +94,27 @@ export class DataValidationResult<T extends string, V, DS extends DataSchema<T, 
   }
 
   /**
+   * 合并属性的校验结果
+   * @param constraint  校验错误的属性名（约束项）
+   * @param result      校验结果
+   */
+  public addHandleResult (constraint: string, result: HandleResult<any, any>): this {
+    if (result.hasError) {
+      this.addError({
+        constraint,
+        reason: result.errorSummary,
+      })
+    }
+    if (result.hasWarning) {
+      this.addError({
+        constraint,
+        reason: result.warningSummary,
+      })
+    }
+    return this
+  }
+
+  /**
    * 设置值
    * @param value
    */

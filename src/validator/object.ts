@@ -59,22 +59,19 @@ export class ObjectDataValidator implements DataValidator<T, V, DS> {
           // 检查是否符合 propertyNames 的定义
           if (schema.propertyNames != null) {
             const xValidateResult = this.validatorMaster.validate(schema.propertyNames, propertyName)
+            result.addHandleResult('propertyNames', xValidateResult)
 
             // 若不符合，则忽略
-            if (xValidateResult.hasError) {
-              result.merge(xValidateResult)
-              continue
-            }
+            if (xValidateResult.hasError) continue
           }
         }
 
         // 在 properties 中定义了的属性，使用指定的 DataSchema 进行检查
         const xValidateResult = this.validatorMaster.validate(schema.properties[propertyName], propertyValue)
+        result.addHandleResult('properties', xValidateResult)
 
         // 若不符合，则终止解析
-        if (xValidateResult.hasError) {
-          return result.merge(xValidateResult)
-        }
+        if (xValidateResult.hasError) return result
 
         // 否则，添加到值中
         value[propertyName] = propertyValue

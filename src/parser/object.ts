@@ -1,6 +1,6 @@
 import { DataSchemaParser, DataSchemaParseResult } from './_base'
 import { DataSchemaParserMaster } from './_master'
-import { OBJECT_V_TYPE as V, OBJECT_T_TYPE as T, RawObjectDataSchema as RDS, ObjectDataSchema as DS, RawObjectDataSchema, ObjectDataSchema } from '../schema/object'
+import { OBJECT_V_TYPE as V, OBJECT_T_TYPE as T, RawObjectDataSchema as RDS, ObjectDataSchema as DS, ObjectDataSchema } from '../schema/object'
 import { StringDataSchema, STRING_T_TYPE } from '../schema/string'
 import { stringify, isString } from '../_util/type-util'
 import { coverBoolean } from '../_util/cover-util'
@@ -53,19 +53,14 @@ export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
       if (result.ensureObject('properties')) {
         properties = {}
         for (const propertyName of Object.getOwnPropertyNames(rawSchema.properties)) {
+          const p: string = path + '.' + propertyName
           const propertyValue = rawSchema.properties[propertyName]
-          const propertyParserResult = this.parserMaster.parse(path + '.' + propertyName, propertyValue)
+          const propertyParserResult = this.parserMaster.parse(p, propertyValue)
+          result.addHandleResult('properties', propertyParserResult)
 
           // 如果存在错误，则忽略此属性
-          if (propertyParserResult.hasError) {
-            result.addError({
-              constraint: 'properties',
-              reason: `${ propertyName }: ` + propertyParserResult.errorSummary,
-            })
-            continue
-          }
-
-          // 添加属性对应的 DataSchema
+          // 否则，添加属性对应的 DataSchema
+          if (propertyParserResult.hasError) continue
           properties[propertyName] = propertyParserResult.schema!
         }
       }
@@ -74,14 +69,20 @@ export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     // 解析 propertyNames
     let propertyNames: ObjectDataSchema['propertyNames'] = undefined
     if (rawSchema.propertyNames != null) {
+      const p: string = path + '.$propertyNames'
       if (rawSchema.propertyNames.type !== STRING_T_TYPE) {
         result.addError({
+          property: p,
           constraint: 'propertyNames',
           reason: `propertyNames must be a StringDataSchema, but got ${ stringify(rawSchema.propertyNames) }.`
         })
       } else {
-        const propertyNamesParserResult = this.parserMaster.parse(path + '.$propertyNames', rawSchema.propertyNames)
-        propertyNames = propertyNamesParserResult.schema as StringDataSchema
+        const propertyNamesParserResult = this.parserMaster.parse(p, rawSchema.propertyNames)
+        result.addHandleResult('propertyNames', result)
+        // 如果存在错误，则忽略此属性
+        if (!result.hasError) {
+          propertyNames = propertyNamesParserResult.schema as StringDataSchema
+        }
       }
     }
 

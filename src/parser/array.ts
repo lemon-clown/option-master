@@ -61,12 +61,7 @@ export class ArrayDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
 
     // 解析 items
     const items = this.parserMaster.parse(path + '.$items', rawSchema.items)
-    if (items.hasError) {
-      return result.addError({
-        constraint: 'items',
-        reason: items.errorSummary,
-      })
-    }
+    result.addHandleResult('items', items)
 
     // ArrayDataSchema
     const schema: DS = {

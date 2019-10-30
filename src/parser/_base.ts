@@ -106,6 +106,27 @@ export class DataSchemaParseResult<
   }
 
   /**
+   * 合并属性的解析结果
+   * @param constraint  解析错误的属性名（约束项）
+   * @param result      解析结果
+   */
+  public addHandleResult (constraint: string, result: HandleResult<any, any>): this {
+    if (result.hasError) {
+      this.addError({
+        constraint,
+        reason: result.errorSummary,
+      })
+    }
+    if (result.hasWarning) {
+      this.addError({
+        constraint,
+        reason: result.warningSummary,
+      })
+    }
+    return this
+  }
+
+  /**
    * 设置解析结果
    * @param schema
    */

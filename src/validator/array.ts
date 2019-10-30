@@ -58,13 +58,7 @@ export class ArrayDataValidator implements DataValidator<T, V, DS> {
     for (let i = 0; i < data.length; ++i) {
       const d = data[i]
       const xValidateResult: DValidationResult = this.validatorMaster.validate(schema, d)
-      if (xValidateResult.hasError) {
-        return result.addError({
-          constraint: 'items',
-          property: schema.path + '.' + i,
-          reason: `index(${ i }): ` + xValidateResult.errorSummary,
-        })
-      }
+      result.addHandleResult('items', xValidateResult)
     }
 
     // 通过校验
