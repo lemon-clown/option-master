@@ -11,7 +11,7 @@ export type OBJECT_V_TYPE = any[]
 
 
 /**
- * 原生的对象类型数据选项，用户在配置文件中指定的对象类型
+ * 原生的对象类型数据模式，用户在配置文件中指定的对象类型
  * 参见 https://json-schema.org/understanding-json-schema/reference/object.html
  */
 export interface RawObjectDataSchema extends RawDataSchema<OBJECT_T_TYPE, OBJECT_V_TYPE> {
@@ -56,7 +56,7 @@ export interface RawObjectDataSchema extends RawDataSchema<OBJECT_T_TYPE, OBJECT
 
 
 /**
- * 对象类型的数据选项
+ * 对象类型的数据模式，解析 RawObjectDataSchema 后得到的结果
  */
 export interface ObjectDataSchema extends DataSchema<OBJECT_T_TYPE, OBJECT_V_TYPE> {
   /**

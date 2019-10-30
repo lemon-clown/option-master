@@ -12,7 +12,7 @@ export type BOOLEAN_V_TYPE = boolean
 
 
 /**
- * 布尔类型的数据选项
+ * 布尔类型的数据模式
  */
 export interface RawBooleanDataSchema extends RawDataSchema<BOOLEAN_T_TYPE, BOOLEAN_V_TYPE> {
 
@@ -21,7 +21,7 @@ export interface RawBooleanDataSchema extends RawDataSchema<BOOLEAN_T_TYPE, BOOL
 
 
 /**
- * 布尔类型的数据选项
+ * 布尔类型的数据模式，解析 RawBooleanDataSchema 后得到的结果
  */
 export interface BooleanDataSchema extends DataSchema<BOOLEAN_T_TYPE, BOOLEAN_V_TYPE> {
 

@@ -10,7 +10,7 @@ export type STRING_V_TYPE = string
 
 
 /**
- * 原生的字符串类型数据选项，用户在配置文件中指定的对象类型
+ * 原生的字符串类型数据模式，用户在配置文件中指定的对象类型
  * 参见 https://json-schema.org/understanding-json-schema/reference/string.html
  */
 export interface RawStringDataSchema extends RawDataSchema<STRING_T_TYPE, STRING_V_TYPE> {
@@ -26,7 +26,7 @@ export interface RawStringDataSchema extends RawDataSchema<STRING_T_TYPE, STRING
 
 
 /**
- * 字符串类型的数据选项
+ * 字符串类型的数据模式，解析 RawStringDataSchema 后得到的结果
  */
 export interface StringDataSchema extends DataSchema<STRING_T_TYPE, STRING_V_TYPE> {
   /**

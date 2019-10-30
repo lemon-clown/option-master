@@ -10,7 +10,7 @@ export type ARRAY_V_TYPE = any[]
 
 
 /**
- * 原生的数组类型数据选项，用户在配置文件中指定的对象类型
+ * 原生的数组类型数据模式，用户在配置文件中指定的对象类型
  * 参见 https://json-schema.org/understanding-json-schema/reference/array.html
  */
 export interface RawArrayDataSchema extends RawDataSchema<ARRAY_T_TYPE, ARRAY_V_TYPE> {
@@ -27,7 +27,7 @@ export interface RawArrayDataSchema extends RawDataSchema<ARRAY_T_TYPE, ARRAY_V_
 
 
 /**
- * 数组类型的数据选项
+ * 数组类型的数据模式，解析 RawArrayDataSchema 后得到的结果
  */
 export interface ArrayDataSchema extends DataSchema<ARRAY_T_TYPE, ARRAY_V_TYPE> {
   /**

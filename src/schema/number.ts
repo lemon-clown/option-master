@@ -10,7 +10,7 @@ export type NUMBER_V_TYPE = number
 
 
 /**
- * 原生的数字类型数据选项，用户在配置文件中指定的对象类型
+ * 原生的数字类型数据模式，用户在配置文件中指定的对象类型
  * 参见 https://json-schema.org/understanding-json-schema/reference/numeric.html
  */
 export interface RawNumberDataSchema extends RawDataSchema<NUMBER_T_TYPE, NUMBER_V_TYPE> {
@@ -38,7 +38,7 @@ export interface RawNumberDataSchema extends RawDataSchema<NUMBER_T_TYPE, NUMBER
 
 
 /**
- * 数字类型的数据选项
+ * 数字类型的数据模式，解析 RawNumberDataSchema 后得到的结果
  */
 export interface NumberDataSchema extends DataSchema<NUMBER_T_TYPE, NUMBER_V_TYPE> {
   /**
