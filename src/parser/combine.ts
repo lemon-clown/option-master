@@ -76,6 +76,14 @@ export class CombineDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
     const anyOf: DataSchema<string, any>[] | undefined = parseSchemas('anyOf', rawSchema.allOf)
     const oneOf: DataSchema<string, any>[] | undefined = parseSchemas('oneOf', rawSchema.allOf)
 
+    // allOf, anyOf, oneOf 至少要设置一项有效值
+    if ((allOf == null || allOf.length <= 0) && (anyOf == null || anyOf.length <= 0) && (oneOf == null || oneOf.length <= 0)) {
+      return result.addError({
+        constraint: 'type',
+        reason: 'CombineDataSchema must be set at least one valid value of properties: `allOf`, `anyOf`, `oneOf`.'
+      })
+    }
+
     // CombineDataSchema
     const schema: DS = {
       type: this.type,
