@@ -174,14 +174,14 @@ export function coverArray<T> (elemCoverFunc: CoverOperationFunc<T>): CoverOpera
     if (value == null) return result.setValue(defaultValue)
 
     // 如果不是数组，则直接置为默认值，并添加错误信息
-    if (isArray(value)) {
+    if (!isArray(value)) {
       return result
         .addError(`${ stringify(value) } is not a valid array`)
         .setValue(defaultValue)
     }
 
     const resolvedValue: T[] = []
-    for (let i = 0; i <= value.length; ++i) {
+    for (let i = 0; i < value.length; ++i) {
       const v = value[i]
       const xResult = elemCoverFunc(undefined, v)
 
