@@ -32,7 +32,7 @@
     "outDir": "lib",
     "module": "commonjs",
     "target": "es6",
-    "rootDir": ".",
+    "rootDir": "."
   },
   "include": [
     "src",

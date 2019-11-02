@@ -18,6 +18,7 @@ import { IntegerDataValidatorFactory } from './validator/integer'
 import { NumberDataValidatorFactory } from './validator/number'
 import { ObjectDataValidatorFactory } from './validator/object'
 import { StringDataValidatorFactory } from './validator/string'
+import './types'
 
 
 // export DataSchemas
