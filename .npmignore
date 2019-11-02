@@ -6,7 +6,6 @@ test/
 src/
 script/
 node_modules/
-tsconfig.json
 .eslintignore
 .eslintrc
 *.js.map

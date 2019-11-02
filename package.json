@@ -2,13 +2,24 @@
   "name": "@lemon-clown/option-util",
   "version": "0.0.1",
   "author": "lemon-clown <me.clown.lemon@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemon-clown/option-util"
+  },
+  "keywords": [
+    "json-schema",
+    "config util",
+    "option util"
+  ],
   "description": "option utils",
+  "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
     "start": "tsc -b tsconfig.json --watch",
-    "build": "tsc -b tsconfig.json",
+    "build": "rimraf lib/ && tsc -b tsconfig.json",
+    "postbuild": "rimraf lib/package.json lib/test && mv lib/src/* lib && rimraf lib/src/ lib/**/*.tsbuildinfo",
     "lint:fix": "eslint src/**/*.ts --fix",
-    "prepublishOnly": "yarn lint:fix"
+    "prepublishOnly": "yarn lint:fix && yarn build"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^1.13.0",
@@ -18,6 +29,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.0",
     "prettier": "^1.18.2",
+    "rimraf": "^3.0.0",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
   }

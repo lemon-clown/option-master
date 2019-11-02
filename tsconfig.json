@@ -16,9 +16,9 @@
     "noEmitOnError": true,
     "removeComments": false,
     "composite": true,
-    "declarationMap": true,
+    "declarationMap": false,
     "declaration": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "pretty": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -32,9 +32,10 @@
     "outDir": "lib",
     "module": "commonjs",
     "target": "es6",
-    "rootDir": "src",
+    "rootDir": ".",
   },
   "include": [
-    "src"
+    "src",
+    "test"
   ]
 }

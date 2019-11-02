@@ -3,6 +3,8 @@
     "Interop",
     "downlevel",
     "gmail",
-    "plusplus"
+    "plusplus",
+    "postbuild",
+    "tsbuildinfo"
   ]
 }
