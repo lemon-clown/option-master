@@ -48,7 +48,7 @@ export class StringDataValidator implements DataValidator<T, V, DS> {
     if (schema.pattern != null && !schema.pattern.test(value)) {
       return result.addError({
         constraint: 'pattern',
-        reason: `expected value pattern is ${ schema.pattern.source }, but got ${ stringify(value) }.`
+        reason: `expected value pattern is ${ stringify(schema.pattern.source) }, but got ${ stringify(value) }.`
       })
     }
 
@@ -56,7 +56,7 @@ export class StringDataValidator implements DataValidator<T, V, DS> {
     if (schema.enum != null && schema.enum.length > 0 && schema.enum.indexOf(value) < 0) {
       return result.addError({
         constraint: 'enum',
-        reason: `expected values are ${ schema.enum }, but got ${ stringify(value) }.`
+        reason: `expected value should in the ${ stringify(schema.enum) }, but got ${ stringify(value) }.`
       })
     }
 

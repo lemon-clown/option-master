@@ -3,6 +3,7 @@ import { DataSchemaParserMaster } from './_master'
 import { COMBINE_V_TYPE as V, COMBINE_T_TYPE as T, RawCombineDataSchema as RDS, CombineDataSchema as DS, CombineStrategy } from '../schema/combine'
 import { RawDataSchema, DataSchema } from '../schema/_base'
 import { coverBoolean, coverString } from '../_util/cover-util'
+import { stringify } from '../_util/type-util'
 
 
 /**
@@ -40,7 +41,7 @@ export class CombineDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
     if (strategy !== CombineStrategy.ALL && strategy !== CombineStrategy.ANY && strategy !== CombineStrategy.ONE) {
       result.addError({
         constraint: 'strategy',
-        reason: `unknown strategy: ${ strategy }`
+        reason: `unknown strategy: ${ stringify(strategy) }`
       })
       strategy = CombineStrategy.ALL
     }
