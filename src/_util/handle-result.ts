@@ -33,7 +33,7 @@ export abstract class HandleResult <E, W> {
    * 警告消息
    */
   public get warnings (): W[] {
-    return this.warnings
+    return this._warnings
   }
 
   /**
