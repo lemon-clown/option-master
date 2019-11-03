@@ -69,7 +69,7 @@ export class IntegerDataValidator implements DataValidator<T, V, DS> {
     }
 
     // 检查最大值（不可取到）
-    if (schema.exclusiveMaximum != null && schema.exclusiveMaximum >= value) {
+    if (schema.exclusiveMaximum != null && schema.exclusiveMaximum <= value) {
       return result.addError({
         constraint: 'exclusiveMaximum',
         reason: `exclusiveMaximum value expected is ${ stringify(schema.exclusiveMaximum) }, but got ${ stringify(value) }.`
