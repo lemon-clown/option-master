@@ -1,4 +1,4 @@
-import { DataSchema, RawDataSchema } from './_base'
+import { DataSchema, RawDataSchema, RDSchema, DSchema } from './_base'
 import { RawStringDataSchema, StringDataSchema } from './string'
 
 
@@ -19,7 +19,7 @@ export interface RawObjectDataSchema extends RawDataSchema<OBJECT_T_TYPE, OBJECT
    * 对象属性的类型，定义对象可能出现的若干属性的属性名及其类型
    * 参见 https://json-schema.org/understanding-json-schema/reference/object.html#properties
    */
-  properties?: { [key: string]: RawDataSchema<string, any> }
+  properties?: { [key: string]: RDSchema }
   /**
    * 是否允许其它额外的属性，若为 false 且指定了 properties，
    * 则对象中只有 properties 中出现的属性会被采用，其它的属性将被忽略，
@@ -67,7 +67,7 @@ export interface ObjectDataSchema extends DataSchema<OBJECT_T_TYPE, OBJECT_V_TYP
   /**
    * 对象属性的类型
    */
-  properties?: { [key: string]: DataSchema<string, any> }
+  properties?: { [key: string]: DSchema }
   /**
    * 对象属性名的数据类型
    */

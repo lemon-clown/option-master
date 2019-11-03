@@ -1,4 +1,4 @@
-import { DataSchema, RawDataSchema } from './_base'
+import { DataSchema, RawDataSchema, RDSchema, DSchema } from './_base'
 
 
 // ArrayDataSchema.type 的类型
@@ -17,7 +17,7 @@ export interface RawArrayDataSchema extends RawDataSchema<ARRAY_T_TYPE, ARRAY_V_
   /**
    * 数组元素的类型
    */
-  items: RawDataSchema<string, any>
+  items: RDSchema
   /**
    * 数组的元素的值是否唯一
    * @default false
@@ -33,7 +33,7 @@ export interface ArrayDataSchema extends DataSchema<ARRAY_T_TYPE, ARRAY_V_TYPE> 
   /**
    * 数组元素的类型
    */
-  items: DataSchema<string, any>
+  items: DSchema
   /**
    * 数组的元素的值是否唯一
    */

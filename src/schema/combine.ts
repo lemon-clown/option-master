@@ -1,4 +1,4 @@
-import { DataSchema, RawDataSchema } from './_base'
+import { DataSchema, RawDataSchema, RDSchema, DSchema } from './_base'
 
 
 // CombineDataSchema.type 的类型
@@ -46,17 +46,17 @@ export interface RawCombineDataSchema extends RawDataSchema<COMBINE_T_TYPE, COMB
    * 需要满足所有 allOf 中定义的 DataSchema 才算校验通过
    * https://json-schema.org/understanding-json-schema/reference/combining.html#allof
    */
-  allOf?: RawDataSchema<string, any>[]
+  allOf?: RDSchema[]
   /**
    * 满足 anyOf 中任一定义的 DataSchema 就算校验通过
    * 参见 https://json-schema.org/understanding-json-schema/reference/combining.html#anyof
    */
-  anyOf?: RawDataSchema<string, any>[]
+  anyOf?: RDSchema[]
   /**
    * 满足且满足 oneOf 中定义的某个 DataSchema 才算校验通过
    * 参见 https://json-schema.org/understanding-json-schema/reference/combining.html#oneof
    */
-  oneOf?: RawDataSchema<string, any>[]
+  oneOf?: RDSchema[]
 }
 
 
@@ -75,15 +75,15 @@ export interface CombineDataSchema extends DataSchema<COMBINE_T_TYPE, COMBINE_V_
    * 需要满足所有 allOf 中定义的 DataSchema 才算校验通过
    * https://json-schema.org/understanding-json-schema/reference/combining.html#allof
    */
-  allOf?: DataSchema<string, any>[]
+  allOf?: DSchema[]
   /**
    * 满足 anyOf 中任一定义的 DataSchema 就算校验通过
    * 参见 https://json-schema.org/understanding-json-schema/reference/combining.html#anyof
    */
-  anyOf?: DataSchema<string, any>[]
+  anyOf?: DSchema[]
   /**
    * 满足且满足 oneOf 中定义的某个 DataSchema 才算校验通过
    * 参见 https://json-schema.org/understanding-json-schema/reference/combining.html#oneof
    */
-  oneOf?: DataSchema<string, any>[]
+  oneOf?: DSchema[]
 }

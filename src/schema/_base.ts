@@ -43,3 +43,7 @@ export interface DataSchema<T extends string, V> {
    */
   readonly default?: V
 }
+
+
+export type RDSchema = RawDataSchema<string, any>
+export type DSchema = DataSchema<string, any>

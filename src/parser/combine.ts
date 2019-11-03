@@ -1,7 +1,7 @@
 import { DataSchemaParser, DataSchemaParseResult } from './_base'
 import { DataSchemaParserMaster } from './_master'
 import { COMBINE_V_TYPE as V, COMBINE_T_TYPE as T, RawCombineDataSchema as RDS, CombineDataSchema as DS, CombineStrategy } from '../schema/combine'
-import { RawDataSchema, DataSchema } from '../schema/_base'
+import { RDSchema, DSchema } from '../schema/_base'
 import { coverBoolean, coverString } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'
 
@@ -52,12 +52,9 @@ export class CombineDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
      * @param constraint
      * @param rawSchemas
      */
-    const parseSchemas = (
-      constraint: 'allOf' | 'anyOf' | 'oneOf',
-      rawSchemas?: RawDataSchema<string, any>[]
-    ): DataSchema<string, any>[] | undefined => {
+    const parseSchemas = (constraint: 'allOf' | 'anyOf' | 'oneOf', rawSchemas?: RDSchema[]): DSchema[] | undefined => {
       if (rawSchemas == null || rawSchemas.length <= 0) return undefined
-      const schemas: DataSchema<string, any>[] = []
+      const schemas: DSchema[] = []
       const p: string = path + '.$' + constraint
       for (let i = 0; i < rawSchemas.length; ++i) {
         const itemRawSchema = rawSchemas[i]
@@ -73,9 +70,9 @@ export class CombineDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
       return schemas
     }
 
-    const allOf: DataSchema<string, any>[] | undefined = parseSchemas('allOf', rawSchema.allOf)
-    const anyOf: DataSchema<string, any>[] | undefined = parseSchemas('anyOf', rawSchema.allOf)
-    const oneOf: DataSchema<string, any>[] | undefined = parseSchemas('oneOf', rawSchema.allOf)
+    const allOf: DSchema[] | undefined = parseSchemas('allOf', rawSchema.allOf)
+    const anyOf: DSchema[] | undefined = parseSchemas('anyOf', rawSchema.allOf)
+    const oneOf: DSchema[] | undefined = parseSchemas('oneOf', rawSchema.allOf)
 
     // allOf, anyOf, oneOf 至少要设置一项有效值
     if ((allOf == null || allOf.length <= 0) && (anyOf == null || anyOf.length <= 0) && (oneOf == null || oneOf.length <= 0)) {
