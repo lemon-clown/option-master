@@ -23,6 +23,7 @@ yarn-error.log*
 .idea/
 .vscode/*
 !.vscode/settings.json
+!.vscode/launch.json
 
 *.suo
 *.ntvs*
