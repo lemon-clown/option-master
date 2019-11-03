@@ -1,0 +1,9 @@
+{
+  "errors": [
+    {
+      "property": "",
+      "constraint": "enum"
+    }
+  ],
+  "warnings": []
+}
