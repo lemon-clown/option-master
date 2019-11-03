@@ -103,7 +103,7 @@ export const coverInteger: CoverOperationFunc<number> = (defaultValue, value) =>
  *  - 'true'（不区分大小写）视作 true
  *  - 其余值视作 undefined
  *
- * 否则，若不是布尔值，视作 undefined
+ * 否则，若不是布尔值，视作类型错误
  */
 export const coverBoolean: CoverOperationFunc<boolean> = (defaultValue, value) => {
   const result: CoverOperationResult<boolean> = new CoverOperationResult()
@@ -119,7 +119,8 @@ export const coverBoolean: CoverOperationFunc<boolean> = (defaultValue, value) =
     case false: return result.setValue(false)
     case 'true':
     case true: return result.setValue(true)
-    default: return result.setValue(defaultValue)
+    default:
+      return result.addError(`(${ stringify(value) }) is not a valid boolean type (or boolean string)`)
   }
 }
 
