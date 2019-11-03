@@ -2,7 +2,7 @@
   "errors": [
     {
       "property": "",
-      "constraint": "minimum"
+      "constraint": "exclusiveMinimum"
     }
   ],
   "warnings": []

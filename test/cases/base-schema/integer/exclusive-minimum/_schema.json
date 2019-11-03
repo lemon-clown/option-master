@@ -1,5 +1,5 @@
 {
   "type": "integer",
-  "minimum": 20,
+  "exclusiveMinimum": 20,
   "required": true
 }

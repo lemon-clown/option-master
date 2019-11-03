@@ -1,5 +1,9 @@
 {
-  "data": 20,
-  "errors": [],
+  "errors": [
+    {
+      "property": "",
+      "constraint": "exclusiveMaximum"
+    }
+  ],
   "warnings": []
 }
