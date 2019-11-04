@@ -1,0 +1,7 @@
+{
+  "type": "string",
+  "minLength": 7,
+  "maxLength": 28,
+  "pattern": "^[A-Z]{2,3}-[\\d]*$",
+  "required": true
+}

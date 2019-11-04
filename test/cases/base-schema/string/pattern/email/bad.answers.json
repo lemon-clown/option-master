@@ -1,0 +1,20 @@
+[
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "pattern"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "pattern"
+      }
+    ],
+    "warnings": []
+  }
+]

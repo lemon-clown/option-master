@@ -1,0 +1,12 @@
+[
+  {
+    "data": "bar@foo.dd",
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": "foo@bar.com",
+    "errors": [],
+    "warnings": []
+  }
+]
