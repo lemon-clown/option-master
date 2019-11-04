@@ -1,0 +1,20 @@
+[
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "unique"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "unique"
+      }
+    ],
+    "warnings": []
+  }
+]

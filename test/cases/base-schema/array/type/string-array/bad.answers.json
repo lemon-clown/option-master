@@ -1,0 +1,63 @@
+[
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "items"
+      },
+      {
+        "property": "",
+        "constraint": "items"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "items"
+      },
+      {
+        "property": "",
+        "constraint": "items"
+      },
+      {
+        "property": "",
+        "constraint": "items"
+      },
+      {
+        "property": "",
+        "constraint": "items"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "items"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "items"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "items"
+      }
+    ],
+    "warnings": []
+  }
+]
