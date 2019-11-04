@@ -22,11 +22,10 @@ async function answer () {
   await caseMaster.scan(caseRootDir)
 
   for (const kase of caseMaster.cases) {
-    const answerResult: AnswerResult | string = await caseMaster.consume(kase, needReason)
+    const answerResult: AnswerResult | AnswerResult[] | string = await caseMaster.consume(kase, needReason)
     if (isString(answerResult)) {
       throw answerResult
     }
-
     const data = JSON.stringify(answerResult, null, 2)
     const filepath: string = ANSWER_MODE ? kase.answerDataFilePath : kase.outputDataFilePath
     await fs.writeFile(filepath, data, encoding)

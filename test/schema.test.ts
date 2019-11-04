@@ -26,32 +26,46 @@ before(async function test() {
             throw new Error(`answer file (${ kase.answerDataFilePath }) not found`)
           }
 
-          const answerResult: AnswerResult | string = await caseMaster.consume(kase, false)
-          if (isString(answerResult)) {
-            throw answerResult
+          let answerResults: AnswerResult | AnswerResult[] | string = await caseMaster.consume(kase, false)
+          if (isString(answerResults)) {
+            throw answerResults
           }
 
-          const output: any = answerResult
-          const answer: any = await fs.readJSONSync(kase.answerDataFilePath)
-
-          // check errors
-          if (answer.errors != null && answer.errors.length > 0) {
-            expect(output.errors)
-              .to.be.an('array')
-              .to.have.lengthOf(answer.errors.length)
-              .to.have.deep.members(answer.errors)
+          // 单个数据可以作为多个数据的一个特例进行处理
+          let answers: any = await fs.readJSONSync(kase.answerDataFilePath)
+          if (!kase.multipleCase) {
+            answerResults = [answerResults] as AnswerResult[]
+            answers = [answers]
           }
 
-          // check warnings
-          if (answer.warnings != null && answer.warnings.length > 0) {
-            expect(output.warnings)
-              .to.be.an('array')
-              .to.have.lengthOf(answer.warnings.length)
-              .to.have.deep.members(answer.warnings)
-          }
+          // 输出和答案应有相同的数据数
+          expect(answerResults)
+            .to.be.an('array')
+            .to.have.lengthOf(answers.length)
 
-          // check data
-          expect(output.data).to.eql(answer.data)
+          for (let i = 0; i < answers.length; ++i) {
+            const output = answerResults[i] as AnswerResult
+            const answer = answers[i]
+
+            // check errors
+            if (answer.errors != null && answer.errors.length > 0) {
+              expect(output.errors)
+                .to.be.an('array')
+                .to.have.lengthOf(answer.errors.length)
+                .to.have.deep.members(answer.errors)
+            }
+
+            // check warnings
+            if (answer.warnings != null && answer.warnings.length > 0) {
+              expect(output.warnings)
+                .to.be.an('array')
+                .to.have.lengthOf(answer.warnings.length)
+                .to.have.deep.members(answer.warnings)
+            }
+
+            // check data
+            expect(output.data).to.eql(answer.data)
+          }
         })
       }
     })

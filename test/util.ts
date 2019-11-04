@@ -34,6 +34,11 @@ export interface UseCaseItem {
    */
   encoding: string
   /**
+   *
+   * 是否含有多个数据案例
+   */
+  multipleCase: boolean
+  /**
    * file path of DataSchema
    *
    * DataSchema 的文件路径
@@ -146,26 +151,47 @@ interface TestCaseMasterProps {
    */
   readonly schemaFileName?: string
   /**
-   * filename suffix of input data file
+   * filename suffix of single data input file
    *
-   * 输入文件的文件名后缀
+   * 单个数据的输入文件的文件名后缀
    * @default .input.json
    */
   readonly inputDataFilePathSuffix?: string
   /**
-   * filename suffix of output data file
+   * filename suffix of multiple data input file
    *
-   * 输出文件的文件名后缀
+   * 多个数据的输入文件的文件名后缀
+   * @default .inputs.json
+   */
+  readonly multipleInputDataFilePathSuffix?: string
+  /**
+   * filename suffix of single data output file
+   *
+   * 单个数据的输出文件的文件名后缀
    * @default .output.json
    */
   readonly outputDataFilePathSuffix?: string
   /**
-   * filename suffix of answer data file
+   * filename suffix of multiple data output file
    *
-   * 答案文件的文件名后缀
+   * 多个数据的输出文件的文件名后缀
+   * @default .outputs.json
+   */
+  readonly multipleOutputDataFilePathSuffix?: string
+  /**
+   * filename suffix of single data answer file
+   *
+   * 单个数据的答案文件的文件名后缀
    * @default .answer.json
    */
   readonly answerDataFilePathSuffix?: string
+  /**
+   * filename suffix of multiple data answer file
+   *
+   * 多个数据的答案文件的文件名后缀
+   * @default .answers.json
+   */
+  readonly multipleAnswerDataFilePathSuffix?: string
 }
 
 
@@ -174,24 +200,33 @@ export class TestCaseMaster {
   private readonly _schemaMap: Map<string, DSchema>   // <schemaFilePath, DSchema>
   private readonly encoding: string
   private readonly schemaFileName: string
-  private readonly inputFilePathSuffix: string
-  private readonly outputFilePathSuffix?: string
-  private readonly answerFilePathSuffix?: string
+  private readonly inputDataFilePathSuffix: string
+  private readonly multipleInputDataFilePathSuffix: string
+  private readonly outputDataFilePathSuffix: string
+  private readonly multipleOutputDataFilePathSuffix: string
+  private readonly answerDataFilePathSuffix: string
+  private readonly multipleAnswerDataFilePathSuffix: string
 
   public constructor ({
     encoding = 'utf-8',
     schemaFileName = '_schema.json',
-    inputDataFilePathSuffix: inputFilePathSuffix = '.input.json',
-    outputDataFilePathSuffix: outputFilePathSuffix = '.output.json',
-    answerDataFilePathSuffix: answerFilePathSuffix = '.answer.json',
+    inputDataFilePathSuffix = '.input.json',
+    multipleInputDataFilePathSuffix = '.inputs.json',
+    outputDataFilePathSuffix = '.output.json',
+    multipleOutputDataFilePathSuffix = '.outputs.json',
+    answerDataFilePathSuffix = '.answer.json',
+    multipleAnswerDataFilePathSuffix = '.answers.json',
   }: TestCaseMasterProps = {}) {
     this._cases = []
     this._schemaMap = new Map()
     this.encoding = encoding
     this.schemaFileName = schemaFileName
-    this.inputFilePathSuffix = inputFilePathSuffix
-    this.outputFilePathSuffix = outputFilePathSuffix
-    this.answerFilePathSuffix = answerFilePathSuffix
+    this.inputDataFilePathSuffix = inputDataFilePathSuffix
+    this.multipleInputDataFilePathSuffix = multipleInputDataFilePathSuffix
+    this.outputDataFilePathSuffix = outputDataFilePathSuffix
+    this.multipleOutputDataFilePathSuffix = multipleOutputDataFilePathSuffix
+    this.answerDataFilePathSuffix = answerDataFilePathSuffix
+    this.multipleAnswerDataFilePathSuffix = multipleAnswerDataFilePathSuffix
   }
 
   /**
@@ -212,7 +247,15 @@ export class TestCaseMaster {
    */
   public async scan(caseDirectory: string, recursive: boolean = true) {
     const cases: UseCaseItem[] = []
-    const { schemaFileName, inputFilePathSuffix, outputFilePathSuffix, answerFilePathSuffix } = this
+    const {
+      schemaFileName,
+      inputDataFilePathSuffix,
+      multipleInputDataFilePathSuffix,
+      outputDataFilePathSuffix,
+      multipleOutputDataFilePathSuffix,
+      answerDataFilePathSuffix,
+      multipleAnswerDataFilePathSuffix,
+    } = this
     const scan = async (dir: string, schemaFilePath?: string) => {
       const files = fs.readdirSync(dir)
 
@@ -236,21 +279,43 @@ export class TestCaseMaster {
         if (schemaFilePath == null) continue
 
         // 检查是否存在输入文件（输出文件和答案文件都是可选的）
-        if (filename.endsWith(inputFilePathSuffix)) {
-          const title = filename.slice(0, -inputFilePathSuffix.length)
-          const outputDataFilePath = path.join(dir, title + outputFilePathSuffix)
-          const answerDataFilePath = path.join(dir, title + answerFilePathSuffix)
+        if (filename.endsWith(inputDataFilePathSuffix)) {
+          const title = filename.slice(0, -inputDataFilePathSuffix.length)
+          const outputDataFilePath = path.join(dir, title + outputDataFilePathSuffix)
+          const answerDataFilePath = path.join(dir, title + answerDataFilePathSuffix)
 
           const item: UseCaseItem = {
             path: dir,
             title,
             encoding: this.encoding,
+            multipleCase: false,
             schemaFilePath,
             inputDataFilePath: filepath,
             outputDataFilePath,
             answerDataFilePath,
           }
           cases.push(item)
+          continue
+        }
+
+        // 检查是否存在输入文件（输出文件和答案文件都是可选的）
+        if (filename.endsWith(multipleInputDataFilePathSuffix)) {
+          const title = filename.slice(0, -multipleInputDataFilePathSuffix.length)
+          const outputDataFilePath = path.join(dir, title + multipleOutputDataFilePathSuffix)
+          const answerDataFilePath = path.join(dir, title + multipleAnswerDataFilePathSuffix)
+
+          const item: UseCaseItem = {
+            path: dir,
+            title,
+            encoding: this.encoding,
+            multipleCase: true,
+            schemaFilePath,
+            inputDataFilePath: filepath,
+            outputDataFilePath,
+            answerDataFilePath,
+          }
+          cases.push(item)
+          continue
         }
       }
     }
@@ -260,13 +325,13 @@ export class TestCaseMaster {
   }
 
   /**
-   * 通过 DataSchema 和 InputData 生成 AnswerResult
+   * 通过 DataSchema 和 InputData 生成 AnswerResult；若是多数据的输入，则生成 AnswerResult<T>[]
    * 若 DataSchema 存在错误，则返回错误消息
    *
    * @param item
    * @param needReason  AnswerResult 中是否需要添加错误原因
    */
-  public async consume<T = any>(item: UseCaseItem, needReason: boolean = true): Promise<AnswerResult<T> | string> {
+  public async consume<T = any>(item: UseCaseItem, needReason: boolean = true): Promise<AnswerResult<T> | AnswerResult<T>[] | string> {
     const { encoding, schemaFilePath, inputDataFilePath } = item
     let schema: DSchema | undefined = this._schemaMap.get(schemaFilePath)
     if (schema == null) {
@@ -287,38 +352,53 @@ export class TestCaseMaster {
       schema = parseResult.schema
     }
 
+    const handleInput = (rawData: any): AnswerResult<T> => {
+      const validationResult = validatorMaster.validate(schema!, rawData)
+      const comparator = (
+        x: { property: string, constraint: string },
+        y: { property: string, constraint: string },
+      ) => {
+        if (x.property === y.property) {
+          if (x.constraint === y.constraint) return 0
+          return x.constraint < y.constraint ? -1 : 1
+        }
+        return x.property < y.property ? -1 : 1
+      }
+
+      return {
+        data: validationResult.value,
+        errors: validationResult.errors
+          .map(({ property, constraint, reason }) => {
+            const result: WarnOrErrorItem<DataValidationError> = { property, constraint }
+            if (needReason) result.reason = reason
+            return result
+          })
+          .sort(comparator),
+        warnings: validationResult.warnings
+          .map(({ property, constraint, reason }) => {
+            const result: WarnOrErrorItem<DataValidationWarning> = { property, constraint }
+            if (needReason) result.reason = reason
+            return result
+          })
+          .sort(comparator)
+      }
+    }
+
     // validate data
     const inputDataContent: string = await fs.readFile(inputDataFilePath, encoding)
     const inputData: any = JSON.parse(inputDataContent)
-    const validationResult = validatorMaster.validate(schema!, inputData)
-    const comparator = (
-      x: { property: string, constraint: string },
-      y: { property: string, constraint: string },
-    ) => {
-      if (x.property === y.property) {
-        if (x.constraint === y.constraint) return 0
-        return x.constraint < y.constraint ? -1 : 1
-      }
-      return x.property < y.property ? -1 : 1
+
+    // single data input file
+    if (!item.multipleCase) {
+      return handleInput(inputData)
     }
 
-    return {
-      data: validationResult.value,
-      errors: validationResult.errors
-        .map(({ property, constraint, reason }) => {
-          const result: WarnOrErrorItem<DataValidationError> = { property, constraint }
-          if (needReason) result.reason = reason
-          return result
-        })
-        .sort(comparator),
-      warnings: validationResult.warnings
-        .map(({ property, constraint, reason }) => {
-          const result: WarnOrErrorItem<DataValidationWarning> = { property, constraint }
-          if (needReason) result.reason = reason
-          return result
-        })
-        .sort(comparator)
+    // multiple data input file
+    const results: AnswerResult<T>[] = []
+    for (const a of inputData) {
+      results.push(handleInput(a))
     }
+    return results
   }
 
   /**
