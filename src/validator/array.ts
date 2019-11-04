@@ -57,7 +57,7 @@ export class ArrayDataValidator implements DataValidator<T, V, DS> {
     // 检查数据项是否符合 items 的定义
     for (let i = 0; i < data.length; ++i) {
       const d = data[i]
-      const xValidateResult: DValidationResult = this.validatorMaster.validate(schema, d)
+      const xValidateResult: DValidationResult = this.validatorMaster.validate(schema.items, d)
       result.addHandleResult('items', xValidateResult)
     }
 
