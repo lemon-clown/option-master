@@ -1,0 +1,38 @@
+[
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "enum"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "enum"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "enum"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "enum"
+      }
+    ],
+    "warnings": []
+  }
+]

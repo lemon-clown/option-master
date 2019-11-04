@@ -1,0 +1,29 @@
+[
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "exclusiveMaximum"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "exclusiveMaximum"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "exclusiveMaximum"
+      }
+    ],
+    "warnings": []
+  }
+]
