@@ -1,0 +1,20 @@
+[
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "exclusiveMinimum"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "exclusiveMinimum"
+      }
+    ],
+    "warnings": []
+  }
+]
