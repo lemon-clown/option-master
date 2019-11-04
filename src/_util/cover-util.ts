@@ -58,6 +58,9 @@ export type CoverOperationFunc<T> = (defaultValue?: T, value?: any) => CoverOper
  export const coverNumber: CoverOperationFunc<number> = (defaultValue, value) => {
   const result: CoverOperationResult<number> = new CoverOperationResult()
   if (value == null) return result.setValue(defaultValue)
+  if (typeof value === 'boolean') {
+    return result.addError(`expected a number, but got boolean: ${ value }`)
+  }
 
   // 转为 number
   value = convertToNumber(value)
