@@ -15,7 +15,7 @@
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
-    "clean": "rimraf test/**/*.output.json",
+    "clean": "rimraf test/**/*.output.json test/**/*.outputs.json",
     "start": "tsc -b tsconfig.json --watch",
     "build": "rimraf lib/ && tsc -b tsconfig.json",
     "postbuild": "rimraf lib/package.json lib/test && mv lib/src/* lib && rimraf lib/src/ lib/**/*.tsbuildinfo",
