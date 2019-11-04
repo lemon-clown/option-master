@@ -15,6 +15,14 @@ export type STRING_V_TYPE = string
  */
 export interface RawStringDataSchema extends RawDataSchema<STRING_T_TYPE, STRING_V_TYPE> {
   /**
+   * 最小的长度，需大于等于 0
+   */
+  minLength?: number
+  /**
+   * 最长的长度，需大于 0
+   */
+  maxLength?: number
+  /**
    * 字符串的模式
    */
   pattern?: string
@@ -29,6 +37,14 @@ export interface RawStringDataSchema extends RawDataSchema<STRING_T_TYPE, STRING
  * 字符串类型的数据模式，解析 RawStringDataSchema 后得到的结果
  */
 export interface StringDataSchema extends DataSchema<STRING_T_TYPE, STRING_V_TYPE> {
+  /**
+   * 最小的长度，需大于等于 0
+   */
+  minLength?: number
+  /**
+   * 最长的长度，需大于 0
+   */
+  maxLength?: number
   /**
    * 字符串的模式
    */

@@ -1,6 +1,6 @@
 import { DataSchemaParser, DataSchemaParseResult } from './_base'
 import { STRING_V_TYPE as V, STRING_T_TYPE as T, RawStringDataSchema as RDS, StringDataSchema as DS } from '../schema/string'
-import { coverString, coverBoolean, coverArray, coverRegex } from '../_util/cover-util'
+import { coverString, coverBoolean, coverArray, coverRegex, coverNumber, coverInteger } from '../_util/cover-util'
 
 
 /**
@@ -30,6 +30,31 @@ export class StringDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     const defaultValue = result.parseProperty<V>('default', coverString)
     const pattern = result.parseProperty<RegExp>('pattern', coverRegex)
     const enumValue = result.parseProperty<string[]>('enum', coverArray<string>(coverString))
+    const minLength = result.parseProperty<number>('minLength', coverInteger)
+    const maxLength = result.parseProperty<number>('maxLength', coverInteger)
+
+    if (minLength.value != null) {
+      if (minLength.value < 0) {
+        result.addError({
+          constraint: 'minLength',
+          reason: 'minLength must be a non-negative integer',
+        })
+      }
+    }
+
+    if (maxLength.value != null) {
+      if (maxLength.value <= 0) {
+        result.addError({
+          constraint: 'maxLength',
+          reason: 'maxLength must be a positive integer',
+        })
+      } else if (minLength.value != null && minLength.value > maxLength.value) {
+        result.addError({
+          constraint: 'minLength',
+          reason: 'minLength must be less than or equal maxLength',
+        })
+      }
+    }
 
     // StringDataSchema
     const schema: DS = {
@@ -37,6 +62,8 @@ export class StringDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
       path,
       required: Boolean(required.value),
       default: defaultValue.value,
+      minLength: minLength.value,
+      maxLength: maxLength.value,
       pattern: pattern.value,
       enum: enumValue.value,
     }

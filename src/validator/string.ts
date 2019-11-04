@@ -44,6 +44,22 @@ export class StringDataValidator implements DataValidator<T, V, DS> {
 
     const value: string = stringValue.value!
 
+    // 检查 minLength
+    if (schema.minLength != null && schema.minLength > value.length) {
+      return result.addError({
+        constraint: 'minLength',
+        reason: `minLength expected is ${ schema.minLength }, but got value (${ stringify(value) }) with length (${ value.length })`
+      })
+    }
+
+    // 检查 maxLength
+    if (schema.maxLength != null && schema.maxLength < value.length) {
+      return result.addError({
+        constraint: 'maxLength',
+        reason: `maxLength expected is ${ schema.maxLength }, but got value (${ stringify(value) }) with length (${ value.length })`
+      })
+    }
+
     // 检查是否匹配指定的模式
     if (schema.pattern != null && !schema.pattern.test(value)) {
       return result.addError({
