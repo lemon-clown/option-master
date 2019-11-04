@@ -1,0 +1,38 @@
+[
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "type"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "type"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "required"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "property": "",
+        "constraint": "type"
+      }
+    ],
+    "warnings": []
+  }
+]
