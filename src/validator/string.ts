@@ -34,21 +34,14 @@ export class StringDataValidator implements DataValidator<T, V, DS> {
     if (data == null) return result
 
     // 检查是否为字符串
-    const stringValue = coverString(undefined, data)
-    if (stringValue.hasError) {
-      return result.addError({
-        constraint: 'type',
-        reason: `expected a ${ T }, but got ${ stringify(data) }.\n` + stringValue.errorSummary,
-      })
-    }
-
-    const value: string = stringValue.value!
+    const value = result.validateBaseType(coverString, data)!
+    if (result.hasError) return result
 
     // 检查 minLength
     if (schema.minLength != null && schema.minLength > value.length) {
       return result.addError({
         constraint: 'minLength',
-        reason: `minLength expected is ${ schema.minLength }, but got value (${ stringify(value) }) with length (${ value.length })`
+        reason: `minLength expected is ${ schema.minLength }, but got value (${ stringify(value) }) with length (${ value.length }).`
       })
     }
 
@@ -56,7 +49,7 @@ export class StringDataValidator implements DataValidator<T, V, DS> {
     if (schema.maxLength != null && schema.maxLength < value.length) {
       return result.addError({
         constraint: 'maxLength',
-        reason: `maxLength expected is ${ schema.maxLength }, but got value (${ stringify(value) }) with length (${ value.length })`
+        reason: `maxLength expected is ${ schema.maxLength }, but got value (${ stringify(value) }) with length (${ value.length }).`
       })
     }
 
@@ -64,7 +57,7 @@ export class StringDataValidator implements DataValidator<T, V, DS> {
     if (schema.pattern != null && !schema.pattern.test(value)) {
       return result.addError({
         constraint: 'pattern',
-        reason: `expected value pattern is ${ stringify(schema.pattern.source) }, but got ${ stringify(value) }.`
+        reason: `expected value pattern is (${ stringify(schema.pattern.source) }), but got (${ stringify(value) }).`
       })
     }
 
@@ -72,7 +65,7 @@ export class StringDataValidator implements DataValidator<T, V, DS> {
     if (schema.enum != null && schema.enum.length > 0 && schema.enum.indexOf(value) < 0) {
       return result.addError({
         constraint: 'enum',
-        reason: `expected value should in the ${ stringify(schema.enum) }, but got ${ stringify(value) }.`
+        reason: `expected value should in the ${ stringify(schema.enum) }, but got (${ stringify(value) }).`
       })
     }
 

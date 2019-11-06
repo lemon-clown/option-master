@@ -1,14 +1,13 @@
 import fs from 'fs-extra'
 import path from 'path'
 import {
-  DataValidationError,
-  DataValidationWarning,
   DSchema,
   DSParseResult,
   RDSchema,
   parserMaster,
   validatorMaster,
 } from '../src'
+import { DataHandleResultException } from '../src/_util/handle-result'
 
 
 /**
@@ -91,12 +90,26 @@ export interface UseCaseGroup {
 
 
 /**
- *
- * @member constraint   DataSchema 的约束项
- * @member property
- *
+ * 异常信息对象
  */
-type WarnOrErrorItem<T extends (DataValidationError | DataValidationWarning)> = PickPartial<Pick<T, 'constraint' | 'property' | 'reason'>, 'reason'>
+interface ExceptionItem {
+  /**
+   * 约束项
+   */
+  constraint: string
+  /**
+   * 解析/校验 异常的属性名
+   */
+  property?: string
+  /**
+   * 错误原因
+   */
+  reason?: string
+  /**
+   * 错误的详情
+   */
+  traces?: ExceptionItem[]
+}
 
 
 /**
@@ -113,20 +126,20 @@ export interface AnswerResult<T = any> {
   data: T
   /**
    * error messages generated during validation using the corresponding data schema.
-   * sorted by <property, constraint>
+   * sorted by <constraint, property>
    *
    * 使用对应数据模式进行校验时产生的错误信息
-   * 为了方便比较，将按照 <property, constraint> 进行排序
+   * 为了方便比较，将按照 <constraint, property> 进行排序
    */
-  errors: WarnOrErrorItem<DataValidationError>[]
+  errors: ExceptionItem[]
   /**
    * warning messages generated during validation using the corresponding data schema.
-   * sorted by <property, constraint>
+   * sorted by <constraint, property>
    *
    * 使用对应数据模式进行校验时产生的错误信息
-   * 为了方便比较，将按照 <property, constraint> 进行排序
+   * 为了方便比较，将按照 <constraint, property> 进行排序
    */
-  warnings: WarnOrErrorItem<DataValidationWarning>[]
+  warnings: ExceptionItem[]
 }
 
 
@@ -337,7 +350,7 @@ export class TestCaseMaster {
     if (schema == null) {
       const rawDataSchemaContent: string = await fs.readFile(schemaFilePath, encoding)
       const rawDataSchema: RDSchema = JSON.parse(rawDataSchemaContent)
-      const parseResult: DSParseResult = parserMaster.parse('', rawDataSchema)
+      const parseResult: DSParseResult = parserMaster.parse(rawDataSchema)
 
       // schema has error
       if (parseResult.hasError) {
@@ -349,37 +362,41 @@ export class TestCaseMaster {
         console.warn('[warning] bad schema:', parseResult.warningSummary)
       }
 
-      schema = parseResult.schema
+      schema = parseResult.value
     }
 
     const handleInput = (rawData: any): AnswerResult<T> => {
       const validationResult = validatorMaster.validate(schema!, rawData)
-      const comparator = (
-        x: { property: string, constraint: string },
-        y: { property: string, constraint: string },
-      ) => {
-        if (x.property === y.property) {
-          if (x.constraint === y.constraint) return 0
-          return x.constraint < y.constraint ? -1 : 1
+
+      // 比较器，constraint 优先，property 无值的优先
+      const comparator = (x: ExceptionItem, y: ExceptionItem) => {
+        if (x.constraint === y.constraint) {
+          if (x.property == null) {
+            if (y.property == null) return 0
+            return -1
+          }
+          if (y.property == null) return 1
+          return x.property < y.property ? -1 : 1
         }
-        return x.property < y.property ? -1 : 1
+        return x.constraint < y.constraint ? -1 : 1
+      }
+
+      // 映射器
+      const mapper = (x: DataHandleResultException): ExceptionItem => {
+        const result: ExceptionItem = { constraint: x.constraint }
+        if (needReason) result.reason = x.reason
+        if (x.property != null) result.property = x.property
+        if (x.traces != null) result.traces = x.traces.map(mapper)
+        return result
       }
 
       return {
         data: validationResult.value,
         errors: validationResult.errors
-          .map(({ property, constraint, reason }) => {
-            const result: WarnOrErrorItem<DataValidationError> = { property, constraint }
-            if (needReason) result.reason = reason
-            return result
-          })
+          .map(mapper)
           .sort(comparator),
         warnings: validationResult.warnings
-          .map(({ property, constraint, reason }) => {
-            const result: WarnOrErrorItem<DataValidationWarning> = { property, constraint }
-            if (needReason) result.reason = reason
-            return result
-          })
+          .map(mapper)
           .sort(comparator)
       }
     }

@@ -1,31 +1,7 @@
 import { DataSchema } from '../schema/_base'
 import { stringify, isObject } from '../_util/type-util'
-import { HandleResult } from '../_util/handle-result'
-
-
-/**
- * 校验时的错误信息对象
- */
-export interface DataValidationError {
-  /**
-   * 检查项（DataSchema 中的属性名）
-   */
-  constraint: string
-  /**
-   * 属性路径；考虑到数组和对象可能会导致实际属性值未属性树的非根节点，因此记录属性路径是必要的
-   */
-  property: string
-  /**
-   * 错误原因
-   */
-  reason: string
-}
-
-
-/**
- * 校验时的警告信息对象
- */
-export type DataValidationWarning = DataValidationError
+import { DataHandleResult } from '../_util/handle-result'
+import { CoverOperationFunc } from '../_util/cover-util'
 
 
 /**
@@ -35,92 +11,12 @@ export type DataValidationWarning = DataValidationError
  * @template V    typeof <X>DataSchema.V
  * @template DS   typeof <X>DataSchema
  */
-export class DataValidationResult<T extends string, V, DS extends DataSchema<T, V>>
-  extends HandleResult<DataValidationError, DataValidationWarning> {
-  private _value?: V
+export class DataValidationResult<T extends string, V, DS extends DataSchema<T, V>> extends DataHandleResult<V> {
   public readonly _schema: DS
 
   public constructor(schema: DS) {
     super()
     this._schema = schema
-  }
-
-  /**
-   * 通过验证后的值
-   * 若通过校验，此值应不为 undefined
-   */
-  public get value(): V | undefined {
-    return this._value
-  }
-
-  /**
-   * 错误信息汇总
-   */
-  public get errorSummary(): string {
-    return '[' + this._errors.map(error => `${ error.constraint }: ${ error.reason }`).join(',\n') + ']'
-  }
-
-  /**
-   * 追加校验错误信息对象
-   * @param errors
-   */
-  public addError (...errors: PickPartial<DataValidationError, 'property'>[]): this {
-    const property = this._schema.path
-    for (const error of errors) {
-      const e: DataValidationError = { property, ...error }
-      this._errors.push(e)
-    }
-    return this
-  }
-
-  /**
-   * 追加校验警告信息对象
-   * @param warnings
-   */
-  public addWarning (...warnings: PickPartial<DataValidationWarning, 'property'>[]): this {
-    const property = this._schema.path
-    for (const warning of warnings) {
-      const w: DataValidationWarning = { property, ...warning }
-      this._warnings.push(w)
-    }
-    return this
-  }
-
-  /**
-   * 警告消息汇总
-   */
-  public get warningSummary(): string {
-    return '[' + this._warnings.map(warning=> `${ warning.constraint }: ${ warning.reason }`).join(',\n') + ']'
-  }
-
-  /**
-   * 合并属性的校验结果
-   * @param constraint  校验错误的属性名（约束项）
-   * @param result      校验结果
-   */
-  public addHandleResult (constraint: string, result: HandleResult<any, any>): this {
-    if (result.hasError) {
-      this.addError({
-        constraint,
-        reason: result.errorSummary,
-      })
-    }
-    if (result.hasWarning) {
-      this.addError({
-        constraint,
-        reason: result.warningSummary,
-      })
-    }
-    return this
-  }
-
-  /**
-   * 设置值
-   * @param value
-   */
-  public setValue(value: V): this {
-    this._value = value
-    return this
   }
 
   /**
@@ -143,11 +39,31 @@ export class DataValidationResult<T extends string, V, DS extends DataSchema<T, 
     if (schema.required && data == null) {
       this.addError({
         constraint: 'required',
-        reason: `required, but got ${ stringify(data) }.`
+        reason: `required, but got (${ stringify(data) }).`
       })
     }
 
     return data
+  }
+
+
+  /**
+   * 校验给定的基本类型数据是否符合指定数据类型
+   *
+   * @param coverFunc     覆盖属性的函数
+   * @param data          待校验的数据
+   */
+  public validateBaseType (coverFunc: CoverOperationFunc<V>, data?: any): V | undefined {
+    const schema = this._schema
+    const result = coverFunc(schema.default, data)
+    let a = /^[aeiou]/.test(schema.type) ? 'an' : 'a'
+    if (result.hasError) {
+      this.addError({
+        constraint: 'type',
+        reason: `expected ${ a } ${ schema.type }, but got (${ stringify(data) }): ` + result.errorSummary,
+      })
+    }
+    return result.value
   }
 
   /**
@@ -159,7 +75,7 @@ export class DataValidationResult<T extends string, V, DS extends DataSchema<T, 
     if (!isObject(data)) {
       this.addError({
         constraint,
-        reason: `expected an object, but got ${ stringify(data) }`
+        reason: `expected an object, but got (${ stringify(data) }).`
       })
       return false
     }

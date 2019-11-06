@@ -26,17 +26,16 @@ export class ArrayDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
 
   /**
    * parse RawSchema to Schema
-   * @param path
    * @param rawSchema
    */
-  public parse (path: string, rawSchema: RDS): ArrayDataSchemaParserResult {
-    const result: ArrayDataSchemaParserResult = new DataSchemaParseResult(path, rawSchema)
+  public parse (rawSchema: RDS): ArrayDataSchemaParserResult {
+    const result: ArrayDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
 
     // required 的默认值为 false
-    const required = result.parseProperty<boolean>('required', coverBoolean, false)
+    const requiredResult = result.parseBaseTypeProperty<boolean>('required', coverBoolean, false)
 
     // unique 的默认值为 false
-    const unique = result.parseProperty<boolean>('unique', coverBoolean, false)
+    const uniqueResult = result.parseBaseTypeProperty<boolean>('unique', coverBoolean, false)
 
     // 检查 defaultValue 是否为数组
     let defaultValue = undefined
@@ -44,7 +43,7 @@ export class ArrayDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
       if (isArray(rawSchema.default)) {
         result.addError({
           constraint: 'default',
-          reason: `expected an array, but got ${ stringify(rawSchema.default) }`
+          reason: `expected an array, but got (${ stringify(rawSchema.default) }).`
         })
       } else {
         defaultValue = rawSchema.default
@@ -55,24 +54,23 @@ export class ArrayDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     if (rawSchema.items == null) {
       return result.addError({
         constraint: 'items',
-        reason: `'items' is required, but got ${ stringify(rawSchema.items) }.`
+        reason: `'items' is required, but got (${ stringify(rawSchema.items) }).`
       })
     }
 
     // 解析 items
-    const items = this.parserMaster.parse(path + '.$items', rawSchema.items)
-    result.addHandleResult('items', items)
+    const itemsResult = this.parserMaster.parse(rawSchema.items)
+    result.addHandleResult('items', itemsResult)
 
     // ArrayDataSchema
     const schema: DS = {
       type: this.type,
-      path,
-      required: Boolean(required.value),
+      required: Boolean(requiredResult.value),
       default: defaultValue,
-      items: items.schema!,
-      unique: Boolean(unique.value),
+      items: itemsResult.value!,
+      unique: Boolean(uniqueResult.value),
     }
 
-    return result.setSchema(schema)
+    return result.setValue(schema)
   }
 }

@@ -21,20 +21,19 @@ export class IntegerDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
 
   /**
    * parse RawSchema to Schema
-   * @param path
    * @param rawSchema
    */
-  public parse (path: string, rawSchema: RDS): IntegerDataSchemaParserResult {
-    const result: IntegerDataSchemaParserResult = new DataSchemaParseResult(path, rawSchema)
+  public parse (rawSchema: RDS): IntegerDataSchemaParserResult {
+    const result: IntegerDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
 
     // required 的默认值为 false
-    const required = result.parseProperty<boolean>('required', coverBoolean, false)
-    const defaultValue = result.parseProperty<V>('default', coverInteger)
-    const minimum = result.parseProperty<number>('minimum', coverInteger)
-    const maximum = result.parseProperty<number>('maximum', coverInteger)
-    const exclusiveMinimum = result.parseProperty<number>('exclusiveMinimum', coverInteger)
-    const exclusiveMaximum = result.parseProperty<number>('exclusiveMaximum', coverInteger)
-    const enumValue = result.parseProperty<number[]>('enum', coverArray<number>(coverInteger))
+    const requiredResult = result.parseBaseTypeProperty<boolean>('required', coverBoolean, false)
+    const defaultValueResult = result.parseBaseTypeProperty<V>('default', coverInteger)
+    const minimumResult = result.parseBaseTypeProperty<number>('minimum', coverInteger)
+    const maximumResult = result.parseBaseTypeProperty<number>('maximum', coverInteger)
+    const exclusiveMinimumResult = result.parseBaseTypeProperty<number>('exclusiveMinimum', coverInteger)
+    const exclusiveMaximumResult = result.parseBaseTypeProperty<number>('exclusiveMaximum', coverInteger)
+    const enumValueResult = result.parseBaseTypeProperty<number[]>('enum', coverArray<number>(coverInteger))
 
     const ceil = (x?: number) => x == null ? x : Math.ceil(x)
     const floor = (x?: number) => x == null ? x : Math.floor(x)
@@ -42,16 +41,15 @@ export class IntegerDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
     // IntegerDataSchema
     const schema: DS = {
       type: this.type,
-      path,
-      required: Boolean(required.value),
-      default: defaultValue.value,
-      minimum: ceil(minimum.value),
-      maximum: floor(maximum.value),
-      exclusiveMinimum: floor(exclusiveMinimum.value),
-      exclusiveMaximum: ceil(exclusiveMaximum.value),
-      enum: enumValue.value,
+      required: Boolean(requiredResult.value),
+      default: defaultValueResult.value,
+      minimum: ceil(minimumResult.value),
+      maximum: floor(maximumResult.value),
+      exclusiveMinimum: floor(exclusiveMinimumResult.value),
+      exclusiveMaximum: ceil(exclusiveMaximumResult.value),
+      enum: enumValueResult.value,
     }
 
-    return result.setSchema(schema)
+    return result.setValue(schema)
   }
 }

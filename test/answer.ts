@@ -14,7 +14,7 @@ const encoding = 'utf-8'
  */
 const ANSWER_MODE: boolean = coverBoolean(false, process.env.ANSWER_MODE).value!
 const needReason: boolean = coverBoolean(ANSWER_MODE ? false : true, process.env.NEED_REASON).value!
-const caseRootDir: string = path.resolve(coverString('test/cases', process.env.CASE_ROOT_DIR).value!)
+const caseRootDir: string = path.resolve(coverString('test/cases/base-schema/array', process.env.CASE_ROOT_DIR).value!)
 
 
 async function answer () {

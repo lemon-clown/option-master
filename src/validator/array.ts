@@ -39,7 +39,7 @@ export class ArrayDataValidator implements DataValidator<T, V, DS> {
     if (!isArray(data)) {
       return result.addError({
         constraint: 'type',
-        reason: `expected a ${ T }, but got ${ stringify(data) }.\n`,
+        reason: `expected an ${ T }, but got (${ stringify(data) }).`,
       })
     }
 
@@ -49,7 +49,7 @@ export class ArrayDataValidator implements DataValidator<T, V, DS> {
       if (valueSet.size !== data.length) {
         return result.addError({
           constraint: 'unique',
-          reason: `expected a unique array, but got ${ stringify(data) }`
+          reason: `expected a unique array, but got (${ stringify(data) }).`
         })
       }
     }
@@ -58,8 +58,11 @@ export class ArrayDataValidator implements DataValidator<T, V, DS> {
     for (let i = 0; i < data.length; ++i) {
       const d = data[i]
       const xValidateResult: DValidationResult = this.validatorMaster.validate(schema.items, d)
-      result.addHandleResult('items', xValidateResult)
+      result.addHandleResult('items', xValidateResult, '' + i)
     }
+
+    // 如果存在错误，则不能设置值
+    if (result.hasError) return result
 
     // 通过校验
     return result.setValue(data)

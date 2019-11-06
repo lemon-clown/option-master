@@ -27,23 +27,28 @@ export class CombineDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
 
   /**
    * parse RawSchema to Schema
-   * @param path
    * @param rawSchema
    */
-  public parse (path: string, rawSchema: RDS): CombineDataSchemaParserResult {
-    const result: CombineDataSchemaParserResult = new DataSchemaParseResult(path, rawSchema)
+  public parse (rawSchema: RDS): CombineDataSchemaParserResult {
+    const result: CombineDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
 
     // required 的默认值为 false
-    const required = result.parseProperty<boolean>('required', coverBoolean, false)
+    const requiredResult = result.parseBaseTypeProperty<boolean>('required', coverBoolean, false)
     const defaultValue = rawSchema.default
-    const strategyResult = result.parseProperty<CombineStrategy>('strategy', coverString as any, CombineStrategy.ALL)
-    let strategy = strategyResult.value
-    if (strategy !== CombineStrategy.ALL && strategy !== CombineStrategy.ANY && strategy !== CombineStrategy.ONE) {
-      result.addError({
-        constraint: 'strategy',
-        reason: `unknown strategy: ${ stringify(strategy) }`
-      })
-      strategy = CombineStrategy.ALL
+
+    // strategy 的默认值为 all
+    const strategyResult = result.parseBaseTypeProperty<CombineStrategy>('strategy', coverString as any, CombineStrategy.ALL)
+    switch (strategyResult.value) {
+      case CombineStrategy.ALL:
+      case CombineStrategy.ANY:
+      case CombineStrategy.ONE:
+        break
+      default:
+        result.addError({
+          constraint: 'strategy',
+          reason: `unknown strategy: ${ stringify(rawSchema.strategy) }`
+        })
+        strategyResult.setValue(CombineStrategy.ALL)
     }
 
     /**
@@ -55,15 +60,14 @@ export class CombineDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
     const parseSchemas = (constraint: 'allOf' | 'anyOf' | 'oneOf', rawSchemas?: RDSchema[]): DSchema[] | undefined => {
       if (rawSchemas == null || rawSchemas.length <= 0) return undefined
       const schemas: DSchema[] = []
-      const p: string = path + '.$' + constraint
       for (let i = 0; i < rawSchemas.length; ++i) {
         const itemRawSchema = rawSchemas[i]
-        const itemSchema = this.parserMaster.parse(p + i, itemRawSchema)
+        const itemSchema = this.parserMaster.parse(itemRawSchema)
         result.addHandleResult(constraint, itemSchema)
 
         // 存在错误则跳过
         if (itemSchema.hasError) continue
-        schemas.push(itemSchema.schema!)
+        schemas.push(itemSchema.value!)
       }
 
       if (schemas.length <= 0) return undefined
@@ -85,15 +89,14 @@ export class CombineDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
     // CombineDataSchema
     const schema: DS = {
       type: this.type,
-      path,
-      required: Boolean(required.value),
+      required: Boolean(requiredResult.value),
       default: defaultValue,
-      strategy,
+      strategy: strategyResult.value!,
       allOf,
       anyOf,
       oneOf,
     }
 
-    return result.setSchema(schema)
+    return result.setValue(schema)
   }
 }

@@ -1,7 +1,6 @@
 import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
 import { BOOLEAN_V_TYPE as V, BOOLEAN_T_TYPE as T, BooleanDataSchema as DS } from '../schema/boolean'
 import { coverBoolean } from '../_util/cover-util'
-import { stringify } from '../_util/type-util'
 
 
 /**
@@ -33,16 +32,10 @@ export class BooleanDataValidator implements DataValidator<T, V, DS> {
     // 若未设置值，则无需进一步校验
     if (data == null) return result
 
-    // 检查是否为布尔值
-    const booleanValue = coverBoolean(undefined, data)
-    if (booleanValue.hasError) {
-      return result.addError({
-        constraint: 'type',
-        reason: `expected a ${ T }, but got ${ stringify(data) }.\n` + booleanValue.errorSummary,
-      })
-    }
+    const value = result.validateBaseType(coverBoolean, data)
 
-    const value: boolean = booleanValue.value!
+    // 如果存在错误，则不能设置值
+    if (result.hasError) return result
 
     // 通过校验
     return result.setValue(value)

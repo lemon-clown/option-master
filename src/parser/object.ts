@@ -27,17 +27,16 @@ export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
 
   /**
    * parse RawSchema to Schema
-   * @param path
    * @param rawSchema
    */
-  public parse (path: string, rawSchema: RDS): ObjectDataSchemaParserResult {
-    const result: ObjectDataSchemaParserResult = new DataSchemaParseResult(path, rawSchema)
+  public parse (rawSchema: RDS): ObjectDataSchemaParserResult {
+    const result: ObjectDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
 
     // required 的默认值为 false
-    const required = result.parseProperty<boolean>('required', coverBoolean, false)
+    const requiredResult = result.parseBaseTypeProperty<boolean>('required', coverBoolean, false)
 
     // allowAdditionalProperties 的默认值为 false
-    const allowAdditionalProperties = result.parseProperty<boolean>('allowAdditionalProperties', coverBoolean, false)
+    const allowAdditionalPropertiesResult = result.parseBaseTypeProperty<boolean>('allowAdditionalProperties', coverBoolean, false)
 
     // 检查 defaultValue 是否为对象
     let defaultValue: ObjectDataSchema['default'] = undefined
@@ -53,15 +52,14 @@ export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
       if (result.ensureObject('properties')) {
         properties = {}
         for (const propertyName of Object.getOwnPropertyNames(rawSchema.properties)) {
-          const p: string = path + '.' + propertyName
-          const propertyValue = rawSchema.properties[propertyName]
-          const propertyParserResult = this.parserMaster.parse(p, propertyValue)
+          const propertyValueSchema = rawSchema.properties[propertyName]
+          const propertyParserResult = this.parserMaster.parse(propertyValueSchema)
           result.addHandleResult('properties', propertyParserResult)
 
           // 如果存在错误，则忽略此属性
           // 否则，添加属性对应的 DataSchema
           if (propertyParserResult.hasError) continue
-          properties[propertyName] = propertyParserResult.schema!
+          properties[propertyName] = propertyParserResult.value!
         }
       }
     }
@@ -69,19 +67,17 @@ export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     // 解析 propertyNames
     let propertyNames: ObjectDataSchema['propertyNames'] = undefined
     if (rawSchema.propertyNames != null) {
-      const p: string = path + '.$propertyNames'
       if (rawSchema.propertyNames.type !== STRING_T_TYPE) {
         result.addError({
-          property: p,
           constraint: 'propertyNames',
-          reason: `propertyNames must be a StringDataSchema, but got ${ stringify(rawSchema.propertyNames) }.`
+          reason: `propertyNames must be a StringDataSchema, but got (${ stringify(rawSchema.propertyNames) }).`
         })
       } else {
-        const propertyNamesParserResult = this.parserMaster.parse(p, rawSchema.propertyNames)
-        result.addHandleResult('propertyNames', result)
+        const propertyNamesParserResult = this.parserMaster.parse(rawSchema.propertyNames)
+        result.addHandleResult('propertyNames', propertyNamesParserResult)
         // 如果存在错误，则忽略此属性
         if (!result.hasError) {
-          propertyNames = propertyNamesParserResult.schema as StringDataSchema
+          propertyNames = propertyNamesParserResult.value as StringDataSchema
         }
       }
     }
@@ -96,7 +92,7 @@ export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
           if (!isString(propertyValue)) {
             result.addError({
               constraint: 'dependencies',
-              reason: `dependencies[${ propertyName }] expected a string value. but got ${ stringify(propertyValue) }`
+              reason: `dependencies[${ propertyName }] expected a string value. but got (${ stringify(propertyValue) }).`
             })
             continue
           }
@@ -108,15 +104,14 @@ export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     // ObjectDataSchema
     const schema: DS = {
       type: this.type,
-      path,
-      required: Boolean(required.value),
+      required: Boolean(requiredResult.value),
       default: defaultValue,
-      allowAdditionalProperties: Boolean(allowAdditionalProperties.value),
+      allowAdditionalProperties: Boolean(allowAdditionalPropertiesResult.value),
       properties,
       propertyNames,
       dependencies,
     }
 
-    return result.setSchema(schema)
+    return result.setValue(schema)
   }
 }

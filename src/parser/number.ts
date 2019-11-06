@@ -19,34 +19,32 @@ export class NumberDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
 
   /**
    * parse RawSchema to Schema
-   * @param path
    * @param rawSchema
    */
-  public parse (path: string, rawSchema: RDS): NumberDataSchemaParserResult {
-    const result: NumberDataSchemaParserResult = new DataSchemaParseResult(path, rawSchema)
+  public parse (rawSchema: RDS): NumberDataSchemaParserResult {
+    const result: NumberDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
 
     // required 的默认值为 false
-    const required = result.parseProperty<boolean>('required', coverBoolean, false)
-    const defaultValue = result.parseProperty<V>('default', coverNumber)
-    const minimum = result.parseProperty<number>('minimum', coverNumber)
-    const maximum = result.parseProperty<number>('maximum', coverNumber)
-    const exclusiveMinimum = result.parseProperty<number>('exclusiveMinimum', coverNumber)
-    const exclusiveMaximum = result.parseProperty<number>('exclusiveMaximum', coverNumber)
-    const enumValue = result.parseProperty<number[]>('enum', coverArray<number>(coverNumber))
+    const requiredResult = result.parseBaseTypeProperty<boolean>('required', coverBoolean, false)
+    const defaultValueResult = result.parseBaseTypeProperty<V>('default', coverNumber)
+    const minimumResult = result.parseBaseTypeProperty<number>('minimum', coverNumber)
+    const maximumResult = result.parseBaseTypeProperty<number>('maximum', coverNumber)
+    const exclusiveMinimumResult = result.parseBaseTypeProperty<number>('exclusiveMinimum', coverNumber)
+    const exclusiveMaximumResult = result.parseBaseTypeProperty<number>('exclusiveMaximum', coverNumber)
+    const enumValueResult = result.parseBaseTypeProperty<number[]>('enum', coverArray<number>(coverNumber))
 
     // NumberDataSchema
     const schema: DS = {
       type: this.type,
-      path,
-      required: Boolean(required.value),
-      default: defaultValue.value,
-      minimum: minimum.value,
-      maximum: maximum.value,
-      exclusiveMinimum: exclusiveMinimum.value,
-      exclusiveMaximum: exclusiveMaximum.value,
-      enum: enumValue.value,
+      required: Boolean(requiredResult.value),
+      default: defaultValueResult.value,
+      minimum: minimumResult.value,
+      maximum: maximumResult.value,
+      exclusiveMinimum: exclusiveMinimumResult.value,
+      exclusiveMaximum: exclusiveMaximumResult.value,
+      enum: enumValueResult.value,
     }
 
-    return result.setSchema(schema)
+    return result.setValue(schema)
   }
 }

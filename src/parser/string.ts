@@ -1,6 +1,6 @@
 import { DataSchemaParser, DataSchemaParseResult } from './_base'
 import { STRING_V_TYPE as V, STRING_T_TYPE as T, RawStringDataSchema as RDS, StringDataSchema as DS } from '../schema/string'
-import { coverString, coverBoolean, coverArray, coverRegex, coverNumber, coverInteger } from '../_util/cover-util'
+import { coverString, coverBoolean, coverArray, coverRegex, coverInteger } from '../_util/cover-util'
 
 
 /**
@@ -19,22 +19,21 @@ export class StringDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
 
   /**
    * parse RawSchema to Schema
-   * @param path
    * @param rawSchema
    */
-  public parse (path: string, rawSchema: RDS): StringDataSchemaParserResult {
-    const result: StringDataSchemaParserResult = new DataSchemaParseResult(path, rawSchema)
+  public parse (rawSchema: RDS): StringDataSchemaParserResult {
+    const result: StringDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
 
     // required 的默认值为 false
-    const required = result.parseProperty<boolean>('required', coverBoolean, false)
-    const defaultValue = result.parseProperty<V>('default', coverString)
-    const pattern = result.parseProperty<RegExp>('pattern', coverRegex)
-    const enumValue = result.parseProperty<string[]>('enum', coverArray<string>(coverString))
-    const minLength = result.parseProperty<number>('minLength', coverInteger)
-    const maxLength = result.parseProperty<number>('maxLength', coverInteger)
+    const requiredResult = result.parseBaseTypeProperty<boolean>('required', coverBoolean, false)
+    const defaultValueResult = result.parseBaseTypeProperty<V>('default', coverString)
+    const patternResult = result.parseBaseTypeProperty<RegExp>('pattern', coverRegex)
+    const enumValueResult = result.parseBaseTypeProperty<string[]>('enum', coverArray<string>(coverString))
+    const minLengthResult = result.parseBaseTypeProperty<number>('minLength', coverInteger)
+    const maxLengthResult = result.parseBaseTypeProperty<number>('maxLength', coverInteger)
 
-    if (minLength.value != null) {
-      if (minLength.value < 0) {
+    if (minLengthResult.value != null) {
+      if (minLengthResult.value < 0) {
         result.addError({
           constraint: 'minLength',
           reason: 'minLength must be a non-negative integer',
@@ -42,13 +41,13 @@ export class StringDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
       }
     }
 
-    if (maxLength.value != null) {
-      if (maxLength.value <= 0) {
+    if (maxLengthResult.value != null) {
+      if (maxLengthResult.value <= 0) {
         result.addError({
           constraint: 'maxLength',
           reason: 'maxLength must be a positive integer',
         })
-      } else if (minLength.value != null && minLength.value > maxLength.value) {
+      } else if (minLengthResult.value != null && minLengthResult.value > maxLengthResult.value) {
         result.addError({
           constraint: 'minLength',
           reason: 'minLength must be less than or equal maxLength',
@@ -59,15 +58,14 @@ export class StringDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     // StringDataSchema
     const schema: DS = {
       type: this.type,
-      path,
-      required: Boolean(required.value),
-      default: defaultValue.value,
-      minLength: minLength.value,
-      maxLength: maxLength.value,
-      pattern: pattern.value,
-      enum: enumValue.value,
+      required: Boolean(requiredResult.value),
+      default: defaultValueResult.value,
+      minLength: minLengthResult.value,
+      maxLength: maxLengthResult.value,
+      pattern: patternResult.value,
+      enum: enumValueResult.value,
     }
 
-    return result.setSchema(schema)
+    return result.setValue(schema)
   }
 }

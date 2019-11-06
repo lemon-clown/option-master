@@ -50,7 +50,7 @@ export class ObjectDataValidator implements DataValidator<T, V, DS> {
           if (!schema.allowAdditionalProperties) {
             result.addWarning({
               constraint: 'properties',
-              property: schema.path + '.' + propertyName,
+              property: propertyName,
               reason: `property(${ propertyName }) is not defined, ignore (allowAdditionalProperties is false).`
             })
             continue
@@ -68,7 +68,7 @@ export class ObjectDataValidator implements DataValidator<T, V, DS> {
 
         // 在 properties 中定义了的属性，使用指定的 DataSchema 进行检查
         const xValidateResult = this.validatorMaster.validate(schema.properties[propertyName], propertyValue)
-        result.addHandleResult('properties', xValidateResult)
+        result.addHandleResult('properties', xValidateResult, propertyName)
 
         // 若不符合，则终止解析
         if (xValidateResult.hasError) return result
@@ -88,7 +88,6 @@ export class ObjectDataValidator implements DataValidator<T, V, DS> {
             if (value[v] == null) {
               return result.addError({
                 constraint: 'dependencies',
-                property: schema.path + '.' + propertyName,
                 reason: `${ propertyName } depend on ${ stringify(propertyValue) }, but ${ v } is absent.`
               })
             }
