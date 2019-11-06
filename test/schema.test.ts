@@ -1,9 +1,14 @@
 import fs from 'fs-extra'
 import path from 'path'
 import { describe, it } from 'mocha'
-import { expect } from 'chai'
+import * as chai from 'chai'
+import chaiExclude from 'chai-exclude'
 import { TestCaseMaster, AnswerResult, UseCaseGroup } from './util'
 import { isString } from '../src'
+
+
+chai.use(chaiExclude)
+const { expect } = chai
 
 
 it('This is a required placeholder to allow before() to work', () => { })
@@ -52,7 +57,9 @@ before(async function test() {
               expect(output.errors)
                 .to.be.an('array')
                 .to.have.lengthOf(answer.errors.length)
-                .to.have.deep.members(answer.errors)
+              expect(output.errors)
+                .excludingEvery('reason')
+                .to.deep.equal(answer.errors)
             }
 
             // check warnings
@@ -60,11 +67,13 @@ before(async function test() {
               expect(output.warnings)
                 .to.be.an('array')
                 .to.have.lengthOf(answer.warnings.length)
-                .to.have.deep.members(answer.warnings)
+              expect(output.warnings)
+                .excludingEvery('reason')
+                .to.deep.equal(answer.warnings)
             }
 
             // check data
-            expect(output.data).to.eql(answer.data)
+            expect(output.data).to.deep.equal(answer.data)
           }
         })
       }
