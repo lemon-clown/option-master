@@ -2,8 +2,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "exclusiveMinimum"
+        "constraint": "exclusiveMinimum",
+        "reason": "exclusiveMinimum value expected is 19.8, but got (19.8)."
       }
     ],
     "warnings": []
@@ -11,8 +11,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "exclusiveMinimum"
+        "constraint": "exclusiveMinimum",
+        "reason": "exclusiveMinimum value expected is 19.8, but got (-19)."
       }
     ],
     "warnings": []

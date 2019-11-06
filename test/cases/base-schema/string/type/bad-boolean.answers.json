@@ -2,8 +2,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "type"
+        "constraint": "type",
+        "reason": "expected a string, but got (true): (true) is not a valid string"
       }
     ],
     "warnings": []
@@ -11,8 +11,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "type"
+        "constraint": "type",
+        "reason": "expected a string, but got (false): (false) is not a valid string"
       }
     ],
     "warnings": []

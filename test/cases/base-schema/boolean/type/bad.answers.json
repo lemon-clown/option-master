@@ -2,8 +2,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "type"
+        "constraint": "type",
+        "reason": "expected a boolean, but got (nothing): (nothing) is not a valid boolean type (or boolean string)"
       }
     ],
     "warnings": []
@@ -11,8 +11,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "type"
+        "constraint": "type",
+        "reason": "expected a boolean, but got (null): (null) is not a valid boolean type (or boolean string)"
       }
     ],
     "warnings": []
@@ -20,8 +20,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "required"
+        "constraint": "required",
+        "reason": "required, but got (null)."
       }
     ],
     "warnings": []
@@ -29,8 +29,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "type"
+        "constraint": "type",
+        "reason": "expected a boolean, but got (123): (123) is not a valid boolean type (or boolean string)"
       }
     ],
     "warnings": []

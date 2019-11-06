@@ -2,8 +2,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "type"
+        "constraint": "type",
+        "reason": "expected a string, but got (1.232): (1.232) is not a valid string"
       }
     ],
     "warnings": []
@@ -11,8 +11,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "type"
+        "constraint": "type",
+        "reason": "expected a string, but got (-23): (-23) is not a valid string"
       }
     ],
     "warnings": []
@@ -20,8 +20,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "type"
+        "constraint": "type",
+        "reason": "expected a string, but got (2): (2) is not a valid string"
       }
     ],
     "warnings": []

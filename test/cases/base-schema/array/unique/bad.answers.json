@@ -2,8 +2,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "unique"
+        "constraint": "unique",
+        "reason": "expected a unique array, but got ([1,2,3,3])."
       }
     ],
     "warnings": []
@@ -11,8 +11,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "unique"
+        "constraint": "unique",
+        "reason": "expected a unique array, but got ([2,2,1])."
       }
     ],
     "warnings": []

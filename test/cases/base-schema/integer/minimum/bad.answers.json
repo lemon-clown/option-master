@@ -2,8 +2,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "minimum"
+        "constraint": "minimum",
+        "reason": "minimum value expected is 20, but got (19)."
       }
     ],
     "warnings": []
@@ -11,8 +11,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "minimum"
+        "constraint": "minimum",
+        "reason": "minimum value expected is 20, but got (-23219)."
       }
     ],
     "warnings": []

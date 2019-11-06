@@ -2,8 +2,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "type"
+        "constraint": "type",
+        "reason": "expected a number, but got (d0x23): (NaN) is not a valid number (or number string)."
       }
     ],
     "warnings": []
@@ -11,8 +11,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "type"
+        "constraint": "type",
+        "reason": "expected a number, but got (0x23.ff): (NaN) is not a valid number (or number string)."
       }
     ],
     "warnings": []
@@ -20,8 +20,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "type"
+        "constraint": "type",
+        "reason": "expected a number, but got (true): expected a number, but got boolean (true)."
       }
     ],
     "warnings": []
@@ -29,8 +29,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "type"
+        "constraint": "type",
+        "reason": "expected a number, but got (false): expected a number, but got boolean (false)."
       }
     ],
     "warnings": []

@@ -2,8 +2,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "type"
+        "constraint": "type",
+        "reason": "expected an integer, but got (d0x23): (NaN) is not a valid number (or number string)"
       }
     ],
     "warnings": []
@@ -11,8 +11,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "type"
+        "constraint": "type",
+        "reason": "expected an integer, but got (0.2302): (0.2302) is not a valid integer (or integer string)"
       }
     ],
     "warnings": []
@@ -20,8 +20,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "type"
+        "constraint": "type",
+        "reason": "expected an integer, but got (233sfe): (NaN) is not a valid number (or number string)"
       }
     ],
     "warnings": []

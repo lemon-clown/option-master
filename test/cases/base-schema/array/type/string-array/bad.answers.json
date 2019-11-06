@@ -2,12 +2,26 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "items"
+        "constraint": "items",
+        "reason": "items#0: expected a string, but got (1): (1) is not a valid string",
+        "property": "0",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a string, but got (1): (1) is not a valid string"
+          }
+        ]
       },
       {
-        "property": "",
-        "constraint": "items"
+        "constraint": "items",
+        "reason": "items#2: expected a string, but got (2): (2) is not a valid string",
+        "property": "2",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a string, but got (2): (2) is not a valid string"
+          }
+        ]
       }
     ],
     "warnings": []
@@ -15,20 +29,48 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "items"
+        "constraint": "items",
+        "reason": "items#0: expected a string, but got (true): (true) is not a valid string",
+        "property": "0",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a string, but got (true): (true) is not a valid string"
+          }
+        ]
       },
       {
-        "property": "",
-        "constraint": "items"
+        "constraint": "items",
+        "reason": "items#1: expected a string, but got (2): (2) is not a valid string",
+        "property": "1",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a string, but got (2): (2) is not a valid string"
+          }
+        ]
       },
       {
-        "property": "",
-        "constraint": "items"
+        "constraint": "items",
+        "reason": "items#2: expected a string, but got (false): (false) is not a valid string",
+        "property": "2",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a string, but got (false): (false) is not a valid string"
+          }
+        ]
       },
       {
-        "property": "",
-        "constraint": "items"
+        "constraint": "items",
+        "reason": "items#3: expected a string, but got (1): (1) is not a valid string",
+        "property": "3",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a string, but got (1): (1) is not a valid string"
+          }
+        ]
       }
     ],
     "warnings": []
@@ -36,8 +78,15 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "items"
+        "constraint": "items",
+        "reason": "items#1: expected a string, but got (false): (false) is not a valid string",
+        "property": "1",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a string, but got (false): (false) is not a valid string"
+          }
+        ]
       }
     ],
     "warnings": []
@@ -45,8 +94,15 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "items"
+        "constraint": "items",
+        "reason": "items#1: expected a string, but got (false): (false) is not a valid string",
+        "property": "1",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a string, but got (false): (false) is not a valid string"
+          }
+        ]
       }
     ],
     "warnings": []
@@ -54,8 +110,15 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "items"
+        "constraint": "items",
+        "reason": "items#1: expected value pattern is (^\\d+-\\w+$), but got (xx).",
+        "property": "1",
+        "traces": [
+          {
+            "constraint": "pattern",
+            "reason": "expected value pattern is (^\\d+-\\w+$), but got (xx)."
+          }
+        ]
       }
     ],
     "warnings": []

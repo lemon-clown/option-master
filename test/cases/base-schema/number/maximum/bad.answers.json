@@ -2,8 +2,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "maximum"
+        "constraint": "maximum",
+        "reason": "maximum value expected is 20.1, but got (20.2)."
       }
     ],
     "warnings": []
@@ -11,8 +11,8 @@
   {
     "errors": [
       {
-        "property": "",
-        "constraint": "maximum"
+        "constraint": "maximum",
+        "reason": "maximum value expected is 20.1, but got (192323)."
       }
     ],
     "warnings": []
