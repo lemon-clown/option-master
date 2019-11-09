@@ -51,7 +51,7 @@ export class DataSchemaParserMaster {
       const result: DSParseResult = new DataSchemaParseResult(rawDataSchema)
       return result.addError({
         constraint: 'type',
-        reason: '`schema.type` must be a string.'
+        reason: `\`schema.type\` must be a string, but got (${stringify(rawDataSchema.type)}).`
       })
     }
 

@@ -55,12 +55,12 @@ export type CoverOperationFunc<T> = (defaultValue?: T, value?: any) => CoverOper
   }
 
   // 转为 number
-  value = convertToNumber(value)
-  if (Number.isNaN(value)) {
+  const v = convertToNumber(value)
+  if (Number.isNaN(v)) {
     return result.addError(`(${ stringify(value) }) is not a valid number (or number string).`)
   }
 
-  return result.setValue(value)
+  return result.setValue(v)
 }
 
 
@@ -75,17 +75,17 @@ export const coverInteger: CoverOperationFunc<number> = (defaultValue, value) =>
   if (value == null) return result
 
   // 转为 number
-  value = convertToNumber(value)
-  if (Number.isNaN(value)) {
+  const v = convertToNumber(value)
+  if (Number.isNaN(v)) {
     return result.addError(`(${ stringify(value) }) is not a valid number (or number string)`)
   }
 
   // 检查是否为整数
-  if (!Number.isInteger(value)) {
+  if (!Number.isInteger(v)) {
     result.addError(`(${ stringify(value) }) is not a valid integer (or integer string)`)
   }
 
-  return result.setValue(value)
+  return result.setValue(v)
 }
 
 
