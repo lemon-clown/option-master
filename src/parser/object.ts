@@ -2,8 +2,8 @@ import { DataSchemaParser, DataSchemaParseResult } from './_base'
 import { DataSchemaParserMaster } from './_master'
 import { OBJECT_V_TYPE as V, OBJECT_T_TYPE as T, RawObjectDataSchema as RDS, ObjectDataSchema as DS, ObjectDataSchema } from '../schema/object'
 import { StringDataSchema, STRING_T_TYPE } from '../schema/string'
-import { stringify, isString } from '../_util/type-util'
-import { coverBoolean } from '../_util/cover-util'
+import { stringify } from '../_util/type-util'
+import { coverBoolean, coverArray, coverString } from '../_util/cover-util'
 
 
 /**
@@ -89,10 +89,11 @@ export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
         dependencies = {}
         for (const propertyName of Object.getOwnPropertyNames(rawSchema.dependencies)) {
           const propertyValue = rawSchema.dependencies[propertyName]
-          if (!isString(propertyValue)) {
+          const xResult = coverArray(coverString)(propertyValue)
+          if (xResult.hasError) {
             result.addError({
               constraint: 'dependencies',
-              reason: `dependencies[${ propertyName }] expected a string value. but got (${ stringify(propertyValue) }).`
+              reason: xResult.errorSummary,
             })
             continue
           }

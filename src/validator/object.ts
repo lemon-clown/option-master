@@ -44,6 +44,20 @@ export class ObjectDataValidator implements DataValidator<T, V, DS> {
 
       // 检查是否满足 properties 中的定义
       if (schema.properties != null) {
+          // 在 properties 中定义了的属性
+        if (schema.properties.hasOwnProperty(propertyName)) {
+          // 使用指定的 DataSchema 进行检查
+          const xSchema = schema.properties[propertyName]
+          const xValidateResult = this.validatorMaster.validate(xSchema, propertyValue)
+          result.addHandleResult('properties', xValidateResult, propertyName)
+
+          // 若符合，则更新值
+          if (!xValidateResult.hasError) {
+            value[propertyName] = xValidateResult.value
+          }
+          continue
+        }
+
         // 未在 properties 中定义的属性
         if (schema.properties[propertyName] == null) {
           // 若不允许额外的属性，则直接忽略
@@ -51,44 +65,68 @@ export class ObjectDataValidator implements DataValidator<T, V, DS> {
             result.addWarning({
               constraint: 'properties',
               property: propertyName,
-              reason: `property(${ propertyName }) is not defined, ignore (allowAdditionalProperties is false).`
+              reason: `property(${ propertyName }) is not defined (allowAdditionalProperties is false), skipped.`
             })
             continue
           }
+        }
+      }
 
-          // 检查是否符合 propertyNames 的定义
-          if (schema.propertyNames != null) {
-            const xValidateResult = this.validatorMaster.validate(schema.propertyNames, propertyName)
-            result.addHandleResult('propertyNames', xValidateResult)
-
-            // 若不符合，则忽略
-            if (xValidateResult.hasError) continue
-          }
+      // 对额外属性做检查
+      if (schema.propertyNames != null) {
+        // 检查是否符合 propertyNames 的定义
+        const xSchema = schema.propertyNames
+        const xValidateResult = this.validatorMaster.validate(xSchema, propertyName)
+        if (xValidateResult.hasError) {
+          result.addWarning({
+            constraint: 'propertyNames',
+            property: propertyName,
+            reason: `property(${ propertyName }) is not matched propertyNamesSchema, skipped.`,
+            traces: [...xValidateResult.errors, ...xValidateResult.warnings],
+          })
+        } else {
+          result.addHandleResult('propertyNames', xValidateResult)
         }
 
-        // 在 properties 中定义了的属性，使用指定的 DataSchema 进行检查
-        const xValidateResult = this.validatorMaster.validate(schema.properties[propertyName], propertyValue)
+        // 若不符合，则忽略
+        if (xValidateResult.hasError) continue
+      }
+      // 属性名通过校验，直接更新值
+      value[propertyName] = propertyValue
+    }
+
+    // 检查 schema 中定义的值
+    if (schema.properties != null) {
+      for (const propertyName of Object.getOwnPropertyNames(schema.properties)) {
+        /**
+         * 如果已经定义了，则忽略；
+         * 不要使用 value.hasOwnProperty 判断，因为可能该属性的子判断结果存在异常，导致其值未设置
+         * 因此使用 data.hasOwnProperty 进行判断
+         */
+        if (data.hasOwnProperty(propertyName)) continue
+        const xSchema = schema.properties[propertyName]
+        const xValidateResult = this.validatorMaster.validate(xSchema, undefined)
         result.addHandleResult('properties', xValidateResult, propertyName)
 
-        // 若不符合，则终止解析
-        if (xValidateResult.hasError) return result
-
-        // 否则，添加到值中
-        value[propertyName] = propertyValue
+        // 若不存在 error 且值不为 undefined，则更新值
+        if (!xValidateResult.hasError && xValidateResult.value !== undefined) {
+          value[propertyName] = xValidateResult.value
+        }
       }
     }
 
     // 检查是否满足 dependencies
     if (schema.dependencies != null) {
       for (const propertyName of Object.getOwnPropertyNames(schema.dependencies)) {
-        const propertyValue = schema.dependencies[propertyName]
+        const dependencies = schema.dependencies[propertyName]
         // 如果某个属性出现了，那么其依赖的属性也必须出现
-        if (value[propertyName] != null) {
-          for (const v of propertyValue) {
-            if (value[v] == null) {
-              return result.addError({
+        if (value.hasOwnProperty(propertyName)) {
+          for (const dependencyName of dependencies) {
+            if (!value.hasOwnProperty(dependencyName)) {
+              result.addError({
                 constraint: 'dependencies',
-                reason: `${ propertyName } depend on ${ stringify(propertyValue) }, but ${ v } is absent.`
+                property: propertyName,
+                reason: `${ propertyName } depend on ${ stringify(dependencies) }, but "${ dependencyName }" is absent.`
               })
             }
           }
@@ -96,8 +134,9 @@ export class ObjectDataValidator implements DataValidator<T, V, DS> {
       }
     }
 
-    // 通过校验
-    return result.setValue(value)
+    // 若未产生错误，则通过校验，并设置 value
+    if (!result.hasError) result.setValue(value)
+    return result
   }
 }
 

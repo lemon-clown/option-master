@@ -34,11 +34,9 @@ export class BooleanDataValidator implements DataValidator<T, V, DS> {
 
     const value = result.validateBaseType(coverBoolean, data)
 
-    // 如果存在错误，则不能设置值
-    if (result.hasError) return result
-
-    // 通过校验
-    return result.setValue(value)
+    // 若未产生错误，则通过校验，并设置 value
+    if (!result.hasError) result.setValue(value)
+    return result
   }
 }
 
