@@ -3,7 +3,7 @@
     "errors": [
       {
         "constraint": "maxLength",
-        "reason": "maxLength expected is 12, but got value (1234cc ss dd ee ff gg dfs dfe) with length (29)."
+        "reason": "maxLength expected is 12, but got value (\"1234cc ss dd ee ff gg dfs dfe\") with length (29)."
       }
     ],
     "warnings": []
@@ -12,7 +12,7 @@
     "errors": [
       {
         "constraint": "maxLength",
-        "reason": "maxLength expected is 12, but got value (中文中文中文中文中文中文dd) with length (14)."
+        "reason": "maxLength expected is 12, but got value (\"中文中文中文中文中文中文dd\") with length (14)."
       }
     ],
     "warnings": []
@@ -21,7 +21,7 @@
     "errors": [
       {
         "constraint": "maxLength",
-        "reason": "maxLength expected is 12, but got value (fefFFsFF3223SSSSSSSSsssssssss) with length (29)."
+        "reason": "maxLength expected is 12, but got value (\"fefFFsFF3223SSSSSSSSsssssssss\") with length (29)."
       }
     ],
     "warnings": []

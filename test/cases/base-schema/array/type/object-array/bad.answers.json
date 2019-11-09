@@ -21,7 +21,7 @@
       },
       {
         "constraint": "items",
-        "reason": "items#2: [2.port: maximum value expected is 65535, but got (3000000).,\n2.host: expected value pattern is (^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$), but got (1270.0.0.1).]",
+        "reason": "items#2: [2.port: maximum value expected is 65535, but got (3000000).,\n2.host: expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"1270.0.0.1\").]",
         "property": "2",
         "traces": [
           {
@@ -37,12 +37,12 @@
           },
           {
             "constraint": "properties",
-            "reason": "properties#host: expected value pattern is (^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$), but got (1270.0.0.1).",
+            "reason": "properties#host: expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"1270.0.0.1\").",
             "property": "host",
             "traces": [
               {
                 "constraint": "pattern",
-                "reason": "expected value pattern is (^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$), but got (1270.0.0.1)."
+                "reason": "expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"1270.0.0.1\")."
               }
             ]
           }
@@ -55,17 +55,17 @@
     "errors": [
       {
         "constraint": "items",
-        "reason": "items#0.port: expected an integer, but got (2sfe): (2sfe) is not a valid number (or number string)",
+        "reason": "items#0.port: expected an integer, but got (\"2sfe\"): (\"2sfe\") is not a valid number (or number string)",
         "property": "0",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: expected an integer, but got (2sfe): (2sfe) is not a valid number (or number string)",
+            "reason": "properties#port: expected an integer, but got (\"2sfe\"): (\"2sfe\") is not a valid number (or number string)",
             "property": "port",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected an integer, but got (2sfe): (2sfe) is not a valid number (or number string)"
+                "reason": "expected an integer, but got (\"2sfe\"): (\"2sfe\") is not a valid number (or number string)"
               }
             ]
           }
@@ -103,7 +103,7 @@
             "traces": [
               {
                 "constraint": "pattern",
-                "reason": "expected value pattern is (^data-), but got (public)."
+                "reason": "expected value pattern is (\"^data-\"), but got (\"public\")."
               }
             ]
           }
@@ -115,17 +115,17 @@
     "errors": [
       {
         "constraint": "items",
-        "reason": "items#1: [1.host: expected value pattern is (^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$), but got (127.0).,\n1.port: required, but got (undefined).]",
+        "reason": "items#1: [1.host: expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"127.0\").,\n1.port: required, but got (undefined).]",
         "property": "1",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#host: expected value pattern is (^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$), but got (127.0).",
+            "reason": "properties#host: expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"127.0\").",
             "property": "host",
             "traces": [
               {
                 "constraint": "pattern",
-                "reason": "expected value pattern is (^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$), but got (127.0)."
+                "reason": "expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"127.0\")."
               }
             ]
           },
@@ -156,7 +156,7 @@
             "traces": [
               {
                 "constraint": "pattern",
-                "reason": "expected value pattern is (^data-), but got (url)."
+                "reason": "expected value pattern is (\"^data-\"), but got (\"url\")."
               }
             ]
           }
@@ -189,7 +189,7 @@
             "traces": [
               {
                 "constraint": "pattern",
-                "reason": "expected value pattern is (^data-), but got (public)."
+                "reason": "expected value pattern is (\"^data-\"), but got (\"public\")."
               }
             ]
           }
@@ -207,7 +207,7 @@
             "traces": [
               {
                 "constraint": "pattern",
-                "reason": "expected value pattern is (^data-), but got (url)."
+                "reason": "expected value pattern is (\"^data-\"), but got (\"url\")."
               }
             ]
           }

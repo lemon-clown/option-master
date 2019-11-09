@@ -58,6 +58,5 @@ export function convertToNumber(x: string | number): number {
  */
 export function stringify (x: any) {
   if (x == null) return '' + x
-  if (typeof x === 'object') return JSON.stringify(x)
-  return '' + x
+  return JSON.stringify(x)
 }

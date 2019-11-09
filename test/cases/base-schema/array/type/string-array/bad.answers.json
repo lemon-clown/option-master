@@ -111,12 +111,12 @@
     "errors": [
       {
         "constraint": "items",
-        "reason": "items#1: expected value pattern is (^\\d+-\\w+$), but got (xx).",
+        "reason": "items#1: expected value pattern is (\"^\\\\d+-\\\\w+$\"), but got (\"xx\").",
         "property": "1",
         "traces": [
           {
             "constraint": "pattern",
-            "reason": "expected value pattern is (^\\d+-\\w+$), but got (xx)."
+            "reason": "expected value pattern is (\"^\\\\d+-\\\\w+$\"), but got (\"xx\")."
           }
         ]
       }

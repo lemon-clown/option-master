@@ -3,7 +3,7 @@
     "errors": [
       {
         "constraint": "pattern",
-        "reason": "expected value pattern is (^[A-Z]{2,3}-[\\d]*$), but got (dC-23232)."
+        "reason": "expected value pattern is (\"^[A-Z]{2,3}-[\\\\d]*$\"), but got (\"dC-23232\")."
       }
     ],
     "warnings": []
@@ -12,7 +12,7 @@
     "errors": [
       {
         "constraint": "pattern",
-        "reason": "expected value pattern is (^[A-Z]{2,3}-[\\d]*$), but got (X2S-23423334344)."
+        "reason": "expected value pattern is (\"^[A-Z]{2,3}-[\\\\d]*$\"), but got (\"X2S-23423334344\")."
       }
     ],
     "warnings": []
@@ -21,7 +21,7 @@
     "errors": [
       {
         "constraint": "minLength",
-        "reason": "minLength expected is 7, but got value (DFS-2) with length (5)."
+        "reason": "minLength expected is 7, but got value (\"DFS-2\") with length (5)."
       }
     ],
     "warnings": []
@@ -30,7 +30,7 @@
     "errors": [
       {
         "constraint": "pattern",
-        "reason": "expected value pattern is (^[A-Z]{2,3}-[\\d]*$), but got (DF-2sE33w2)."
+        "reason": "expected value pattern is (\"^[A-Z]{2,3}-[\\\\d]*$\"), but got (\"DF-2sE33w2\")."
       }
     ],
     "warnings": []

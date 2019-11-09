@@ -12,7 +12,7 @@
         "traces": [
           {
             "constraint": "pattern",
-            "reason": "expected value pattern is (^xx-), but got (gender)."
+            "reason": "expected value pattern is (\"^xx-\"), but got (\"gender\")."
           }
         ]
       }
@@ -33,7 +33,7 @@
         "traces": [
           {
             "constraint": "pattern",
-            "reason": "expected value pattern is (^xx-), but got (sex)."
+            "reason": "expected value pattern is (\"^xx-\"), but got (\"sex\")."
           }
         ]
       }
