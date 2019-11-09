@@ -75,8 +75,8 @@ export class CombineDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
     }
 
     const allOf: DSchema[] | undefined = parseSchemas('allOf', rawSchema.allOf)
-    const anyOf: DSchema[] | undefined = parseSchemas('anyOf', rawSchema.allOf)
-    const oneOf: DSchema[] | undefined = parseSchemas('oneOf', rawSchema.allOf)
+    const anyOf: DSchema[] | undefined = parseSchemas('anyOf', rawSchema.anyOf)
+    const oneOf: DSchema[] | undefined = parseSchemas('oneOf', rawSchema.oneOf)
 
     // allOf, anyOf, oneOf 至少要设置一项有效值
     if ((allOf == null || allOf.length <= 0) && (anyOf == null || anyOf.length <= 0) && (oneOf == null || oneOf.length <= 0)) {

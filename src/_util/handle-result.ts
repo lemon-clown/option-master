@@ -228,16 +228,24 @@ export class DataHandleResult<T> extends HandleResult<T, DataHandleResultExcepti
    * @param constraint  约束信息
    * @param property    属性名称
    * @param result      校验结果
+   * @param errReason   错误原因
    */
-  public addHandleResult<V>(constraint: string, result: DataHandleResult<V>, property?: string): this {
+  public addHandleResult<V>(
+    constraint: string,
+    result: DataHandleResult<V>,
+    property?: string,
+    errReason: string = ''
+  ): this {
     if (result.hasError) {
       const e = {
         constraint,
         property,
-        reason: '',
+        reason: errReason,
         traces: result.errors,
       }
-      e.reason = this.getSummary([e])
+      if (e.reason.length <= 0) {
+        e.reason = this.getSummary([e])
+      }
       this.addError(e)
     }
     if (result.hasWarning) {
