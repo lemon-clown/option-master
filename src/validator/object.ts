@@ -36,7 +36,7 @@ export class ObjectDataValidator implements DataValidator<T, V, DS> {
     if (data == null) return result
 
     // 检查是否为对象
-    result.ensureObject('type', data)
+    if (!result.ensureObject('type', data)) return result
 
     const value: any = {}
     for (const propertyName of Object.getOwnPropertyNames(data)) {
