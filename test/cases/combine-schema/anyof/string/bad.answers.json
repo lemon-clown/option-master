@@ -1,0 +1,157 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "anyOf",
+        "reason": "not matched any of DataSchemas defined in `anyOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "[0]#: expected a string, but got (true): (true) is not a valid string",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got (true): (true) is not a valid string"
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "[1]#: expected a string, but got (true): (true) is not a valid string",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got (true): (true) is not a valid string"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "anyOf",
+        "reason": "not matched any of DataSchemas defined in `anyOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "[0]#: expected a string, but got ({}): ({}) is not a valid string",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got ({}): ({}) is not a valid string"
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "[1]#: expected a string, but got ({}): ({}) is not a valid string",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got ({}): ({}) is not a valid string"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "anyOf",
+        "reason": "not matched any of DataSchemas defined in `anyOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "[0]#: expected a string, but got ([]): ([]) is not a valid string",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got ([]): ([]) is not a valid string"
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "[1]#: expected a string, but got ([]): ([]) is not a valid string",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got ([]): ([]) is not a valid string"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "anyOf",
+        "reason": "not matched any of DataSchemas defined in `anyOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "[0]#: minLength expected is 5, but got value (\"2f3\") with length (3).",
+            "traces": [
+              {
+                "constraint": "minLength",
+                "reason": "minLength expected is 5, but got value (\"2f3\") with length (3)."
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "[1]#: expected value pattern is (\"^[\\\\d]+$\"), but got (\"2f3\").",
+            "traces": [
+              {
+                "constraint": "pattern",
+                "reason": "expected value pattern is (\"^[\\\\d]+$\"), but got (\"2f3\")."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "anyOf",
+        "reason": "not matched any of DataSchemas defined in `anyOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "[0]#: minLength expected is 5, but got value (\"a12d\") with length (4).",
+            "traces": [
+              {
+                "constraint": "minLength",
+                "reason": "minLength expected is 5, but got value (\"a12d\") with length (4)."
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "[1]#: expected value pattern is (\"^[\\\\d]+$\"), but got (\"a12d\").",
+            "traces": [
+              {
+                "constraint": "pattern",
+                "reason": "expected value pattern is (\"^[\\\\d]+$\"), but got (\"a12d\")."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  }
+]

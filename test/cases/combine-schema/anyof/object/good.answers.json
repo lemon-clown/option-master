@@ -1,0 +1,30 @@
+[
+  {
+    "data": {
+      "gender": "female"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": {
+      "gender": "male"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": {
+      "sex": "female"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": {
+      "gender": "male"
+    },
+    "errors": [],
+    "warnings": []
+  }
+]

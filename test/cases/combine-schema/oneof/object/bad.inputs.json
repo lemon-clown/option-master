@@ -1,0 +1,17 @@
+[
+  {
+
+  },
+  true,
+  {
+    "gender": "man"
+  },
+  {
+    "sex": "male",
+    "gender": "female"
+  },
+  {
+    "gender": "male",
+    "sex": "male"
+  }
+]

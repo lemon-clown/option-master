@@ -1,0 +1,204 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "anyOf",
+        "reason": "not matched any of DataSchemas defined in `anyOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "[0]#gender: required, but got (undefined).",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "properties#gender: required, but got (undefined).",
+                "property": "gender",
+                "traces": [
+                  {
+                    "constraint": "required",
+                    "reason": "required, but got (undefined)."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "[1]#sex: required, but got (undefined).",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "properties#sex: required, but got (undefined).",
+                "property": "sex",
+                "traces": [
+                  {
+                    "constraint": "required",
+                    "reason": "required, but got (undefined)."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "anyOf",
+        "reason": "not matched any of DataSchemas defined in `anyOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "[0]#: expected an object, but got (true).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an object, but got (true)."
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "[1]#: expected an object, but got (true).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an object, but got (true)."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "anyOf",
+        "reason": "not matched any of DataSchemas defined in `anyOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "[0]#gender: expected value should in the [\"male\",\"female\"], but got (\"man\").",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "properties#gender: expected value should in the [\"male\",\"female\"], but got (\"man\").",
+                "property": "gender",
+                "traces": [
+                  {
+                    "constraint": "enum",
+                    "reason": "expected value should in the [\"male\",\"female\"], but got (\"man\")."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "[1]#sex: required, but got (undefined).",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "properties#sex: required, but got (undefined).",
+                "property": "sex",
+                "traces": [
+                  {
+                    "constraint": "required",
+                    "reason": "required, but got (undefined)."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": [
+      {
+        "constraint": "anyOf",
+        "reason": "anyOf#gender: property(gender) is not defined (allowAdditionalProperties is false), skipped.",
+        "traces": [
+          {
+            "constraint": "[1]",
+            "reason": "[1]#gender: property(gender) is not defined (allowAdditionalProperties is false), skipped.",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "property(gender) is not defined (allowAdditionalProperties is false), skipped.",
+                "property": "gender"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "errors": [
+      {
+        "constraint": "anyOf",
+        "reason": "not matched any of DataSchemas defined in `anyOf`",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "[0]#gender: required, but got (undefined).",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "properties#gender: required, but got (undefined).",
+                "property": "gender",
+                "traces": [
+                  {
+                    "constraint": "required",
+                    "reason": "required, but got (undefined)."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "[1]#sex: expected value should in the [\"male\",\"female\"], but got (\"woman\").",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "properties#sex: expected value should in the [\"male\",\"female\"], but got (\"woman\").",
+                "property": "sex",
+                "traces": [
+                  {
+                    "constraint": "enum",
+                    "reason": "expected value should in the [\"male\",\"female\"], but got (\"woman\")."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": [
+      {
+        "constraint": "anyOf",
+        "reason": "anyOf#sex: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "[0]#sex: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+                "property": "sex"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

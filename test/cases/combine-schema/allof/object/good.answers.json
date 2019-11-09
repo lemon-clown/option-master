@@ -1,0 +1,27 @@
+[
+  {
+    "data": {
+      "name": "alice",
+      "age": 32
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": {
+      "name": "bob",
+      "age": 23
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": {
+      "name": "cat",
+      "age": 23,
+      "gender": "male"
+    },
+    "errors": [],
+    "warnings": []
+  }
+]

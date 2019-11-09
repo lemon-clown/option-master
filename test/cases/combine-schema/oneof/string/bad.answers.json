@@ -1,0 +1,135 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "oneOf",
+        "reason": "expected matched only one of the DataSchemas defined in `oneOf`, but matched 0 DataSchemas",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "[0]#: expected value pattern is (\"^[0a-z]+\"), but got (\"ABEOEURO\").",
+            "traces": [
+              {
+                "constraint": "pattern",
+                "reason": "expected value pattern is (\"^[0a-z]+\"), but got (\"ABEOEURO\")."
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "[1]#: expected an integer, but got (\"ABEOEURO\"): (\"ABEOEURO\") is not a valid number (or number string)",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an integer, but got (\"ABEOEURO\"): (\"ABEOEURO\") is not a valid number (or number string)"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "oneOf",
+        "reason": "expected matched only one of the DataSchemas defined in `oneOf`, but matched 0 DataSchemas",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "[0]#: expected a string, but got (0): (0) is not a valid string",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got (0): (0) is not a valid string"
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "[1]#: minimum value expected is 1, but got (0).",
+            "traces": [
+              {
+                "constraint": "minimum",
+                "reason": "minimum value expected is 1, but got (0)."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "oneOf",
+        "reason": "expected matched only one of the DataSchemas defined in `oneOf`, but matched 0 DataSchemas",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "[0]#: expected a string, but got (2.23): (2.23) is not a valid string",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got (2.23): (2.23) is not a valid string"
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "[1]#: expected an integer, but got (2.23): (2.23) is not a valid integer (or integer string)",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an integer, but got (2.23): (2.23) is not a valid integer (or integer string)"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "oneOf",
+        "reason": "expected matched only one of the DataSchemas defined in `oneOf`, but matched 0 DataSchemas",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "[0]#: expected a string, but got (true): (true) is not a valid string",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got (true): (true) is not a valid string"
+              }
+            ]
+          },
+          {
+            "constraint": "[1]",
+            "reason": "[1]#: expected an integer, but got (true): expected a integer, but got boolean (true).",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an integer, but got (true): expected a integer, but got boolean (true)."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "oneOf",
+        "reason": "expected matched only one of the DataSchemas defined in `oneOf`, but matched 2 DataSchemas"
+      }
+    ],
+    "warnings": []
+  }
+]
