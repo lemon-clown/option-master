@@ -1,0 +1,27 @@
+[
+  {
+    "serve": {
+      "host": "127.0.0.1.23",
+      "port": 333,
+      "ssl": {
+        "pub_key": "waw",
+        "sec_key": "wow"
+      }
+    }
+  },
+  {
+    "serve": {
+      "host": "127.0.0.1",
+      "port": -23,
+      "ssl": {
+        "pub_key": "waw"
+      }
+    }
+  },
+  {
+    "serve": {
+      "host": "127.0.0.1",
+      "port": 80
+    }
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "data": {
+      "name": "alice",
+      "xx-gender": "female"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": {
+      "name": "bob",
+      "age": 18,
+      "xx-sex": "male"
+    },
+    "errors": [],
+    "warnings": []
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "data": {
+      "name": "alice"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": {
+      "name": "bob",
+      "age": 18
+    },
+    "errors": [],
+    "warnings": []
+  }
+]
