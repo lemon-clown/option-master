@@ -3,7 +3,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a number, but got (d0x23): (NaN) is not a valid number (or number string)."
+        "reason": "expected a number, but got (d0x23): (d0x23) is not a valid number (or number string)."
       }
     ],
     "warnings": []
@@ -12,7 +12,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a number, but got (0x23.ff): (NaN) is not a valid number (or number string)."
+        "reason": "expected a number, but got (0x23.ff): (0x23.ff) is not a valid number (or number string)."
       }
     ],
     "warnings": []
