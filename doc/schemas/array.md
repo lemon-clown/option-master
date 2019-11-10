@@ -35,7 +35,7 @@
 # demo
 
   ```typescript
-  import { parserMaster, validatorMaster } from '../../src'
+  import { parserMaster, validatorMaster } from 'option-master'
 
   const rawSchema = {
     type: 'array',
