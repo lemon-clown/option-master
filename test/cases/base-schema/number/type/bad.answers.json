@@ -21,7 +21,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a number, but got (true): expected a number, but got boolean (true)."
+        "reason": "expected a number, but got (true): expected a number (or number string), but got (true)."
       }
     ],
     "warnings": []
@@ -30,7 +30,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a number, but got (false): expected a number, but got boolean (false)."
+        "reason": "expected a number, but got (false): expected a number (or number string), but got (false)."
       }
     ],
     "warnings": []

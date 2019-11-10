@@ -55,17 +55,17 @@
     "errors": [
       {
         "constraint": "items",
-        "reason": "items#0.port: expected an integer, but got (\"2sfe\"): (\"2sfe\") is not a valid number (or number string)",
+        "reason": "items#0.port: expected an integer, but got (\"2sfe\"): (\"2sfe\") is not a valid integer (or integer string)",
         "property": "0",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: expected an integer, but got (\"2sfe\"): (\"2sfe\") is not a valid number (or number string)",
+            "reason": "properties#port: expected an integer, but got (\"2sfe\"): (\"2sfe\") is not a valid integer (or integer string)",
             "property": "port",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected an integer, but got (\"2sfe\"): (\"2sfe\") is not a valid number (or number string)"
+                "reason": "expected an integer, but got (\"2sfe\"): (\"2sfe\") is not a valid integer (or integer string)"
               }
             ]
           }
