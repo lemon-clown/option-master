@@ -50,8 +50,8 @@ export type CoverOperationFunc<T> = (defaultValue?: T, value?: any) => CoverOper
  export const coverNumber: CoverOperationFunc<number> = (defaultValue, value) => {
   const result: CoverOperationResult<number> = new CoverOperationResult(defaultValue)
   if (value == null) return result
-  if (typeof value === 'boolean') {
-    return result.addError(`expected a number, but got boolean (${ value }).`)
+  if (typeof value !== 'string' && typeof value !== 'number') {
+    return result.addError(`expected a number (or number string), but got (${ stringify(value) }).`)
   }
 
   // 转为 number
@@ -73,14 +73,14 @@ export type CoverOperationFunc<T> = (defaultValue?: T, value?: any) => CoverOper
 export const coverInteger: CoverOperationFunc<number> = (defaultValue, value) => {
   const result: CoverOperationResult<number> = new CoverOperationResult(defaultValue)
   if (value == null) return result
-  if (typeof value === 'boolean') {
-    return result.addError(`expected a integer, but got boolean (${ value }).`)
+  if (typeof value !== 'string' && typeof value !== 'number') {
+    return result.addError(`expected a integer (or integer string), but got (${ stringify(value) }).`)
   }
 
   // 转为 number
   const v = convertToNumber(value)
   if (Number.isNaN(v)) {
-    return result.addError(`(${ stringify(value) }) is not a valid number (or number string)`)
+    return result.addError(`(${ stringify(value) }) is not a valid integer (or integer string)`)
   }
 
   // 检查是否为整数
