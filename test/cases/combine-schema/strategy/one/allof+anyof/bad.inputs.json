@@ -1,0 +1,15 @@
+[
+  {
+    "nickname": "alice"
+  },
+  {
+    "age": 22
+  },
+  true,
+  false,
+  {
+    "nickname": "alice",
+    "age": 22,
+    "name": "alice"
+  }
+]

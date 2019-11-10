@@ -1,0 +1,27 @@
+[
+  {
+    "data": {
+      "nickname": "alice",
+      "age": 22
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": "alice",
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": "x--23333333333333333333333333333333333333333333333333",
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": {
+      "name": "alice"
+    },
+    "errors": [],
+    "warnings": []
+  }
+]

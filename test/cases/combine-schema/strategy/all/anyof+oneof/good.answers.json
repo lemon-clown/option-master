@@ -1,0 +1,35 @@
+[
+  {
+    "data": {
+      "name": "alice",
+      "gender": "female"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": {
+      "name": "bob",
+      "email": "bob@bob.com",
+      "sex": "male"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": {
+      "email": "john@bob.com",
+      "gender": "male"
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": {
+      "name": "john",
+      "sex": "female"
+    },
+    "errors": [],
+    "warnings": []
+  }
+]

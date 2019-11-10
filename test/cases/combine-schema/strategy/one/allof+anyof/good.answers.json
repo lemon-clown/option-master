@@ -1,0 +1,22 @@
+[
+  {
+    "data": {
+      "nickname": "alice",
+      "age": 22
+    },
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": "alice",
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": {
+      "name": "alice"
+    },
+    "errors": [],
+    "warnings": []
+  }
+]
