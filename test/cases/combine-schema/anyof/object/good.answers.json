@@ -4,14 +4,50 @@
       "gender": "female"
     },
     "errors": [],
-    "warnings": []
+    "warnings": [
+      {
+        "constraint": "anyOf",
+        "reason": "anyOf#sex: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "[0]#sex: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+                "property": "sex"
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "data": {
       "gender": "male"
     },
     "errors": [],
-    "warnings": []
+    "warnings": [
+      {
+        "constraint": "anyOf",
+        "reason": "anyOf#sex: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+        "traces": [
+          {
+            "constraint": "[0]",
+            "reason": "[0]#sex: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+                "property": "sex"
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "data": {
