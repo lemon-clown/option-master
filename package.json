@@ -1,10 +1,13 @@
 {
-  "name": "@lemon-clown/option-util",
+  "name": "option-master",
   "version": "0.0.1",
-  "author": "lemon-clown <me.clown.lemon@gmail.com>",
+  "author": {
+    "name": "lemon-clown",
+    "url": "https://github.com/lemon-clown/"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lemon-clown/option-util"
+    "url": "https://github.com/lemon-clown/option-master"
   },
   "keywords": [
     "json-schema",
