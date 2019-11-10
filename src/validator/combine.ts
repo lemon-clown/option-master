@@ -91,9 +91,11 @@ export class CombineDataValidator implements DataValidator<T, V, DS> {
         if (xValidateResult.hasError) continue
 
         // 通过校验，不过仍要合并可能的 warning
+        const tmpResult = new DataValidationResult(schema)
+        tmpResult.addHandleResult(`[${ i }]`, xValidateResult)
         verifiedItems.push('anyOf')
         anyOfResult
-          .addHandleResult('anyOf', xValidateResult)
+          .addHandleResult('anyOf', tmpResult)
           .setValue(xValidateResult.value)
         break
       }
@@ -123,8 +125,10 @@ export class CombineDataValidator implements DataValidator<T, V, DS> {
         // 通过校验
         if (count === 0) {
           // 此有当 count == 0 时才有必要合并 warning，因为 count > 0 时是 oneOf 校验失败的情况
+          const tmpResult = new DataValidationResult(schema)
+          tmpResult.addHandleResult(`[${ i }]`, xValidateResult)
           oneOfResult
-            .addHandleResult('oneOf', xValidateResult)
+            .addHandleResult('oneOf', tmpResult)
             .setValue(xValidateResult.value)
         }
         ++count
@@ -179,9 +183,22 @@ export class CombineDataValidator implements DataValidator<T, V, DS> {
         result.addError({ constraint: 'strategy', reason })
       }
     } else {
-      if (allOfResult != null && !allOfResult.hasError) result.setValue(allOfResult.value)
-      if (anyOfResult != null && !anyOfResult.hasError) result.setValue(anyOfResult.value)
-      if (oneOfResult != null && !oneOfResult.hasError) result.setValue(oneOfResult.value)
+      // 若校验通过，则需合并所有通过的项的 warning
+      if (allOfResult != null && !allOfResult.hasError) {
+        result
+          .addWarning(...allOfResult.warnings)
+          .setValue(allOfResult.value)
+      }
+      if (anyOfResult != null && !anyOfResult.hasError) {
+        result
+          .addWarning(...anyOfResult.warnings)
+          .setValue(anyOfResult.value)
+      }
+      if (oneOfResult != null && !oneOfResult.hasError) {
+        result
+          .addWarning(...oneOfResult.warnings)
+          .setValue(oneOfResult.value)
+      }
     }
     return result
   }
