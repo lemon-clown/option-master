@@ -44,7 +44,7 @@ export class ObjectDataValidator implements DataValidator<T, V, DS> {
 
       // 检查是否满足 properties 中的定义
       if (schema.properties != null) {
-          // 在 properties 中定义了的属性
+        // 在 properties 中定义了的属性
         if (schema.properties.hasOwnProperty(propertyName)) {
           // 使用指定的 DataSchema 进行检查
           const xSchema = schema.properties[propertyName]
@@ -57,21 +57,18 @@ export class ObjectDataValidator implements DataValidator<T, V, DS> {
           }
           continue
         }
+      }
 
-        // 未在 properties 中定义的属性
-        if (schema.properties[propertyName] == null) {
-          // 若不允许额外的属性，则直接忽略
-          if (!schema.allowAdditionalProperties) {
-            if (!schema.silentIgnore) {
-              result.addWarning({
-                constraint: 'properties',
-                property: propertyName,
-                reason: `property(${ propertyName }) is not defined (allowAdditionalProperties is false), skipped.`
-              })
-            }
-            continue
-          }
+      // 若不允许额外的属性，则直接忽略
+      if (!schema.allowAdditionalProperties) {
+        if (!schema.silentIgnore) {
+          result.addWarning({
+            constraint: 'properties',
+            property: propertyName,
+            reason: `property(${ propertyName }) is not defined (allowAdditionalProperties is false), skipped.`
+          })
         }
+        continue
       }
 
       // 对额外属性做检查
