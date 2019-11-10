@@ -1,0 +1,203 @@
+# Introduction
+
+* DataValidator 的作用是校验给定的数据是否匹配指定的 DataSchema，并对数据做适当的处理
+
+---
+
+* The role of the DataValidator is to verify that the given data matches the specified DataSchema and handle the data appropriately.
+
+* Already implemented Data validators:
+
+  - boolean：[BooleanDataValidator](../src/validator/boolean.ts)
+  - integer：[IntegerDataValidator](../src/validator/integer.ts)
+  - number：[NumberDataValidator](../src/validator/number.ts)
+  - string：[StringDataValidator](../src/validator/string.ts)
+  - array：[ArrayDataValidator](../src/validator/array.ts)
+  - object：[ObjectDataValidator](../src/validator/object.ts)
+  - combine：[CombineDataValidator](../src/validator/combine.ts)
+
+## DataValidationResult
+
+  // todo: provide documents about DataValidationResult
+
+## ValidatorMaster
+  * ValidatorMaster 管理类型和校验器的映射关系，可以认为是校验器的注册中心，`option-master` 提供了默认的 ValidatorMaster 实例，可通过 `import { validatorMaster } from 'option-master'` 引入
+
+  * `option-master` 提供了一些基础的校验器，默认的 ValidatorMaster 实例已注册了这些基础校验器；因此如果要手动创建实例，建议注册包中提供的校验器
+
+  ---
+
+  * ValidatorMaster manages the mapping between types and validators and can be thought of as the registry of DataValidator. `option-master` provides the default ValidatorMaster instance, which can be used across `import { validatorMaster } from 'option-master'`
+
+  * `option-master` provides some basic validators, which are registered by the default ValidatorMaster instance; therefore, if you want to create an instance manually, it is recommended to register the validators provided from `option-master`. For example:
+
+    ```typescript
+    import { ARRAY_T_TYPE } from 'option-master/schema/array'
+    import { BOOLEAN_T_TYPE } from 'option-master/schema/boolean'
+    import { COMBINE_T_TYPE } from 'option-master/schema/combine'
+    import { INTEGER_T_TYPE } from 'option-master/schema/integer'
+    import { NUMBER_T_TYPE } from 'option-master/schema/number'
+    import { OBJECT_T_TYPE } from 'option-master/schema/object'
+    import { STRING_T_TYPE } from 'option-master/schema/string'
+    import { ArrayDataValidatorFactory } from 'option-master/validator/array'
+    import { BooleanDataValidatorFactory } from 'option-master/validator/boolean'
+    import { CombineDataValidatorFactory } from 'option-master/validator/combine'
+    import { IntegerDataValidatorFactory } from 'option-master/validator/integer'
+    import { NumberDataValidatorFactory } from 'option-master/validator/number'
+    import { ObjectDataValidatorFactory } from 'option-master/validator/object'
+    import { StringDataValidatorFactory } from 'option-master/validator/string'
+
+    // create ValidatorMaster manually
+    export const validatorMaster = new DataValidatorMaster()
+    validatorMaster.registerValidatorFactory(ARRAY_T_TYPE, new ArrayDataValidatorFactory(validatorMaster))
+    validatorMaster.registerValidatorFactory(BOOLEAN_T_TYPE, new BooleanDataValidatorFactory())
+    validatorMaster.registerValidatorFactory(COMBINE_T_TYPE, new CombineDataValidatorFactory(validatorMaster))
+    validatorMaster.registerValidatorFactory(INTEGER_T_TYPE, new IntegerDataValidatorFactory())
+    validatorMaster.registerValidatorFactory(NUMBER_T_TYPE, new NumberDataValidatorFactory())
+    validatorMaster.registerValidatorFactory(OBJECT_T_TYPE, new ObjectDataValidatorFactory(validatorMaster))
+    validatorMaster.registerValidatorFactory(STRING_T_TYPE, new StringDataValidatorFactory()
+    ```
+
+# Create new data schema validator
+  * create XDataSchema type:
+    ```typescript
+    import { DataSchema } from 'option-master'
+
+    const T = 'ipv4'
+    type T = typeof T
+    type V = string
+    type DS = DataSchema<T, V>
+    ```
+
+  * create XDataValidationResult type:
+    ```typescript
+    import { DataValidationResult } from 'option-master'
+    export type Ipv4DataValidationResult = DataValidationResult<T, V, DS>
+    ```
+
+  * create XDataValidator:
+    ```typescript
+    import { DataValidator } from 'option-master'
+    export class Ipv4DataValidator implements DataValidator<T, V, DS> {
+      private readonly schema: DS
+      private readonly pattern: RegExp
+      public readonly type: T = T
+
+      public constructor (schema: DS) {
+        this.schema = schema
+        this.pattern = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/
+      }
+
+      public validate (data: any): Ipv4DataValidationResult {
+        const { schema } = this
+        const result: Ipv4DataValidationResult = new DataValidationResult(schema)
+        data = result.baseValidate(data)
+
+        // if data is null/undefined, no further verification required
+        if (data == null) return result
+
+        // check if data is string
+        const value = result.validateBaseType(coverString, data)!
+        if (result.hasError) return result
+
+        // check pattern
+        if (!this.pattern.test(value)) {
+          return result.addError({
+            constraint: 'type',
+            reason: `value is not a valid ipv4 value. expected pattern is ${ this.pattern.source }`
+          })
+        }
+
+        // passed validation
+        return result.setValue(value)
+      }
+    }
+    ```
+
+  * create XDataValidatorFactory
+    ```typescript
+    export class Ipv4DataValidatorFactory implements DataValidatorFactory<T, V, DS> {
+      public readonly type: T = T
+      public create(schema: DS) {
+        return new Ipv4DataValidator(schema)
+      }
+    }
+    ```
+
+  * register to `validatorMaster` (you also can create new instance of ValidatorMaster as mentioned above):
+
+    ```typescript
+    import { validatorMaster } from 'option-master'
+    validatorMaster.registerValidatorFactory(T, new Ipv4DataValidatorFactory())
+    ```
+
+  * full code
+
+    ```typescript
+    import { DataSchema, DataValidationResult, DataValidator, DataValidatorFactory, validatorMaster } from 'option-master'
+
+    const T = 'ipv4'
+    type T = typeof T
+    type V = string
+    type DS = DataSchema<T, V>
+
+    /**
+     * result type of Ipv4DataSchemaValidator.validate
+     */
+    export type Ipv4DataValidationResult = DataValidationResult<T, V, DS>
+
+
+    /**
+    * ipv4 validator
+    */
+    export class Ipv4DataValidator implements DataValidator<T, V, DS> {
+      private readonly schema: DS
+      private readonly pattern: RegExp
+      public readonly type: T = T
+
+      public constructor (schema: DS) {
+        this.schema = schema
+        this.pattern = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/
+      }
+
+      public validate (data: any): Ipv4DataValidationResult {
+        const { schema } = this
+        const result: Ipv4DataValidationResult = new DataValidationResult(schema)
+        data = result.baseValidate(data)
+
+        // if data is null/undefined, no further verification required
+        if (data == null) return result
+
+        // check if data is string
+        const value = result.validateBaseType(coverString, data)!
+        if (result.hasError) return result
+
+        // check pattern
+        if (!this.pattern.test(value)) {
+          return result.addError({
+            constraint: 'type',
+            reason: `value is not a valid ipv4 value. expected pattern is ${ this.pattern.source }`
+          })
+        }
+
+        // passed validation
+        return result.setValue(value)
+      }
+    }
+
+    /**
+     * Ipv4 validator factory
+     */
+    export class Ipv4DataValidatorFactory implements DataValidatorFactory<T, V, DS> {
+      public readonly type: T = T
+
+      public create(schema: DS) {
+        return new Ipv4DataValidator(schema)
+      }
+    }
+
+    // register validator
+    validatorMaster.registerValidatorFactory(T, new Ipv4DataValidatorFactory())
+    ```
+
+  * see [demo/custom-type/ipv4.ts](../demo/custom-type/ipv4.ts)
