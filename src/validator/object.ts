@@ -62,11 +62,13 @@ export class ObjectDataValidator implements DataValidator<T, V, DS> {
         if (schema.properties[propertyName] == null) {
           // 若不允许额外的属性，则直接忽略
           if (!schema.allowAdditionalProperties) {
-            result.addWarning({
-              constraint: 'properties',
-              property: propertyName,
-              reason: `property(${ propertyName }) is not defined (allowAdditionalProperties is false), skipped.`
-            })
+            if (!schema.silentIgnore) {
+              result.addWarning({
+                constraint: 'properties',
+                property: propertyName,
+                reason: `property(${ propertyName }) is not defined (allowAdditionalProperties is false), skipped.`
+              })
+            }
             continue
           }
         }
@@ -78,12 +80,14 @@ export class ObjectDataValidator implements DataValidator<T, V, DS> {
         const xSchema = schema.propertyNames
         const xValidateResult = this.validatorMaster.validate(xSchema, propertyName)
         if (xValidateResult.hasError) {
-          result.addWarning({
-            constraint: 'propertyNames',
-            property: propertyName,
-            reason: `property(${ propertyName }) is not matched propertyNamesSchema, skipped.`,
-            traces: [...xValidateResult.errors, ...xValidateResult.warnings],
-          })
+          if (!schema.silentIgnore) {
+            result.addWarning({
+              constraint: 'propertyNames',
+              property: propertyName,
+              reason: `property(${ propertyName }) is not matched propertyNamesSchema, skipped.`,
+              traces: [...xValidateResult.errors, ...xValidateResult.warnings],
+            })
+          }
         } else {
           result.addHandleResult('propertyNames', xValidateResult)
         }

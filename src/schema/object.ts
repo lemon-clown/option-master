@@ -52,6 +52,11 @@ export interface RawObjectDataSchema extends RawDataSchema<OBJECT_T_TYPE, OBJECT
    * 参见 https://json-schema.org/understanding-json-schema/reference/object.html#dependencies
    */
   dependencies?: { [key: string]: string[] }
+  /**
+   * 若为 true，则当数据中出现不合法的额外属性时，不添加警告信息
+   * @default false
+   */
+  silentIgnore?: boolean
 }
 
 
@@ -64,6 +69,10 @@ export interface ObjectDataSchema extends DataSchema<OBJECT_T_TYPE, OBJECT_V_TYP
    * 则对象中只有 properties 中出现的属性会被采用，其它的属性将被忽略
    */
   allowAdditionalProperties: boolean
+  /**
+   * 若为 true，则当数据中出现不合法的额外属性时，不添加警告信息
+   */
+  silentIgnore: boolean
   /**
    * 对象属性的类型
    */

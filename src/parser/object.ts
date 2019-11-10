@@ -38,6 +38,9 @@ export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     // allowAdditionalProperties 的默认值为 false
     const allowAdditionalPropertiesResult = result.parseBaseTypeProperty<boolean>('allowAdditionalProperties', coverBoolean, false)
 
+    // silentIgnore 的默认值为 false
+    const silentIgnoreResult = result.parseBaseTypeProperty<boolean>('silentIgnore', coverBoolean, false)
+
     // 检查 defaultValue 是否为对象
     let defaultValue: ObjectDataSchema['default'] = undefined
     if (rawSchema.default != null) {
@@ -108,6 +111,7 @@ export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
       required: Boolean(requiredResult.value),
       default: defaultValue,
       allowAdditionalProperties: Boolean(allowAdditionalPropertiesResult.value),
+      silentIgnore: Boolean(silentIgnoreResult.value),
       properties,
       propertyNames,
       dependencies,
