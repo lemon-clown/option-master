@@ -1,3 +1,8 @@
+[![npm version](https://img.shields.io/npm/v/option-master.svg)](https://www.npmjs.com/package/option-master)
+[![npm download](https://img.shields.io/npm/dm/option-master.svg)](https://www.npmjs.com/package/option-master)
+[![npm license](https://img.shields.io/npm/l/option-master.svg)](https://www.npmjs.com/package/option-master)
+
+
 # Introduction
 * 这个库是为了解决配置文件的校验问题。在开发通用库或者工具时，在使用上通常存在以下几个步骤：
   - 开发者编写【定义配置文件数据模式】的配置文件 DS
