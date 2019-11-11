@@ -1,6 +1,7 @@
 import { DataSchemaParser, DataSchemaParseResult } from './_base'
-import { STRING_V_TYPE as V, STRING_T_TYPE as T, RawStringDataSchema as RDS, StringDataSchema as DS } from '../schema/string'
+import { STRING_V_TYPE as V, STRING_T_TYPE as T, RawStringDataSchema as RDS, StringDataSchema as DS, StringFormat, StringFormatSet } from '../schema/string'
 import { coverString, coverBoolean, coverArray, coverRegex, coverInteger } from '../_util/cover-util'
+import { isString } from '../_util/type-util'
 
 
 /**
@@ -31,6 +32,34 @@ export class StringDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
     const enumValueResult = result.parseBaseTypeProperty<string[]>('enum', coverArray<string>(coverString))
     const minLengthResult = result.parseBaseTypeProperty<number>('minLength', coverInteger)
     const maxLengthResult = result.parseBaseTypeProperty<number>('maxLength', coverInteger)
+
+    let format: StringFormat[] | undefined
+    if (rawSchema.format != null) {
+      // 先检查是否为字符串数组
+      const formats: string[] = isString(rawSchema.format) ? [rawSchema.format] : rawSchema.format
+      const formatResult = coverArray<string>(coverString)(formats)
+      if (formatResult.hasError) {
+        result.addError({
+          constraint: 'format',
+          reason: formatResult.errorSummary,
+        })
+      } else {
+        format = []
+        for (let f of formatResult.value!) {
+          f = f.toLowerCase()
+          if (!StringFormatSet.has(f)) {
+            result.addWarning({
+              constraint: 'format',
+              reason: `unsupported format: ${ f }`
+            })
+            continue
+          }
+          format.push(f as StringFormat)
+        }
+        if (format.length <= 0) format = undefined
+      }
+    }
+
 
     if (minLengthResult.value != null) {
       if (minLengthResult.value < 0) {
@@ -63,6 +92,7 @@ export class StringDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
       minLength: minLengthResult.value,
       maxLength: maxLengthResult.value,
       pattern: patternResult.value,
+      format,
       enum: enumValueResult.value,
     }
 

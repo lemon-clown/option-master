@@ -10,6 +10,28 @@ export type STRING_V_TYPE = string
 
 
 /**
+ * 特定类型的字符串格式
+ */
+export enum StringFormat {
+  /**
+   * ipv4 地址
+   */
+  IPV4 = 'ipv4',
+  /**
+   * ipv6 地址
+   */
+  IPV6 = 'ipv6',
+  /**
+   * 邮件格式
+   */
+  EMAIL = 'email',
+}
+
+// StringFormat 集合
+export const StringFormatSet = new Set<string>(Object.values(StringFormat))
+
+
+/**
  * 原生的字符串类型数据模式，用户在配置文件中指定的对象类型
  * 参见 https://json-schema.org/understanding-json-schema/reference/string.html
  */
@@ -26,6 +48,11 @@ export interface RawStringDataSchema extends RawDataSchema<STRING_T_TYPE, STRING
    * 字符串的模式
    */
   pattern?: string
+  /**
+   * 预置的模式，和其它属性按照“与”逻辑进行校验
+   * 若指定了多个，则表示“或”的关系，如 { format: ['ipv4', 'ipv6' ] } 表示既可为 ipv4 地址也可为 ipv6 地址
+   */
+  format?: StringFormat | StringFormat[]
   /**
    * 枚举项列表，数据项的值包括 default 均需为 enum 中的值
    */
@@ -49,6 +76,11 @@ export interface StringDataSchema extends DataSchema<STRING_T_TYPE, STRING_V_TYP
    * 字符串的模式
    */
   pattern?: RegExp
+  /**
+   * 预置的模式，和其它属性按照“与”逻辑进行校验
+   * 若指定了多个，则表示“或”的关系，如 { format: ['ipv4', 'ipv6' ] } 表示既可为 ipv4 地址也可为 ipv6 地址
+   */
+  format?: StringFormat[]
   /**
    * 枚举项列表，数据项的值包括 default 均需为 enum 中的值
    */
