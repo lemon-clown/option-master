@@ -1,0 +1,17 @@
+[
+  {
+    "data": "alice@gmail.com",
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": "alice-1@some.ww.com",
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": "alice-2@xx.yy.zz",
+    "errors": [],
+    "warnings": []
+  }
+]

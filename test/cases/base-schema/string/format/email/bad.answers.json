@@ -1,0 +1,38 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "format",
+        "reason": "not matched any of [\"email\"]"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "format",
+        "reason": "not matched any of [\"email\"]"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "format",
+        "reason": "not matched any of [\"email\"]"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "format",
+        "reason": "not matched any of [\"email\"]"
+      }
+    ],
+    "warnings": []
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "data": "127.0.0.1",
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": "192.168.1.1",
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": "192.168.1.255",
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": "255.255.255.255",
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": "0.0.0.0",
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "data": "1.1.1.01",
+    "errors": [],
+    "warnings": []
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "format",
+        "reason": "not matched any of [\"ipv4\",\"ipv6\"]"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "format",
+        "reason": "not matched any of [\"ipv4\",\"ipv6\"]"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "format",
+        "reason": "not matched any of [\"ipv4\",\"ipv6\"]"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "format",
+        "reason": "not matched any of [\"ipv4\",\"ipv6\"]"
+      }
+    ],
+    "warnings": []
+  }
+]
