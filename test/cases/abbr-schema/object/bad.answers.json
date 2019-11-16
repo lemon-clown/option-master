@@ -1,0 +1,66 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "properties",
+        "reason": "properties#host: expected a string, but got (80): (80) is not a valid string",
+        "property": "host",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a string, but got (80): (80) is not a valid string"
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "properties",
+        "reason": "properties#port: expected an integer, but got (2.3): (2.3) is not a valid integer (or integer string)",
+        "property": "port",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected an integer, but got (2.3): (2.3) is not a valid integer (or integer string)"
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "properties",
+        "reason": "properties#public: expected a boolean, but got (1): (1) is not a valid boolean type (or boolean string)",
+        "property": "public",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a boolean, but got (1): (1) is not a valid boolean type (or boolean string)"
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "properties",
+        "reason": "properties#public: expected a boolean, but got (\"/\"): (\"/\") is not a valid boolean type (or boolean string)",
+        "property": "public",
+        "traces": [
+          {
+            "constraint": "type",
+            "reason": "expected a boolean, but got (\"/\"): (\"/\") is not a valid boolean type (or boolean string)"
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  }
+]
