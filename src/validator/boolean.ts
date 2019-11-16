@@ -12,22 +12,17 @@ export type BooleanDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 布尔值类型的校验器
  */
-export class BooleanDataValidator implements DataValidator<T, V, DS> {
-  private readonly schema: DS
+export class BooleanDataValidator extends DataValidator<T, V, DS> {
   public readonly type: T = T
-
-  public constructor (schema: DS) {
-    this.schema = schema
-  }
 
   /**
    * 包装 BooleanDataSchema 的实例，使其具备校验给定数据是否为合法布尔值的能力
    * @param data
    */
   public validate (data: any): BooleanDataValidationResult {
-    const { schema } = this
-    const result: BooleanDataValidationResult = new DataValidationResult(schema)
-    data = result.baseValidate(data)
+    const result: BooleanDataValidationResult = super.validate(data)
+    data = result.value
+    result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
     if (data == null) return result
@@ -48,6 +43,6 @@ export class BooleanDataValidatorFactory extends DataValidatorFactory<T, V, DS> 
   public readonly type: T = T
 
   public create(schema: DS) {
-    return new BooleanDataValidator(schema)
+    return new BooleanDataValidator(schema, this.validatorMaster)
   }
 }

@@ -13,13 +13,8 @@ export type NumberDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 数字类型的校验器
  */
-export class NumberDataValidator implements DataValidator<T, V, DS> {
-  private readonly schema: DS
+export class NumberDataValidator extends DataValidator<T, V, DS> {
   public readonly type: T = T
-
-  public constructor (schema: DS) {
-    this.schema = schema
-  }
 
   /**
    * 包装 NumberDataSchema 的实例，使其具备校验给定数据是否为合法数字的能力
@@ -27,8 +22,9 @@ export class NumberDataValidator implements DataValidator<T, V, DS> {
    */
   public validate (data: any): NumberDataValidationResult {
     const { schema } = this
-    const result: NumberDataValidationResult = new DataValidationResult(schema)
-    data = result.baseValidate(data)
+    const result: NumberDataValidationResult = super.validate(data)
+    data = result.value
+    result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
     if (data == null) return result
@@ -91,6 +87,6 @@ export class NumberDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {
-    return new NumberDataValidator(schema)
+    return new NumberDataValidator(schema, this.validatorMaster)
   }
 }

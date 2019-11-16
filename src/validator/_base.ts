@@ -21,34 +21,6 @@ export class DataValidationResult<T extends string, V, DS extends DataSchema<T, 
   }
 
   /**
-   * 执行基本的数据校验，检查（并设置）是否要设置成默认值
-   *
-   * @template X  给定的值的数据类型
-   */
-  public baseValidate<X extends V = any>(data: X): X {
-    const schema = this._schema
-
-    // 检查是否为置任何值
-    if (data == null) {
-      // 检查 DataSchema 中是否有默认值
-      if (schema.default != null) {
-        data = schema.default as X
-      }
-    }
-
-    // 检查是否为必填项
-    if (schema.required && data == null) {
-      this.addError({
-        constraint: 'required',
-        reason: `required, but got (${ stringify(data) }).`
-      })
-    }
-
-    return data
-  }
-
-
-  /**
    * 校验给定的基本类型数据是否符合指定数据类型
    *
    * @param coverFunc     覆盖属性的函数
@@ -93,18 +65,58 @@ export class DataValidationResult<T extends string, V, DS extends DataSchema<T, 
  * @template V    typeof <X>DataSchema.V
  * @template DS   typeof <X>DataSchema
  */
-export interface DataValidator<T extends string, V, DS extends DataSchema<T, V>> {
+export abstract class DataValidator<T extends string, V, DS extends DataSchema<T, V>> {
   /**
    * 对应 DataSchema 中的 type，用作唯一表示
    * 表示该校验器接收何种类型的 DataSchema 实例
    */
-  readonly type: T
+  public abstract readonly type: T
+
+  /**
+   * 校验器使用的数据模式
+   */
+  protected readonly schema: DS
+
+  /**
+   * 校验器管理器；用于分发/递归校验
+   */
+  protected readonly validatorMaster: DataValidatorMaster
+
+  public constructor (schema: DS, validatorMaster: DataValidatorMaster) {
+    this.schema = schema
+    this.validatorMaster = validatorMaster
+  }
 
   /**
    * 校验数据 & 解析数据（通过 default 等值为计算数据的最终结果）
    * @param data
    */
-  validate (data: any): DataValidationResult<T, V, DS>
+  public validate (data: any): DataValidationResult<T, V, DS> {
+    const { schema } = this
+    const result: DataValidationResult<T, V, DS> = new DataValidationResult(schema)
+
+    // 检查是否为置任何值
+    if (data == null) {
+      // 检查 DataSchema 中是否有默认值
+      if (schema.default != null) {
+        data = schema.default as V
+      }
+    }
+
+    // 检查是否为必填项
+    if (schema.required && data == null) {
+      result.addError({
+        constraint: 'required',
+        reason: `required, but got (${ stringify(data) }).`
+      })
+    }
+
+    // 如果存在错误，则不能设置值
+    if (result.hasError) return result
+
+    // 通过校验
+    return result.setValue(data)
+  }
 }
 
 

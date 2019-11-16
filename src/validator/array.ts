@@ -1,7 +1,7 @@
 import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
 import { ARRAY_V_TYPE as V, ARRAY_T_TYPE as T, ArrayDataSchema as DS } from '../schema/array'
 import { isArray, stringify } from '../_util/type-util'
-import { DValidationResult, DataValidatorMaster } from './_master'
+import { DValidationResult } from './_master'
 
 
 /**
@@ -13,15 +13,8 @@ export type ArrayDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 数组类型的校验器
  */
-export class ArrayDataValidator implements DataValidator<T, V, DS> {
-  private readonly validatorMaster: DataValidatorMaster
-  private readonly schema: DS
+export class ArrayDataValidator extends DataValidator<T, V, DS> {
   public readonly type: T = T
-
-  public constructor(schema: DS, validatorMaster: DataValidatorMaster) {
-    this.schema = schema
-    this.validatorMaster = validatorMaster
-  }
 
   /**
    * 包装 ArrayDataSchema 的实例，使其具备校验给定数据是否为合法数组的能力
@@ -29,8 +22,9 @@ export class ArrayDataValidator implements DataValidator<T, V, DS> {
    */
   public validate(data: any): ArrayDataValidationResult {
     const { schema } = this
-    const result: ArrayDataValidationResult = new DataValidationResult(schema)
-    data = result.baseValidate(data)
+    const result: ArrayDataValidationResult = super.validate(data)
+    data = result.value
+    result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
     if (data == null) return result

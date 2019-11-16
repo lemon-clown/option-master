@@ -13,13 +13,8 @@ export type StringDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 字符串类型的校验器
  */
-export class StringDataValidator implements DataValidator<T, V, DS> {
-  private readonly schema: DS
+export class StringDataValidator extends DataValidator<T, V, DS> {
   public readonly type: T = T
-
-  public constructor (schema: DS) {
-    this.schema = schema
-  }
 
   /**
    * 包装 StringDataSchema 的实例，使其具备校验给定数据是否为合法字符串的能力
@@ -27,8 +22,9 @@ export class StringDataValidator implements DataValidator<T, V, DS> {
    */
   public validate (data: any): StringDataValidationResult {
     const { schema } = this
-    const result: StringDataValidationResult = new DataValidationResult(schema)
-    data = result.baseValidate(data)
+    const result: StringDataValidationResult = super.validate(data)
+    data = result.value
+    result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
     if (data == null) return result
@@ -119,6 +115,6 @@ export class StringDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {
-    return new StringDataValidator(schema)
+    return new StringDataValidator(schema, this.validatorMaster)
   }
 }
