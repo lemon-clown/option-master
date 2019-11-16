@@ -209,16 +209,10 @@ export class CombineDataValidator implements DataValidator<T, V, DS> {
  * 组合类型的校验器的工厂对象实例
  */
 
-export class CombineDataValidatorFactory implements DataValidatorFactory<T, V, DS> {
-  private readonly validatorMaster: DataValidatorMaster
+export class CombineDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
   public readonly type: T = T
-
 
   public create(schema: DS) {
     return new CombineDataValidator(schema, this.validatorMaster)
-  }
-
-  public constructor(validatorMaster: DataValidatorMaster) {
-    this.validatorMaster = validatorMaster
   }
 }

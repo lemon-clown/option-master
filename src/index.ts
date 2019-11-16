@@ -76,9 +76,9 @@ parserMaster.registerParser(STRING_T_TYPE, new StringDataSchemaParser(parserMast
  */
 export const validatorMaster = new DataValidatorMaster()
 validatorMaster.registerValidatorFactory(ARRAY_T_TYPE, new ArrayDataValidatorFactory(validatorMaster))
-validatorMaster.registerValidatorFactory(BOOLEAN_T_TYPE, new BooleanDataValidatorFactory())
+validatorMaster.registerValidatorFactory(BOOLEAN_T_TYPE, new BooleanDataValidatorFactory(validatorMaster))
 validatorMaster.registerValidatorFactory(COMBINE_T_TYPE, new CombineDataValidatorFactory(validatorMaster))
-validatorMaster.registerValidatorFactory(INTEGER_T_TYPE, new IntegerDataValidatorFactory())
-validatorMaster.registerValidatorFactory(NUMBER_T_TYPE, new NumberDataValidatorFactory())
+validatorMaster.registerValidatorFactory(INTEGER_T_TYPE, new IntegerDataValidatorFactory(validatorMaster))
+validatorMaster.registerValidatorFactory(NUMBER_T_TYPE, new NumberDataValidatorFactory(validatorMaster))
 validatorMaster.registerValidatorFactory(OBJECT_T_TYPE, new ObjectDataValidatorFactory(validatorMaster))
-validatorMaster.registerValidatorFactory(STRING_T_TYPE, new StringDataValidatorFactory())
+validatorMaster.registerValidatorFactory(STRING_T_TYPE, new StringDataValidatorFactory(validatorMaster))

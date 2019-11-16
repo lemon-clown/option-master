@@ -44,7 +44,7 @@ export class BooleanDataValidator implements DataValidator<T, V, DS> {
 /**
  * 布尔值类型的校验器的工厂对象
  */
-export class BooleanDataValidatorFactory implements DataValidatorFactory<T, V, DS> {
+export class BooleanDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {

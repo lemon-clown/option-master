@@ -2,6 +2,7 @@ import { DataSchema } from '../schema/_base'
 import { stringify, isObject } from '../_util/type-util'
 import { DataHandleResult } from '../_util/handle-result'
 import { CoverOperationFunc } from '../_util/cover-util'
+import { DataValidatorMaster } from './_master'
 
 
 /**
@@ -108,12 +109,24 @@ export interface DataValidator<T extends string, V, DS extends DataSchema<T, V>>
 
 
 /**
- * 创建 DataValidator 的工厂函数
+ * DataValidator 的工厂类
  */
-export interface DataValidatorFactory<T extends string, V, DS extends DataSchema<T, V>> {
+export abstract class DataValidatorFactory<T extends string, V, DS extends DataSchema<T, V>> {
+  /**
+   * 对应 DataSchema 中的 type，用作唯一标识
+   * 表示该校验器工厂类生产何种类型的校验器
+   */
+  public abstract readonly type: T
+
+  protected readonly validatorMaster: DataValidatorMaster
+
+  public constructor(validatorMaster: DataValidatorMaster) {
+    this.validatorMaster = validatorMaster
+  }
+
   /**
    * 通过 DataSchema 创建与之对应的数据校验器
    * @param schema
    */
-  create (schema: DS): DataValidator<T, V, DS>
+  public abstract create (schema: DS): DataValidator<T, V, DS>
 }

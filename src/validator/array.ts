@@ -77,15 +77,10 @@ export class ArrayDataValidator implements DataValidator<T, V, DS> {
 /**
  * 数组类型的校验器的工厂对象
  */
-export class ArrayDataValidatorFactory implements DataValidatorFactory<T, V, DS> {
-  private readonly validatorMaster: DataValidatorMaster
+export class ArrayDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {
     return new ArrayDataValidator(schema, this.validatorMaster)
-  }
-
-  public constructor(validatorMaster: DataValidatorMaster) {
-    this.validatorMaster = validatorMaster
   }
 }

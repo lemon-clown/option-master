@@ -87,7 +87,7 @@ export class NumberDataValidator implements DataValidator<T, V, DS> {
  * 数字类型的校验器的工厂对象实例
  */
 
-export class NumberDataValidatorFactory implements DataValidatorFactory<T, V, DS> {
+export class NumberDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {

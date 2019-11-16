@@ -115,7 +115,7 @@ export class StringDataValidator implements DataValidator<T, V, DS> {
 /**
  * 字符串类型的校验器的工厂对象实例
  */
-export class StringDataValidatorFactory implements DataValidatorFactory<T, V, DS> {
+export class StringDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {

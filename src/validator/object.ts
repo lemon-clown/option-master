@@ -145,15 +145,10 @@ export class ObjectDataValidator implements DataValidator<T, V, DS> {
 /**
  * 对象类型的校验器的工厂对象
  */
-export class ObjectDataValidatorFactory implements DataValidatorFactory<T, V, DS> {
-  private readonly validatorMaster: DataValidatorMaster
+export class ObjectDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {
     return new ObjectDataValidator(schema, this.validatorMaster)
-  }
-
-  public constructor(validatorMaster: DataValidatorMaster) {
-    this.validatorMaster = validatorMaster
   }
 }
