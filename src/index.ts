@@ -63,12 +63,12 @@ export * from './_util/type-util'
  */
 export const parserMaster = new DataSchemaParserMaster()
 parserMaster.registerParser(ARRAY_T_TYPE, new ArrayDataSchemaParser(parserMaster))
-parserMaster.registerParser(BOOLEAN_T_TYPE, new BooleanDataSchemaParser())
+parserMaster.registerParser(BOOLEAN_T_TYPE, new BooleanDataSchemaParser(parserMaster))
 parserMaster.registerParser(COMBINE_T_TYPE, new CombineDataSchemaParser(parserMaster))
-parserMaster.registerParser(INTEGER_T_TYPE, new IntegerDataSchemaParser())
-parserMaster.registerParser(NUMBER_T_TYPE, new NumberDataSchemaParser())
+parserMaster.registerParser(INTEGER_T_TYPE, new IntegerDataSchemaParser(parserMaster))
+parserMaster.registerParser(NUMBER_T_TYPE, new NumberDataSchemaParser(parserMaster))
 parserMaster.registerParser(OBJECT_T_TYPE, new ObjectDataSchemaParser(parserMaster))
-parserMaster.registerParser(STRING_T_TYPE, new StringDataSchemaParser())
+parserMaster.registerParser(STRING_T_TYPE, new StringDataSchemaParser(parserMaster))
 
 
 /**

@@ -4,23 +4,6 @@
 
 
 # Introduction
-* 这个库是为了解决配置文件的校验问题。在开发通用库或者工具时，在使用上通常存在以下几个步骤：
-  - 开发者编写【定义配置文件数据模式】的配置文件 DS
-  - 使用者编写配置文件 C
-  - 开发者的程序中通过 DS 来校验 C 的合法性，并做规范化处理得到 D，使用 D 作为程序的当前配置
-  - 若校验 C 的过程中存在错误，则必须返回完善的错误信息（实际上初始化时会对 DS 进行一次校验，因此还有针对 DS 校验的错误信息对象）
-
-* 因此有四种类型：
-  - DataSchema: 定义配置文件的数据模式，类似 JSON-SCHEMA，后续的目标是基本支持 JSON-SCHEMA 中有的属性
-  - DataSchemaParser: 将开发者定义的配置文件的数据模式解析成 DataSchema
-  - DataValidator: 通过 DataSchema 对给定数据进行校验，判断其是否符合 DataSchema 中的定义；并做适当的规范化处理
-  - HandleResult: 解析/校验的结果，包含三个属性：
-    - value: 最终得到的结果，仅当解析/校验过程中未出现错误时才会设置值；在校验过程中可能会根据需要格式化给定的数据，如：当给定的数据中某个属性缺失时，按照 DataSchema 中的定义设置对应的默认值
-    - errors: 解析过程中产生的错误（文档待补充，可通过查看 [DataHandleResult 源码][DataHandleResult] 来辅助理解）
-    - warnings: 解析过程中产生的警告信息（文档待补充，可通过查看 [DataHandleResult 源码][DataHandleResult] 来辅助理解）
-
----
-
 * This package is to solve the verification problem of the configuration file. When developing a generic library or tool, there are usually the following steps in its use:
   - Developer writes the configuration file (let's call it DS) for "Defining Profile Data Mode"
   - User writes a configuration file (let's call it C)
@@ -35,6 +18,23 @@
     - value: The final result, the value will be set only when no error occurs during the parsing/verification process; the given data may be formatted as needed during the verification process, such as: when an attribute in a given data is missing, set the corresponding default value as defined in DataSchema
     - errors: errors generated during parsing (documents to be supplemented, can be understood by looking at [source code of DataHandleResult][DataHandleResult])
     - warnings: warning messages generated during parsing (documents to be supplemented, can be understood by looking at [source code of DataHandleResult][DataHandleResult])
+
+---
+
+* 这个库是为了解决配置文件的校验问题。在开发通用库或者工具时，在使用上通常存在以下几个步骤：
+  - 开发者编写【定义配置文件数据模式】的配置文件 DS
+  - 使用者编写配置文件 C
+  - 开发者的程序中通过 DS 来校验 C 的合法性，并做规范化处理得到 D，使用 D 作为程序的当前配置
+  - 若校验 C 的过程中存在错误，则必须返回完善的错误信息（实际上初始化时会对 DS 进行一次校验，因此还有针对 DS 校验的错误信息对象）
+
+* 因此有四种类型：
+  - DataSchema: 定义配置文件的数据模式，类似 JSON-SCHEMA，后续的目标是基本支持 JSON-SCHEMA 中有的属性
+  - DataSchemaParser: 将开发者定义的配置文件的数据模式解析成 DataSchema
+  - DataValidator: 通过 DataSchema 对给定数据进行校验，判断其是否符合 DataSchema 中的定义；并做适当的规范化处理
+  - HandleResult: 解析/校验的结果，包含三个属性：
+    - value: 最终得到的结果，仅当解析/校验过程中未出现错误时才会设置值；在校验过程中可能会根据需要格式化给定的数据，如：当给定的数据中某个属性缺失时，按照 DataSchema 中的定义设置对应的默认值
+    - errors: 解析过程中产生的错误（文档待补充，可通过查看 [DataHandleResult 源码][DataHandleResult] 来辅助理解）
+    - warnings: 解析过程中产生的警告信息（文档待补充，可通过查看 [DataHandleResult 源码][DataHandleResult] 来辅助理解）
 
 # usage
 
@@ -98,10 +98,7 @@ const rawSchema = {
       pattern: '^\\w{3,20}$',
       required: true,
     },
-    age: {
-      type: 'integer',
-      minimum: 1,
-    }
+    age: 'integer'
   },
   dependencies: {
     email: ['age', 'gender']

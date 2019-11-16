@@ -1,7 +1,8 @@
 import { RawDataSchema, DataSchema } from '../schema/_base'
-import { isObject, stringify } from '../_util/type-util'
-import { CoverOperationFunc, CoverOperationResult } from '../_util/cover-util'
+import { isObject, stringify, isString } from '../_util/type-util'
+import { CoverOperationFunc, CoverOperationResult, coverBoolean } from '../_util/cover-util'
 import { DataHandleResult } from '../_util/handle-result'
+import { DataSchemaParserMaster } from './_master'
 
 
 /**
@@ -79,7 +80,7 @@ export class DataSchemaParseResult<
  * @template DS   typeof <X>DataSchema
  * @template RDS  typeof <X>RawDataSchema
  */
-export interface DataSchemaParser<
+export abstract class DataSchemaParser<
   T extends string,
   V,
   RDS extends RawDataSchema<T, V>,
@@ -89,11 +90,29 @@ export interface DataSchemaParser<
    * 对应 RawDataSchema 中的 type，用作唯一标识
    * 表示该解析器接收何种类型的 RawDataSchema
    */
-  readonly type: T
+  public abstract readonly type: T
+
+  protected readonly parserMaster: DataSchemaParserMaster
+
+  public constructor (parserMaster: DataSchemaParserMaster) {
+    this.parserMaster = parserMaster
+  }
 
   /**
    * parse RawSchema to Schema
    * @param rawSchema   待解析的 RawDataSchema
    */
-  parse (rawSchema: RawDataSchema<T, V>): DataSchemaParseResult<T, V, RDS, DS>
+  public parse (rawSchema: RawDataSchema<T, V>): DataSchemaParseResult<T, V, RDS, DS> {
+    rawSchema = this.parserMaster.normalizeRawSchema(rawSchema) as RawDataSchema<T, V>
+    const result: DataSchemaParseResult<T, V, RDS, DS> = (new DataSchemaParseResult(rawSchema)) as any
+
+    // required 的默认值为 false
+    const requiredResult = result.parseBaseTypeProperty<boolean>('required', coverBoolean, false)
+
+    const schema: DS = {
+      type: rawSchema.type,
+      required: Boolean(requiredResult.value),
+    } as any
+    return result.setValue(schema)
+  }
 }

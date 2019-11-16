@@ -47,6 +47,7 @@ export class DataSchemaParserMaster {
    * @param rawSchema   待解析的 RawDataSchema
    */
   public parse(rawDataSchema: RDS): DSParseResult {
+    rawDataSchema = this.normalizeRawSchema(rawDataSchema)
     if (rawDataSchema == null || !isString(rawDataSchema.type)) {
       const result: DSParseResult = new DataSchemaParseResult(rawDataSchema)
       return result.addError({
@@ -65,5 +66,17 @@ export class DataSchemaParserMaster {
     }
 
     return parser.parse(rawDataSchema)
+  }
+
+  /**
+   * 格式化 rawDataSchema
+   * 当 rawDataSchema 为字符串时，表示定义为此字符串的类型的 Schema
+   * @param rawDataSchema
+   */
+  public normalizeRawSchema(rawDataSchema: RawDataSchema<T, V>): RawDataSchema<T, V> {
+    if (isString(rawDataSchema)) {
+      return { type: rawDataSchema as unknown as T }
+    }
+    return rawDataSchema
   }
 }

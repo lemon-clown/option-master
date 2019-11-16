@@ -1,6 +1,6 @@
 import { DataSchemaParser, DataSchemaParseResult } from './_base'
 import { INTEGER_V_TYPE as V, INTEGER_T_TYPE as T, RawIntegerDataSchema as RDS, IntegerDataSchema as DS } from '../schema/integer'
-import { coverInteger, coverBoolean, coverArray } from '../_util/cover-util'
+import { coverInteger, coverArray } from '../_util/cover-util'
 
 
 /**
@@ -16,7 +16,7 @@ export type IntegerDataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
  * maximum 和 exclusiveMinimum 若非整数，则做下取整
  * enum 将忽略所有非整数（或整数字符串）的值
  */
-export class IntegerDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
+export class IntegerDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
   public readonly type: T = T
 
   /**
@@ -24,10 +24,9 @@ export class IntegerDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
    * @param rawSchema
    */
   public parse (rawSchema: RDS): IntegerDataSchemaParserResult {
-    const result: IntegerDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
+    const result: IntegerDataSchemaParserResult = super.parse(rawSchema)
+    rawSchema = result._rawSchema
 
-    // required 的默认值为 false
-    const requiredResult = result.parseBaseTypeProperty<boolean>('required', coverBoolean, false)
     const defaultValueResult = result.parseBaseTypeProperty<V>('default', coverInteger)
     const minimumResult = result.parseBaseTypeProperty<number>('minimum', coverInteger)
     const maximumResult = result.parseBaseTypeProperty<number>('maximum', coverInteger)
@@ -40,8 +39,7 @@ export class IntegerDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
 
     // IntegerDataSchema
     const schema: DS = {
-      type: this.type,
-      required: Boolean(requiredResult.value),
+      ...result.value!,
       default: defaultValueResult.value,
       minimum: ceil(minimumResult.value),
       maximum: floor(maximumResult.value),

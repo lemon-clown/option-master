@@ -1,6 +1,6 @@
 import { DataSchemaParser, DataSchemaParseResult } from './_base'
 import { NUMBER_V_TYPE as V, NUMBER_T_TYPE as T, RawNumberDataSchema as RDS, NumberDataSchema as DS } from '../schema/number'
-import { coverNumber, coverBoolean, coverArray } from '../_util/cover-util'
+import { coverNumber, coverArray } from '../_util/cover-util'
 
 
 /**
@@ -14,7 +14,7 @@ export type NumberDataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
  *
  * enum 将忽略所有非数字（或数字字符串）的值
  */
-export class NumberDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
+export class NumberDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
   public readonly type: T = T
 
   /**
@@ -22,10 +22,10 @@ export class NumberDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
    * @param rawSchema
    */
   public parse (rawSchema: RDS): NumberDataSchemaParserResult {
-    const result: NumberDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
+    const result: NumberDataSchemaParserResult = super.parse(rawSchema)
+    rawSchema = result._rawSchema
 
     // required 的默认值为 false
-    const requiredResult = result.parseBaseTypeProperty<boolean>('required', coverBoolean, false)
     const defaultValueResult = result.parseBaseTypeProperty<V>('default', coverNumber)
     const minimumResult = result.parseBaseTypeProperty<number>('minimum', coverNumber)
     const maximumResult = result.parseBaseTypeProperty<number>('maximum', coverNumber)
@@ -35,8 +35,7 @@ export class NumberDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
 
     // NumberDataSchema
     const schema: DS = {
-      type: this.type,
-      required: Boolean(requiredResult.value),
+      ...result.value!,
       default: defaultValueResult.value,
       minimum: minimumResult.value,
       maximum: maximumResult.value,

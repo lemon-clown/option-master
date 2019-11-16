@@ -1,5 +1,4 @@
 import { DataSchemaParser, DataSchemaParseResult } from './_base'
-import { DataSchemaParserMaster } from './_master'
 import { OBJECT_V_TYPE as V, OBJECT_T_TYPE as T, RawObjectDataSchema as RDS, ObjectDataSchema as DS, ObjectDataSchema } from '../schema/object'
 import { StringDataSchema, STRING_T_TYPE } from '../schema/string'
 import { stringify } from '../_util/type-util'
@@ -17,23 +16,16 @@ export type ObjectDataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
  *
  * enum 将忽略所有非对象的值
  */
-export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
-  private readonly parserMaster: DataSchemaParserMaster
+export class ObjectDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
   public readonly type: T = T
-
-  public constructor (parserMaster: DataSchemaParserMaster) {
-    this.parserMaster = parserMaster
-  }
 
   /**
    * parse RawSchema to Schema
    * @param rawSchema
    */
   public parse (rawSchema: RDS): ObjectDataSchemaParserResult {
-    const result: ObjectDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
-
-    // required 的默认值为 false
-    const requiredResult = result.parseBaseTypeProperty<boolean>('required', coverBoolean, false)
+    const result: ObjectDataSchemaParserResult = super.parse(rawSchema)
+    rawSchema = result._rawSchema
 
     // allowAdditionalProperties 的默认值为 false
     const allowAdditionalPropertiesResult = result.parseBaseTypeProperty<boolean>('allowAdditionalProperties', coverBoolean, false)
@@ -107,8 +99,7 @@ export class ObjectDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
 
     // ObjectDataSchema
     const schema: DS = {
-      type: this.type,
-      required: Boolean(requiredResult.value),
+      ...result.value!,
       default: defaultValue,
       allowAdditionalProperties: Boolean(allowAdditionalPropertiesResult.value),
       silentIgnore: Boolean(silentIgnoreResult.value),
