@@ -12,7 +12,7 @@ export type BooleanDataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
 /**
  * 布尔类型的模式的解析器
  */
-export class BooleanDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
+export class BooleanDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
   public readonly type: T = T
 
   /**
@@ -20,16 +20,14 @@ export class BooleanDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
    * @param rawSchema
    */
   public parse (rawSchema: RDS): BooleanDataSchemaParserResult {
-    const result: BooleanDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
+    const result: BooleanDataSchemaParserResult = super.parse(rawSchema)
+    rawSchema = result._rawSchema
 
-    // required 的默认值为 false
-    const requiredResult = result.parseBaseTypeProperty<boolean>('required', coverBoolean, false)
     const defaultValueResult = result.parseBaseTypeProperty<V>('default', coverBoolean)
 
     // BooleanDataSchema
     const schema: DS = {
-      type: this.type,
-      required: Boolean(requiredResult.value),
+      ...result.value!,
       default: defaultValueResult.value,
     }
 

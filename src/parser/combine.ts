@@ -1,8 +1,7 @@
 import { DataSchemaParser, DataSchemaParseResult } from './_base'
-import { DataSchemaParserMaster } from './_master'
 import { COMBINE_V_TYPE as V, COMBINE_T_TYPE as T, RawCombineDataSchema as RDS, CombineDataSchema as DS, CombineStrategy } from '../schema/combine'
 import { RDSchema, DSchema } from '../schema/_base'
-import { coverBoolean, coverString } from '../_util/cover-util'
+import { coverString } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'
 
 
@@ -17,23 +16,17 @@ export type CombineDataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
  *
  * enum 将忽略所有非组合（或组合字符串）的值
  */
-export class CombineDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
-  private readonly parserMaster: DataSchemaParserMaster
+export class CombineDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
   public readonly type: T = T
-
-  public constructor (parserMaster: DataSchemaParserMaster) {
-    this.parserMaster = parserMaster
-  }
 
   /**
    * parse RawSchema to Schema
    * @param rawSchema
    */
   public parse (rawSchema: RDS): CombineDataSchemaParserResult {
-    const result: CombineDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
+    const result: CombineDataSchemaParserResult = super.parse(rawSchema)
+    rawSchema = result._rawSchema
 
-    // required 的默认值为 false
-    const requiredResult = result.parseBaseTypeProperty<boolean>('required', coverBoolean, false)
     const defaultValue = rawSchema.default
 
     // strategy 的默认值为 all
@@ -88,8 +81,7 @@ export class CombineDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> 
 
     // CombineDataSchema
     const schema: DS = {
-      type: this.type,
-      required: Boolean(requiredResult.value),
+      ...result.value!,
       default: defaultValue,
       strategy: strategyResult.value!,
       allOf,

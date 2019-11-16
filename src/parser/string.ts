@@ -1,6 +1,6 @@
 import { DataSchemaParser, DataSchemaParseResult } from './_base'
 import { STRING_V_TYPE as V, STRING_T_TYPE as T, RawStringDataSchema as RDS, StringDataSchema as DS, StringFormat, StringFormatSet } from '../schema/string'
-import { coverString, coverBoolean, coverArray, coverRegex, coverInteger } from '../_util/cover-util'
+import { coverString, coverArray, coverRegex, coverInteger } from '../_util/cover-util'
 import { isString } from '../_util/type-util'
 
 
@@ -15,7 +15,7 @@ export type StringDataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
  *
  * enum 将忽略所有非字符串的值
  */
-export class StringDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
+export class StringDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
   public readonly type: T = T
 
   /**
@@ -23,10 +23,9 @@ export class StringDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
    * @param rawSchema
    */
   public parse (rawSchema: RDS): StringDataSchemaParserResult {
-    const result: StringDataSchemaParserResult = new DataSchemaParseResult(rawSchema)
+    const result: StringDataSchemaParserResult = super.parse(rawSchema)
+    rawSchema = result._rawSchema
 
-    // required 的默认值为 false
-    const requiredResult = result.parseBaseTypeProperty<boolean>('required', coverBoolean, false)
     const defaultValueResult = result.parseBaseTypeProperty<V>('default', coverString)
     const patternResult = result.parseBaseTypeProperty<RegExp>('pattern', coverRegex)
     const enumValueResult = result.parseBaseTypeProperty<string[]>('enum', coverArray<string>(coverString))
@@ -86,8 +85,7 @@ export class StringDataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
 
     // StringDataSchema
     const schema: DS = {
-      type: this.type,
-      required: Boolean(requiredResult.value),
+      ...result.value!,
       default: defaultValueResult.value,
       minLength: minLengthResult.value,
       maxLength: maxLengthResult.value,
