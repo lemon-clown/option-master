@@ -1,5 +1,5 @@
 import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
-import { STRING_V_TYPE as V, STRING_T_TYPE as T, StringDataSchema as DS, StringFormat } from '../schema/string'
+import { STRING_V_TYPE as V, STRING_T_TYPE as T, StringDataSchema as DS, StringFormat, StringTransformType } from '../schema/string'
 import { coverString } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'
 
@@ -30,8 +30,25 @@ export class StringDataValidator extends DataValidator<T, V, DS> {
     if (data == null) return result
 
     // 检查是否为字符串
-    const value = result.validateBaseType(coverString, data)!
+    let value = result.validateBaseType(coverString, data)!
     if (result.hasError) return result
+
+    // 执行 transform
+    if (schema.transform != null && schema.transform.length > 0) {
+      for (const transformType of schema.transform) {
+        switch (transformType as StringTransformType) {
+          case 'lowercase':
+            value = value.toLowerCase()
+            break
+          case 'uppercase':
+            value = value.toUpperCase()
+            break
+          case 'trim':
+            value = value.trim()
+            break
+        }
+      }
+    }
 
     // 检查 minLength
     if (schema.minLength != null && schema.minLength > value.length) {

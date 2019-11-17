@@ -1,5 +1,14 @@
 import { DataSchemaParser, DataSchemaParseResult } from './_base'
-import { STRING_V_TYPE as V, STRING_T_TYPE as T, RawStringDataSchema as RDS, StringDataSchema as DS, StringFormat, StringFormatSet } from '../schema/string'
+import {
+  STRING_V_TYPE as V,
+  STRING_T_TYPE as T,
+  RawStringDataSchema as RDS,
+  StringDataSchema as DS,
+  StringFormat,
+  StringFormatSet,
+  StringTransformType,
+  StringTransformTypeSet
+} from '../schema/string'
 import { coverString, coverArray, coverRegex, coverInteger } from '../_util/cover-util'
 import { isString } from '../_util/type-util'
 
@@ -59,6 +68,34 @@ export class StringDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
       }
     }
 
+    // transform
+    let transform: StringTransformType[] | undefined
+    if (rawSchema.transform != null) {
+      // 先检查是否为字符串数组
+      const transforms: string[] = isString(rawSchema.transform) ? [rawSchema.transform] : rawSchema.transform
+      const transformResult = coverArray<string>(coverString)(transforms)
+      if (transformResult.hasError) {
+        result.addError({
+          constraint: 'transform',
+          reason: transformResult.errorSummary,
+        })
+      } else {
+        transform = []
+        for (let f of transformResult.value!) {
+          f = f.toLowerCase()
+          if (!StringTransformTypeSet.has(f)) {
+            result.addWarning({
+              constraint: 'transform',
+              reason: `unsupported transform: ${ f }`
+            })
+            continue
+          }
+          transform.push(f as StringTransformType)
+        }
+        if (transform.length <= 0) transform = undefined
+      }
+    }
+
 
     if (minLengthResult.value != null) {
       if (minLengthResult.value < 0) {
@@ -91,6 +128,7 @@ export class StringDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
       maxLength: maxLengthResult.value,
       pattern: patternResult.value,
       format,
+      transform,
       enum: enumValueResult.value,
     }
 
