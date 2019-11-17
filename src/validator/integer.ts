@@ -13,13 +13,8 @@ export type IntegerDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 整数类型的校验器
  */
-export class IntegerDataValidator implements DataValidator<T, V, DS> {
-  private readonly schema: DS
+export class IntegerDataValidator extends DataValidator<T, V, DS> {
   public readonly type: T = T
-
-  public constructor (schema: DS) {
-    this.schema = schema
-  }
 
   /**
    * 包装 IntegerDataSchema 的实例，使其具备校验给定数据是否为合法整数的能力
@@ -27,8 +22,9 @@ export class IntegerDataValidator implements DataValidator<T, V, DS> {
    */
   public validate (data: any): IntegerDataValidationResult {
     const { schema } = this
-    const result: IntegerDataValidationResult = new DataValidationResult(schema)
-    data = result.baseValidate(data)
+    const result: IntegerDataValidationResult = super.validate(data)
+    data = result.value
+    result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
     if (data == null) return result
@@ -86,10 +82,10 @@ export class IntegerDataValidator implements DataValidator<T, V, DS> {
 /**
  * 整数类型的校验器的工厂对象
  */
-export class IntegerDataValidatorFactory implements DataValidatorFactory<T, V, DS> {
+export class IntegerDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {
-    return new IntegerDataValidator(schema)
+    return new IntegerDataValidator(schema, this.validatorMaster)
   }
 }

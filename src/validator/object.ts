@@ -1,7 +1,6 @@
 import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
 import { OBJECT_V_TYPE as V, OBJECT_T_TYPE as T, ObjectDataSchema as DS } from '../schema/object'
 import { stringify } from '../_util/type-util'
-import { DataValidatorMaster } from './_master'
 
 
 /**
@@ -13,15 +12,8 @@ export type ObjectDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 对象类型的校验器
  */
-export class ObjectDataValidator implements DataValidator<T, V, DS> {
-  private readonly validatorMaster: DataValidatorMaster
-  private readonly schema: DS
+export class ObjectDataValidator extends DataValidator<T, V, DS> {
   public readonly type: T = T
-
-  public constructor(schema: DS, validatorMaster: DataValidatorMaster) {
-    this.schema = schema
-    this.validatorMaster = validatorMaster
-  }
 
   /**
    * 包装 ObjectDataSchema 的实例，使其具备校验给定数据是否为合法对象的能力
@@ -29,8 +21,9 @@ export class ObjectDataValidator implements DataValidator<T, V, DS> {
    */
   public validate(data: any): ObjectDataValidationResult {
     const { schema } = this
-    const result: ObjectDataValidationResult = new DataValidationResult(schema)
-    data = result.baseValidate(data)
+    const result: ObjectDataValidationResult = super.validate(data)
+    data = result.value
+    result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
     if (data == null) return result
@@ -145,15 +138,10 @@ export class ObjectDataValidator implements DataValidator<T, V, DS> {
 /**
  * 对象类型的校验器的工厂对象
  */
-export class ObjectDataValidatorFactory implements DataValidatorFactory<T, V, DS> {
-  private readonly validatorMaster: DataValidatorMaster
+export class ObjectDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {
     return new ObjectDataValidator(schema, this.validatorMaster)
-  }
-
-  public constructor(validatorMaster: DataValidatorMaster) {
-    this.validatorMaster = validatorMaster
   }
 }

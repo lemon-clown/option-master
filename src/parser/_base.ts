@@ -1,5 +1,5 @@
 import { RawDataSchema, DataSchema } from '../schema/_base'
-import { isObject, stringify, isString } from '../_util/type-util'
+import { isObject, stringify } from '../_util/type-util'
 import { CoverOperationFunc, CoverOperationResult, coverBoolean } from '../_util/cover-util'
 import { DataHandleResult } from '../_util/handle-result'
 import { DataSchemaParserMaster } from './_master'

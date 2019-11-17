@@ -1,6 +1,6 @@
 import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
 import { COMBINE_V_TYPE as V, COMBINE_T_TYPE as T, CombineDataSchema as DS, CombineStrategy } from '../schema/combine'
-import { DataValidatorMaster, DValidationResult } from './_master'
+import { DValidationResult } from './_master'
 import { stringify } from '../_util/type-util'
 
 
@@ -15,15 +15,8 @@ export type CombineDataValidationResult = DataValidationResult<T, V, DS>
  *
  * anyOf 取第一个校验通过的 Schema 的 value
  */
-export class CombineDataValidator implements DataValidator<T, V, DS> {
-  private readonly validatorMaster: DataValidatorMaster
-  private readonly schema: DS
+export class CombineDataValidator extends DataValidator<T, V, DS> {
   public readonly type: T = T
-
-  public constructor(schema: DS, validatorMaster: DataValidatorMaster) {
-    this.schema = schema
-    this.validatorMaster = validatorMaster
-  }
 
   /**
    * 包装 CombineDataSchema 的实例，使其具备校验给定数据是否为合法组合的能力
@@ -32,8 +25,9 @@ export class CombineDataValidator implements DataValidator<T, V, DS> {
   public validate (data: any): CombineDataValidationResult {
     const { schema } = this
     const { strategy, allOf, anyOf, oneOf } = schema
-    const result: CombineDataValidationResult = new DataValidationResult(schema)
-    data = result.baseValidate(data)
+    const result: CombineDataValidationResult = super.validate(data)
+    data = result.value
+    result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
     if (data == null) return result
@@ -209,16 +203,10 @@ export class CombineDataValidator implements DataValidator<T, V, DS> {
  * 组合类型的校验器的工厂对象实例
  */
 
-export class CombineDataValidatorFactory implements DataValidatorFactory<T, V, DS> {
-  private readonly validatorMaster: DataValidatorMaster
+export class CombineDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
   public readonly type: T = T
-
 
   public create(schema: DS) {
     return new CombineDataValidator(schema, this.validatorMaster)
-  }
-
-  public constructor(validatorMaster: DataValidatorMaster) {
-    this.validatorMaster = validatorMaster
   }
 }
