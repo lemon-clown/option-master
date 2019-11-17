@@ -43,18 +43,40 @@
      `minLength`        | minimum length ($x.length \geqslant$)     | -       | No
      `maxLength`        | maximum length ($x.length \leqslant$)     | -       | No
      `pattern`          | a regular expression defined data pattern | -       | No
-     `format`           | formats of string                         | -       | No
+     `format`           | see [format][]                            | -       | No
+     `transform`        | see [transform][]                         | -       | No
      `enum`             | acceptable values ($x \in$)               | -       | No
 
 ## format
 
   * 指定字符串的类型，和 `StringDataSchema` 中其它属性按照“与”逻辑进行校验
-  * 若指定了多个，则表示“或”的关系，如 { format: ['ipv4', 'ipv6' ] } 表示既可为 ipv4 地址也可为 ipv6 地址
+  * 若指定了多个，则表示“或”的关系，如 { format: ['ipv4', 'ipv6' ] } 表示既可为 ipv4 地址也可为 ipv6 地址，现在支持的有：
+    - `ipv4`
+    - `ipv6`
+    - `email`
 
   ---
 
   * Specify the format of the string.
-  * If more than one format is specified, any of these formats matched is ok, such as `{ format: ['ipv4', 'ipv6' ] }` means that it can be either an `ipv4` address or an `ipv6` address.
+  * If more than one format is specified, any of these formats matched is ok, such as `{ format: ['ipv4', 'ipv6' ] }` means that it can be either an `ipv4` address or an `ipv6` address., now supported are:
+    - `ipv4`:
+    - `ipv6`:
+    - `email`:
+
+## transform
+  * 指定字符串的转换函数，现在支持的有：
+    - `lowercase`: 转成小写
+    - `uppercase`: 转成大写
+    - `trim`: 去除头尾空白字符
+
+  ----
+
+  * Specify The conversion function for string, now supported are:
+      - `lowercase`: convert to lowercase
+      - `uppercase`: converted to uppercase
+      - `trim`: remove the head and tail blank words
+
+
 
 # demo
 
