@@ -1,0 +1,5 @@
+{
+  "type": "string",
+  "transform": "lowercase",
+  "required": true
+}
