@@ -68,6 +68,9 @@
     - `lowercase`: 转成小写
     - `uppercase`: 转成大写
     - `trim`: 去除头尾空白字符
+    - `camel-case`: 驼峰式（首字母大写）
+    - `little-camel-case`: 驼峰式（首字母小写）
+    - `kebab-case`: 小写串式
 
   ----
 
@@ -75,8 +78,9 @@
       - `lowercase`: convert to lowercase
       - `uppercase`: converted to uppercase
       - `trim`: remove the head and tail blank words
-
-
+      - `camel-case`: camel style (initial capitalization)
+      - `little-camel-case`: camel style (first letter lowercase)
+      - `kebab-case`: lowercase kebab string
 
 # demo
 
