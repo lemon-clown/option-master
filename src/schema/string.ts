@@ -47,6 +47,18 @@ export enum StringTransformType {
    * 清除头尾的空白字符
    */
   TRIM = 'trim',
+  /**
+   * 驼峰式
+   */
+  CAMEL_CASE = 'camel-case',
+  /**
+   * 小写驼峰式
+   */
+  LITTLE_CAMEL_CASE = 'little-camel-case',
+  /**
+   * 小写串式
+   */
+  KEBAB_CASE = 'kebab-case'
 }
 
 
