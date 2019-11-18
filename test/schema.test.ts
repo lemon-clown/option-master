@@ -16,7 +16,9 @@ before(async function test() {
   const encoding = 'utf-8'
   const caseRootDir = path.resolve('test/cases')
   const caseMaster = new TestCaseMaster({ encoding })
-  await caseMaster.scan(caseRootDir)
+  await caseMaster.scan(path.join(caseRootDir, 'abbr-schema'))
+  await caseMaster.scan(path.join(caseRootDir, 'base-schema'))
+  await caseMaster.scan(path.join(caseRootDir, 'combine-schema'))
 
   const useCaseGroups: UseCaseGroup[] = caseMaster.collectUseCases(caseRootDir)
 

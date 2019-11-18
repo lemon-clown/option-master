@@ -27,6 +27,9 @@
     "test": "mocha -r ts-node/register test/**/*.test.ts",
     "prepublishOnly": "yarn lint:fix && yarn test && yarn build"
   },
+  "dependencies": {
+    "camelcase": "^5.3.1"
+  },
   "devDependencies": {
     "@types/chai": "^4.2.4",
     "@types/fs-extra": "^8.0.1",
