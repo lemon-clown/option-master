@@ -1,6 +1,7 @@
 [![npm version](https://img.shields.io/npm/v/option-master.svg)](https://www.npmjs.com/package/option-master)
 [![npm download](https://img.shields.io/npm/dm/option-master.svg)](https://www.npmjs.com/package/option-master)
 [![npm license](https://img.shields.io/npm/l/option-master.svg)](https://www.npmjs.com/package/option-master)
+[![git action](https://action-badges.now.sh/lemon-clown/option-master?action=test)](https://github.com/lemon-clown/option-master/actions)
 
 
 # Introduction
