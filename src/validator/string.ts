@@ -1,9 +1,8 @@
-import camelcase from 'camelcase'
 import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
 import { STRING_V_TYPE as V, STRING_T_TYPE as T, StringDataSchema as DS, StringFormat, StringTransformType } from '../schema/string'
 import { coverString } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'
-import { toKebabCase } from '../_util/string-util'
+import { toKebabCase, toCamelCase, toLittleCamelCase } from '../_util/string-util'
 
 
 /**
@@ -49,10 +48,10 @@ export class StringDataValidator extends DataValidator<T, V, DS> {
             value = value.trim()
             break
           case StringTransformType.CAMEL_CASE:
-            value = camelcase(value, { pascalCase: true })
+            value = toCamelCase(value)
             break
           case StringTransformType.LITTLE_CAMEL_CASE:
-            value = camelcase(value, { pascalCase: false })
+            value = toLittleCamelCase(value)
             break
           case StringTransformType.KEBAB_CASE:
             value = toKebabCase(value)

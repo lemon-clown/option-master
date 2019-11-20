@@ -1,3 +1,24 @@
+import camelcase from 'camelcase'
+
+
+/**
+ * 转为驼峰式(首字母大写)
+ * @param s
+ */
+export function toCamelCase (s: string): string {
+  return camelcase(s, { pascalCase: true })
+}
+
+
+/**
+ * 转为小写驼峰式(首字母小写)
+ * @param s
+ */
+export function toLittleCamelCase(s: string): string {
+  return camelcase(s, {pascalCase: false})
+}
+
+
 /**
  * 转为串式
  * @param s
