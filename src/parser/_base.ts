@@ -122,3 +122,16 @@ export abstract class DataSchemaParser<
     return result.setValue(schema)
   }
 }
+
+
+/**
+ * DataSchema 解析器的构造函数接口
+ */
+export interface DataSchemaParserConstructor<
+  T extends string,
+  V,
+  RDS extends RawDataSchema<T, V>,
+  DS extends DataSchema<T, V>,
+> {
+  new (parserMaster: DataSchemaParserMaster): DataSchemaParser<T, V, RDS, DS>
+}

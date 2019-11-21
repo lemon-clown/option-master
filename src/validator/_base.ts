@@ -142,3 +142,15 @@ export abstract class DataValidatorFactory<T extends string, V, DS extends DataS
    */
   public abstract create (schema: DS): DataValidator<T, V, DS>
 }
+
+
+/**
+ * DataValidator 工厂类的构造函数接口
+ */
+export interface DataValidatorFactoryConstructor<
+  T extends string,
+  V,
+  DS extends DataSchema<T, V>,
+> {
+  new (validatorMaster: DataValidatorMaster): DataValidatorFactory<T, V, DS>
+}

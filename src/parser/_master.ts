@@ -1,7 +1,7 @@
 import { RawDataSchema, DataSchema, RDSchema } from '../schema/_base'
 import { DataSchemaMaster } from '../schema/_master'
 import { isString, stringify } from '../_util/type-util'
-import { DataSchemaParser, DataSchemaParseResult } from './_base'
+import { DataSchemaParser, DataSchemaParseResult, DataSchemaParserConstructor } from './_base'
 
 
 type T = string
@@ -9,6 +9,7 @@ type V = any
 type DS = DataSchema<T, V>
 type RDS = RawDataSchema<T, V>
 export type DSParser = DataSchemaParser<T, V, RDS, DS>
+export type DSParserConstructor = DataSchemaParserConstructor<T, V, RDS, DS>
 export type DSParseResult = DataSchemaParseResult<T, V, RDS, DS>
 
 

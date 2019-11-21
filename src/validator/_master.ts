@@ -1,4 +1,4 @@
-import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
+import { DataValidator, DataValidationResult, DataValidatorFactory, DataValidatorFactoryConstructor } from './_base'
 import { DataSchema, DSchema } from '../schema/_base'
 import { DataSchemaMaster } from '../schema/_master'
 import { stringify } from '../_util/type-util'
@@ -9,6 +9,7 @@ type V = any
 type DS = DataSchema<T, V>
 export type DValidator = DataValidator<T, V, DS>
 export type DValidatorFactory = DataValidatorFactory<T, V, DS>
+export type DValidatorFactoryConstructor = DataValidatorFactoryConstructor<T, V, DS>
 export type DValidationResult = DataValidationResult<T, V, DS>
 
 
