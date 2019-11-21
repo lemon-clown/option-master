@@ -19,6 +19,7 @@ before(async function test() {
   await caseMaster.scan(path.join(caseRootDir, 'abbr-schema'))
   await caseMaster.scan(path.join(caseRootDir, 'base-schema'))
   await caseMaster.scan(path.join(caseRootDir, 'combine-schema'))
+  await caseMaster.scan(path.join(caseRootDir, 'ref-schema'))
 
   const useCaseGroups: UseCaseGroup[] = caseMaster.collectUseCases(caseRootDir)
 

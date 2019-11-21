@@ -14,12 +14,15 @@ const encoding = 'utf-8'
  */
 const ANSWER_MODE: boolean = coverBoolean(false, process.env.ANSWER_MODE).value!
 const needReason: boolean = coverBoolean(ANSWER_MODE ? false : true, process.env.NEED_REASON).value!
-const caseRootDir: string = path.resolve(coverString('test/cases', process.env.CASE_ROOT_DIR).value!)
+const caseRootDir: string = path.resolve('test/cases')
 
 
 async function answer () {
   const caseMaster = new TestCaseMaster({ encoding })
-  await caseMaster.scan(caseRootDir)
+  await caseMaster.scan(path.join(caseRootDir, 'abbr-schema'))
+  await caseMaster.scan(path.join(caseRootDir, 'base-schema'))
+  await caseMaster.scan(path.join(caseRootDir, 'combine-schema'))
+  await caseMaster.scan(path.join(caseRootDir, 'ref-schema'))
 
   for (const kase of caseMaster.cases) {
     const answerResult: AnswerResult | AnswerResult[] | string = await caseMaster.consume(kase, needReason)
