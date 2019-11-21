@@ -1,12 +1,6 @@
 import fs from 'fs-extra'
 import path from 'path'
-import {
-  DSchema,
-  DSParseResult,
-  RDSchema,
-  parserMaster,
-  validatorMaster,
-} from '../src'
+import { DSchema, DSParseResult, RDSchema, optionMaster } from '../src'
 import { DataHandleResultException } from '../src/_util/handle-result'
 
 
@@ -347,10 +341,12 @@ export class TestCaseMaster {
   public async consume<T = any>(item: UseCaseItem, needReason: boolean = true): Promise<AnswerResult<T> | AnswerResult<T>[] | string> {
     const { encoding, schemaFilePath, inputDataFilePath } = item
     let schema: DSchema | undefined = this._schemaMap.get(schemaFilePath)
+
+    optionMaster.reset()
     if (schema == null) {
       const rawDataSchemaContent: string = await fs.readFile(schemaFilePath, encoding)
       const rawDataSchema: RDSchema = JSON.parse(rawDataSchemaContent)
-      const parseResult: DSParseResult = parserMaster.parse(rawDataSchema)
+      const parseResult: DSParseResult = optionMaster.parse(rawDataSchema)
 
       // schema has error
       if (parseResult.hasError) {
@@ -366,7 +362,7 @@ export class TestCaseMaster {
     }
 
     const handleInput = (rawData: any): AnswerResult<T> => {
-      const validationResult = validatorMaster.validate(schema!, rawData)
+      const validationResult = optionMaster.validate(schema!, rawData)
 
       // 比较器，constraint 优先，property 无值的优先
       const comparator = (x: ExceptionItem, y: ExceptionItem) => {
