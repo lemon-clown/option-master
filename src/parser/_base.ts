@@ -1,6 +1,6 @@
-import { RawDataSchema, DataSchema } from '../schema/_base'
+import { RawDataSchema, DataSchema, DSchema } from '../schema/_base'
 import { isObject, stringify } from '../_util/type-util'
-import { CoverOperationFunc, CoverOperationResult, coverBoolean } from '../_util/cover-util'
+import { CoverOperationFunc, CoverOperationResult, coverBoolean, coverString } from '../_util/cover-util'
 import { DataHandleResult } from '../_util/handle-result'
 import { DataSchemaParserMaster } from './_master'
 
@@ -109,10 +109,16 @@ export abstract class DataSchemaParser<
     // required 的默认值为 false
     const requiredResult = result.parseBaseTypeProperty<boolean>('required', coverBoolean, false)
 
+    // id 可不设置
+    const $idResult = result.parseBaseTypeProperty<string>('$id', coverString, undefined)
+
+    // eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
     const schema: DS = {
       type: rawSchema.type,
+      $id: $idResult.value == null ? undefined : $idResult.value.trim(),
       required: Boolean(requiredResult.value),
-    } as any
+    } as DSchema as DS
+
     return result.setValue(schema)
   }
 }
