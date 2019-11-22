@@ -1,4 +1,5 @@
-import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
+import { DataValidator, DataValidatorFactory } from './_base'
+import { DataValidationResult } from './_result'
 import { COMBINE_V_TYPE as V, COMBINE_T_TYPE as T, CombineDataSchema as DS, CombineStrategy } from '../schema/combine'
 import { DValidationResult } from './_master'
 import { stringify } from '../_util/type-util'

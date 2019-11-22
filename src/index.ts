@@ -26,6 +26,7 @@ export * from './parser/ref'
 // export DataValidators
 export * from './validator/_base'
 export * from './validator/_master'
+export * from './validator/_result'
 export * from './validator/boolean'
 export * from './validator/combine'
 export * from './validator/integer'

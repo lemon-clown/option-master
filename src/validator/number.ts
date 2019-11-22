@@ -1,4 +1,5 @@
-import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
+import { DataValidator, DataValidatorFactory } from './_base'
+import { DataValidationResult } from './_result'
 import { NUMBER_V_TYPE as V, NUMBER_T_TYPE as T, NumberDataSchema as DS } from '../schema/number'
 import { coverNumber } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'

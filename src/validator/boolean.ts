@@ -1,4 +1,5 @@
-import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
+import { DataValidator, DataValidatorFactory } from './_base'
+import { DataValidationResult } from './_result'
 import { BOOLEAN_V_TYPE as V, BOOLEAN_T_TYPE as T, BooleanDataSchema as DS } from '../schema/boolean'
 import { coverBoolean } from '../_util/cover-util'
 

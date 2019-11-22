@@ -1,4 +1,5 @@
-import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
+import { DataValidator, DataValidatorFactory } from './_base'
+import { DataValidationResult } from './_result'
 import { REF_V_TYPE as V, REF_T_TYPE as T, RefDataSchema as DS } from '../schema/ref'
 
 

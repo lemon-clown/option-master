@@ -1,4 +1,5 @@
-import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
+import { DataValidator, DataValidatorFactory } from './_base'
+import { DataValidationResult } from './_result'
 import { STRING_V_TYPE as V, STRING_T_TYPE as T, StringDataSchema as DS, StringFormat, StringTransformType } from '../schema/string'
 import { coverString } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'

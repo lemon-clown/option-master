@@ -1,4 +1,5 @@
-import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
+import { DataValidator, DataValidatorFactory } from './_base'
+import { DataValidationResult } from './_result'
 import { OBJECT_V_TYPE as V, OBJECT_T_TYPE as T, ObjectDataSchema as DS } from '../schema/object'
 import { stringify } from '../_util/type-util'
 

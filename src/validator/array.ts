@@ -1,4 +1,5 @@
-import { DataValidator, DataValidationResult, DataValidatorFactory } from './_base'
+import { DataValidator, DataValidatorFactory } from './_base'
+import { DataValidationResult } from './_result'
 import { ARRAY_V_TYPE as V, ARRAY_T_TYPE as T, ArrayDataSchema as DS } from '../schema/array'
 import { isArray, stringify } from '../_util/type-util'
 import { DValidationResult } from './_master'

@@ -1,4 +1,5 @@
-import { DataValidator, DataValidationResult, DataValidatorFactory, DataValidatorFactoryConstructor } from './_base'
+import { DataValidator, DataValidatorFactory, DataValidatorFactoryConstructor } from './_base'
+import { DataValidationResult } from './_result'
 import { DataSchema, DSchema } from '../schema/_base'
 import { DataSchemaMaster } from '../schema/_master'
 import { stringify } from '../_util/type-util'
