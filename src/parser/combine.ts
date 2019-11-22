@@ -1,4 +1,5 @@
-import { DataSchemaParser, DataSchemaParseResult } from './_base'
+import { DataSchemaParser } from './_base'
+import { DataSchemaParseResult } from './_result'
 import { COMBINE_V_TYPE as V, COMBINE_T_TYPE as T, RawCombineDataSchema as RDS, CombineDataSchema as DS, CombineStrategy } from '../schema/combine'
 import { RDSchema, DSchema } from '../schema/_base'
 import { coverString } from '../_util/cover-util'

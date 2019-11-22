@@ -1,4 +1,5 @@
-import { DataSchemaParser, DataSchemaParseResult } from './_base'
+import { DataSchemaParser } from './_base'
+import { DataSchemaParseResult } from './_result'
 import { REF_V_TYPE as V, REF_T_TYPE as T, RawRefDataSchema as RDS, RefDataSchema as DS } from '../schema/ref'
 import { coverString } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'

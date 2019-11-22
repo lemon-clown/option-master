@@ -1,4 +1,5 @@
-import { DataSchemaParser, DataSchemaParseResult } from './_base'
+import { DataSchemaParser } from './_base'
+import { DataSchemaParseResult } from './_result'
 import { OBJECT_V_TYPE as V, OBJECT_T_TYPE as T, RawObjectDataSchema as RDS, ObjectDataSchema as DS, ObjectDataSchema } from '../schema/object'
 import { StringDataSchema, STRING_T_TYPE } from '../schema/string'
 import { stringify } from '../_util/type-util'

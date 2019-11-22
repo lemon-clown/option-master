@@ -14,6 +14,7 @@ export * from './schema/ref'
 // export DataSchemaParsers
 export * from './parser/_base'
 export * from './parser/_master'
+export * from './parser/_result'
 export * from './parser/boolean'
 export * from './parser/combine'
 export * from './parser/integer'

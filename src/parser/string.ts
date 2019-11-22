@@ -1,4 +1,5 @@
-import { DataSchemaParser, DataSchemaParseResult } from './_base'
+import { DataSchemaParser } from './_base'
+import { DataSchemaParseResult } from './_result'
 import {
   STRING_V_TYPE as V,
   STRING_T_TYPE as T,

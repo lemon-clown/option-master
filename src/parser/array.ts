@@ -1,4 +1,5 @@
-import { DataSchemaParser, DataSchemaParseResult } from './_base'
+import { DataSchemaParser } from './_base'
+import { DataSchemaParseResult } from './_result'
 import { ARRAY_V_TYPE as V, ARRAY_T_TYPE as T, RawArrayDataSchema as RDS, ArrayDataSchema as DS } from '../schema/array'
 import { coverBoolean } from '../_util/cover-util'
 import { isArray, stringify } from '../_util/type-util'

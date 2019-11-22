@@ -1,7 +1,8 @@
 import { RawDataSchema, DataSchema, RDSchema } from '../schema/_base'
 import { DataSchemaMaster } from '../schema/_master'
 import { isString, stringify } from '../_util/type-util'
-import { DataSchemaParser, DataSchemaParseResult, DataSchemaParserConstructor } from './_base'
+import { DataSchemaParser, DataSchemaParserConstructor } from './_base'
+import { DataSchemaParseResult } from './_result'
 
 
 type T = string
