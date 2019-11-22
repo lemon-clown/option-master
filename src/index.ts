@@ -2,6 +2,7 @@ import './types'
 
 // export DataSchemas
 export * from './schema/_base'
+export * from './schema/_master'
 export * from './schema/boolean'
 export * from './schema/combine'
 export * from './schema/integer'
@@ -23,6 +24,7 @@ export * from './parser/ref'
 
 // export DataValidators
 export * from './validator/_base'
+export * from './validator/_master'
 export * from './validator/boolean'
 export * from './validator/combine'
 export * from './validator/integer'
