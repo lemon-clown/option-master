@@ -1,38 +1,23 @@
-import fs from 'fs-extra'
 import path from 'path'
-import { TestCaseMaster, AnswerResult } from './util'
-import { coverBoolean, isString, coverString } from '../src'
+import { DataSchemaParserTestCaseMaster } from './util/schema-parser-case-util'
+import { DataValidatorTestCaseMaster } from './util/schema-validator-case-util'
 
-
-const encoding = 'utf-8'
 
 /**
- * if true, the answer() function will output the validation result into .answer.json files
- * otherwise, output into .output.json files
- *
- * 若为真，则 answer() 函数会将校验结果输出到 .answer.json 文件中；否则，输出到 .input.json 文件中
+ * create answer (to be checked)
  */
-const ANSWER_MODE: boolean = coverBoolean(false, process.env.ANSWER_MODE).value!
-const needReason: boolean = coverBoolean(ANSWER_MODE ? false : true, process.env.NEED_REASON).value!
-const caseRootDir: string = path.resolve('test/cases')
+async function answer() {
+  const caseRootDirectory: string = path.resolve('test/cases')
 
+  // DataSchemaParser cases
+  const parserCaseMaster = new DataSchemaParserTestCaseMaster({ caseRootDirectory })
+  await parserCaseMaster.scan(path.resolve(caseRootDirectory, 'data-schema'))
+  await parserCaseMaster.answer()
 
-async function answer () {
-  const caseMaster = new TestCaseMaster({ encoding })
-  await caseMaster.scan(path.join(caseRootDir, 'abbr-schema'))
-  await caseMaster.scan(path.join(caseRootDir, 'base-schema'))
-  await caseMaster.scan(path.join(caseRootDir, 'combine-schema'))
-  await caseMaster.scan(path.join(caseRootDir, 'ref-schema'))
-
-  for (const kase of caseMaster.cases) {
-    const answerResult: AnswerResult | AnswerResult[] | string = await caseMaster.consume(kase, needReason)
-    if (isString(answerResult)) {
-      throw answerResult
-    }
-    const data = JSON.stringify(answerResult, null, 2)
-    const filepath: string = ANSWER_MODE ? kase.answerDataFilePath : kase.outputDataFilePath
-    await fs.writeFile(filepath, data, encoding)
-  }
+  // DataValidator cases
+  const dataValidatorMaster = new DataValidatorTestCaseMaster({ caseRootDirectory })
+  await dataValidatorMaster.scan(path.resolve(caseRootDirectory, 'data-schema'))
+  await dataValidatorMaster.answer()
 }
 
 
