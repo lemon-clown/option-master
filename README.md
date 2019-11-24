@@ -48,7 +48,7 @@
 
 ## demo1
   ```typescript
-  import { parserMaster, validatorMaster } from 'option-master'
+  import { optionMaster } from 'option-master'
 
   const rawSchema = {
     type: 'integer',
@@ -57,10 +57,13 @@
     default: 0
   }
 
-  // parse rawSchema
-  const { value: schema } = parserMaster.parse(rawSchema)
+ // parse rawSchema
+  optionMaster.reset()
+  const { value: schema } = optionMaster.parse(rawSchema)
+
+  // validate data with schema
   const validate = (data: any): boolean | undefined => {
-    const result = validatorMaster.validate(schema!, data)
+    const result = optionMaster.validate(schema!, data)
     if (result.hasError) {
       console.error(result.errorDetails)
     }
@@ -83,7 +86,7 @@
 
 ## demo2
 ```typescript
-import { parserMaster, validatorMaster } from '../../src'
+import { optionMaster } from '../../src'
 
 const rawSchema = {
   type: 'object',
@@ -107,10 +110,14 @@ const rawSchema = {
   required: true
 }
 
+
 // parse rawSchema
-const { value: schema } = parserMaster.parse(rawSchema)
+optionMaster.reset()
+const { value: schema } = optionMaster.parse(rawSchema)
+
+// validate data with schema
 const validate = (data: any): boolean | undefined => {
-  const result = validatorMaster.validate(schema!, data)
+  const result = optionMaster.validate(schema!, data)
   if (result.hasError) {
     console.error(result.errorDetails)
   }
@@ -130,7 +137,7 @@ validate({ name: 'joy', email: 'joy@bob.com', age: 33, gender: 'female' })      
 validate(false)                                                                   // undefined; and will print errors (`type` is not satisfied)
 ```
 
-# further read
+# Schema Docs
 * schemas
   - [BooleanDataSchema][]
   - [NumberDataSchema][]

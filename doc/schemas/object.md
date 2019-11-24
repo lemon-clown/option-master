@@ -102,7 +102,7 @@
 # demo
 
   ```typescript
-  import { parserMaster, validatorMaster } from 'option-master'
+  import { optionMaster } from 'option-master'
 
   const rawSchema = {
     type: 'object',
@@ -130,9 +130,12 @@
   }
 
   // parse rawSchema
-  const { value: schema } = parserMaster.parse(rawSchema)
+  optionMaster.reset()
+  const { value: schema } = optionMaster.parse(rawSchema)
+
+  // validate data with schema
   const validate = (data: any): boolean | undefined => {
-    const result = validatorMaster.validate(schema!, data)
+    const result = optionMaster.validate(schema!, data)
     if (result.hasError) {
       console.error(result.errorDetails)
     }
