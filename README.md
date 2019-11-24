@@ -146,6 +146,7 @@ validate(false)                                                                 
   - [ArrayDataSchema][]
   - [ObjectDataSchema][]
   - [CombineDataSchema][]
+  - [RefDataSchema][]
 * [parser][DataSchemaParser]
 * [validator][DataValidator]
 
@@ -158,6 +159,7 @@ validate(false)                                                                 
 [ArrayDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/array.md
 [ObjectDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/object.md
 [CombineDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/combine.md
+[RefDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/ref.md
 
 [DataHandleResult]: https://github.com/lemon-clown/option-master/blob/master/src/_util/handle-result.ts
 [DataSchemaParser]: https://github.com/lemon-clown/option-master/blob/master/doc/parser.md
