@@ -1,7 +1,7 @@
 import {
   DataSchema, RawDataSchema, DataSchemaParseResult, DataSchemaParser,
   coverBoolean, coverString, DataValidationResult, DataValidator, DataValidatorFactory,
-  parserMaster, validatorMaster,
+  DataValidatorMaster, optionMaster,
 } from '../../src'
 
 
@@ -21,7 +21,7 @@ export type Ipv4DataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
 /**
  * ipv4 schema parser
  */
-export class Ipv4DataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
+export class Ipv4DataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
   public readonly type: T = T
 
   public parse (rawSchema: RDS): Ipv4DataSchemaParserResult {
@@ -49,20 +49,19 @@ export type Ipv4DataValidationResult = DataValidationResult<T, V, DS>
 /**
  * ipv4 validator
  */
-export class Ipv4DataValidator implements DataValidator<T, V, DS> {
-  private readonly schema: DS
+export class Ipv4DataValidator extends DataValidator<T, V, DS> {
   private readonly pattern: RegExp
   public readonly type: T = T
 
-  public constructor (schema: DS) {
-    this.schema = schema
+  public constructor (schema: DS, validatorMaster: DataValidatorMaster) {
+    super(schema, validatorMaster)
     this.pattern = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/
   }
 
   public validate (data: any): Ipv4DataValidationResult {
-    const { schema } = this
-    const result: Ipv4DataValidationResult = new DataValidationResult(schema)
-    data = result.baseValidate(data)
+    const result: Ipv4DataValidationResult = super.validate(data)
+    data = result.value
+    result.setValue(undefined)
 
     // if data is null/undefined, no further verification required
     if (data == null) return result
@@ -88,18 +87,18 @@ export class Ipv4DataValidator implements DataValidator<T, V, DS> {
 /**
  * Ipv4 validator factory
  */
-export class Ipv4DataValidatorFactory implements DataValidatorFactory<T, V, DS> {
+export class Ipv4DataValidatorFactory extends DataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {
-    return new Ipv4DataValidator(schema)
+    return new Ipv4DataValidator(schema, this.validatorMaster)
   }
 }
 
 
 // register parser and validator
-parserMaster.registerParser(T, new Ipv4DataSchemaParser())
-validatorMaster.registerValidatorFactory(T, new Ipv4DataValidatorFactory())
+optionMaster.registerParser(T, Ipv4DataSchemaParser)
+optionMaster.registerValidatorFactory(T, Ipv4DataValidatorFactory)
 
 
 // run test
@@ -110,9 +109,10 @@ const rawSchema = {
 
 
 // parse rawSchema
-const { value: schema } = parserMaster.parse(rawSchema)
+optionMaster.reset()
+const { value: schema } = optionMaster.parse(rawSchema)
 const validate = (data: any): boolean | undefined => {
-  const result = validatorMaster.validate(schema!, data)
+  const result = optionMaster.validate(schema!, data)
   if (result.hasError) {
     console.error(result.errorDetails)
   }
