@@ -5,6 +5,7 @@
       type: 'integer'
       required?: boolean
       default?: boolean
+      $id?: string
       minimum?: number
       maximum?: number
       exclusiveMinimum?: number
@@ -19,6 +20,7 @@
       type: 'integer'
       required: boolean
       default?: boolean
+      $id?: string
       minimum?: number
       maximum?: number
       exclusiveMinimum?: number
@@ -34,6 +36,7 @@
      `type`             | the type of DataSchema            | -       | Yes (and the value must be `'integer'`)
      `required`         | whether the data must be set      | `false` | No
      `default`          | default value of this DataSchema  | -       | No
+     `$id`              | unique identifier for DataSchema  | -       | No
      `minimum`          | minimum value ($x \geqslant$)     | -       | No
      `maximum`          | maximum value ($x \leqslant$)     | -       | No
      `exclusiveMinimum` | exclusive minimum value ($x >$)   | -       | No
@@ -85,4 +88,4 @@
 [rawSchema]: ../../src/schema/integer.ts#RawIntegerDataSchema
 [schema]: ../../src/schema/integer.ts#IntegerDataSchema
 [demo]: ../../demo/integer
-[test-cases]: ../../test/cases/base-schema/integer
+[test-cases]: ../../test/cases/data-schema/base-schema/integer

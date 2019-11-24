@@ -5,6 +5,7 @@
       type: 'boolean'
       required?: boolean
       default?: boolean
+      $id?: string
     }
     ```
 
@@ -14,6 +15,7 @@
       type: 'boolean'
       required: boolean
       default?: boolean
+      $id?: string
     }
     ```
 
@@ -24,6 +26,7 @@
      `type`     | the type of DataSchema            | -       | Yes (and the value must be `'boolean'`)
      `required` | whether the data must be set      | `false` | No
      `default`  | default value of this DataSchema  | -       | No
+     `$id`      | unique identifier for DataSchema  | -       | No
 
 
 # demo
@@ -64,4 +67,4 @@
 [rawSchema]: ../../src/schema/boolean.ts#RawBooleanDataSchema
 [schema]: ../../src/schema/boolean.ts#BooleanDataSchema
 [demo]: ../../demo/boolean
-[test-cases]: ../../test/cases/base-schema/boolean
+[test-cases]: ../../test/cases/data-schema/base-schema/boolean

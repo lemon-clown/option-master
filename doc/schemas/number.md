@@ -5,6 +5,7 @@
       type: 'number'
       required?: boolean
       default?: boolean
+      $id?: string
       minimum?: number
       maximum?: number
       exclusiveMinimum?: number
@@ -19,6 +20,7 @@
       type: 'number'
       required: boolean
       default?: boolean
+      $id?: string
       minimum?: number
       maximum?: number
       exclusiveMinimum?: number
@@ -34,6 +36,7 @@
      `type`             | the type of DataSchema            | -       | Yes (and the value must be `'number'`)
      `required`         | whether the data must be set      | `false` | No
      `default`          | default value of this DataSchema  | -       | No
+     `$id`              | unique identifier for DataSchema  | -       | No
      `minimum`          | minimum value ($x \geqslant$)     | -       | No
      `maximum`          | maximum value ($x \leqslant$)     | -       | No
      `exclusiveMinimum` | exclusive minimum value ($x >$)   | -       | No
@@ -85,4 +88,4 @@
 [rawSchema]: ../../src/schema/number.ts#RawNumberDataSchema
 [schema]: ../../src/schema/number.ts#NumberDataSchema
 [demo]: ../../demo/number
-[test-cases]: ../../test/cases/base-schema/number
+[test-cases]: ../../test/cases/data-schema/base-schema/number
