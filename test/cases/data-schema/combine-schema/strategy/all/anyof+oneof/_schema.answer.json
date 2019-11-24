@@ -1,0 +1,80 @@
+{
+  "value": {
+    "type": "combine",
+    "required": false,
+    "strategy": "all",
+    "anyOf": [
+      {
+        "type": "object",
+        "required": false,
+        "allowAdditionalProperties": true,
+        "silentIgnore": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
+      {
+        "type": "object",
+        "required": false,
+        "allowAdditionalProperties": true,
+        "silentIgnore": false,
+        "properties": {
+          "email": {
+            "type": "string",
+            "required": true,
+            "pattern": "[^@]+@[^\\.]+\\..+"
+          }
+        }
+      }
+    ],
+    "oneOf": [
+      {
+        "type": "object",
+        "required": false,
+        "allowAdditionalProperties": true,
+        "silentIgnore": true,
+        "properties": {
+          "gender": {
+            "type": "string",
+            "required": true,
+            "enum": [
+              "male",
+              "female"
+            ]
+          }
+        },
+        "propertyNames": {
+          "type": "string",
+          "required": false,
+          "pattern": "^(name|email)$"
+        }
+      },
+      {
+        "type": "object",
+        "required": false,
+        "allowAdditionalProperties": true,
+        "silentIgnore": true,
+        "properties": {
+          "sex": {
+            "type": "string",
+            "required": true,
+            "enum": [
+              "male",
+              "female"
+            ]
+          }
+        },
+        "propertyNames": {
+          "type": "string",
+          "required": false,
+          "pattern": "^(name|email)$"
+        }
+      }
+    ]
+  },
+  "errors": [],
+  "warnings": []
+}

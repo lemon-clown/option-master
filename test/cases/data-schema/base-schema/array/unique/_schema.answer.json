@@ -1,0 +1,13 @@
+{
+  "value": {
+    "type": "array",
+    "required": false,
+    "items": {
+      "type": "number",
+      "required": false
+    },
+    "unique": true
+  },
+  "errors": [],
+  "warnings": []
+}

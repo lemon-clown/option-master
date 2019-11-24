@@ -1,0 +1,130 @@
+[
+  {
+    "errors": [
+      {
+        "constraint": "properties",
+        "reason": "properties#globalOptions.logLevel: required, but got (undefined).",
+        "property": "globalOptions",
+        "traces": [
+          {
+            "constraint": "properties",
+            "reason": "properties#logLevel: required, but got (undefined).",
+            "property": "logLevel",
+            "traces": [
+              {
+                "constraint": "required",
+                "reason": "required, but got (undefined)."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "properties",
+        "reason": "properties#serve: [serve.port: expected an integer, but got (\"sss\"): (\"sss\") is not a valid integer (or integer string),\nserve.dataFileRootPath: dataFileRootPath depend on [\"apiItemConfigPath\"], but \"apiItemConfigPath\" is absent.]",
+        "property": "serve",
+        "traces": [
+          {
+            "constraint": "properties",
+            "reason": "properties#port: expected an integer, but got (\"sss\"): (\"sss\") is not a valid integer (or integer string)",
+            "property": "port",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an integer, but got (\"sss\"): (\"sss\") is not a valid integer (or integer string)"
+              }
+            ]
+          },
+          {
+            "constraint": "dependencies",
+            "reason": "dataFileRootPath depend on [\"apiItemConfigPath\"], but \"apiItemConfigPath\" is absent.",
+            "property": "dataFileRootPath"
+          }
+        ]
+      },
+      {
+        "constraint": "dependencies",
+        "reason": "generate depend on [\"globalOptions\"], but \"globalOptions\" is absent.",
+        "property": "generate"
+      }
+    ],
+    "warnings": [
+      {
+        "constraint": "properties",
+        "reason": "properties#generate.schemaArgs.ignored-X: property(ignored-X) is not matched propertyNamesSchema, skipped.",
+        "property": "generate",
+        "traces": [
+          {
+            "constraint": "properties",
+            "reason": "properties#schemaArgs.ignored-X: property(ignored-X) is not matched propertyNamesSchema, skipped.",
+            "property": "schemaArgs",
+            "traces": [
+              {
+                "constraint": "propertyNames",
+                "reason": "property(ignored-X) is not matched propertyNamesSchema, skipped.",
+                "property": "ignored-X",
+                "traces": [
+                  {
+                    "constraint": "pattern",
+                    "reason": "expected value pattern is (\"^attr-\"), but got (\"ignored-X\")."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "errors": [
+      {
+        "constraint": "dependencies",
+        "reason": "generate depend on [\"globalOptions\"], but \"globalOptions\" is absent.",
+        "property": "generate"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "properties",
+        "reason": "properties#generate.clean: expected a boolean, but got (\"oh\"): (\"oh\") is not a valid boolean type (or boolean string)",
+        "property": "generate",
+        "traces": [
+          {
+            "constraint": "properties",
+            "reason": "properties#clean: expected a boolean, but got (\"oh\"): (\"oh\") is not a valid boolean type (or boolean string)",
+            "property": "clean",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a boolean, but got (\"oh\"): (\"oh\") is not a valid boolean type (or boolean string)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "constraint": "properties",
+        "reason": "properties#serve.port: required, but got (undefined).",
+        "property": "serve",
+        "traces": [
+          {
+            "constraint": "properties",
+            "reason": "properties#port: required, but got (undefined).",
+            "property": "port",
+            "traces": [
+              {
+                "constraint": "required",
+                "reason": "required, but got (undefined)."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  }
+]

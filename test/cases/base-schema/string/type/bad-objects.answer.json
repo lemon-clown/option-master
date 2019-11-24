@@ -1,9 +1,0 @@
-{
-  "errors": [
-    {
-      "constraint": "type",
-      "reason": "expected a string, but got ([{},{\"ss\":\"dfe\"}]): ([{},{\"ss\":\"dfe\"}]) is not a valid string"
-    }
-  ],
-  "warnings": []
-}

@@ -1,0 +1,54 @@
+{
+  "value": {
+    "type": "object",
+    "required": false,
+    "allowAdditionalProperties": false,
+    "silentIgnore": false,
+    "properties": {
+      "serve": {
+        "type": "object",
+        "required": false,
+        "allowAdditionalProperties": false,
+        "silentIgnore": false,
+        "properties": {
+          "host": {
+            "type": "string",
+            "required": false,
+            "default": "127.0.0.1",
+            "pattern": "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
+          },
+          "port": {
+            "type": "integer",
+            "required": false,
+            "default": 80,
+            "minimum": 0,
+            "maximum": 65535
+          },
+          "prefixUrl": {
+            "type": "string",
+            "required": false,
+            "default": "/"
+          },
+          "ssl": {
+            "type": "object",
+            "required": true,
+            "allowAdditionalProperties": false,
+            "silentIgnore": false,
+            "properties": {
+              "pub_key": {
+                "type": "string",
+                "required": true
+              },
+              "sec_key": {
+                "type": "string",
+                "required": true
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

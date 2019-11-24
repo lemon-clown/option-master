@@ -1,0 +1,24 @@
+{
+  "value": {
+    "type": "object",
+    "required": true,
+    "allowAdditionalProperties": false,
+    "silentIgnore": false,
+    "properties": {
+      "host": {
+        "type": "string",
+        "required": false
+      },
+      "port": {
+        "type": "integer",
+        "required": false
+      },
+      "public": {
+        "type": "boolean",
+        "required": false
+      }
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

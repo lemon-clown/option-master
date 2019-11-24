@@ -1,0 +1,36 @@
+{
+  "value": {
+    "type": "combine",
+    "required": true,
+    "strategy": "all",
+    "allOf": [
+      {
+        "type": "object",
+        "required": false,
+        "allowAdditionalProperties": true,
+        "silentIgnore": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
+      {
+        "type": "object",
+        "required": false,
+        "allowAdditionalProperties": true,
+        "silentIgnore": false,
+        "properties": {
+          "age": {
+            "type": "integer",
+            "required": true,
+            "minimum": 1
+          }
+        }
+      }
+    ]
+  },
+  "errors": [],
+  "warnings": []
+}
