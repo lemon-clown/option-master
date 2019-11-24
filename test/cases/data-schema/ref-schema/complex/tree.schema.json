@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "$id": "#/node",
+  "required": true,
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "title": "string",
+    "children": {
+      "type": "array",
+      "items": {
+        "type": "ref",
+        "$ref": "#/node"
+      }
+    }
+  }
+}
