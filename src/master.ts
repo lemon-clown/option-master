@@ -56,7 +56,7 @@ export class OptionMaster {
     this.dataValidatorMaster = new DataValidatorMaster(this.schemaMaster)
   }
 
-  public reset () {
+  public reset() {
     this.schemaMaster.clear()
     this.schemaParserMaster.reset()
   }
@@ -66,7 +66,7 @@ export class OptionMaster {
    * @param type
    * @param SchemaParserConstructor
    */
-  public registerParser (type: string, SchemaParserConstructor: DSParserConstructor): this {
+  public registerParser(type: string, SchemaParserConstructor: DSParserConstructor): this {
     const schemaParser = new SchemaParserConstructor(this.schemaParserMaster)
     this.schemaParserMaster.registerParser(type, schemaParser)
     return this
@@ -88,7 +88,7 @@ export class OptionMaster {
    * @param type
    * @param DataValidatorFactory
    */
-  public registerValidatorFactory (type: string, DataValidatorFactory: DValidatorFactoryConstructor): this {
+  public registerValidatorFactory(type: string, DataValidatorFactory: DValidatorFactoryConstructor): this {
     const dataValidatorFactory = new DataValidatorFactory(this.dataValidatorMaster)
     this.dataValidatorMaster.registerValidatorFactory(type, dataValidatorFactory)
     return this
@@ -99,7 +99,7 @@ export class OptionMaster {
    * @param type
    * @param DataValidatorFactory
    */
-  public replaceValidatorFactory (type: string, DataValidatorFactory: DValidatorFactoryConstructor): this {
+  public replaceValidatorFactory(type: string, DataValidatorFactory: DValidatorFactoryConstructor): this {
     const dataValidatorFactory = new DataValidatorFactory(this.dataValidatorMaster)
     this.dataValidatorMaster.replaceValidatorFactory(type, dataValidatorFactory)
     return this
@@ -121,50 +121,52 @@ export class OptionMaster {
   public validate(schema: DSchema, data: any): DValidationResult {
     return this.dataValidatorMaster.validate(schema, data)
   }
+
+  /**
+   * 将预置的 DataSchema 及其解析器、校验器注册进当前 OptionMaster 实例中
+   */
+  public registerDefaultSchemas(): this {
+    this
+      // array
+      .registerParser(ARRAY_T_TYPE, ArrayDataSchemaParser)
+      .registerValidatorFactory(ARRAY_T_TYPE, ArrayDataValidatorFactory)
+
+      // boolean
+      .registerParser(BOOLEAN_T_TYPE, BooleanDataSchemaParser)
+      .registerValidatorFactory(BOOLEAN_T_TYPE, BooleanDataValidatorFactory)
+
+      // combine
+      .registerParser(COMBINE_T_TYPE, CombineDataSchemaParser)
+      .registerValidatorFactory(COMBINE_T_TYPE, CombineDataValidatorFactory)
+
+      // integer
+      .registerParser(INTEGER_T_TYPE, IntegerDataSchemaParser)
+      .registerValidatorFactory(INTEGER_T_TYPE, IntegerDataValidatorFactory)
+
+      // number
+      .registerParser(NUMBER_T_TYPE, NumberDataSchemaParser)
+      .registerValidatorFactory(NUMBER_T_TYPE, NumberDataValidatorFactory)
+
+      // object
+      .registerParser(OBJECT_T_TYPE, ObjectDataSchemaParser)
+      .registerValidatorFactory(OBJECT_T_TYPE, ObjectDataValidatorFactory)
+
+      // ref
+      .registerParser(REF_T_TYPE, RefDataSchemaParser)
+      .registerValidatorFactory(REF_T_TYPE, RefDataValidatorFactory)
+
+      // string
+      .registerParser(STRING_T_TYPE, StringDataSchemaParser)
+      .registerValidatorFactory(STRING_T_TYPE, StringDataValidatorFactory)
+    return this
+  }
 }
 
 
 /**
- * 默认的 ParserMaster；支持类型包括：array, boolean, integer, number, string
+ * 默认的 ParserMaster；
+ * 支持类型包括：array, boolean, combine, integer, number, object, ref, string
  */
 export const optionMaster = new OptionMaster()
+optionMaster.registerDefaultSchemas()
 
-// array
-optionMaster
-  .registerParser(ARRAY_T_TYPE, ArrayDataSchemaParser)
-  .registerValidatorFactory(ARRAY_T_TYPE, ArrayDataValidatorFactory)
-
-// boolean
-optionMaster
-  .registerParser(BOOLEAN_T_TYPE, BooleanDataSchemaParser)
-  .registerValidatorFactory(BOOLEAN_T_TYPE, BooleanDataValidatorFactory)
-
-// combine
-optionMaster
-  .registerParser(COMBINE_T_TYPE, CombineDataSchemaParser)
-  .registerValidatorFactory(COMBINE_T_TYPE, CombineDataValidatorFactory)
-
-// integer
-optionMaster
-  .registerParser(INTEGER_T_TYPE, IntegerDataSchemaParser)
-  .registerValidatorFactory(INTEGER_T_TYPE, IntegerDataValidatorFactory)
-
-// number
-optionMaster
-  .registerParser(NUMBER_T_TYPE, NumberDataSchemaParser)
-  .registerValidatorFactory(NUMBER_T_TYPE, NumberDataValidatorFactory)
-
-// object
-optionMaster
-  .registerParser(OBJECT_T_TYPE, ObjectDataSchemaParser)
-  .registerValidatorFactory(OBJECT_T_TYPE, ObjectDataValidatorFactory)
-
-// ref
-optionMaster
-  .registerParser(REF_T_TYPE, RefDataSchemaParser)
-  .registerValidatorFactory(REF_T_TYPE, RefDataValidatorFactory)
-
-// string
-optionMaster
-  .registerParser(STRING_T_TYPE, StringDataSchemaParser)
-  .registerValidatorFactory(STRING_T_TYPE, StringDataValidatorFactory)
