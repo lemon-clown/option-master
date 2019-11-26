@@ -1,5 +1,13 @@
 {
   "value": {
+    "definitions": {
+      "port": {
+        "type": "integer",
+        "required": false,
+        "minimum": 0,
+        "maximum": 65535
+      }
+    },
     "type": "object",
     "required": false,
     "allowAdditionalProperties": false,
@@ -18,17 +26,15 @@
             "pattern": "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
           },
           "port": {
-            "type": "integer",
-            "$id": "#/serve/port",
+            "type": "ref",
             "required": false,
             "default": 80,
-            "minimum": 0,
-            "maximum": 65535
+            "$ref": "#/definitions/port"
           },
           "port2": {
             "type": "ref",
             "required": false,
-            "$ref": "#/serve/port"
+            "$ref": "#/definitions/port"
           },
           "prefixUrl": {
             "type": "string",

@@ -3,42 +3,49 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#children.1.children.0.children.0.name: required, but got (undefined).",
-        "property": "children",
+        "reason": "properties#tree.children.1.children.0.children.0.name: required, but got (undefined).",
+        "property": "tree",
         "traces": [
           {
-            "constraint": "items",
-            "reason": "items#1.children.0.children.0.name: required, but got (undefined).",
-            "property": "1",
+            "constraint": "properties",
+            "reason": "properties#children.1.children.0.children.0.name: required, but got (undefined).",
+            "property": "children",
             "traces": [
               {
-                "constraint": "properties",
-                "reason": "properties#children.0.children.0.name: required, but got (undefined).",
-                "property": "children",
+                "constraint": "items",
+                "reason": "items#1.children.0.children.0.name: required, but got (undefined).",
+                "property": "1",
                 "traces": [
                   {
-                    "constraint": "items",
-                    "reason": "items#0.children.0.name: required, but got (undefined).",
-                    "property": "0",
+                    "constraint": "properties",
+                    "reason": "properties#children.0.children.0.name: required, but got (undefined).",
+                    "property": "children",
                     "traces": [
                       {
-                        "constraint": "properties",
-                        "reason": "properties#children.0.name: required, but got (undefined).",
-                        "property": "children",
+                        "constraint": "items",
+                        "reason": "items#0.children.0.name: required, but got (undefined).",
+                        "property": "0",
                         "traces": [
                           {
-                            "constraint": "items",
-                            "reason": "items#0.name: required, but got (undefined).",
-                            "property": "0",
+                            "constraint": "properties",
+                            "reason": "properties#children.0.name: required, but got (undefined).",
+                            "property": "children",
                             "traces": [
                               {
-                                "constraint": "properties",
-                                "reason": "properties#name: required, but got (undefined).",
-                                "property": "name",
+                                "constraint": "items",
+                                "reason": "items#0.name: required, but got (undefined).",
+                                "property": "0",
                                 "traces": [
                                   {
-                                    "constraint": "required",
-                                    "reason": "required, but got (undefined)."
+                                    "constraint": "properties",
+                                    "reason": "properties#name: required, but got (undefined).",
+                                    "property": "name",
+                                    "traces": [
+                                      {
+                                        "constraint": "required",
+                                        "reason": "required, but got (undefined)."
+                                      }
+                                    ]
                                   }
                                 ]
                               }
