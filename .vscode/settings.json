@@ -13,5 +13,6 @@
     "postbuild",
     "tsbuildinfo",
     "typeof"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
