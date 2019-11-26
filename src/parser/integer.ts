@@ -1,5 +1,4 @@
-import { DataSchemaParser } from './_base'
-import { DataSchemaParseResult } from './_result'
+import { BaseDataSchemaParser, DataSchemaParseResult } from '../_core/parser'
 import { INTEGER_V_TYPE as V, INTEGER_T_TYPE as T, RawIntegerDataSchema as RDS, IntegerDataSchema as DS } from '../schema/integer'
 import { coverInteger, coverArray } from '../_util/cover-util'
 
@@ -17,7 +16,7 @@ export type IntegerDataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
  * maximum 和 exclusiveMinimum 若非整数，则做下取整
  * enum 将忽略所有非整数（或整数字符串）的值
  */
-export class IntegerDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
+export class IntegerDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
   public readonly type: T = T
 
   /**
@@ -28,12 +27,12 @@ export class IntegerDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
     const result: IntegerDataSchemaParserResult = super.parse(rawSchema)
     rawSchema = result._rawSchema
 
-    const defaultValueResult = result.parseBaseTypeProperty<V>('default', coverInteger)
-    const minimumResult = result.parseBaseTypeProperty<number>('minimum', coverInteger)
-    const maximumResult = result.parseBaseTypeProperty<number>('maximum', coverInteger)
-    const exclusiveMinimumResult = result.parseBaseTypeProperty<number>('exclusiveMinimum', coverInteger)
-    const exclusiveMaximumResult = result.parseBaseTypeProperty<number>('exclusiveMaximum', coverInteger)
-    const enumValueResult = result.parseBaseTypeProperty<number[]>('enum', coverArray<number>(coverInteger))
+    const defaultValueResult = result.parseProperty<V>('default', coverInteger)
+    const minimumResult = result.parseProperty<number>('minimum', coverInteger)
+    const maximumResult = result.parseProperty<number>('maximum', coverInteger)
+    const exclusiveMinimumResult = result.parseProperty<number>('exclusiveMinimum', coverInteger)
+    const exclusiveMaximumResult = result.parseProperty<number>('exclusiveMaximum', coverInteger)
+    const enumValueResult = result.parseProperty<number[]>('enum', coverArray<number>(coverInteger))
 
     const ceil = (x?: number) => x == null ? x : Math.ceil(x)
     const floor = (x?: number) => x == null ? x : Math.floor(x)

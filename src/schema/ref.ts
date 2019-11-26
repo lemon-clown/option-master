@@ -1,4 +1,4 @@
-import { DataSchema, RawDataSchema } from './_base'
+import { DataSchema, RawDataSchema } from '../_core/schema'
 
 
 // RefDataSchema.type 的类型

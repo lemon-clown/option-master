@@ -1,7 +1,6 @@
-import { DataSchemaParser } from './_base'
-import { DataSchemaParseResult } from './_result'
+import { RDSchema, DSchema } from '../_core/schema'
+import { BaseDataSchemaParser, DataSchemaParseResult } from '../_core/parser'
 import { COMBINE_V_TYPE as V, COMBINE_T_TYPE as T, RawCombineDataSchema as RDS, CombineDataSchema as DS, CombineStrategy } from '../schema/combine'
-import { RDSchema, DSchema } from '../schema/_base'
 import { coverString } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'
 
@@ -17,7 +16,7 @@ export type CombineDataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
  *
  * enum 将忽略所有非组合（或组合字符串）的值
  */
-export class CombineDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
+export class CombineDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
   public readonly type: T = T
 
   /**
@@ -31,7 +30,7 @@ export class CombineDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
     const defaultValue = rawSchema.default
 
     // strategy 的默认值为 all
-    const strategyResult = result.parseBaseTypeProperty<CombineStrategy>('strategy', coverString as any, CombineStrategy.ALL)
+    const strategyResult = result.parseProperty<CombineStrategy>('strategy', coverString as any, CombineStrategy.ALL)
     switch (strategyResult.value) {
       case CombineStrategy.ALL:
       case CombineStrategy.ANY:
@@ -56,7 +55,7 @@ export class CombineDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
       const schemas: DSchema[] = []
       for (let i = 0; i < rawSchemas.length; ++i) {
         const itemRawSchema = rawSchemas[i]
-        const itemSchema = this.parserMaster.parse(itemRawSchema)
+        const itemSchema = this.context.parseDataSchema(itemRawSchema)
         result.addHandleResult(constraint, itemSchema)
 
         // 存在错误则跳过

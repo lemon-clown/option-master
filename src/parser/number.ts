@@ -1,5 +1,4 @@
-import { DataSchemaParser } from './_base'
-import { DataSchemaParseResult } from './_result'
+import { BaseDataSchemaParser, DataSchemaParseResult } from '../_core/parser'
 import { NUMBER_V_TYPE as V, NUMBER_T_TYPE as T, RawNumberDataSchema as RDS, NumberDataSchema as DS } from '../schema/number'
 import { coverNumber, coverArray } from '../_util/cover-util'
 
@@ -15,7 +14,7 @@ export type NumberDataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
  *
  * enum 将忽略所有非数字（或数字字符串）的值
  */
-export class NumberDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
+export class NumberDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
   public readonly type: T = T
 
   /**
@@ -27,12 +26,12 @@ export class NumberDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
     rawSchema = result._rawSchema
 
     // required 的默认值为 false
-    const defaultValueResult = result.parseBaseTypeProperty<V>('default', coverNumber)
-    const minimumResult = result.parseBaseTypeProperty<number>('minimum', coverNumber)
-    const maximumResult = result.parseBaseTypeProperty<number>('maximum', coverNumber)
-    const exclusiveMinimumResult = result.parseBaseTypeProperty<number>('exclusiveMinimum', coverNumber)
-    const exclusiveMaximumResult = result.parseBaseTypeProperty<number>('exclusiveMaximum', coverNumber)
-    const enumValueResult = result.parseBaseTypeProperty<number[]>('enum', coverArray<number>(coverNumber))
+    const defaultValueResult = result.parseProperty<V>('default', coverNumber)
+    const minimumResult = result.parseProperty<number>('minimum', coverNumber)
+    const maximumResult = result.parseProperty<number>('maximum', coverNumber)
+    const exclusiveMinimumResult = result.parseProperty<number>('exclusiveMinimum', coverNumber)
+    const exclusiveMaximumResult = result.parseProperty<number>('exclusiveMaximum', coverNumber)
+    const enumValueResult = result.parseProperty<number[]>('enum', coverArray<number>(coverNumber))
 
     // NumberDataSchema
     const schema: DS = {

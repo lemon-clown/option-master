@@ -1,5 +1,4 @@
-import { DataValidator, DataValidatorFactory } from './_base'
-import { DataValidationResult } from './_result'
+import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult } from '../_core/validator'
 import { NUMBER_V_TYPE as V, NUMBER_T_TYPE as T, NumberDataSchema as DS } from '../schema/number'
 import { coverNumber } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'
@@ -14,7 +13,7 @@ export type NumberDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 数字类型的校验器
  */
-export class NumberDataValidator extends DataValidator<T, V, DS> {
+export class NumberDataValidator extends BaseDataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**
@@ -31,7 +30,7 @@ export class NumberDataValidator extends DataValidator<T, V, DS> {
     if (data == null) return result
 
     // 检查是否为数字
-    const value = result.validateBaseType(coverNumber, data)!
+    const value = result.validateType(coverNumber, data)!
     if (result.hasError) return result
 
     // 检查最小值（可取到）
@@ -84,10 +83,10 @@ export class NumberDataValidator extends DataValidator<T, V, DS> {
  * 数字类型的校验器的工厂对象实例
  */
 
-export class NumberDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
+export class NumberDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {
-    return new NumberDataValidator(schema, this.validatorMaster)
+    return new NumberDataValidator(schema, this.context)
   }
 }

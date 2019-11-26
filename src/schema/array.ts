@@ -1,4 +1,4 @@
-import { DataSchema, RawDataSchema, RDSchema, DSchema } from './_base'
+import { DataSchema, RawDataSchema, RDSchema, DSchema } from '../_core/schema'
 
 
 // ArrayDataSchema.type 的类型

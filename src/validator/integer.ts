@@ -1,5 +1,4 @@
-import { DataValidator, DataValidatorFactory } from './_base'
-import { DataValidationResult } from './_result'
+import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult } from '../_core/validator'
 import { INTEGER_V_TYPE as V, INTEGER_T_TYPE as T, IntegerDataSchema as DS } from '../schema/integer'
 import { coverInteger } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'
@@ -14,7 +13,7 @@ export type IntegerDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 整数类型的校验器
  */
-export class IntegerDataValidator extends DataValidator<T, V, DS> {
+export class IntegerDataValidator extends BaseDataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**
@@ -31,7 +30,7 @@ export class IntegerDataValidator extends DataValidator<T, V, DS> {
     if (data == null) return result
 
     // 检查是否为整数
-    const value = result.validateBaseType(coverInteger, data)!
+    const value = result.validateType(coverInteger, data)!
     if (result.hasError) return result
 
     // 检查最小值（可取到）
@@ -83,10 +82,10 @@ export class IntegerDataValidator extends DataValidator<T, V, DS> {
 /**
  * 整数类型的校验器的工厂对象
  */
-export class IntegerDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
+export class IntegerDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {
-    return new IntegerDataValidator(schema, this.validatorMaster)
+    return new IntegerDataValidator(schema, this.context)
   }
 }

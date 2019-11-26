@@ -1,5 +1,4 @@
-import { DataSchemaParser } from './_base'
-import { DataSchemaParseResult } from './_result'
+import { BaseDataSchemaParser, DataSchemaParseResult } from '../_core/parser'
 import { BOOLEAN_V_TYPE as V, BOOLEAN_T_TYPE as T, RawBooleanDataSchema as RDS, BooleanDataSchema as DS } from '../schema/boolean'
 import { coverBoolean } from '../_util/cover-util'
 
@@ -13,7 +12,7 @@ export type BooleanDataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
 /**
  * 布尔类型的模式的解析器
  */
-export class BooleanDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
+export class BooleanDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
   public readonly type: T = T
 
   /**
@@ -24,7 +23,7 @@ export class BooleanDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
     const result: BooleanDataSchemaParserResult = super.parse(rawSchema)
     rawSchema = result._rawSchema
 
-    const defaultValueResult = result.parseBaseTypeProperty<V>('default', coverBoolean)
+    const defaultValueResult = result.parseProperty<V>('default', coverBoolean)
 
     // BooleanDataSchema
     const schema: DS = {

@@ -1,7 +1,6 @@
-import { DataValidator, DataValidatorFactory } from './_base'
-import { DataValidationResult } from './_result'
+import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DVResult } from '../_core/validator'
 import { OBJECT_V_TYPE as V, OBJECT_T_TYPE as T, ObjectDataSchema as DS } from '../schema/object'
-import { stringify } from '../_util/type-util'
+import { stringify, isObject } from '../_util/type-util'
 
 
 /**
@@ -13,7 +12,7 @@ export type ObjectDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 对象类型的校验器
  */
-export class ObjectDataValidator extends DataValidator<T, V, DS> {
+export class ObjectDataValidator extends BaseDataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**
@@ -30,7 +29,12 @@ export class ObjectDataValidator extends DataValidator<T, V, DS> {
     if (data == null) return result
 
     // 检查是否为对象
-    if (!result.ensureObject('type', data)) return result
+    if (!isObject(data)) {
+      return result.addError({
+        constraint: 'type',
+        reason: `expected an object, but got (${ stringify(data) }).`
+      })
+    }
 
     const value: any = {}
     for (const propertyName of Object.getOwnPropertyNames(data)) {
@@ -42,7 +46,7 @@ export class ObjectDataValidator extends DataValidator<T, V, DS> {
         if (schema.properties.hasOwnProperty(propertyName)) {
           // 使用指定的 DataSchema 进行检查
           const xSchema = schema.properties[propertyName]
-          const xValidateResult = this.validatorMaster.validate(xSchema, propertyValue)
+          const xValidateResult = this.context.validateDataSchema(xSchema, propertyValue)
           result.addHandleResult('properties', xValidateResult, propertyName)
 
           // 若符合，则更新值
@@ -69,7 +73,7 @@ export class ObjectDataValidator extends DataValidator<T, V, DS> {
       if (schema.propertyNames != null) {
         // 检查是否符合 propertyNames 的定义
         const xSchema = schema.propertyNames
-        const xValidateResult = this.validatorMaster.validate(xSchema, propertyName)
+        const xValidateResult = this.context.validateDataSchema(xSchema, propertyName)
         if (xValidateResult.hasError) {
           if (!schema.silentIgnore) {
             result.addWarning({
@@ -100,7 +104,7 @@ export class ObjectDataValidator extends DataValidator<T, V, DS> {
          */
         if (data.hasOwnProperty(propertyName)) continue
         const xSchema = schema.properties[propertyName]
-        const xValidateResult = this.validatorMaster.validate(xSchema, undefined)
+        const xValidateResult = this.context.validateDataSchema(xSchema, undefined)
         result.addHandleResult('properties', xValidateResult, propertyName)
 
         // 若不存在 error 且值不为 undefined，则更新值
@@ -139,10 +143,10 @@ export class ObjectDataValidator extends DataValidator<T, V, DS> {
 /**
  * 对象类型的校验器的工厂对象
  */
-export class ObjectDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
+export class ObjectDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {
-    return new ObjectDataValidator(schema, this.validatorMaster)
+    return new ObjectDataValidator(schema, this.context)
   }
 }

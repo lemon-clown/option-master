@@ -1,5 +1,6 @@
-import { DataSchemaMaster } from './schema/_master'
-import { RDSchema, DSchema } from './schema/_base'
+import { RDSchema, DSchema } from './_core/schema'
+import { DataSchemaParserMaster, DSPResult, DSParserConstructor } from './_core/parser'
+import { DataValidatorMaster, DVResult, DVFactoryConstructor } from './_core/validator'
 import { ARRAY_T_TYPE } from './schema/array'
 import { BOOLEAN_T_TYPE } from './schema/boolean'
 import { COMBINE_T_TYPE } from './schema/combine'
@@ -8,7 +9,6 @@ import { NUMBER_T_TYPE } from './schema/number'
 import { OBJECT_T_TYPE } from './schema/object'
 import { REF_T_TYPE } from './schema/ref'
 import { STRING_T_TYPE } from './schema/string'
-import { DataSchemaParserMaster, ParserMode, DSParseResult, DSParserConstructor } from './parser/_master'
 import { ArrayDataSchemaParser } from './parser/array'
 import { BooleanDataSchemaParser } from './parser/boolean'
 import { CombineDataSchemaParser } from './parser/combine'
@@ -17,7 +17,6 @@ import { NumberDataSchemaParser } from './parser/number'
 import { ObjectDataSchemaParser } from './parser/object'
 import { RefDataSchemaParser } from './parser/ref'
 import { StringDataSchemaParser } from './parser/string'
-import { DataValidatorMaster, DValidationResult, DValidatorFactoryConstructor } from './validator/_master'
 import { ArrayDataValidatorFactory } from './validator/array'
 import { BooleanDataValidatorFactory } from './validator/boolean'
 import { CombineDataValidatorFactory } from './validator/combine'
@@ -30,16 +29,6 @@ import { StringDataValidatorFactory } from './validator/string'
 
 export class OptionMaster {
   /**
-   * 解析模式：对 RawDataSchema 的拷贝模式
-   */
-  protected readonly mode: ParserMode
-
-  /**
-   * 数据模式管理对象实例
-   */
-  protected readonly schemaMaster: DataSchemaMaster
-
-  /**
    * 数据模式解析器管理对象实例
    */
   protected readonly schemaParserMaster: DataSchemaParserMaster
@@ -49,16 +38,9 @@ export class OptionMaster {
    */
   protected readonly dataValidatorMaster: DataValidatorMaster
 
-  public constructor(schemaMaster?: DataSchemaMaster, mode?: ParserMode) {
-    this.mode = mode != null ? mode : ParserMode.SHALLOW_CLONE
-    this.schemaMaster = schemaMaster != null ? schemaMaster : new DataSchemaMaster()
-    this.schemaParserMaster = new DataSchemaParserMaster(this.schemaMaster, this.mode)
-    this.dataValidatorMaster = new DataValidatorMaster(this.schemaMaster)
-  }
-
-  public reset() {
-    this.schemaMaster.clear()
-    this.schemaParserMaster.reset()
+  public constructor() {
+    this.schemaParserMaster = new DataSchemaParserMaster()
+    this.dataValidatorMaster = new DataValidatorMaster()
   }
 
   /**
@@ -88,7 +70,7 @@ export class OptionMaster {
    * @param type
    * @param DataValidatorFactory
    */
-  public registerValidatorFactory(type: string, DataValidatorFactory: DValidatorFactoryConstructor): this {
+  public registerValidatorFactory(type: string, DataValidatorFactory: DVFactoryConstructor): this {
     const dataValidatorFactory = new DataValidatorFactory(this.dataValidatorMaster)
     this.dataValidatorMaster.registerValidatorFactory(type, dataValidatorFactory)
     return this
@@ -99,7 +81,7 @@ export class OptionMaster {
    * @param type
    * @param DataValidatorFactory
    */
-  public replaceValidatorFactory(type: string, DataValidatorFactory: DValidatorFactoryConstructor): this {
+  public replaceValidatorFactory(type: string, DataValidatorFactory: DVFactoryConstructor): this {
     const dataValidatorFactory = new DataValidatorFactory(this.dataValidatorMaster)
     this.dataValidatorMaster.replaceValidatorFactory(type, dataValidatorFactory)
     return this
@@ -109,8 +91,8 @@ export class OptionMaster {
    * 执行解析操作
    * @param rawDataSchema   待解析的 RawDataSchema
    */
-  public parse(rawDataSchema: RDSchema): DSParseResult {
-    return this.schemaParserMaster.parse(rawDataSchema)
+  public parse(rawDataSchema: RDSchema): DSPResult {
+    return this.schemaParserMaster.parseTopDataSchema(rawDataSchema)
   }
 
   /**
@@ -118,8 +100,8 @@ export class OptionMaster {
    * @param schema
    * @param data
    */
-  public validate(schema: DSchema, data: any): DValidationResult {
-    return this.dataValidatorMaster.validate(schema, data)
+  public validate(schema: DSchema, data: any): DVResult {
+    return this.dataValidatorMaster.validateTopDataSchema(schema, data)
   }
 
   /**
