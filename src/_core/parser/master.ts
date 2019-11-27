@@ -97,7 +97,7 @@ export class DataSchemaParserMaster implements DataSchemaParserContext {
 
     // pre-add schema (parsing)
     const $path = this.definitionSchemaMaster.nameToPath(name)
-    this.definitionSchemaMaster.preAddSchema($path, $idResult.value)
+    this.definitionSchemaMaster.addRawSchema($path, rawSchema, $idResult.value)
 
     const dataSchemaResult = this.parseDataSchema(rawSchema)
     result.merge(dataSchemaResult)
@@ -172,6 +172,14 @@ export class DataSchemaParserMaster implements DataSchemaParserContext {
 
   /**
    * override method
+   * @see DataSchemaParserContext#getRawDefinition
+   */
+  public getRawDefinition(idOrPath: string): RDDSchema | undefined {
+    return this.definitionSchemaMaster.getRawSchema(idOrPath)
+  }
+
+  /**
+   * override method
    * @see DataSchemaParserContext#normalizeRawSchema
    */
   public normalizeRawSchema(rawSchema: RDSchema): RDSchema {
@@ -179,5 +187,16 @@ export class DataSchemaParserMaster implements DataSchemaParserContext {
       return { type: rawSchema }
     }
     return { ...rawSchema }
+  }
+
+  /**
+   * override method
+   * @see DataSchemaParserContext#coverRawSchema
+   */
+  public inheritRawSchema<T extends RDSchema>(defaultRawSchema: RDSchema, rawSchema: T): T {
+    return {
+      required: defaultRawSchema.required,
+      ...rawSchema,
+    }
   }
 }

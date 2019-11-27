@@ -54,11 +54,22 @@ export interface DataSchemaParserContext {
    */
   hasDefinition(idOrPath: string): boolean
   /**
+   *
+   * @param idOrPath
+   */
+  getRawDefinition(idOrPath: string): RDDSchema | undefined
+  /**
    * 格式化 rawDataSchema
    * 当 rawDataSchema 为字符串时，表示定义为此字符串的类型的 Schema
    * @param rawSchema
    */
   normalizeRawSchema(rawSchema: RDSchema): RDSchema
+  /**
+   *
+   * @param parentRawSchema
+   * @param rawSchema
+   */
+  inheritRawSchema<T extends RDSchema>(parentRawSchema: RDSchema, rawSchema: T): T
 }
 
 

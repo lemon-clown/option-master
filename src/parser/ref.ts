@@ -24,6 +24,7 @@ export class RefDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
     const result: RefDataSchemaParserResult = super.parse(rawSchema)
     rawSchema = result._rawSchema
 
+    // check $ref
     const $refResult = result.parseProperty<string>('$ref', coverString)
     if ($refResult.hasError || $refResult.value == null) {
       return result.addError({
@@ -35,15 +36,21 @@ export class RefDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
     // check if the referenced DataSchema exists
     const $ref = $refResult.value!
     if (!this.context.hasDefinition($ref)) {
-      result.addError({
+      return result.addError({
         constraint: '$ref',
         reason: `bad \`$ref\`, cannot find DataSchema with $id(${ $ref })`
       })
     }
 
+    // set the default value of the optional property to the property value
+    // corresponding to the referenced DataSchema
+    const rawDefinitionSchema = this.context.getRawDefinition($ref)!
+    rawSchema = this.context.inheritRawSchema(rawDefinitionSchema, rawSchema)
+    const basicResult: RefDataSchemaParserResult = super.parse(rawSchema)
+
     // RefDataSchema
     const schema: DS = {
-      ...result.value!,
+      ...basicResult.value!,
       $ref,
       default: rawSchema.default,
     }

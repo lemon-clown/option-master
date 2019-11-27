@@ -1,4 +1,4 @@
-import { DDSchema, TDSchema } from './types'
+import { DDSchema, TDSchema, RDDSchema } from './types'
 
 
 /**
@@ -9,6 +9,10 @@ export interface DefinitionDataSchemaNode {
    * 用于处理递归引用的问题：当引用节点引用的是其直系祖先节点时，会产生无限递归问题
    */
   finished: boolean
+  /**
+   *
+   */
+  rawSchema: Readonly<RDDSchema>
   /**
    * 用于缓存已解析的引用节点：
    *   - 当引用节点中没有覆盖属性（coverProperties) 时，可直接替换为其引用的节点（需要注意 $id 属性的更新）
@@ -58,7 +62,7 @@ export class DefinitionDataSchemaMaster {
    * @param $path
    * @param $id
    */
-  public preAddSchema($path: string, $id?: string) {
+  public addRawSchema($path: string, rawSchema: RDDSchema, $id?: string) {
     // check if $id is duplicate
     if ($id != null && this.schemaIdMap.has($id)) {
       throw new Error(`[DefinitionDataSchemaMaster.preAddSchema] $id(${ $id }) has existed`)
@@ -70,7 +74,7 @@ export class DefinitionDataSchemaMaster {
     }
 
     // add node
-    const node: DefinitionDataSchemaNode = { finished: false }
+    const node: DefinitionDataSchemaNode = { finished: false, rawSchema }
     if ($id != null) this.schemaIdMap.set($id, node)
     this.schemaPathMap.set($path, node)
   }
@@ -84,6 +88,15 @@ export class DefinitionDataSchemaMaster {
     const node = this.schemaPathMap.get($path)
     node!.finished = true
     node!.schema = schema
+  }
+
+  /**
+   *
+   * @param idOrPath
+   */
+  public getRawSchema(idOrPath: string): RDDSchema | undefined {
+    const node = this.getByIdOrPath(idOrPath)
+    return node != null ? node.rawSchema: undefined
   }
 
   /**
