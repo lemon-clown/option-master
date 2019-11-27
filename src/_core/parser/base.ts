@@ -5,8 +5,9 @@ import { DataSchemaParseResult } from './result'
 
 
 /**
- * DataSchema 解析器，将用户定义的内容解析成 DataSchema
+ * DataSchema parser to parse RawDataSchema content into DataSchema
  *
+ * 数据模式解析器，将用户定义的内容解析成 DataSchema
  * @template T    typeof <X>DataSchema.type
  * @template V    typeof <X>DataSchema.V
  * @template DS   typeof <X>DataSchema

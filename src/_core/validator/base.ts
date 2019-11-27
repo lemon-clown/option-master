@@ -5,9 +5,10 @@ import { DataValidatorFactory, DataValidatorContext, DataValidator } from './typ
 
 
 /**
- * DataSchema 校验器：
- *  - 封装 DataSchema 实例，使其具备校验数据是否符合其定义的数据类型的能力
+ * Data validator: Encapsulates a DataSchema instance with the ability to
+ * verify that the data conforms to its defined data type
  *
+ * 数据校验器：封装 DataSchema 实例，使其具备校验数据是否符合其定义的数据类型的能力
  * @template T    typeof <X>DataSchema.type
  * @template V    typeof <X>DataSchema.V
  * @template DS   typeof <X>DataSchema
@@ -15,19 +16,15 @@ import { DataValidatorFactory, DataValidatorContext, DataValidator } from './typ
 export abstract class BaseDataValidator<T extends string, V, DS extends DataSchema<T, V>>
   implements DataValidator<T, V, DS> {
   /**
-   * 对应 DataSchema 中的 type，用作唯一表示
-   * 表示该校验器接收何种类型的 DataSchema 实例
+   * override method
+   * @see DataValidator#type
    */
   public abstract readonly type: T
-
   /**
    * 校验器使用的数据模式
    */
   protected readonly schema: DS
 
-  /**
-   *
-   */
   protected readonly context: DataValidatorContext
 
   public constructor(schema: DS, context: DataValidatorContext) {
@@ -36,8 +33,8 @@ export abstract class BaseDataValidator<T extends string, V, DS extends DataSche
   }
 
   /**
-   * 校验数据 & 解析数据（通过 default 等值为计算数据的最终结果）
-   * @param data
+   * override method
+   * @see DataValidator#validate
    */
   public validate(data: any): DataValidationResult<T, V, DS> {
     const { schema } = this
@@ -74,8 +71,8 @@ export abstract class BaseDataValidator<T extends string, V, DS extends DataSche
 export abstract class BaseDataValidatorFactory<T extends string, V, DS extends DataSchema<T, V>>
   implements DataValidatorFactory<T, V, DS> {
   /**
-   * 对应 DataSchema 中的 type，用作唯一标识
-   * 表示该校验器工厂类生产何种类型的校验器
+   * override method
+   * @see DataValidatorFactory#type
    */
   public abstract readonly type: T
 
@@ -86,8 +83,8 @@ export abstract class BaseDataValidatorFactory<T extends string, V, DS extends D
   }
 
   /**
-   * 通过 DataSchema 创建与之对应的数据校验器
-   * @param schema
+   * override method
+   * @see DataValidatorFactory#create
    */
   public abstract create(schema: DS): DataValidator<T, V, DS>
 }

@@ -111,7 +111,7 @@ export interface RawTopDataSchema<T extends string, V> extends RawDataSchema<T, 
    *  * 若 DefinitionDataSchema 指定了 `$id`，则可直接通过 `{ $ref: <$id> }` 进行引用
    *  * 也可以通过 `#/definitions/<name>` 进行引用
    *
-   * @see https://json-schema.org/understanding-json-schema/structuring.html#reuse  *
+   * @see https://json-schema.org/understanding-json-schema/structuring.html#reuse
    */
   definitions?: { [name: string]: RawDefinitionDataSchema<T, V> }
 }
@@ -135,7 +135,7 @@ export interface TopDataSchema<T extends string, V> extends DataSchema<T, V> {
    *  * 若 DefinitionDataSchema 指定了 `$id`，则可直接通过 `{ $ref: <$id> }` 进行引用
    *  * 也可以通过 `#/definitions/<name>` 进行引用
    *
-   * @see https://json-schema.org/understanding-json-schema/structuring.html#reuse  *
+   * @see https://json-schema.org/understanding-json-schema/structuring.html#reuse
    */
   readonly definitions?: { [name: string]: DefinitionDataSchema<T, V> }
 }

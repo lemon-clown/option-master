@@ -37,7 +37,11 @@ export class DataSchemaParseResult<
    * @param defaultValue  属性的默认值
    * @template P  typeof rawSchema[propertyName]
    */
-  public parseProperty<P>(propertyName: keyof RDS, coverFunc: CoverOperationFunc<P>, defaultValue?: P): CoverOperationResult<P> {
+  public parseProperty<P>(
+    propertyName: keyof RDS,
+    coverFunc: CoverOperationFunc<P>,
+    defaultValue?: P
+  ): CoverOperationResult<P> {
     const rawSchema = this._rawSchema
     const result = coverFunc(defaultValue, rawSchema[propertyName])
     if (result.hasError) {

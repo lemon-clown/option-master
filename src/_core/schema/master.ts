@@ -2,153 +2,129 @@ import { DDSchema, TDSchema, RDDSchema } from './types'
 
 
 /**
- * 数据模式节点
- */
-export interface DefinitionDataSchemaNode {
-  /**
-   * 用于处理递归引用的问题：当引用节点引用的是其直系祖先节点时，会产生无限递归问题
-   */
-  finished: boolean
-  /**
-   *
-   */
-  rawSchema: Readonly<RDDSchema>
-  /**
-   * 用于缓存已解析的引用节点：
-   *   - 当引用节点中没有覆盖属性（coverProperties) 时，可直接替换为其引用的节点（需要注意 $id 属性的更新）
-   */
-  schema?: Readonly<DDSchema>
-}
-
-
-/**
+ * Maintain the DefinitionDataSchema mapping relationship;
+ * Used to parse RefDataSchema to determine whether the reference is valid,
+ * and set the default value of the optional attribute to the corresponding
+ * attribute value of the referenced DataSchema.
  *
+ * 维护 DefinitionDataSchema 映射关系；
+ * 用于在解析 RefDataSchema 判断引用是否合法，
+ * 以及将可选的属性的默认值设置为被引用的 DataSchema 的对应属性值
  */
 export class DefinitionDataSchemaMaster {
   /**
-   * RawDefinitionDataSchema.$id 和 DataSchemaNode 的映射
-   * 用于解析引用节点
-   */
-  protected readonly schemaIdMap: Map<string, DefinitionDataSchemaNode>
-  /**
+   * Mapping of RawDefinitionDataSchema.$id and RawDefinitionDataSchema
    *
+   * RawDefinitionDataSchema.$id 和 RawDefinitionDataSchema 的映射
    */
-  protected readonly schemaPathMap: Map<string, DefinitionDataSchemaNode>
+  protected readonly rawSchemaIdMap: Map<string, RDDSchema>
   /**
+   * Mapping of RawDefinitionDataSchema path and RawDefinitionDataSchema
    *
+   * RawDefinitionDataSchema 路径和 RawDefinitionDataSchema 的映射
+   */
+  protected readonly rawSchemaPathMap: Map<string, RDDSchema>
+  /**
+   * 路径前缀
    */
   protected readonly pathPrefix: string
 
   public constructor(pathPrefix?: string) {
     this.pathPrefix =  pathPrefix || '#/definitions/'
-    this.schemaIdMap = new Map()
-    this.schemaPathMap = new Map()
+    this.rawSchemaIdMap = new Map()
+    this.rawSchemaPathMap = new Map()
   }
 
   /**
    * 清空 Map
    */
   public clear(): void {
-    this.schemaIdMap.clear()
-    this.schemaPathMap.clear()
-  }
-
-  public nameToPath($name: string) {
-    return this.pathPrefix + $name
+    this.rawSchemaIdMap.clear()
+    this.rawSchemaPathMap.clear()
   }
 
   /**
+   * Mapping DefinitionDataSchema attribute names in TopDataSchema to reference paths;
+   * As in `{ "definitions" : { "tree" : xxx } }`:
+   *  - name is `tree`
+   *  - path is `#/definitions/tree`
    *
-   * @param $path
-   * @param $id
+   * 将 DefinitionDataSchema 在 TopDataSchema 中的属性名称映射为引用路径；
+   * 如 `{ "definitions" : { "tree": xxx  } }` 中：
+   *  - name 为 `tree`
+   *  - path 为 `#/definitions/tree`
+   * @param name
+   */
+  public nameToPath(name: string) {
+    return this.pathPrefix + name
+  }
+
+  /**
+   * 添加 RawDefinitionDataSchema
+   * @param $path       path like `#/definitions/node`
+   * @param rawSchema   RawDefinitionDataSchema
+   * @param $id         the $id of RawDefinitionDataSchema
    */
   public addRawSchema($path: string, rawSchema: RDDSchema, $id?: string) {
     // check if $id is duplicate
-    if ($id != null && this.schemaIdMap.has($id)) {
-      throw new Error(`[DefinitionDataSchemaMaster.preAddSchema] $id(${ $id }) has existed`)
+    if ($id != null && this.rawSchemaIdMap.has($id)) {
+      throw new Error(`[DefinitionDataSchemaMaster.addRawSchema] $id(${ $id }) has existed`)
     }
 
     // check if $path is duplicate
-    if (this.schemaPathMap.has($path)) {
-      throw new Error(`[DefinitionDataSchemaMaster.preAddSchema] $path(${ $path }) has existed`)
+    if (this.rawSchemaPathMap.has($path)) {
+      throw new Error(`[DefinitionDataSchemaMaster.addRawSchema] $path(${ $path }) has existed`)
     }
 
-    // add node
-    const node: DefinitionDataSchemaNode = { finished: false, rawSchema }
-    if ($id != null) this.schemaIdMap.set($id, node)
-    this.schemaPathMap.set($path, node)
+    // add rawSchema
+    if ($id != null) this.rawSchemaIdMap.set($id, rawSchema)
+    this.rawSchemaPathMap.set($path, rawSchema)
   }
 
   /**
-   * 添加 DataSchema，并把 finished 状态置为 true
-   * @param $path
-   * @param schema
-   */
-  public addSchema($path: string, schema?: DDSchema) {
-    const node = this.schemaPathMap.get($path)
-    node!.finished = true
-    node!.schema = schema
-  }
-
-  /**
+   * Get RawDefinitionDataSchema by id/path of DefinitionDataSchema
    *
+   * 通过 id/path 获取 RawDefinitionDataSchema
    * @param idOrPath
    */
   public getRawSchema(idOrPath: string): RDDSchema | undefined {
-    const node = this.getByIdOrPath(idOrPath)
-    return node != null ? node.rawSchema: undefined
-  }
-
-  /**
-   * @param idOrPath
-   */
-  public getSchema(idOrPath: string): DDSchema | undefined {
-    const node = this.getByIdOrPath(idOrPath)
-    return node != null ? node.schema : undefined
-  }
-
-  /**
-   * 是否存在含指定 $id 的 RawDataSchema
-   * @param idOrPath
-   */
-  public has(idOrPath: string): boolean {
-    return this.getByIdOrPath(idOrPath) != null
-  }
-
-  /**
-   * 检查是否已解析完成
-   * @param idOrPath
-   */
-  public isFinished(idOrPath: string): boolean {
-    const node = this.getByIdOrPath(idOrPath)
-    if (node == null) return true
-    return node.finished
-  }
-
-  /**
-   * get DefinitionDataSchemaNode by schema.$id or ref path
-   * @param idOrPath
-   */
-  private getByIdOrPath(idOrPath: string): DefinitionDataSchemaNode | undefined {
     // try id
-    let node = this.schemaIdMap.get(idOrPath)
+    let node = this.rawSchemaIdMap.get(idOrPath)
     if (node != null) return node
 
     // try path
-    node = this.schemaPathMap.get(idOrPath)
+    node = this.rawSchemaPathMap.get(idOrPath)
     if (node != null) return node
 
     // not found
     return undefined
   }
+
+  /**
+   * Check if a RawDefinitionDataSchema with the specified id/path exists
+   *
+   * 判断是否存在指定的 id/path 的 RawDefinitionDataSchema
+   * @param idOrPath
+   */
+  public has(idOrPath: string): boolean {
+    return this.getRawSchema(idOrPath) != null
+  }
 }
 
 
 /**
+ * A wrapper class for TopDataSchema, making it capable of querying DefinitionDataSchema
  *
+ * TopDataSchema 的封装类，使之具备查询 DefinitionDataSchema 的能力
  */
 export class TopDataSchemaMaster {
+  /**
+   * Path to the current DataSchema definitions
+   *
+   * 当前 DataSchema 的 definitions 所在的路径
+   */
   protected readonly pathPrefix: string
+
   protected schema?: TDSchema
 
   public constructor(schema?: TDSchema, pathPrefix?: string) {
@@ -156,13 +132,14 @@ export class TopDataSchemaMaster {
     this.pathPrefix =  pathPrefix || '#/definitions/'
   }
 
-  public resetSchema (schema: TDSchema) {
+  public setSchema (schema: TDSchema) {
     this.schema = schema
   }
 
   /**
-   * 通过 $id 或者 `#/definitions/<name>` 获取 DefinitionDataSchema
+   * Get DefinitionDataSchema via $id or $path (`#/definitions/<name>`)
    *
+   * 通过 $id 或者路径（`#/definitions/<name>`）获取 DefinitionDataSchema
    * @param idOrPath
    */
   public getDefinition(idOrPath: string): DDSchema | undefined {
