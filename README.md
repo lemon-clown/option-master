@@ -57,8 +57,7 @@
     default: 0
   }
 
- // parse rawSchema
-  optionMaster.reset()
+  // parse rawSchema
   const { value: schema } = optionMaster.parse(rawSchema)
 
   // validate data with schema
@@ -85,83 +84,205 @@
   ```
 
 ## demo2
-```typescript
-import { optionMaster } from '../../src'
+  ```typescript
+  import { optionMaster } from '../../src'
 
-const rawSchema = {
-  type: 'object',
-  allowAdditionalProperties: true,
-  silentIgnore: true,
-  propertyNames: {
-    type: 'string',
-    enum: ['email', 'gender', 'sex']
-  },
-  properties: {
-    name: {
+  const rawSchema = {
+    type: 'object',
+    allowAdditionalProperties: true,
+    silentIgnore: true,
+    propertyNames: {
       type: 'string',
-      pattern: '^\\w{3,20}$',
-      required: true,
+      enum: ['email', 'gender', 'sex']
     },
-    age: 'integer'
-  },
-  dependencies: {
-    email: ['age', 'gender']
-  },
-  required: true
-}
-
-
-// parse rawSchema
-optionMaster.reset()
-const { value: schema } = optionMaster.parse(rawSchema)
-
-// validate data with schema
-const validate = (data: any): boolean | undefined => {
-  const result = optionMaster.validate(schema!, data)
-  if (result.hasError) {
-    console.error(result.errorDetails)
+    properties: {
+      name: {
+        type: 'string',
+        pattern: '^\\w{3,20}$',
+        required: true,
+      },
+      age: 'integer'
+    },
+    dependencies: {
+      email: ['age', 'gender']
+    },
+    required: true
   }
-  if (result.hasWarning) {
-    console.error(result.warningDetails)
-  }
-  console.log('value:', result.value)
-  return result.value
-}
 
-validate(undefined)                                                               // undefined; and will print errors (`required` is not satisfied)
-validate({ name: 'alice', age: 20 })                                              // { name: 'alice', age: 20 };
-validate({ name: 'bob', gender: 'male' })                                         // { name: 'bob', gender: 'male' }
-validate({ name: 'joy', age: 33, more: 'something', sex: 'female' })              // { name: 'joy', age: 33, sex: 'female' }
-validate({ name: 'joy', email: 'joy@bob.com', more: 'something', sex: 'female' }) // undefined; and will print errors (`dependencies#email` is not satisfied)
-validate({ name: 'joy', email: 'joy@bob.com', age: 33, gender: 'female' })        // { name: 'joy', email: 'joy@bob.com', age: 33, gender: 'female' }
-validate(false)                                                                   // undefined; and will print errors (`type` is not satisfied)
-```
+
+  // parse rawSchema
+  const { value: schema } = optionMaster.parse(rawSchema)
+
+  // validate data with schema
+  const validate = (data: any): boolean | undefined => {
+    const result = optionMaster.validate(schema!, data)
+    if (result.hasError) {
+      console.error(result.errorDetails)
+    }
+    if (result.hasWarning) {
+      console.error(result.warningDetails)
+    }
+    console.log('value:', result.value)
+    return result.value
+  }
+
+  validate(undefined)                                                               // undefined; and will print errors (`required` is not satisfied)
+  validate({ name: 'alice', age: 20 })                                              // { name: 'alice', age: 20 };
+  validate({ name: 'bob', gender: 'male' })                                         // { name: 'bob', gender: 'male' }
+  validate({ name: 'joy', age: 33, more: 'something', sex: 'female' })              // { name: 'joy', age: 33, sex: 'female' }
+  validate({ name: 'joy', email: 'joy@bob.com', more: 'something', sex: 'female' }) // undefined; and will print errors (`dependencies#email` is not satisfied)
+  validate({ name: 'joy', email: 'joy@bob.com', age: 33, gender: 'female' })        // { name: 'joy', email: 'joy@bob.com', age: 33, gender: 'female' }
+  validate(false)                                                                   // undefined; and will print errors (`type` is not satisfied)
+  ```
+
+## demo3
+  ```typescript
+  import { optionMaster } from '../../src'
+
+  const rawSchema = {
+    type: 'ref',
+    $ref: '#/definitions/node',
+    required: true,
+    definitions: {
+      node: {
+        type: 'object',
+        $id: '##/node',
+        properties: {
+          name: {
+            type: 'string',
+            required: true
+          },
+          title: 'string',
+          children: {
+            type: 'array',
+            items: {
+              type: 'ref',
+              $ref: '##/node'
+            }
+          }
+        }
+      }
+    },
+  }
+
+  // parse rawSchema
+  const { value: schema } = optionMaster.parse(rawSchema)
+
+  // validate data with schema
+  const validate = (data: any): boolean | undefined => {
+    const result = optionMaster.validate(schema!, data)
+    if (result.hasError) {
+      console.error(result.errorDetails)
+    }
+    if (result.hasWarning) {
+      console.error(result.warningDetails)
+    }
+    console.log('value:', JSON.stringify(result.value, null, 2))
+    return result.value
+  }
+
+  validate(undefined)             // undefined; and will print errors (`required` is not satisfied)
+
+  /**
+   * result:
+   * {
+   *   "value": {
+   *     "title": "alice",
+   *     "name": "alice",
+   *     "children": [
+   *       {
+   *         "name": "alice-1"
+   *       },
+   *       {
+   *         "name": "alice-2",
+   *         "children": [
+   *           {
+   *             "name": "alice-2-1",
+   *             "children": [
+   *               {
+   *                 "name": "alice-2-1-1"
+   *               }
+   *             ]
+   *           }
+   *         ]
+   *       }
+   *     ]
+   *   },
+   *   "errors": [],
+   *   "warnings": []
+   * }
+   */
+  validate({
+    "title": "alice",
+    "name": "alice",
+    "children": [
+      {
+        "name": "alice-1"
+      },
+      {
+        "name": "alice-2",
+        "children": [
+          {
+            "name": "alice-2-1",
+            "children": [
+              {
+                "name": "alice-2-1-1"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  })
+
+  // undefined; and will print errors (`children.1.children.0.children.0.name` is not satisfied)
+  validate({
+    "title": "alice",
+    "name": "alice",
+    "children": [
+      {
+        "name": "alice-1"
+      },
+      {
+        "name": "alice-2",
+        "children": [
+          {
+            "name": "alice-2-1",
+            "children": [
+              {}
+            ]
+          }
+        ]
+      }
+    ]
+  })
+  ```
 
 # Schema Docs
-* schemas
+* [schema][schema]:
+  - [ArrayDataSchema][]
   - [BooleanDataSchema][]
+  - [CombineDataSchema][]
   - [NumberDataSchema][]
   - [IntegerDataSchema][]
-  - [StringDataSchema][]
-  - [ArrayDataSchema][]
   - [ObjectDataSchema][]
-  - [CombineDataSchema][]
   - [RefDataSchema][]
+  - [StringDataSchema][]
 * [parser][DataSchemaParser]
 * [validator][DataValidator]
 
 
 <!-- schemas -->
+[ArrayDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/array.md
 [BooleanDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/boolean.md
+[CombineDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/combine.md
 [NumberDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/number.md
 [IntegerDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/integer.md
-[StringDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/string.md
-[ArrayDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/array.md
 [ObjectDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/object.md
-[CombineDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/combine.md
 [RefDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/ref.md
+[StringDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/string.md
 
 [DataHandleResult]: https://github.com/lemon-clown/option-master/blob/master/src/_util/handle-result.ts
+[schema]: https://github.com/lemon-clown/option-master/blob/master/doc/schema.md
 [DataSchemaParser]: https://github.com/lemon-clown/option-master/blob/master/doc/parser.md
 [DataValidator]: https://github.com/lemon-clown/option-master/blob/master/doc/validator.md
-
