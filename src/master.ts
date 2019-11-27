@@ -27,6 +27,11 @@ import { RefDataValidatorFactory } from './validator/ref'
 import { StringDataValidatorFactory } from './validator/string'
 
 
+/**
+ * Management object for parsing data schema and verifying data
+ *
+ * 解析数据模式、校验数据的管理对象
+ */
 export class OptionMaster {
   /**
    * 数据模式解析器管理对象实例
@@ -44,7 +49,9 @@ export class OptionMaster {
   }
 
   /**
-   * 添加 DataSchemaParser，若指定的 type 已存在，则忽略此次添加
+   * Add DataSchemaParser, if the parser of the specified type already exists, ignore this addition
+   *
+   * 添加 DataSchemaParser，若指定的 type 的解析器已存在，则忽略此次添加
    * @param type
    * @param SchemaParserConstructor
    */
@@ -55,7 +62,11 @@ export class OptionMaster {
   }
 
   /**
-   * 覆盖已有的 DataSchemaParser，若指定的 type 之前没有对应的 DataSchemaParser，也做添加操作
+   * Overwrite the existing DataSchemaParser.
+   * If there is no corresponding DataSchemaParser before the specified type, add it.
+   *
+   * 覆盖已有的 DataSchemaParser；
+   * 若指定的 type 之前没有对应的 DataSchemaParser，也做添加操作
    * @param type
    * @param SchemaParserConstructor
    */
@@ -66,23 +77,28 @@ export class OptionMaster {
   }
 
   /**
-   * 添加 DataValidatorFactory，若指定的 type 已存在，则忽略此次添加
+   * Add DataValidatorFactory, if the specified type already exists, ignore this addition
+   *
+   * 添加 DataValidatorFactory，若指定的 type 已存在，则忽略此次添
    * @param type
-   * @param DataValidatorFactory
+   * @param DataValidatorFactoryConstructor
    */
-  public registerValidatorFactory(type: string, DataValidatorFactory: DVFactoryConstructor): this {
-    const dataValidatorFactory = new DataValidatorFactory(this.dataValidatorMaster)
+  public registerValidatorFactory(type: string, DataValidatorFactoryConstructor: DVFactoryConstructor): this {
+    const dataValidatorFactory = new DataValidatorFactoryConstructor(this.dataValidatorMaster)
     this.dataValidatorMaster.registerValidatorFactory(type, dataValidatorFactory)
     return this
   }
 
   /**
-   * 覆盖已有的 DataValidatorFactory，若指定的 type 之前没有对应的 DataSchemaParser，也做添加操作
+   * Overwrite the existing DataValidatorFactory.
+   * If there is no corresponding DataValidatorFactory before the specified type, add it
+   *
+   * 覆盖已有的 DataValidatorFactory，若指定的 type 之前没有对应的 DataValidatorFactory，也做添加操作
    * @param type
-   * @param DataValidatorFactory
+   * @param DataValidatorFactoryConstructor
    */
-  public replaceValidatorFactory(type: string, DataValidatorFactory: DVFactoryConstructor): this {
-    const dataValidatorFactory = new DataValidatorFactory(this.dataValidatorMaster)
+  public replaceValidatorFactory(type: string, DataValidatorFactoryConstructor: DVFactoryConstructor): this {
+    const dataValidatorFactory = new DataValidatorFactoryConstructor(this.dataValidatorMaster)
     this.dataValidatorMaster.replaceValidatorFactory(type, dataValidatorFactory)
     return this
   }
@@ -97,14 +113,16 @@ export class OptionMaster {
 
   /**
    * 执行校验操作
-   * @param schema
-   * @param data
+   * @param schema  预期的数据模式
+   * @param data    待校验的数据a
    */
   public validate(schema: DSchema, data: any): DVResult {
     return this.dataValidatorMaster.validateTopDataSchema(schema, data)
   }
 
   /**
+   * Register the preset DataSchema, its parser, and validator into the current OptionMaster instance
+   *
    * 将预置的 DataSchema 及其解析器、校验器注册进当前 OptionMaster 实例中
    */
   public registerDefaultSchemas(): this {
