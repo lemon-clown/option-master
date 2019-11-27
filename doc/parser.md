@@ -8,13 +8,14 @@
 
 * Already implemented DataSchema parsers:
 
+  - array：[ArrayDataSchemaParser](../src/parser/array.ts)
   - boolean：[BooleanDataSchemaParser](../src/parser/boolean.ts)
+  - combine：[CombineDataSchemaParser](../src/parser/combine.ts)
   - integer：[IntegerDataSchemaParser](../src/parser/integer.ts)
   - number：[NumberDataSchemaParser](../src/parser/number.ts)
-  - string：[StringDataSchemaParser](../src/parser/string.ts)
-  - array：[ArrayDataSchemaParser](../src/parser/array.ts)
   - object：[ObjectDataSchemaParser](../src/parser/object.ts)
-  - combine：[CombineDataSchemaParser](../src/parser/combine.ts)
+  - ref：[ObjectDataSchemaParser](../src/parser/ref.ts)
+  - string：[StringDataSchemaParser](../src/parser/string.ts)
 
 ## DataSchemaParseResult
 
@@ -32,21 +33,23 @@
   * `option-master` provides some basic parsers, which are registered by the default ParserMaster instance; therefore, if you want to create an instance manually, it is recommended to register the parsers provided from `option-master`. For example:
 
     ```typescript
-    import { ARRAY_T_TYPE } from 'option-master/schema/array'
-    import { BOOLEAN_T_TYPE } from 'option-master/schema/boolean'
-    import { COMBINE_T_TYPE } from 'option-master/schema/combine'
-    import { INTEGER_T_TYPE } from 'option-master/schema/integer'
-    import { NUMBER_T_TYPE } from 'option-master/schema/number'
-    import { OBJECT_T_TYPE } from 'option-master/schema/object'
-    import { STRING_T_TYPE } from 'option-master/schema/string'
-    import { DataSchemaParserMaster } from 'option-master/parser/_master'
-    import { ArrayDataSchemaParser } from 'option-master/parser/array'
-    import { BooleanDataSchemaParser } from 'option-master/parser/boolean'
-    import { CombineDataSchemaParser } from 'option-master/parser/combine'
-    import { IntegerDataSchemaParser } from 'option-master/parser/integer'
-    import { NumberDataSchemaParser } from 'option-master/parser/number'
-    import { ObjectDataSchemaParser } from 'option-master/parser/object'
-    import { StringDataSchemaParser } from 'option-master/parser/string'
+    import { ARRAY_T_TYPE } from 'option-master/lib/schema/array'
+    import { BOOLEAN_T_TYPE } from 'option-master/lib/schema/boolean'
+    import { COMBINE_T_TYPE } from 'option-master/lib/schema/combine'
+    import { INTEGER_T_TYPE } from 'option-master/lib/schema/integer'
+    import { NUMBER_T_TYPE } from 'option-master/lib/schema/number'
+    import { OBJECT_T_TYPE } from 'option-master/lib/schema/object'
+    import { REF_T_TYPE } from 'option-master/lib/schema/ref'
+    import { STRING_T_TYPE } from 'option-master/lib/schema/string'
+    import { ArrayDataSchemaParser } from 'option-master/lib/parser/array'
+    import { BooleanDataSchemaParser } from 'option-master/lib/parser/boolean'
+    import { CombineDataSchemaParser } from 'option-master/lib/parser/combine'
+    import { IntegerDataSchemaParser } from 'option-master/lib/parser/integer'
+    import { NumberDataSchemaParser } from 'option-master/lib/parser/number'
+    import { ObjectDataSchemaParser } from 'option-master/lib/parser/object'
+    import { RefDataSchemaParser } from 'option-master/lib/parser/ref'
+    import { StringDataSchemaParser } from 'option-master/lib/parser/string'
+    import { DataSchemaParserMaster } from 'option-master/lib/_core/parser'
 
     // create ParserMaster manually
     const parserMaster = new DataSchemaParserMaster()
@@ -79,16 +82,14 @@
 
   * create XDataSchemaParser:
     ```typescript
-    import { DataSchemaParser } from 'option-master'
-    export class Ipv4DataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
+    import { BaseDataSchemaParser } from 'option-master'
+    export class Ipv4DataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
       public readonly type: T = T
 
       public parse (rawSchema: RDS): Ipv4DataSchemaParserResult {
-        const result: Ipv4DataSchemaParserResult = new DataSchemaParseResult(rawSchema)
-
-        // required 的默认值为 false
-        const requiredResult = result.parseBaseTypeProperty<boolean>('required', coverBoolean, false)
-        const defaultValueResult = result.parseBaseTypeProperty<V>('default', coverString)
+        const result: Ipv4DataSchemaParserResult = super.parse(rawSchema)
+        const requiredResult = result.parseProperty<boolean>('required', coverBoolean, false)
+        const defaultValueResult = result.parseProperty<V>('default', coverString)
 
         // Ipv4DataSchema
         const schema: DS = {
@@ -102,19 +103,25 @@
     }
     ```
 
-  * register to `parserMaster` (you also can create new instance of ParserMaster as mentioned above):
-
+  * register to `parserMaster`:
     ```typescript
-    import { parserMaster } from 'option-master'
-    parserMaster.registerParser(T, new Ipv4DataSchemaParser())
+    import { DataSchemaParserMaster } from 'option-master'
+    const parserMaster = new DataSchemaParserMaster()
+    parserMaster.registerParser(T, new Ipv4DataSchemaParser(parserMaster))
+    ```
+
+    or register to `optionMaster` (you also can create new instance of OptionMaster)
+    ```typescript
+    import { optionMaster } from 'option-master'
+    optionMaster.registerParser(T, Ipv4DataValidatorFactory)
     ```
 
   * full code
 
     ```typescript
     import {
-      DataSchema, RawDataSchema, DataSchemaParseResult, DataSchemaParser,
-      coverBoolean, coverString, parserMaster,
+      DataSchema, RawDataSchema, DataSchemaParseResult, BaseDataSchemaParser,
+      coverBoolean, coverString, optionMaster,
     } from 'option-master'
 
     const T = 'ipv4'
@@ -123,24 +130,21 @@
     type RDS = RawDataSchema<T, V>
     type DS = DataSchema<T, V>
 
-
     /**
      * data type of Ipv4DataSchema parse result
-    */
+     */
     export type Ipv4DataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
 
     /**
      * ipv4 schema parser
-    */
-    export class Ipv4DataSchemaParser implements DataSchemaParser<T, V, RDS, DS> {
+     */
+    export class Ipv4DataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
       public readonly type: T = T
 
       public parse (rawSchema: RDS): Ipv4DataSchemaParserResult {
         const result: Ipv4DataSchemaParserResult = new DataSchemaParseResult(rawSchema)
-
-        // required 的默认值为 false
-        const requiredResult = result.parseBaseTypeProperty<boolean>('required', coverBoolean, false)
-        const defaultValueResult = result.parseBaseTypeProperty<V>('default', coverString)
+        const requiredResult = result.parseProperty<boolean>('required', coverBoolean, false)
+        const defaultValueResult = result.parseProperty<V>('default', coverString)
 
         // Ipv4DataSchema
         const schema: DS = {
@@ -154,7 +158,7 @@
     }
 
     // register parser
-    parserMaster.registerParser(T, new Ipv4DataSchemaParser())
+    optionMaster.registerParser(T, Ipv4DataSchemaParser)
     ```
 
   * see [demo/custom-type/ipv4.ts](../demo/custom-type/ipv4.ts)

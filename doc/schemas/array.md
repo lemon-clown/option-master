@@ -67,7 +67,6 @@
   }
 
   // parse rawSchema
-  optionMaster.reset()
   const { value: schema } = optionMaster.parse(rawSchema)
 
   // validate data with schema
@@ -79,7 +78,7 @@
     if (result.hasWarning) {
       console.error(result.warningDetails)
     }
-    console.log('value:', result.value)
+    console.log('value:', JSON.stringify(result.value, null, 2))
     return result.value
   }
 

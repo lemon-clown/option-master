@@ -2,29 +2,33 @@ import { optionMaster } from '../../src'
 
 
 const rawSchema = {
-  type: 'object',
-  $id: '#/node',
+  type: 'ref',
+  $ref: '#/definitions/node',
   required: true,
-  properties: {
-    name: {
-      type: 'string',
-      required: true
-    },
-    title: 'string',
-    children: {
-      type: 'array',
-      items: {
-        type: 'ref',
-        $ref: '#/node'
+  definitions: {
+    node: {
+      type: 'object',
+      $id: '##/node',
+      properties: {
+        name: {
+          type: 'string',
+          required: true
+        },
+        title: 'string',
+        children: {
+          type: 'array',
+          items: {
+            type: 'ref',
+            $ref: '##/node'
+          }
+        }
       }
     }
-  }
+  },
 }
 
 
-
 // parse rawSchema
-optionMaster.reset()
 const { value: schema } = optionMaster.parse(rawSchema)
 
 // validate data with schema
@@ -36,7 +40,7 @@ const validate = (data: any): boolean | undefined => {
   if (result.hasWarning) {
     console.error(result.warningDetails)
   }
-  console.log('value:', result.value)
+  console.log('value:', JSON.stringify(result.value, null, 2))
   return result.value
 }
 
