@@ -3,7 +3,7 @@
     "definitions": {
       "name": {
         "type": "string",
-        "required": false,
+        "required": true,
         "pattern": "^[\\w\\-]{2,20}\\w$",
         "transform": [
           "trim"

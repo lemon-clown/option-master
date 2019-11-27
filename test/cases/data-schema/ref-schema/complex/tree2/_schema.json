@@ -4,15 +4,15 @@
       "type": "string",
       "$id": "##/tree-node-name",
       "pattern": "^[\\w\\-]{2,20}\\w$",
-      "transform": "trim"
+      "transform": "trim",
+      "required": true
     },
     "tree": {
       "type": "object",
       "properties": {
         "name": {
           "type": "ref",
-          "$ref": "##/tree-node-name",
-          "required": true
+          "$ref": "##/tree-node-name"
         },
         "title": "string",
         "children": {
