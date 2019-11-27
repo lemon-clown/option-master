@@ -1,7 +1,6 @@
-import { RawDataSchema, DataSchema } from '../schema/_base'
-import { isObject, stringify } from '../_util/type-util'
-import { DataHandleResult } from '../_util/handle-result'
-import { CoverOperationFunc, CoverOperationResult } from '../_util/cover-util'
+import { DataHandleResult } from '../../_util/handle-result'
+import { CoverOperationFunc, CoverOperationResult } from '../../_util/cover-util'
+import { RawDataSchema, DataSchema } from '../schema'
 
 
 /**
@@ -13,8 +12,15 @@ import { CoverOperationFunc, CoverOperationResult } from '../_util/cover-util'
  * @template DS   typeof <X>DataSchema
  * @template RDS  typeof <X>RawDataSchema
  */
-export class DataSchemaParseResult<T extends string, V, RDS extends RawDataSchema<T, V>, DS extends DataSchema<T, V>> extends DataHandleResult<DS> {
+export class DataSchemaParseResult<
+  T extends string,
+  V,
+  RDS extends RawDataSchema<T, V>,
+  DS extends DataSchema<T, V>>
+  extends DataHandleResult<DS> {
+
   public readonly _rawSchema: RDS
+
   /**
    * @param rawSchema 待解析的 RawDataSchema
    */
@@ -22,6 +28,7 @@ export class DataSchemaParseResult<T extends string, V, RDS extends RawDataSchem
     super()
     this._rawSchema = rawSchema
   }
+
   /**
    * 解析给定 RawDataSchema 中的属性的值
    *
@@ -30,7 +37,11 @@ export class DataSchemaParseResult<T extends string, V, RDS extends RawDataSchem
    * @param defaultValue  属性的默认值
    * @template P  typeof rawSchema[propertyName]
    */
-  public parseBaseTypeProperty<P>(propertyName: keyof RDS, coverFunc: CoverOperationFunc<P>, defaultValue?: P): CoverOperationResult<P> {
+  public parseProperty<P>(
+    propertyName: keyof RDS,
+    coverFunc: CoverOperationFunc<P>,
+    defaultValue?: P
+  ): CoverOperationResult<P> {
     const rawSchema = this._rawSchema
     const result = coverFunc(defaultValue, rawSchema[propertyName])
     if (result.hasError) {
@@ -40,20 +51,5 @@ export class DataSchemaParseResult<T extends string, V, RDS extends RawDataSchem
       })
     }
     return result
-  }
-  /**
-   * 确保指定的属性值为对象
-   * @param propertyName
-   */
-  public ensureObject(propertyName: keyof RDS): boolean {
-    const rawSchema = this._rawSchema
-    if (!isObject(rawSchema[propertyName])) {
-      this.addError({
-        constraint: propertyName as string,
-        reason: `${ propertyName } must be an object, but got (${ stringify(rawSchema[propertyName]) }).`
-      })
-      return false
-    }
-    return true
   }
 }

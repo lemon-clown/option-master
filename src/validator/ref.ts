@@ -1,5 +1,4 @@
-import { DataValidator, DataValidatorFactory } from './_base'
-import { DataValidationResult } from './_result'
+import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DVResult } from '../_core/validator'
 import { REF_V_TYPE as V, REF_T_TYPE as T, RefDataSchema as DS } from '../schema/ref'
 
 
@@ -12,7 +11,7 @@ export type RefDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 布尔值类型的校验器
  */
-export class RefDataValidator extends DataValidator<T, V, DS> {
+export class RefDataValidator extends BaseDataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**
@@ -28,7 +27,7 @@ export class RefDataValidator extends DataValidator<T, V, DS> {
     if (data == null || result.hasError) return result
 
     const { $ref } = this.schema
-    const xSchema = this.validatorMaster.getDataSchema($ref)
+    const xSchema = this.context.getDefinition($ref)
     if (xSchema == null) {
       return result.addError({
         constraint: '$ref',
@@ -36,7 +35,7 @@ export class RefDataValidator extends DataValidator<T, V, DS> {
       })
     }
 
-    const xResult = this.validatorMaster.validate(xSchema, data)
+    const xResult = this.context.validateDataSchema(xSchema, data)
     const warnings = xResult.warnings.filter(w => w.constraint !== 'required' && w.constraint !== 'default')
     result.addWarning(...warnings)
 
@@ -56,10 +55,10 @@ export class RefDataValidator extends DataValidator<T, V, DS> {
 /**
  * 布尔值类型的校验器的工厂对象
  */
-export class RefDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
+export class RefDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {
-    return new RefDataValidator(schema, this.validatorMaster)
+    return new RefDataValidator(schema, this.context)
   }
 }

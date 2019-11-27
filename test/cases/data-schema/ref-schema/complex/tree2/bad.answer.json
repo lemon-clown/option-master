@@ -56,5 +56,35 @@
       }
     ],
     "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "properties",
+        "reason": "properties#children.1.name: expected value pattern is (\"^[\\\\w\\\\-]{2,20}\\\\w$\"), but got (\"alice 2\").",
+        "property": "children",
+        "traces": [
+          {
+            "constraint": "items",
+            "reason": "items#1.name: expected value pattern is (\"^[\\\\w\\\\-]{2,20}\\\\w$\"), but got (\"alice 2\").",
+            "property": "1",
+            "traces": [
+              {
+                "constraint": "properties",
+                "reason": "properties#name: expected value pattern is (\"^[\\\\w\\\\-]{2,20}\\\\w$\"), but got (\"alice 2\").",
+                "property": "name",
+                "traces": [
+                  {
+                    "constraint": "pattern",
+                    "reason": "expected value pattern is (\"^[\\\\w\\\\-]{2,20}\\\\w$\"), but got (\"alice 2\")."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
   }
 ]

@@ -1,7 +1,5 @@
-import { DataValidator, DataValidatorFactory } from './_base'
-import { DataValidationResult } from './_result'
+import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DVResult } from '../_core/validator'
 import { COMBINE_V_TYPE as V, COMBINE_T_TYPE as T, CombineDataSchema as DS, CombineStrategy } from '../schema/combine'
-import { DValidationResult } from './_master'
 import { stringify } from '../_util/type-util'
 
 
@@ -16,7 +14,7 @@ export type CombineDataValidationResult = DataValidationResult<T, V, DS>
  *
  * anyOf 取第一个校验通过的 Schema 的 value
  */
-export class CombineDataValidator extends DataValidator<T, V, DS> {
+export class CombineDataValidator extends BaseDataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**
@@ -36,9 +34,9 @@ export class CombineDataValidator extends DataValidator<T, V, DS> {
     const checkedItems: ('allOf' | 'anyOf' | 'oneOf')[] = []     // 检查的项
     const verifiedItems: ('allOf' | 'anyOf' | 'oneOf')[] = []    // 通过校验的项
 
-    let allOfResult: DValidationResult | undefined = undefined  // allOf 的校验结果
-    let anyOfResult: DValidationResult | undefined = undefined  // oneOf 的校验结果
-    let oneOfResult: DValidationResult | undefined = undefined  // anyOf 的校验结果
+    let allOfResult: DVResult | undefined = undefined  // allOf 的校验结果
+    let anyOfResult: DVResult | undefined = undefined  // oneOf 的校验结果
+    let oneOfResult: DVResult | undefined = undefined  // anyOf 的校验结果
 
     // 检查是否要判断 allOf
     if (allOf != null && allOf.length > 0) {
@@ -47,7 +45,7 @@ export class CombineDataValidator extends DataValidator<T, V, DS> {
       const traceResult = new DataValidationResult(schema)
       for (let i = 0, value = data; i < allOf.length; ++i) {
         const xSchema = allOf[i]
-        const xValidateResult = this.validatorMaster.validate(xSchema, value)
+        const xValidateResult = this.context.validateDataSchema(xSchema, value)
         traceResult.addHandleResult(`[${ i }]`, xValidateResult)
         if (xValidateResult.hasError) continue
 
@@ -78,7 +76,7 @@ export class CombineDataValidator extends DataValidator<T, V, DS> {
       const traceResult = new DataValidationResult(schema)
       for (let i = 0; i < anyOf.length; ++i) {
         const xSchema = anyOf[i]
-        const xValidateResult = this.validatorMaster.validate(xSchema, data)
+        const xValidateResult = this.context.validateDataSchema(xSchema, data)
         traceResult.addHandleResult(`[${ i }]`, xValidateResult)
 
         // anyOf 不需要符合每一项模式，不符合则继续匹配
@@ -110,7 +108,7 @@ export class CombineDataValidator extends DataValidator<T, V, DS> {
       const traceResult = new DataValidationResult(schema)
       for (let i = 0; i < oneOf.length; ++i) {
         const xSchema = oneOf[i]
-        const xValidateResult = this.validatorMaster.validate(xSchema, data)
+        const xValidateResult = this.context.validateDataSchema(xSchema, data)
         traceResult.addHandleResult(`[${ i }]`, xValidateResult)
 
         // oneOf 需要匹配每一项模式，不符合则继续匹配
@@ -204,10 +202,10 @@ export class CombineDataValidator extends DataValidator<T, V, DS> {
  * 组合类型的校验器的工厂对象实例
  */
 
-export class CombineDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
+export class CombineDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {
-    return new CombineDataValidator(schema, this.validatorMaster)
+    return new CombineDataValidator(schema, this.context)
   }
 }

@@ -5,7 +5,6 @@
       type: 'object'
       required?: boolean
       default?: boolean
-      $id?: string
       properties?: { [key: string]: RawDataSchema }
       allowAdditionalProperties?: boolean
       propertyNames?: RawStringDataSchema
@@ -20,7 +19,6 @@
       type: 'object'
       required: boolean
       default?: boolean
-      $id?: string
       properties?: { [key: string]: DataSchema }
       allowAdditionalProperties: boolean
       propertyNames?: StringDataSchema
@@ -36,7 +34,6 @@
      `type`                       | the type of DataSchema            | -       | Yes (and the value must be `'object'`)
      `required`                   | whether the data must be set      | `false` | No
      `default`                    | default value of this DataSchema  | -       | No
-     `$id`                        | unique identifier for DataSchema  | -       | No
      `properties`                 | see [properties][]                | -       | No
      `allowAdditionalProperties`  | see [allowAdditionalProperties][] | `false` | No
      `propertyNames`              | see [propertyNames][]             | -       | No
@@ -130,7 +127,6 @@
   }
 
   // parse rawSchema
-  optionMaster.reset()
   const { value: schema } = optionMaster.parse(rawSchema)
 
   // validate data with schema
@@ -142,7 +138,7 @@
     if (result.hasWarning) {
       console.error(result.warningDetails)
     }
-    console.log('value:', result.value)
+    console.log('value:', JSON.stringify(result.value, null, 2))
     return result.value
   }
 

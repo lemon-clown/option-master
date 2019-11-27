@@ -1,5 +1,4 @@
-import { DataValidator, DataValidatorFactory } from './_base'
-import { DataValidationResult } from './_result'
+import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult } from '../_core/validator'
 import { STRING_V_TYPE as V, STRING_T_TYPE as T, StringDataSchema as DS, StringFormat, StringTransformType } from '../schema/string'
 import { coverString } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'
@@ -15,14 +14,14 @@ export type StringDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 字符串类型的校验器
  */
-export class StringDataValidator extends DataValidator<T, V, DS> {
+export class StringDataValidator extends BaseDataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**
    * 包装 StringDataSchema 的实例，使其具备校验给定数据是否为合法字符串的能力
    * @param data
    */
-  public validate (data: any): StringDataValidationResult {
+  public validate(data: any): StringDataValidationResult {
     const { schema } = this
     const result: StringDataValidationResult = super.validate(data)
     data = result.value
@@ -32,7 +31,7 @@ export class StringDataValidator extends DataValidator<T, V, DS> {
     if (data == null) return result
 
     // 检查是否为字符串
-    let value = result.validateBaseType(coverString, data)!
+    let value = result.validateType(coverString, data)!
     if (result.hasError) return result
 
     // 执行 transform
@@ -139,10 +138,10 @@ export class StringDataValidator extends DataValidator<T, V, DS> {
 /**
  * 字符串类型的校验器的工厂对象实例
  */
-export class StringDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
+export class StringDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {
-    return new StringDataValidator(schema, this.validatorMaster)
+    return new StringDataValidator(schema, this.context)
   }
 }

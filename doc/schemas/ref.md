@@ -4,7 +4,6 @@
     interface RawRefDataSchema {
       type: 'ref'
       $ref: string
-      $id?: string
       required?: boolean
       default?: boolean
     }
@@ -15,7 +14,6 @@
     interface NumberDataSchema {
       type: 'ref'
       $ref: string
-      $id?: string
       required: boolean
       default?: boolean
     }
@@ -28,7 +26,6 @@
      `type`             | the type of DataSchema                | -       | Yes (and the value must be `'number'`)
      `required`         | whether the data must be set          | `false` | No
      `default`          | default value of this DataSchema      | -       | No
-     `$id`              | unique identifier for DataSchema      | -       | No
      `$ref`             | the $id of the referenced DataSchema  | -       | No
 
 
@@ -37,31 +34,33 @@
   ```typescript
   import { optionMaster } from 'option-master'
 
-
   const rawSchema = {
-    type: 'object',
-    $id: '#/node',
+    type: 'ref',
+    $ref: '#/definitions/node',
     required: true,
-    properties: {
-      name: {
-        type: 'string',
-        required: true
-      },
-      title: 'string',
-      children: {
-        type: 'array',
-        items: {
-          type: 'ref',
-          $ref: '#/node'
+    definitions: {
+      node: {
+        type: 'object',
+        $id: '##/node',
+        properties: {
+          name: {
+            type: 'string',
+            required: true
+          },
+          title: 'string',
+          children: {
+            type: 'array',
+            items: {
+              type: 'ref',
+              $ref: '##/node'
+            }
+          }
         }
       }
     }
   }
 
-
-
   // parse rawSchema
-  optionMaster.reset()
   const { value: schema } = optionMaster.parse(rawSchema)
 
   // validate data with schema
@@ -73,7 +72,7 @@
     if (result.hasWarning) {
       console.error(result.warningDetails)
     }
-    console.log('value:', result.value)
+    console.log('value:', JSON.stringify(result.value, null, 2))
     return result.value
   }
 

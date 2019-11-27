@@ -1,5 +1,5 @@
 {
-  "schema": "./tree.schema.json",
+  "schema": "./_schema.json",
   "cases": [
     {
       "title": "alice",
@@ -14,12 +14,22 @@
             {
               "name": "alice-2-1",
               "children": [
-                {
-                  "name": "alice-2-1-1"
-                }
+                {}
               ]
             }
           ]
+        }
+      ]
+    },
+    {
+      "title": "alice",
+      "name": "alice",
+      "children": [
+        {
+          "name": "alice-1"
+        },
+        {
+          "name": "alice 2"
         }
       ]
     }

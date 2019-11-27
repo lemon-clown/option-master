@@ -1,6 +1,8 @@
 {
   "cSpell.words": [
+    "DDSP",
     "Interop",
+    "TDSP",
     "aeiou",
     "camelcase",
     "downlevel",
@@ -13,5 +15,6 @@
     "postbuild",
     "tsbuildinfo",
     "typeof"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

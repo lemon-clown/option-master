@@ -3,7 +3,7 @@ import path from 'path'
 import * as chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import { TestCaseMasterProps, TestCaseMaster, TestCase } from './case-util'
-import { DValidationResult, optionMaster, DSParseResult, DSchema, DataHandleResultException } from '../../src'
+import { DVResult, optionMaster, DSPResult, DSchema, DataHandleResultException } from '../../src'
 
 
 chai.use(chaiExclude)
@@ -44,16 +44,16 @@ export type DataValidatorTestCaseAnswerData = any[]
  * 输出数据
  */
 export interface DataValidatorOutputData {
-  value: DSParseResult['value']
-  errors: DSParseResult['errors']
-  warnings: DSParseResult['warnings']
+  value: DSPResult['value']
+  errors: DSPResult['errors']
+  warnings: DSPResult['warnings']
 }
 
 
 /**
  * DataSchema 解析器测试用例辅助类
  */
-export class DataValidatorTestCaseMaster extends TestCaseMaster<DValidationResult[], DataValidatorOutputData[]> {
+export class DataValidatorTestCaseMaster extends TestCaseMaster<DVResult[], DataValidatorOutputData[]> {
   public constructor({
     caseRootDirectory,
     inputFileNameSuffix = 'input.json',
@@ -63,8 +63,7 @@ export class DataValidatorTestCaseMaster extends TestCaseMaster<DValidationResul
   }
 
   // override
-  public async consume(kase: TestCase): Promise<DValidationResult[] | never> {
-    optionMaster.reset()
+  public async consume(kase: TestCase): Promise<DVResult[] | never> {
     const { dir, inputFilePath } = kase
     const inputData: DataValidatorTestCaseInputData = await fs.readJSON(inputFilePath)
     const { schema: schemaFilePath, cases } = inputData
@@ -76,7 +75,7 @@ export class DataValidatorTestCaseMaster extends TestCaseMaster<DValidationResul
     }
 
     const rawDataSchema = await fs.readJSON(absoluteSchemaFilePath)
-    const parserResult: DSParseResult = optionMaster.parse(rawDataSchema)
+    const parserResult: DSPResult = optionMaster.parse(rawDataSchema)
 
     // DataSchema is invalid
     if (parserResult.hasError) {
@@ -88,7 +87,7 @@ export class DataValidatorTestCaseMaster extends TestCaseMaster<DValidationResul
     }
 
     const schema: DSchema = parserResult.value!
-    const results: DValidationResult[] = []
+    const results: DVResult[] = []
     for (const data of cases) {
       const result = optionMaster.validate(schema, data)
       results.push(result)
@@ -97,7 +96,7 @@ export class DataValidatorTestCaseMaster extends TestCaseMaster<DValidationResul
   }
 
   // override
-  public async check(outputs: DValidationResult[], answers: DValidationResult[]): Promise<void> {
+  public async check(outputs: DVResult[], answers: DVResult[]): Promise<void> {
     // 输出和答案应有相同的数据数
     expect(outputs)
       .to.be.an('array')
@@ -136,7 +135,7 @@ export class DataValidatorTestCaseMaster extends TestCaseMaster<DValidationResul
   }
 
   // override
-  public toJSON(data: DValidationResult[]): DataValidatorOutputData[] {
+  public toJSON(data: DVResult[]): DataValidatorOutputData[] {
     const mapper = (x: DataHandleResultException) => {
       const result: DataHandleResultException = { constraint: x.constraint, reason: x.reason }
       if (x.property != null) result.property = x.property

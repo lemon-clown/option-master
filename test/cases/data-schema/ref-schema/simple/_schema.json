@@ -1,5 +1,12 @@
 {
   "type": "object",
+  "definitions": {
+    "port": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 65535
+    }
+  },
   "properties": {
     "serve": {
       "type": "object",
@@ -10,15 +17,13 @@
           "default": "127.0.0.1"
         },
         "port": {
-          "type": "integer",
-          "$id": "#/serve/port",
-          "minimum": 0,
-          "maximum": 65535,
+          "type": "ref",
+          "$ref": "#/definitions/port",
           "default": 80
         },
         "port2": {
           "type": "ref",
-          "$ref": "#/serve/port"
+          "$ref": "#/definitions/port"
         },
         "prefixUrl": {
           "type": "string",

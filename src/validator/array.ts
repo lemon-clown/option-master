@@ -1,8 +1,6 @@
-import { DataValidator, DataValidatorFactory } from './_base'
-import { DataValidationResult } from './_result'
+import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DVResult } from '../_core/validator'
 import { ARRAY_V_TYPE as V, ARRAY_T_TYPE as T, ArrayDataSchema as DS } from '../schema/array'
 import { isArray, stringify } from '../_util/type-util'
-import { DValidationResult } from './_master'
 
 
 /**
@@ -14,7 +12,7 @@ export type ArrayDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 数组类型的校验器
  */
-export class ArrayDataValidator extends DataValidator<T, V, DS> {
+export class ArrayDataValidator extends BaseDataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**
@@ -53,7 +51,7 @@ export class ArrayDataValidator extends DataValidator<T, V, DS> {
     const value: any[] = []
     for (let i = 0; i < data.length; ++i) {
       const d = data[i]
-      const xValidateResult: DValidationResult = this.validatorMaster.validate(schema.items, d)
+      const xValidateResult: DVResult = this.context.validateDataSchema(schema.items, d)
       result.addHandleResult('items', xValidateResult, '' + i)
       if (!xValidateResult.hasError) {
         value.push(xValidateResult.value)
@@ -72,10 +70,10 @@ export class ArrayDataValidator extends DataValidator<T, V, DS> {
 /**
  * 数组类型的校验器的工厂对象
  */
-export class ArrayDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
+export class ArrayDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {
-    return new ArrayDataValidator(schema, this.validatorMaster)
+    return new ArrayDataValidator(schema, this.context)
   }
 }

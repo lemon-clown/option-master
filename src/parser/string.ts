@@ -1,5 +1,4 @@
-import { DataSchemaParser } from './_base'
-import { DataSchemaParseResult } from './_result'
+import { BaseDataSchemaParser, DataSchemaParseResult } from '../_core/parser'
 import {
   STRING_V_TYPE as V,
   STRING_T_TYPE as T,
@@ -25,7 +24,7 @@ export type StringDataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
  *
  * enum 将忽略所有非字符串的值
  */
-export class StringDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
+export class StringDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
   public readonly type: T = T
 
   /**
@@ -36,11 +35,11 @@ export class StringDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
     const result: StringDataSchemaParserResult = super.parse(rawSchema)
     rawSchema = result._rawSchema
 
-    const defaultValueResult = result.parseBaseTypeProperty<V>('default', coverString)
-    const patternResult = result.parseBaseTypeProperty<RegExp>('pattern', coverRegex)
-    const enumValueResult = result.parseBaseTypeProperty<string[]>('enum', coverArray<string>(coverString))
-    const minLengthResult = result.parseBaseTypeProperty<number>('minLength', coverInteger)
-    const maxLengthResult = result.parseBaseTypeProperty<number>('maxLength', coverInteger)
+    const defaultValueResult = result.parseProperty<V>('default', coverString)
+    const patternResult = result.parseProperty<RegExp>('pattern', coverRegex)
+    const enumValueResult = result.parseProperty<string[]>('enum', coverArray<string>(coverString))
+    const minLengthResult = result.parseProperty<number>('minLength', coverInteger)
+    const maxLengthResult = result.parseProperty<number>('maxLength', coverInteger)
 
     let format: StringFormat[] | undefined
     if (rawSchema.format != null) {

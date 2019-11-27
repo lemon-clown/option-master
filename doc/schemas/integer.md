@@ -5,7 +5,6 @@
       type: 'integer'
       required?: boolean
       default?: boolean
-      $id?: string
       minimum?: number
       maximum?: number
       exclusiveMinimum?: number
@@ -20,7 +19,6 @@
       type: 'integer'
       required: boolean
       default?: boolean
-      $id?: string
       minimum?: number
       maximum?: number
       exclusiveMinimum?: number
@@ -36,7 +34,6 @@
      `type`             | the type of DataSchema            | -       | Yes (and the value must be `'integer'`)
      `required`         | whether the data must be set      | `false` | No
      `default`          | default value of this DataSchema  | -       | No
-     `$id`              | unique identifier for DataSchema  | -       | No
      `minimum`          | minimum value ($x \geqslant$)     | -       | No
      `maximum`          | maximum value ($x \leqslant$)     | -       | No
      `exclusiveMinimum` | exclusive minimum value ($x >$)   | -       | No
@@ -57,7 +54,6 @@
   }
 
  // parse rawSchema
-  optionMaster.reset()
   const { value: schema } = optionMaster.parse(rawSchema)
 
   // validate data with schema
@@ -69,7 +65,7 @@
     if (result.hasWarning) {
       console.error(result.warningDetails)
     }
-    console.log('value:', result.value)
+    console.log('value:', JSON.stringify(result.value, null, 2))
     return result.value
   }
 

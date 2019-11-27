@@ -1,5 +1,4 @@
-import { DataValidator, DataValidatorFactory } from './_base'
-import { DataValidationResult } from './_result'
+import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult } from '../_core/validator'
 import { BOOLEAN_V_TYPE as V, BOOLEAN_T_TYPE as T, BooleanDataSchema as DS } from '../schema/boolean'
 import { coverBoolean } from '../_util/cover-util'
 
@@ -13,7 +12,7 @@ export type BooleanDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 布尔值类型的校验器
  */
-export class BooleanDataValidator extends DataValidator<T, V, DS> {
+export class BooleanDataValidator extends BaseDataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**
@@ -28,7 +27,7 @@ export class BooleanDataValidator extends DataValidator<T, V, DS> {
     // 若未设置值，则无需进一步校验
     if (data == null) return result
 
-    const value = result.validateBaseType(coverBoolean, data)
+    const value = result.validateType(coverBoolean, data)
 
     // 若未产生错误，则通过校验，并设置 value
     if (!result.hasError) result.setValue(value)
@@ -40,10 +39,10 @@ export class BooleanDataValidator extends DataValidator<T, V, DS> {
 /**
  * 布尔值类型的校验器的工厂对象
  */
-export class BooleanDataValidatorFactory extends DataValidatorFactory<T, V, DS> {
+export class BooleanDataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {
-    return new BooleanDataValidator(schema, this.validatorMaster)
+    return new BooleanDataValidator(schema, this.context)
   }
 }

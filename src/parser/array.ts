@@ -1,5 +1,4 @@
-import { DataSchemaParser } from './_base'
-import { DataSchemaParseResult } from './_result'
+import { BaseDataSchemaParser, DataSchemaParseResult } from '../_core/parser'
 import { ARRAY_V_TYPE as V, ARRAY_T_TYPE as T, RawArrayDataSchema as RDS, ArrayDataSchema as DS } from '../schema/array'
 import { coverBoolean } from '../_util/cover-util'
 import { isArray, stringify } from '../_util/type-util'
@@ -16,7 +15,7 @@ export type ArrayDataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
  *
  * enum 将忽略所有非数组的值
  */
-export class ArrayDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
+export class ArrayDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
   public readonly type: T = T
 
   /**
@@ -28,7 +27,7 @@ export class ArrayDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
     rawSchema = result._rawSchema
 
     // unique 的默认值为 false
-    const uniqueResult = result.parseBaseTypeProperty<boolean>('unique', coverBoolean, false)
+    const uniqueResult = result.parseProperty<boolean>('unique', coverBoolean, false)
 
     // 检查 defaultValue 是否为数组
     let defaultValue = undefined
@@ -52,7 +51,7 @@ export class ArrayDataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
     }
 
     // 解析 items
-    const itemsResult = this.parserMaster.parse(rawSchema.items)
+    const itemsResult = this.context.parseDataSchema(rawSchema.items)
     result.addHandleResult('items', itemsResult)
 
     // ArrayDataSchema

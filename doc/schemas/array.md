@@ -5,7 +5,6 @@
       type: 'array'
       required?: boolean
       default?: boolean
-      $id?: string
       items: RawDataSchema
       unique?: boolean
     }
@@ -17,7 +16,6 @@
       type: 'array'
       required: boolean
       default?: boolean
-      $id?: string
       items: DataSchema
       unique: boolean
     }
@@ -30,7 +28,6 @@
      `type`     | the type of DataSchema                    | -       | Yes (and the value must be `'array'`)
      `required` | whether the data must be set              | `false` | No
      `default`  | default value of this DataSchema          | -       | No
-     `$id`      | unique identifier for DataSchema          | -       | No
      `items`    | element's DataSchema the of array         | -       | Yes
      `unique`   | should element of an array ensure unique  | `false` | No
 
@@ -67,7 +64,6 @@
   }
 
   // parse rawSchema
-  optionMaster.reset()
   const { value: schema } = optionMaster.parse(rawSchema)
 
   // validate data with schema
@@ -79,7 +75,7 @@
     if (result.hasWarning) {
       console.error(result.warningDetails)
     }
-    console.log('value:', result.value)
+    console.log('value:', JSON.stringify(result.value, null, 2))
     return result.value
   }
 

@@ -1,7 +1,7 @@
 import {
-  DataSchema, RawDataSchema, DataSchemaParseResult, DataSchemaParser,
-  coverBoolean, coverString, DataValidationResult, DataValidator, DataValidatorFactory,
-  DataValidatorMaster, optionMaster,
+  DataSchema, RawDataSchema, DataSchemaParseResult, DataValidationResult,
+  BaseDataSchemaParser, BaseDataValidator, BaseDataValidatorFactory,
+  DataValidatorContext, coverBoolean, coverString, optionMaster,
 } from '../../src'
 
 
@@ -21,13 +21,13 @@ export type Ipv4DataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
 /**
  * ipv4 schema parser
  */
-export class Ipv4DataSchemaParser extends DataSchemaParser<T, V, RDS, DS> {
+export class Ipv4DataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
   public readonly type: T = T
 
   public parse (rawSchema: RDS): Ipv4DataSchemaParserResult {
-    const result: Ipv4DataSchemaParserResult = new DataSchemaParseResult(rawSchema)
-    const requiredResult = result.parseBaseTypeProperty<boolean>('required', coverBoolean, false)
-    const defaultValueResult = result.parseBaseTypeProperty<V>('default', coverString)
+    const result: Ipv4DataSchemaParserResult = super.parse(rawSchema)
+    const requiredResult = result.parseProperty<boolean>('required', coverBoolean, false)
+    const defaultValueResult = result.parseProperty<V>('default', coverString)
 
     // Ipv4DataSchema
     const schema: DS = {
@@ -49,12 +49,12 @@ export type Ipv4DataValidationResult = DataValidationResult<T, V, DS>
 /**
  * ipv4 validator
  */
-export class Ipv4DataValidator extends DataValidator<T, V, DS> {
+export class Ipv4DataValidator extends BaseDataValidator<T, V, DS> {
   private readonly pattern: RegExp
   public readonly type: T = T
 
-  public constructor (schema: DS, validatorMaster: DataValidatorMaster) {
-    super(schema, validatorMaster)
+  public constructor (schema: DS, context: DataValidatorContext) {
+    super(schema, context)
     this.pattern = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/
   }
 
@@ -67,7 +67,7 @@ export class Ipv4DataValidator extends DataValidator<T, V, DS> {
     if (data == null) return result
 
     // check if data is string
-    const value = result.validateBaseType(coverString, data)!
+    const value = result.validateType(coverString, data)!
     if (result.hasError) return result
 
     // check pattern
@@ -87,11 +87,11 @@ export class Ipv4DataValidator extends DataValidator<T, V, DS> {
 /**
  * Ipv4 validator factory
  */
-export class Ipv4DataValidatorFactory extends DataValidatorFactory<T, V, DS> {
+export class Ipv4DataValidatorFactory extends BaseDataValidatorFactory<T, V, DS> {
   public readonly type: T = T
 
   public create(schema: DS) {
-    return new Ipv4DataValidator(schema, this.validatorMaster)
+    return new Ipv4DataValidator(schema, this.context)
   }
 }
 
@@ -109,7 +109,6 @@ const rawSchema = {
 
 
 // parse rawSchema
-optionMaster.reset()
 const { value: schema } = optionMaster.parse(rawSchema)
 const validate = (data: any): boolean | undefined => {
   const result = optionMaster.validate(schema!, data)
@@ -119,7 +118,7 @@ const validate = (data: any): boolean | undefined => {
   if (result.hasWarning) {
     console.error(result.warningDetails)
   }
-  console.log('value:', result.value)
+  console.log('value:', JSON.stringify(result.value, null, 2))
   return result.value
 }
 
