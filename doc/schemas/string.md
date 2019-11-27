@@ -11,7 +11,6 @@
       type: 'string'
       required?: boolean
       default?: boolean
-      $id?: string
       minLength?: number
       maxLength?: number
       pattern?: string
@@ -26,7 +25,6 @@
       type: 'string'
       required: boolean
       default?: boolean
-      $id?: string
       minLength?: number
       maxLength?: number
       pattern?: string
@@ -42,7 +40,6 @@
      `type`             | the type of DataSchema                    | -       | Yes (and the value must be `'string'`)
      `required`         | whether the data must be set              | `false` | No
      `default`          | default value of this DataSchema          | -       | No
-     `$id`              | unique identifier for DataSchema          | -       | No
      `minLength`        | minimum length ($x.length \geqslant$)     | -       | No
      `maxLength`        | maximum length ($x.length \leqslant$)     | -       | No
      `pattern`          | a regular expression defined data pattern | -       | No

@@ -5,7 +5,6 @@
       type: 'combine'
       required?: boolean
       default?: boolean
-      $id?: string
       strategy?: 'all' | 'any' | 'one'
       allOf?: RawDataSchema[]
       anyOf?: RawDataSchema[]
@@ -19,7 +18,6 @@
       type: 'combine'
       required: boolean
       default?: boolean
-      $id?: string
       strategy: 'all' | 'any' | 'one'
       allOf?: DataSchema[]
       anyOf?: DataSchema[]
@@ -34,7 +32,6 @@
      `type`     | the type of DataSchema            | -       | Yes (and the value must be `'combine'`)
      `required` | whether the data must be set      | `false` | No
      `default`  | default value of this DataSchema  | -       | No
-     `$id`      | unique identifier for DataSchema  | -       | No
      `strategy` | see [strategy][]                  | `"all"` | No
      `allOf`    | see [allOf][]                     | -       | No
      `anyOf`    | see [anyOf][]                     | -       | No

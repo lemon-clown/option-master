@@ -4,7 +4,6 @@
     interface RawRefDataSchema {
       type: 'ref'
       $ref: string
-      $id?: string
       required?: boolean
       default?: boolean
     }
@@ -15,7 +14,6 @@
     interface NumberDataSchema {
       type: 'ref'
       $ref: string
-      $id?: string
       required: boolean
       default?: boolean
     }
@@ -28,7 +26,6 @@
      `type`             | the type of DataSchema                | -       | Yes (and the value must be `'number'`)
      `required`         | whether the data must be set          | `false` | No
      `default`          | default value of this DataSchema      | -       | No
-     `$id`              | unique identifier for DataSchema      | -       | No
      `$ref`             | the $id of the referenced DataSchema  | -       | No
 
 
