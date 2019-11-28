@@ -32,7 +32,7 @@ export class ArrayDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
     // 检查 defaultValue 是否为数组
     let defaultValue = undefined
     if (rawSchema.default != null) {
-      if (isArray(rawSchema.default)) {
+      if (!isArray(rawSchema.default)) {
         result.addError({
           constraint: 'default',
           reason: `expected an array, but got (${ stringify(rawSchema.default) }).`
