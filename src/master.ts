@@ -5,6 +5,7 @@ import { ARRAY_T_TYPE } from './schema/array'
 import { BOOLEAN_T_TYPE } from './schema/boolean'
 import { COMBINE_T_TYPE } from './schema/combine'
 import { INTEGER_T_TYPE } from './schema/integer'
+import { NULL_T_TYPE } from './schema/null'
 import { NUMBER_T_TYPE } from './schema/number'
 import { OBJECT_T_TYPE } from './schema/object'
 import { REF_T_TYPE } from './schema/ref'
@@ -13,6 +14,7 @@ import { ArrayDataSchemaCompiler } from './compiler/array'
 import { BooleanDataSchemaCompiler } from './compiler/boolean'
 import { CombineDataSchemaCompiler } from './compiler/combine'
 import { IntegerDataSchemaCompiler } from './compiler/integer'
+import { NullDataSchemaCompiler } from './compiler/null'
 import { NumberDataSchemaCompiler } from './compiler/number'
 import { ObjectDataSchemaCompiler } from './compiler/object'
 import { RefDataSchemaCompiler } from './compiler/ref'
@@ -21,6 +23,7 @@ import { ArrayDataValidatorFactory } from './validator/array'
 import { BooleanDataValidatorFactory } from './validator/boolean'
 import { CombineDataValidatorFactory } from './validator/combine'
 import { IntegerDataValidatorFactory } from './validator/integer'
+import { NullDataValidatorFactory } from './validator/null'
 import { NumberDataValidatorFactory } from './validator/number'
 import { ObjectDataValidatorFactory } from './validator/object'
 import { RefDataValidatorFactory } from './validator/ref'
@@ -142,6 +145,10 @@ export class OptionMaster {
       // integer
       .registerCompiler(INTEGER_T_TYPE, IntegerDataSchemaCompiler)
       .registerValidatorFactory(INTEGER_T_TYPE, IntegerDataValidatorFactory)
+
+      // null
+      .registerCompiler(NULL_T_TYPE, NullDataSchemaCompiler)
+      .registerValidatorFactory(NULL_T_TYPE, NullDataValidatorFactory)
 
       // number
       .registerCompiler(NUMBER_T_TYPE, NumberDataSchemaCompiler)
