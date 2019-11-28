@@ -20,17 +20,17 @@ export class NumberDataValidator extends BaseDataValidator<T, V, DS> {
    * 包装 NumberDataSchema 的实例，使其具备校验给定数据是否为合法数字的能力
    * @param data
    */
-  public validate (data: any): NumberDataValidationResult {
+  public validate(data: any): NumberDataValidationResult {
     const { schema } = this
     const result: NumberDataValidationResult = super.validate(data)
     data = result.value
     result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
-    if (data == null) return result
+    if (data === undefined) return result
 
     // 检查是否为数字
-    const value = result.validateType(coverNumber, data)!
+    const value = result.validateType(coverNumber, data, v => typeof v === 'number')!
     if (result.hasError) return result
 
     // 检查最小值（可取到）

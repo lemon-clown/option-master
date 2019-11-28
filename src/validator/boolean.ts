@@ -19,15 +19,15 @@ export class BooleanDataValidator extends BaseDataValidator<T, V, DS> {
    * 包装 BooleanDataSchema 的实例，使其具备校验给定数据是否为合法布尔值的能力
    * @param data
    */
-  public validate (data: any): BooleanDataValidationResult {
+  public validate(data: any): BooleanDataValidationResult {
     const result: BooleanDataValidationResult = super.validate(data)
     data = result.value
     result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
-    if (data == null) return result
+    if (data === undefined) return result
 
-    const value = result.validateType(coverBoolean, data)
+    const value = result.validateType(coverBoolean, data, v => typeof v === 'boolean')
 
     // 若未产生错误，则通过校验，并设置 value
     if (!result.hasError) result.setValue(value)

@@ -31,7 +31,7 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> {
     if (data == null) return result
 
     // 检查是否为字符串
-    let value = result.validateType(coverString, data)!
+    let value = result.validateType(coverString, data, v => typeof v === 'string')!
     if (result.hasError) return result
 
     // 执行 transform

@@ -20,17 +20,17 @@ export class IntegerDataValidator extends BaseDataValidator<T, V, DS> {
    * 包装 IntegerDataSchema 的实例，使其具备校验给定数据是否为合法整数的能力
    * @param data
    */
-  public validate (data: any): IntegerDataValidationResult {
+  public validate(data: any): IntegerDataValidationResult {
     const { schema } = this
     const result: IntegerDataValidationResult = super.validate(data)
     data = result.value
     result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
-    if (data == null) return result
+    if (data === undefined) return result
 
     // 检查是否为整数
-    const value = result.validateType(coverInteger, data)!
+    const value = result.validateType(coverInteger, data, v => typeof v === 'number')!
     if (result.hasError) return result
 
     // 检查最小值（可取到）

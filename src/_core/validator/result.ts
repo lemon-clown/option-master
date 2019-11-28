@@ -25,11 +25,11 @@ export class DataValidationResult<T extends string, V, DS extends DataSchema<T, 
    * @param coverFunc     覆盖属性的函数
    * @param data          待校验的数据
    */
-  public validateType(coverFunc: CoverOperationFunc<V>, data?: any): V | undefined {
+  public validateType(coverFunc: CoverOperationFunc<V>, data: any, checkFunc: (v: any) => boolean): V | undefined {
     const schema = this._schema
     const result = coverFunc(schema.default, data)
     let a = /^[aeiou]/.test(schema.type) ? 'an' : 'a'
-    if (result.hasError) {
+    if (result.hasError || !checkFunc(result.value)) {
       this.addError({
         constraint: 'type',
         reason: `expected ${ a } ${ schema.type }, but got (${ stringify(data) }): ` + result.errorSummary,

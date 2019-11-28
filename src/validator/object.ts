@@ -26,7 +26,7 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> {
     result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
-    if (data == null) return result
+    if (data === undefined) return result
 
     // 检查是否为对象
     if (!isObject(data)) {

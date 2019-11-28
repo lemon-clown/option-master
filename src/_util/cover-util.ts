@@ -44,12 +44,12 @@ export type CoverOperationFunc<T> = (defaultValue?: T, value?: any) => CoverOper
 
 /**
  * 传进来的选项覆盖默认值
- * 若传进来的值为 null/undefined，则返回默认值；
+ * 若传进来的值为 undefined，则返回默认值；
  * 否则将传进来的值转为 number 并返回；返回返回含错误信息的 Result 对象
  */
  export const coverNumber: CoverOperationFunc<number> = (defaultValue, value) => {
   const result: CoverOperationResult<number> = new CoverOperationResult(defaultValue)
-  if (value == null) return result
+  if (value === undefined) return result
   if (typeof value !== 'number') {
     return result.addError(`expected a number, but got (${ stringify(value) }).`)
   }
@@ -66,13 +66,13 @@ export type CoverOperationFunc<T> = (defaultValue?: T, value?: any) => CoverOper
 
 /**
  * 传进来的选项覆盖默认值
- * 若传进来的值为 null/undefined 或非数字，则返回默认值；
+ * 若传进来的值为 undefined 或非数字，则返回默认值；
  * 若传进来的值为数字，但并非整数，则添加一条错误消息，并仍将此值置为返回结果中的 value
  * 否则将传进来的值转为 number 并返回
  */
 export const coverInteger: CoverOperationFunc<number> = (defaultValue, value) => {
   const result: CoverOperationResult<number> = new CoverOperationResult(defaultValue)
-  if (value == null) return result
+  if (value === undefined) return result
   if (typeof value !== 'number') {
     return result.addError(`expected a integer, but got (${ stringify(value) }).`)
   }
@@ -102,7 +102,7 @@ export const coverInteger: CoverOperationFunc<number> = (defaultValue, value) =>
  */
 export const coverBoolean: CoverOperationFunc<boolean> = (defaultValue, value) => {
   const result: CoverOperationResult<boolean> = new CoverOperationResult(defaultValue)
-  if (value == null) return result
+  if (value === undefined) return result
 
   // 检查是否字符串
   if (isString(value)) {
@@ -126,7 +126,7 @@ export const coverBoolean: CoverOperationFunc<boolean> = (defaultValue, value) =
  */
 export const coverString: CoverOperationFunc<string> = (defaultValue, value) => {
   const result: CoverOperationResult<string> = new CoverOperationResult(defaultValue)
-  if (value == null) return result
+  if (value === undefined) return result
 
   // 检查是否为字符串
   if (!isString(value)) {
@@ -143,7 +143,7 @@ export const coverString: CoverOperationFunc<string> = (defaultValue, value) => 
  */
 export const coverRegex: CoverOperationFunc<RegExp> = (defaultValue, value) => {
   const result: CoverOperationResult<RegExp> = new CoverOperationResult(defaultValue)
-  if (value == null) return result
+  if (value === undefined) return result
 
   try {
     const regex = new RegExp(value)
@@ -163,7 +163,7 @@ export const coverRegex: CoverOperationFunc<RegExp> = (defaultValue, value) => {
 export function coverArray<T> (elemCoverFunc: CoverOperationFunc<T>): CoverOperationFunc<T[]> {
   return (defaultValue?: T[], value?: any): CoverOperationResult<T[]> => {
     const result: CoverOperationResult<T[]> = new CoverOperationResult(defaultValue)
-    if (value == null) return result
+    if (value === undefined) return result
 
     // 如果不是数组，则直接置为默认值，并添加错误信息
     if (!isArray(value)) {

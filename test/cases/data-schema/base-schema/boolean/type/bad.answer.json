@@ -20,8 +20,8 @@
   {
     "errors": [
       {
-        "constraint": "required",
-        "reason": "required, but got (null)."
+        "constraint": "type",
+        "reason": "expected a boolean, but got (null): (null) is not a valid boolean type (or boolean string)"
       }
     ],
     "warnings": []

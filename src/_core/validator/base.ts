@@ -41,15 +41,15 @@ export abstract class BaseDataValidator<T extends string, V, DS extends DataSche
     const result: DataValidationResult<T, V, DS> = new DataValidationResult(schema)
 
     // 检查是否为置任何值
-    if (data == null) {
+    if (data === undefined) {
       // 检查 DataSchema 中是否有默认值
-      if (schema.default != null) {
+      if (schema.default !== undefined) {
         data = schema.default as V
       }
     }
 
     // 检查是否为必填项
-    if (schema.required && data == null) {
+    if (schema.required && data === undefined) {
       result.addError({
         constraint: 'required',
         reason: `required, but got (${ stringify(data) }).`
