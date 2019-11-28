@@ -200,6 +200,12 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
 
     // if `type` is array type data, compile to combine
     if (rawSchema != null && isArray(rawSchema.type)) {
+      // optimization when only one data type is specified
+      if (rawSchema.type.length === 1) {
+        return { ...rawSchema, type: rawSchema.type[0]}
+      }
+
+      // compile to combine
       const { definitions } = rawSchema as TDSchema
       return {
         type: 'combine',
