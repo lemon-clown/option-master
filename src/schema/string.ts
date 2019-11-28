@@ -101,7 +101,7 @@ export interface RawStringDataSchema extends RawDataSchema<STRING_T_TYPE, STRING
 
 
 /**
- * 字符串类型的数据模式，解析 RawStringDataSchema 后得到的结果
+ * 字符串类型的数据模式，编译 RawStringDataSchema 后得到的结果
  */
 export interface StringDataSchema extends DataSchema<STRING_T_TYPE, STRING_V_TYPE> {
   /**

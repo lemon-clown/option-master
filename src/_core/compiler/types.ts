@@ -8,55 +8,55 @@ import {
   RTDSchema,
   TDSchema,
 } from '../schema'
-import { DataSchemaParseResult } from './result'
+import { DataSchemaCompileResult } from './result'
 
 
-// short format of DataSchemaParseResult (value?: DataSchema)
-export type DSPResult = DataSchemaParseResult<string, any, RDSchema, DSchema>
+// short format of DataSchemaCompileResult (value?: DataSchema)
+export type DSCResult = DataSchemaCompileResult<string, any, RDSchema, DSchema>
 
-// short format of DataSchemaParseResult (value?: DefinitionDataSchema)
-export type DDSPResult = DataSchemaParseResult<string, any, RDDSchema, DDSchema>
+// short format of DataSchemaCompileResult (value?: DefinitionDataSchema)
+export type DDSCResult = DataSchemaCompileResult<string, any, RDDSchema, DDSchema>
 
-// short format of DataSchemaParseResult (value?: TopDataSchema)
-export type TDSPResult = DataSchemaParseResult<string, any, RTDSchema, TDSchema>
+// short format of DataSchemaCompileResult (value?: TopDataSchema)
+export type TDSCResult = DataSchemaCompileResult<string, any, RTDSchema, TDSchema>
 
-// short format of DataSchemaParser
-export type DSParser = DataSchemaParser<string, any, RDSchema, DSchema>
+// short format of DataSchemaCompiler
+export type DSCompiler = DataSchemaCompiler<string, any, RDSchema, DSchema>
 
-// short format of DataSchemaParserConstructor
-export type DSParserConstructor = DataSchemaParserConstructor<string, any, RDSchema, DSchema>
+// short format of DataSchemaCompilerConstructor
+export type DSCompilerConstructor = DataSchemaCompilerConstructor<string, any, RDSchema, DSchema>
 
 
 /**
- * the context of DataSchemaParser
+ * the context of DataSchemaCompiler
  *
- * 数据模式解析器的上下文
+ * 数据模式编译器的上下文
  */
-export interface DataSchemaParserContext {
+export interface DataSchemaCompilerContext {
   /**
-   * 解析 DataSchema
+   * 编译 DataSchema
    * @param rawSchema
    */
-  parseDataSchema(rawSchema: RDSchema): DSPResult
+  compileDataSchema(rawSchema: RDSchema): DSCResult
   /**
-   * Parse DefinitionDataSchema, DefinitionDataSchema defines the type declaration (reusable data schema),
+   * Compile DefinitionDataSchema, DefinitionDataSchema defines the type declaration (reusable data schema),
    * and can be referenced by other DataSchemas in the top-level DataSchema;
    * it can also define recursive reference data schema
    *
-   * 解析 DefinitionDataSchema，DefinitionDataSchema 定义了类型的声明（可重用的数据模式），可被顶层 DataSchema
+   * 编译 DefinitionDataSchema，DefinitionDataSchema 定义了类型的声明（可重用的数据模式），可被顶层 DataSchema
    * 中的其它 DataSchema 引用；也可以定义递归引用的数据模式
    * @param name
    * @param rawSchema
    */
-  parseDefinitionDataSchema(name: string, rawSchema: RDDSchema): DDSPResult
+  compileDefinitionDataSchema(name: string, rawSchema: RDDSchema): DDSCResult
   /**
    * Parsing the top-level DataSchema, which has unique attributes
    * such as definitions and is a unit of the configuration file
    *
-   * 解析顶层 DataSchema，顶层 DataSchema 中拥有 definitions 等独有属性，是配置文件的单元
+   * 编译顶层 DataSchema，顶层 DataSchema 中拥有 definitions 等独有属性，是配置文件的单元
    * @param rawSchema
    */
-  parseTopDataSchema(rawSchema: RTDSchema): TDSPResult
+  compileTopDataSchema(rawSchema: RTDSchema): TDSCResult
   /**
    * Check if a RawDefinitionDataSchema with the specified id/path exists
    *
@@ -93,43 +93,43 @@ export interface DataSchemaParserContext {
 
 
 /**
- * 数据模式的解析器
+ * 数据模式的编译器
  */
-export interface DataSchemaParser<
+export interface DataSchemaCompiler<
   T extends string,
   V,
   RDS extends RawDataSchema<T, V>,
   DS extends DataSchema<T, V>> {
   /**
    * Corresponds to the type in RawDataSchema, used as a unique identifier,
-   * indicates what type of RawDataSchema the parser receives
+   * indicates what type of RawDataSchema the compiler receives
    *
    * 对应 RawDataSchema 中的 type，用作唯一标识
-   * 表示该解析器接收何种类型的 RawDataSchema
+   * 表示该编译器接收何种类型的 RawDataSchema
    */
   readonly type: T
   /**
-   * 解析数据模式的原始数据
+   * 编译数据模式的原始数据
    * @param rawSchema
    */
-  parse(rawSchema: RawDataSchema<T, V>): DataSchemaParseResult<T, V, RDS, DS>
+  compile(rawSchema: RawDataSchema<T, V>): DataSchemaCompileResult<T, V, RDS, DS>
 }
 
 
 /**
- * DataSchema parser's constructor interface
+ * DataSchema compiler's constructor interface
  *
- * DataSchema 解析器的构造函数接口
+ * DataSchema 编译器的构造函数接口
  */
-export interface DataSchemaParserConstructor<
+export interface DataSchemaCompilerConstructor<
   T extends string,
   V,
   RDS extends RawDataSchema<T, V>,
   DS extends DataSchema<T, V>> {
   /**
-   * constructor of DataSchemaParser<T, V, RDS, DS>
+   * constructor of DataSchemaCompiler<T, V, RDS, DS>
    *
-   * @param context   the context of DataSchemaParser
+   * @param context   the context of DataSchemaCompiler
    */
-  new(context: DataSchemaParserContext): DataSchemaParser<T, V, RDS, DS>
+  new(context: DataSchemaCompilerContext): DataSchemaCompiler<T, V, RDS, DS>
 }

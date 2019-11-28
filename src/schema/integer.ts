@@ -22,7 +22,7 @@ export interface RawIntegerDataSchema extends Omit<RawNumberDataSchema, 'type'> 
 
 
 /**
- * 整数类型的数据模式，解析 RawIntegerDataSchema 后得到的结果
+ * 整数类型的数据模式，编译 RawIntegerDataSchema 后得到的结果
  */
 export interface IntegerDataSchema extends Omit<NumberDataSchema, 'type'> {
   /**

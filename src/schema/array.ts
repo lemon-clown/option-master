@@ -27,7 +27,7 @@ export interface RawArrayDataSchema extends RawDataSchema<ARRAY_T_TYPE, ARRAY_V_
 
 
 /**
- * 数组类型的数据模式，解析 RawArrayDataSchema 后得到的结果
+ * 数组类型的数据模式，编译 RawArrayDataSchema 后得到的结果
  */
 export interface ArrayDataSchema extends DataSchema<ARRAY_T_TYPE, ARRAY_V_TYPE> {
   /**

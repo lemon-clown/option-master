@@ -1,6 +1,6 @@
 import {
-  DataSchema, RawDataSchema, DataSchemaParseResult, DataValidationResult,
-  BaseDataSchemaParser, BaseDataValidator, BaseDataValidatorFactory,
+  DataSchema, RawDataSchema, DataSchemaCompileResult, DataValidationResult,
+  BaseDataSchemaCompiler, BaseDataValidator, BaseDataValidatorFactory,
   DataValidatorContext, coverBoolean, coverString, optionMaster,
 } from '../../src'
 
@@ -13,21 +13,21 @@ type DS = DataSchema<T, V>
 
 
 /**
- * data type of Ipv4DataSchema parse result
+ * data type of Ipv4DataSchema compile result
  */
-export type Ipv4DataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
+export type Ipv4DataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS>
 
 
 /**
- * ipv4 schema parser
+ * ipv4 schema compiler
  */
-export class Ipv4DataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
+export class Ipv4DataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, DS> {
   public readonly type: T = T
 
-  public parse (rawSchema: RDS): Ipv4DataSchemaParserResult {
-    const result: Ipv4DataSchemaParserResult = super.parse(rawSchema)
-    const requiredResult = result.parseProperty<boolean>('required', coverBoolean, false)
-    const defaultValueResult = result.parseProperty<V>('default', coverString)
+  public compile (rawSchema: RDS): Ipv4DataSchemaCompileResult {
+    const result: Ipv4DataSchemaCompileResult = super.compile(rawSchema)
+    const requiredResult = result.compileProperty<boolean>('required', coverBoolean, false)
+    const defaultValueResult = result.compileProperty<V>('default', coverString)
 
     // Ipv4DataSchema
     const schema: DS = {
@@ -96,8 +96,8 @@ export class Ipv4DataValidatorFactory extends BaseDataValidatorFactory<T, V, DS>
 }
 
 
-// register parser and validator
-optionMaster.registerParser(T, Ipv4DataSchemaParser)
+// register compiler and validator
+optionMaster.registerCompiler(T, Ipv4DataSchemaCompiler)
 optionMaster.registerValidatorFactory(T, Ipv4DataValidatorFactory)
 
 
@@ -108,8 +108,8 @@ const rawSchema = {
 }
 
 
-// parse rawSchema
-const { value: schema } = optionMaster.parse(rawSchema)
+// compile rawSchema
+const { value: schema } = optionMaster.compile(rawSchema)
 const validate = (data: any): boolean | undefined => {
   const result = optionMaster.validate(schema!, data)
   if (result.hasError) {

@@ -10,8 +10,8 @@ const rawSchema = {
 }
 
 
-// parse rawSchema
-const { value: schema } = optionMaster.parse(rawSchema)
+// compile rawSchema
+const { value: schema } = optionMaster.compile(rawSchema)
 
 // validate data with schema
 const validate = (data: any): boolean | undefined => {

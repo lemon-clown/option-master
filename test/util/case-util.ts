@@ -180,7 +180,7 @@ export abstract class TestCaseMaster<T, D> {
   }
 
   /**
-   * 解析测试用例的数据，获得输出数据
+   * 编译测试用例的数据，获得输出数据
    * @param kase
    */
   public abstract async consume(kase: TestCase): Promise<T>

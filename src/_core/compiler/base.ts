@@ -1,46 +1,46 @@
 import { coverBoolean } from '../../_util/cover-util'
 import { RawDataSchema, DataSchema } from '../schema'
-import { DataSchemaParserContext, DataSchemaParser } from './types'
-import { DataSchemaParseResult } from './result'
+import { DataSchemaCompilerContext, DataSchemaCompiler } from './types'
+import { DataSchemaCompileResult } from './result'
 
 
 /**
- * DataSchema parser to parse RawDataSchema content into DataSchema
+ * DataSchema compiler to compile RawDataSchema content into DataSchema
  *
- * 数据模式解析器，将用户定义的内容解析成 DataSchema
+ * 数据模式编译器，将用户定义的内容编译成 DataSchema
  * @template T    typeof <X>DataSchema.type
  * @template V    typeof <X>DataSchema.V
  * @template DS   typeof <X>DataSchema
  * @template RDS  typeof <X>RawDataSchema
  */
-export abstract class BaseDataSchemaParser<
+export abstract class BaseDataSchemaCompiler<
   T extends string,
   V,
   RDS extends RawDataSchema<T, V>,
   DS extends DataSchema<T, V>>
-  implements DataSchemaParser<T, V, RDS, DS> {
+  implements DataSchemaCompiler<T, V, RDS, DS> {
   /**
    * override member variable
-   * @see DataSchemaParser#type
+   * @see DataSchemaCompiler#type
    */
   public abstract readonly type: T
 
-  protected readonly context: DataSchemaParserContext
+  protected readonly context: DataSchemaCompilerContext
 
-  public constructor(context: DataSchemaParserContext) {
+  public constructor(context: DataSchemaCompilerContext) {
     this.context = context
   }
 
   /**
    * override method
-   * @see DataSchemaParser#parse
+   * @see DataSchemaCompiler#compile
    */
-  public parse(rawSchema: RawDataSchema<T, V>): DataSchemaParseResult<T, V, RDS, DS> {
+  public compile(rawSchema: RawDataSchema<T, V>): DataSchemaCompileResult<T, V, RDS, DS> {
     rawSchema = this.context.normalizeRawSchema(rawSchema) as RawDataSchema<T, V>
-    const result: DataSchemaParseResult<T, V, RDS, DS> = (new DataSchemaParseResult(rawSchema)) as any
+    const result: DataSchemaCompileResult<T, V, RDS, DS> = (new DataSchemaCompileResult(rawSchema)) as any
 
     // required 的默认值为 false
-    const requiredResult = result.parseProperty<boolean>('required', coverBoolean, false)
+    const requiredResult = result.compileProperty<boolean>('required', coverBoolean, false)
 
     // eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
     const schema: DS = {

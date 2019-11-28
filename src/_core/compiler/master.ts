@@ -8,111 +8,111 @@ import {
   DDSchema,
   DefinitionDataSchemaMaster,
 } from '../schema'
-import { DSParser, DataSchemaParserContext, DSPResult, DDSPResult, TDSPResult } from './types'
-import { DataSchemaParseResult } from './result'
+import { DSCompiler, DataSchemaCompilerContext, DSCResult, DDSCResult, TDSCResult } from './types'
+import { DataSchemaCompileResult } from './result'
 
 
 /**
- * Objects managed by the data pattern parser
+ * Objects managed by the data pattern compiler
  *  - Registration operation: enable a user-defined Schema type to be correctly resolved
- *  - Replace operation: replace the parser of a schema of the original type
- *  - Parsing operation: for the specified RawSchema object, find a suitable parser
- *    to parse its value to get the Schema
+ *  - Replace operation: replace the compiler of a schema of the original type
+ *  - Parsing operation: for the specified RawSchema object, find a suitable compiler
+ *    to compile its value to get the Schema
  *
- * 数据模式解析器的管理对象
- *  - 注册操作：使得一个用户自定义的 Schema 类型能被正确解析
- *  - 替换操作：替换一个原有类型的 Schema 的解析器
- *  - 解析操作：对于指定的 RawSchema 对象，寻找合适的解析器解析其值，得到 Schema
+ * 数据模式编译器的管理对象
+ *  - 注册操作：使得一个用户自定义的 Schema 类型能被正确编译
+ *  - 替换操作：替换一个原有类型的 Schema 的编译器
+ *  - 编译操作：对于指定的 RawSchema 对象，寻找合适的编译器编译其值，得到 Schema
  */
-export class DataSchemaParserMaster implements DataSchemaParserContext {
+export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
   /**
-   * Mapping of the DataSchema.type and DataSchemaParser
+   * Mapping of the DataSchema.type and DataSchemaCompiler
    *
-   * DataSchema.type 和 DataSchemaParser 的映射
+   * DataSchema.type 和 DataSchemaCompiler 的映射
    */
-  protected readonly parserMap: Map<string, DSParser>
+  protected readonly compilerMap: Map<string, DSCompiler>
   /**
    * DefinitionDataSchema management object instance for resolving reference nodes
    *
-   * 数据模式管理对象实例，用于解析引用节点
+   * 数据模式管理对象实例，用于编译引用节点
    */
   protected readonly definitionSchemaMaster: DefinitionDataSchemaMaster
 
-  public constructor(parserMap?: Map<string, DSParser>) {
-    this.parserMap = parserMap != null ? parserMap : new Map()
+  public constructor(compilerMap?: Map<string, DSCompiler>) {
+    this.compilerMap = compilerMap != null ? compilerMap : new Map()
     this.definitionSchemaMaster = new DefinitionDataSchemaMaster()
   }
 
   /**
-   * Add DataSchemaParser, if the parser of the specified type already exists, ignore this addition
+   * Add DataSchemaCompiler, if the compiler of the specified type already exists, ignore this addition
    *
-   * 添加 DataSchemaParser，若指定的 type 的解析器已存在，则忽略此次添加
+   * 添加 DataSchemaCompiler，若指定的 type 的编译器已存在，则忽略此次添加
    * @param type
-   * @param schemaParser
+   * @param schemaCompiler
    */
-  public registerParser(type: string, schemaParser: DSParser): void {
-    if (this.parserMap.has(type)) return
-    this.parserMap.set(type, schemaParser)
+  public registerCompiler(type: string, schemaCompiler: DSCompiler): void {
+    if (this.compilerMap.has(type)) return
+    this.compilerMap.set(type, schemaCompiler)
   }
 
   /**
-   * Overwrite the existing DataSchemaParser.
-   * If there is no corresponding DataSchemaParser before the specified type, add it.
+   * Overwrite the existing DataSchemaCompiler.
+   * If there is no corresponding DataSchemaCompiler before the specified type, add it.
    *
-   * 覆盖已有的 DataSchemaParser；
-   * 若指定的 type 之前没有对应的 DataSchemaParser，也做添加操作
+   * 覆盖已有的 DataSchemaCompiler；
+   * 若指定的 type 之前没有对应的 DataSchemaCompiler，也做添加操作
    * @param type
-   * @param schemaParser
+   * @param schemaCompiler
    */
-  public replaceParser(type: string, schemaParser: DSParser) {
-    this.parserMap.set(type, schemaParser)
+  public replaceCompiler(type: string, schemaCompiler: DSCompiler) {
+    this.compilerMap.set(type, schemaCompiler)
   }
 
   /**
    * override method
-   * @see DataSchemaParserContext#parseDataSchema
+   * @see DataSchemaCompilerContext#compileDataSchema
    */
-  public parseDataSchema(rawSchema: RDSchema): DSPResult {
+  public compileDataSchema(rawSchema: RDSchema): DSCResult {
     rawSchema = this.normalizeRawSchema(rawSchema)
 
     // check type
     if (rawSchema == null || !isString(rawSchema.type)) {
-      const result: DSPResult = new DataSchemaParseResult(rawSchema)
+      const result: DSCResult = new DataSchemaCompileResult(rawSchema)
       return result.addError({
         constraint: 'type',
         reason: `\`schema.type\` must be a string, but got (${ stringify(rawSchema.type) }).`
       })
     }
 
-    // delegate to the specified type of parser
-    const parser = this.parserMap.get(rawSchema.type)
-    if (parser == null) {
-      const result: DSPResult = new DataSchemaParseResult(rawSchema)
+    // delegate to the specified type of compiler
+    const compiler = this.compilerMap.get(rawSchema.type)
+    if (compiler == null) {
+      const result: DSCResult = new DataSchemaCompileResult(rawSchema)
       return result.addError({
         constraint: 'type',
         reason: `unknown \`schema.type\`: ${ stringify(rawSchema.type) }.`
       })
     }
 
-    return parser.parse(rawSchema)
+    return compiler.compile(rawSchema)
   }
 
   /**
    * override method
-   * @see DataSchemaParserContext#parseDefinitionDataSchema
+   * @see DataSchemaCompilerContext#compileDefinitionDataSchema
    */
-  public parseDefinitionDataSchema(name: string, rawSchema: RDDSchema): DDSPResult {
+  public compileDefinitionDataSchema(name: string, rawSchema: RDDSchema): DDSCResult {
     rawSchema = this.normalizeRawSchema(rawSchema)
-    const result: DDSPResult = new DataSchemaParseResult(rawSchema)
+    const result: DDSCResult = new DataSchemaCompileResult(rawSchema)
 
-    // parse $id
-    const $idResult = result.parseProperty('$id', coverString, undefined)
+    // compile $id
+    const $idResult = result.compileProperty('$id', coverString, undefined)
 
     // pre-add schema (parsing)
     const $path = this.definitionSchemaMaster.nameToPath(name)
     this.definitionSchemaMaster.addRawSchema($path, rawSchema, $idResult.value)
 
-    const dataSchemaResult = this.parseDataSchema(rawSchema)
+    const dataSchemaResult = this.compileDataSchema(rawSchema)
     result.merge(dataSchemaResult)
     if (!dataSchemaResult.hasError) {
       const schema: DDSchema = {
@@ -127,21 +127,21 @@ export class DataSchemaParserMaster implements DataSchemaParserContext {
 
   /**
    * override method
-   * @see DataSchemaParserContext#parseTopDataSchema
+   * @see DataSchemaCompilerContext#compileTopDataSchema
    */
-  public parseTopDataSchema(rawSchema: RTDSchema): TDSPResult {
+  public compileTopDataSchema(rawSchema: RTDSchema): TDSCResult {
     rawSchema = this.normalizeRawSchema(rawSchema)
-    const result: TDSPResult = new DataSchemaParseResult(rawSchema)
+    const result: TDSCResult = new DataSchemaCompileResult(rawSchema)
     this.definitionSchemaMaster.clear()
 
     try {
-      // parse definitions first
+      // compile definitions first
       let definitions: TDSchema['definitions'] = undefined
       if (rawSchema.definitions != null) {
         definitions = {}
         for (const name of Object.getOwnPropertyNames(rawSchema.definitions)) {
           const rawDefinitionSchema = rawSchema.definitions[name]
-          const definitionSchemaResult = this.parseDefinitionDataSchema(name, rawDefinitionSchema)
+          const definitionSchemaResult = this.compileDefinitionDataSchema(name, rawDefinitionSchema)
           // merge errors and warnings
           if (definitionSchemaResult.hasError || definitionSchemaResult.hasWarning) {
             result.addHandleResult('definitions', definitionSchemaResult)
@@ -153,8 +153,8 @@ export class DataSchemaParserMaster implements DataSchemaParserContext {
         }
       }
 
-      // parse other property
-      const dataSchemaResult = this.parseDataSchema(rawSchema)
+      // compile other property
+      const dataSchemaResult = this.compileDataSchema(rawSchema)
       result.merge(dataSchemaResult)
 
       // check for errors
@@ -175,7 +175,7 @@ export class DataSchemaParserMaster implements DataSchemaParserContext {
 
   /**
    * override method
-   * @see DataSchemaParserContext#hasDefinition
+   * @see DataSchemaCompilerContext#hasDefinition
    */
   public hasDefinition(idOrPath: string): boolean {
     return this.definitionSchemaMaster.has(idOrPath)
@@ -183,7 +183,7 @@ export class DataSchemaParserMaster implements DataSchemaParserContext {
 
   /**
    * override method
-   * @see DataSchemaParserContext#getRawDefinition
+   * @see DataSchemaCompilerContext#getRawDefinition
    */
   public getRawDefinition(idOrPath: string): RDDSchema | undefined {
     return this.definitionSchemaMaster.getRawSchema(idOrPath)
@@ -191,7 +191,7 @@ export class DataSchemaParserMaster implements DataSchemaParserContext {
 
   /**
    * override method
-   * @see DataSchemaParserContext#normalizeRawSchema
+   * @see DataSchemaCompilerContext#normalizeRawSchema
    */
   public normalizeRawSchema(rawSchema: RDSchema): RDSchema {
     if (isString(rawSchema)) {
@@ -202,7 +202,7 @@ export class DataSchemaParserMaster implements DataSchemaParserContext {
 
   /**
    * override method
-   * @see DataSchemaParserContext#inheritRawSchema
+   * @see DataSchemaCompilerContext#inheritRawSchema
    */
   public inheritRawSchema<T extends RDSchema>(defaultRawSchema: RDSchema, rawSchema: T): T {
     return {

@@ -1,33 +1,33 @@
-import { BaseDataSchemaParser, DataSchemaParseResult } from '../_core/parser'
+import { BaseDataSchemaCompiler, DataSchemaCompileResult } from '../_core/compiler'
 import { ARRAY_V_TYPE as V, ARRAY_T_TYPE as T, RawArrayDataSchema as RDS, ArrayDataSchema as DS } from '../schema/array'
 import { coverBoolean } from '../_util/cover-util'
 import { isArray, stringify } from '../_util/type-util'
 
 
 /**
- * ArrayDataSchema 解析结果的数据类型
+ * ArrayDataSchema 编译结果的数据类型
  */
-export type ArrayDataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
+export type ArrayDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS>
 
 
 /**
- * 数组类型的模式的解析器
+ * 数组类型的模式的编译器
  *
  * enum 将忽略所有非数组的值
  */
-export class ArrayDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
+export class ArrayDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, DS> {
   public readonly type: T = T
 
   /**
-   * parse RawSchema to Schema
+   * compile RawSchema to Schema
    * @param rawSchema
    */
-  public parse (rawSchema: RDS): ArrayDataSchemaParserResult {
-    const result: ArrayDataSchemaParserResult = super.parse(rawSchema)
+  public compile (rawSchema: RDS): ArrayDataSchemaCompileResult {
+    const result: ArrayDataSchemaCompileResult = super.compile(rawSchema)
     rawSchema = result._rawSchema
 
     // unique 的默认值为 false
-    const uniqueResult = result.parseProperty<boolean>('unique', coverBoolean, false)
+    const uniqueResult = result.compileProperty<boolean>('unique', coverBoolean, false)
 
     // 检查 defaultValue 是否为数组
     let defaultValue = undefined
@@ -42,7 +42,7 @@ export class ArrayDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
       }
     }
 
-    // items 为必选项，若未给定，则解析异常
+    // items 为必选项，若未给定，则编译异常
     if (rawSchema.items == null) {
       return result.addError({
         constraint: 'items',
@@ -50,8 +50,8 @@ export class ArrayDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
       })
     }
 
-    // 解析 items
-    const itemsResult = this.context.parseDataSchema(rawSchema.items)
+    // 编译 items
+    const itemsResult = this.context.compileDataSchema(rawSchema.items)
     result.addHandleResult('items', itemsResult)
 
     // ArrayDataSchema

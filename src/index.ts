@@ -3,7 +3,7 @@ import './types'
 
 // export core
 export * from './_core/schema'
-export * from './_core/parser'
+export * from './_core/compiler'
 export * from './_core/validator'
 
 // export utils
@@ -22,15 +22,15 @@ export * from './schema/object'
 export * from './schema/string'
 export * from './schema/ref'
 
-// export DataSchemaParsers
-export * from './parser/array'
-export * from './parser/boolean'
-export * from './parser/combine'
-export * from './parser/integer'
-export * from './parser/number'
-export * from './parser/object'
-export * from './parser/string'
-export * from './parser/ref'
+// export DataSchemaCompilers
+export * from './compiler/array'
+export * from './compiler/boolean'
+export * from './compiler/combine'
+export * from './compiler/integer'
+export * from './compiler/number'
+export * from './compiler/object'
+export * from './compiler/string'
+export * from './compiler/ref'
 
 // export DataValidators
 export * from './validator/array'

@@ -38,7 +38,7 @@ export interface RawNumberDataSchema extends RawDataSchema<NUMBER_T_TYPE, NUMBER
 
 
 /**
- * 数字类型的数据模式，解析 RawNumberDataSchema 后得到的结果
+ * 数字类型的数据模式，编译 RawNumberDataSchema 后得到的结果
  */
 export interface NumberDataSchema extends DataSchema<NUMBER_T_TYPE, NUMBER_V_TYPE> {
   /**

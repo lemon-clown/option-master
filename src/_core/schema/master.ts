@@ -3,12 +3,12 @@ import { DDSchema, TDSchema, RDDSchema } from './types'
 
 /**
  * Maintain the DefinitionDataSchema mapping relationship;
- * Used to parse RefDataSchema to determine whether the reference is valid,
+ * Used to compile RefDataSchema to determine whether the reference is valid,
  * and set the default value of the optional attribute to the corresponding
  * attribute value of the referenced DataSchema.
  *
  * 维护 DefinitionDataSchema 映射关系；
- * 用于在解析 RefDataSchema 判断引用是否合法，
+ * 用于在编译 RefDataSchema 判断引用是否合法，
  * 以及将可选的属性的默认值设置为被引用的 DataSchema 的对应属性值
  */
 export class DefinitionDataSchemaMaster {

@@ -23,7 +23,7 @@ export interface RawObjectDataSchema extends RawDataSchema<OBJECT_T_TYPE, OBJECT
   /**
    * 是否允许其它额外的属性，若为 false 且指定了 properties，
    * 则对象中只有 properties 中出现的属性会被采用，其它的属性将被忽略，
-   * 如下的 Schema 中，数据对象不能出现除 `name` 以外的其它属性（解析器/校验器会忽略这些额外的属性）：
+   * 如下的 Schema 中，数据对象不能出现除 `name` 以外的其它属性（编译器/校验器会忽略这些额外的属性）：
    *  {
    *    properties: {
    *      name: { type: 'string' }
@@ -61,7 +61,7 @@ export interface RawObjectDataSchema extends RawDataSchema<OBJECT_T_TYPE, OBJECT
 
 
 /**
- * 对象类型的数据模式，解析 RawObjectDataSchema 后得到的结果
+ * 对象类型的数据模式，编译 RawObjectDataSchema 后得到的结果
  */
 export interface ObjectDataSchema extends DataSchema<OBJECT_T_TYPE, OBJECT_V_TYPE> {
   /**

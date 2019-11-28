@@ -61,7 +61,7 @@ export interface RawCombineDataSchema extends RawDataSchema<COMBINE_T_TYPE, COMB
 
 
 /**
- * 组合类型的数据模式，解析 RawCombineDataSchema 后得到的结果
+ * 组合类型的数据模式，编译 RawCombineDataSchema 后得到的结果
  *
  * allOf, anyOf, oneOf 这三项至少指定一个，
  * 若指定了多个，则按照 'strategy' 中定义的值来处理

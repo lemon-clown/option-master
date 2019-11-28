@@ -1,4 +1,4 @@
-import { BaseDataSchemaParser, DataSchemaParseResult } from '../_core/parser'
+import { BaseDataSchemaCompiler, DataSchemaCompileResult } from '../_core/compiler'
 import { OBJECT_V_TYPE as V, OBJECT_T_TYPE as T, RawObjectDataSchema as RDS, ObjectDataSchema as DS, ObjectDataSchema } from '../schema/object'
 import { StringDataSchema, STRING_T_TYPE } from '../schema/string'
 import { stringify, isObject } from '../_util/type-util'
@@ -6,32 +6,32 @@ import { coverBoolean, coverArray, coverString } from '../_util/cover-util'
 
 
 /**
- * ObjectDataSchema 解析结果的数据类型
+ * ObjectDataSchema 编译结果的数据类型
  */
-export type ObjectDataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
+export type ObjectDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS>
 
 
 /**
- * 对象类型的模式的解析器
+ * 对象类型的模式的编译器
  *
  * enum 将忽略所有非对象的值
  */
-export class ObjectDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
+export class ObjectDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, DS> {
   public readonly type: T = T
 
   /**
-   * parse RawSchema to Schema
+   * compile RawSchema to Schema
    * @param rawSchema
    */
-  public parse (rawSchema: RDS): ObjectDataSchemaParserResult {
-    const result: ObjectDataSchemaParserResult = super.parse(rawSchema)
+  public compile (rawSchema: RDS): ObjectDataSchemaCompileResult {
+    const result: ObjectDataSchemaCompileResult = super.compile(rawSchema)
     rawSchema = result._rawSchema
 
     // allowAdditionalProperties 的默认值为 false
-    const allowAdditionalPropertiesResult = result.parseProperty<boolean>('allowAdditionalProperties', coverBoolean, false)
+    const allowAdditionalPropertiesResult = result.compileProperty<boolean>('allowAdditionalProperties', coverBoolean, false)
 
     // silentIgnore 的默认值为 false
-    const silentIgnoreResult = result.parseProperty<boolean>('silentIgnore', coverBoolean, false)
+    const silentIgnoreResult = result.compileProperty<boolean>('silentIgnore', coverBoolean, false)
 
 
     // 校验属性是否为对象
@@ -54,25 +54,25 @@ export class ObjectDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> 
       }
     }
 
-    // 解析 properties
+    // 编译 properties
     let properties: ObjectDataSchema['properties'] = undefined
     if (rawSchema.properties != null) {
       if (ensureObject('properties')) {
         properties = {}
         for (const propertyName of Object.getOwnPropertyNames(rawSchema.properties)) {
           const propertyValueSchema = rawSchema.properties[propertyName]
-          const propertyParserResult = this.context.parseDataSchema(propertyValueSchema)
-          result.addHandleResult('properties', propertyParserResult)
+          const propertyCompileResult = this.context.compileDataSchema(propertyValueSchema)
+          result.addHandleResult('properties', propertyCompileResult)
 
           // 如果存在错误，则忽略此属性
           // 否则，添加属性对应的 DataSchema
-          if (propertyParserResult.hasError) continue
-          properties[propertyName] = propertyParserResult.value!
+          if (propertyCompileResult.hasError) continue
+          properties[propertyName] = propertyCompileResult.value!
         }
       }
     }
 
-    // 解析 propertyNames
+    // 编译 propertyNames
     let propertyNames: ObjectDataSchema['propertyNames'] = undefined
     if (rawSchema.propertyNames != null) {
       if (rawSchema.propertyNames.type !== STRING_T_TYPE) {
@@ -81,16 +81,16 @@ export class ObjectDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> 
           reason: `propertyNames must be a StringDataSchema, but got (${ stringify(rawSchema.propertyNames) }).`
         })
       } else {
-        const propertyNamesParserResult = this.context.parseDataSchema(rawSchema.propertyNames)
-        result.addHandleResult('propertyNames', propertyNamesParserResult)
+        const propertyNamesCompileResult = this.context.compileDataSchema(rawSchema.propertyNames)
+        result.addHandleResult('propertyNames', propertyNamesCompileResult)
         // 如果存在错误，则忽略此属性
         if (!result.hasError) {
-          propertyNames = propertyNamesParserResult.value as StringDataSchema
+          propertyNames = propertyNamesCompileResult.value as StringDataSchema
         }
       }
     }
 
-    // 解析 dependencies
+    // 编译 dependencies
     let dependencies: ObjectDataSchema['dependencies'] = undefined
     if (rawSchema.dependencies != null) {
       if (ensureObject('dependencies')) {

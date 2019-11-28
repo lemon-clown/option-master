@@ -2,7 +2,7 @@ import fs from 'fs-extra'
 import * as chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import { TestCaseMaster, TestCaseMasterProps, TestCase } from './case-util'
-import { optionMaster, RDSchema, DSPResult, DataHandleResultException } from '../../src'
+import { optionMaster, RDSchema, DSCResult, DataHandleResultException } from '../../src'
 
 
 chai.use(chaiExclude)
@@ -12,17 +12,17 @@ const { expect } = chai
 /**
  * 输出数据
  */
-export interface DataSchemaParserOutputData {
-  value: DSPResult['value']
-  errors: DSPResult['errors']
-  warnings: DSPResult['warnings']
+export interface DataSchemaCompilerOutputData {
+  value: DSCResult['value']
+  errors: DSCResult['errors']
+  warnings: DSCResult['warnings']
 }
 
 
 /**
- * DataSchema 解析器测试用例辅助类
+ * DataSchema 编译器测试用例辅助类
  */
-export class DataSchemaParserTestCaseMaster extends TestCaseMaster<DSPResult, DataSchemaParserOutputData> {
+export class DataSchemaCompilerTestCaseMaster extends TestCaseMaster<DSCResult, DataSchemaCompilerOutputData> {
   public constructor({
     caseRootDirectory,
     inputFileNameSuffix = 'schema.json',
@@ -32,17 +32,17 @@ export class DataSchemaParserTestCaseMaster extends TestCaseMaster<DSPResult, Da
   }
 
   // override
-  public async consume(kase: TestCase): Promise<DSPResult | never> {
+  public async consume(kase: TestCase): Promise<DSCResult | never> {
     const { inputFilePath: schemaFilePath } = kase
     const rawDataSchema: RDSchema = await fs.readJSON(schemaFilePath)
-    const parserResult: DSPResult = optionMaster.parse(rawDataSchema)
-    return parserResult
+    const CompileResult: DSCResult = optionMaster.compile(rawDataSchema)
+    return CompileResult
   }
 
   // override
-  public async check(output: DSPResult, answer: DSPResult): Promise<void> {
-    const outputData: DataSchemaParserOutputData = this.toJSON(output)
-    const answerData: DataSchemaParserOutputData = this.toJSON(answer)
+  public async check(output: DSCResult, answer: DSCResult): Promise<void> {
+    const outputData: DataSchemaCompilerOutputData = this.toJSON(output)
+    const answerData: DataSchemaCompilerOutputData = this.toJSON(answer)
 
     // check errors
     if (answerData.errors != null && answerData.errors.length > 0) {
@@ -71,7 +71,7 @@ export class DataSchemaParserTestCaseMaster extends TestCaseMaster<DSPResult, Da
   }
 
   // override
-  public toJSON(data: DSPResult): DataSchemaParserOutputData {
+  public toJSON(data: DSCResult): DataSchemaCompilerOutputData {
     const mapper = (x: DataHandleResultException) => {
       const result: DataHandleResultException = { constraint: x.constraint, reason: x.reason }
       if (x.property != null) result.property = x.property
@@ -79,7 +79,7 @@ export class DataSchemaParserTestCaseMaster extends TestCaseMaster<DSPResult, Da
       return result
     }
 
-    const result: DataSchemaParserOutputData = {
+    const result: DataSchemaCompilerOutputData = {
       value: data.value,
       errors: data.errors.map(mapper),
       warnings: data.warnings.map(mapper),

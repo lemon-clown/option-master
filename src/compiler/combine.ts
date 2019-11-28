@@ -1,36 +1,36 @@
 import { RDSchema, DSchema } from '../_core/schema'
-import { BaseDataSchemaParser, DataSchemaParseResult } from '../_core/parser'
+import { BaseDataSchemaCompiler, DataSchemaCompileResult } from '../_core/compiler'
 import { COMBINE_V_TYPE as V, COMBINE_T_TYPE as T, RawCombineDataSchema as RDS, CombineDataSchema as DS, CombineStrategy } from '../schema/combine'
 import { coverString } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'
 
 
 /**
- * CombineDataSchema 解析结果的数据类型
+ * CombineDataSchema 编译结果的数据类型
  */
-export type CombineDataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
+export type CombineDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS>
 
 
 /**
- * 组合类型的模式的解析器
+ * 组合类型的模式的编译器
  *
  * enum 将忽略所有非组合（或组合字符串）的值
  */
-export class CombineDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
+export class CombineDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, DS> {
   public readonly type: T = T
 
   /**
-   * parse RawSchema to Schema
+   * compile RawSchema to Schema
    * @param rawSchema
    */
-  public parse (rawSchema: RDS): CombineDataSchemaParserResult {
-    const result: CombineDataSchemaParserResult = super.parse(rawSchema)
+  public compile (rawSchema: RDS): CombineDataSchemaCompileResult {
+    const result: CombineDataSchemaCompileResult = super.compile(rawSchema)
     rawSchema = result._rawSchema
 
     const defaultValue = rawSchema.default
 
     // strategy 的默认值为 all
-    const strategyResult = result.parseProperty<CombineStrategy>('strategy', coverString as any, CombineStrategy.ALL)
+    const strategyResult = result.compileProperty<CombineStrategy>('strategy', coverString as any, CombineStrategy.ALL)
     switch (strategyResult.value) {
       case CombineStrategy.ALL:
       case CombineStrategy.ANY:
@@ -45,17 +45,17 @@ export class CombineDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS>
     }
 
     /**
-     * 解析 DataSchema 列表
+     * 编译 DataSchema 列表
      *
      * @param constraint
      * @param rawSchemas
      */
-    const parseSchemas = (constraint: 'allOf' | 'anyOf' | 'oneOf', rawSchemas?: RDSchema[]): DSchema[] | undefined => {
+    const compileSchemas = (constraint: 'allOf' | 'anyOf' | 'oneOf', rawSchemas?: RDSchema[]): DSchema[] | undefined => {
       if (rawSchemas == null || rawSchemas.length <= 0) return undefined
       const schemas: DSchema[] = []
       for (let i = 0; i < rawSchemas.length; ++i) {
         const itemRawSchema = rawSchemas[i]
-        const itemSchema = this.context.parseDataSchema(itemRawSchema)
+        const itemSchema = this.context.compileDataSchema(itemRawSchema)
         result.addHandleResult(constraint, itemSchema)
 
         // 存在错误则跳过
@@ -67,9 +67,9 @@ export class CombineDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS>
       return schemas
     }
 
-    const allOf: DSchema[] | undefined = parseSchemas('allOf', rawSchema.allOf)
-    const anyOf: DSchema[] | undefined = parseSchemas('anyOf', rawSchema.anyOf)
-    const oneOf: DSchema[] | undefined = parseSchemas('oneOf', rawSchema.oneOf)
+    const allOf: DSchema[] | undefined = compileSchemas('allOf', rawSchema.allOf)
+    const anyOf: DSchema[] | undefined = compileSchemas('anyOf', rawSchema.anyOf)
+    const oneOf: DSchema[] | undefined = compileSchemas('oneOf', rawSchema.oneOf)
 
     // allOf, anyOf, oneOf 至少要设置一项有效值
     if ((allOf == null || allOf.length <= 0) && (anyOf == null || anyOf.length <= 0) && (oneOf == null || oneOf.length <= 0)) {

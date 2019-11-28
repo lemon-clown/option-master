@@ -14,7 +14,7 @@ import { DataValidationResult } from './result'
  * 数据校验器的管理对象
  *  - 注册操作：使得一个用户自定义的 Schema 类型对应的数据能被正确校验
  *  - 替换操作：替换一个原有类型的数据校验器
- *  - 解析操作：对于指定的 Schema 对象和数据对象，校验数据是否符合此 Schema 的定义
+ *  - 编译操作：对于指定的 Schema 对象和数据对象，校验数据是否符合此 Schema 的定义
  */
 export class DataValidatorMaster implements DataValidatorContext {
   /**
