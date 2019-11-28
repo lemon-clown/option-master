@@ -12,6 +12,7 @@
   - boolean：[BooleanDataValidator](../src/validator/boolean.ts)
   - combine：[CombineDataValidator](../src/validator/combine.ts)
   - integer：[IntegerDataValidator](../src/validator/integer.ts)
+  - null：[NullDataValidator](../src/validator/null.ts)
   - number：[NumberDataValidator](../src/validator/number.ts)
   - object：[ObjectDataValidator](../src/validator/object.ts)
   - ref：[RefDataValidator](../src/validator/ref.ts)
@@ -37,6 +38,7 @@
     import { BOOLEAN_T_TYPE } from 'option-master/lib/schema/boolean'
     import { COMBINE_T_TYPE } from 'option-master/lib/schema/combine'
     import { INTEGER_T_TYPE } from 'option-master/lib/schema/integer'
+    import { NULL_T_TYPE } from 'option-master/lib/schema/null'
     import { NUMBER_T_TYPE } from 'option-master/lib/schema/number'
     import { OBJECT_T_TYPE } from 'option-master/lib/schema/object'
     import { REF_T_TYPE } from 'option-master/lib/schema/ref'
@@ -45,6 +47,7 @@
     import { BooleanDataValidatorFactory } from 'option-master/lib/validator/boolean'
     import { CombineDataValidatorFactory } from 'option-master/lib/validator/combine'
     import { IntegerDataValidatorFactory } from 'option-master/lib/validator/integer'
+    import { NullDataValidatorFactory } from 'option-master/lib/validator/null'
     import { NumberDataValidatorFactory } from 'option-master/lib/validator/number'
     import { ObjectDataValidatorFactory } from 'option-master/lib/validator/object'
     import { RefDataValidatorFactory } from 'option-master/lib/validator/ref'
@@ -57,6 +60,7 @@
     validatorMaster.registerValidatorFactory(BOOLEAN_T_TYPE, new BooleanDataValidatorFactory(validatorMaster))
     validatorMaster.registerValidatorFactory(COMBINE_T_TYPE, new CombineDataValidatorFactory(validatorMaster))
     validatorMaster.registerValidatorFactory(INTEGER_T_TYPE, new IntegerDataValidatorFactory(validatorMaster))
+    validatorMaster.registerValidatorFactory(NULL_T_TYPE, new NullDataValidatorFactory(validatorMaster))
     validatorMaster.registerValidatorFactory(NUMBER_T_TYPE, new NumberDataValidatorFactory(validatorMaster))
     validatorMaster.registerValidatorFactory(OBJECT_T_TYPE, new ObjectDataValidatorFactory(validatorMaster))
     validatorMaster.registerValidatorFactory(REF_T_TYPE, new RefDataValidatorFactory(validatorMaster))

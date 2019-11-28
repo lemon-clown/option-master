@@ -263,6 +263,7 @@
   - [ArrayDataSchema][]
   - [BooleanDataSchema][]
   - [CombineDataSchema][]
+  - [NullDataSchema][]
   - [NumberDataSchema][]
   - [IntegerDataSchema][]
   - [ObjectDataSchema][]
@@ -276,6 +277,7 @@
 [ArrayDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/array.md
 [BooleanDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/boolean.md
 [CombineDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/combine.md
+[NullDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/null.md
 [NumberDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/number.md
 [IntegerDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/integer.md
 [ObjectDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/object.md

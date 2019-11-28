@@ -12,6 +12,7 @@
   - boolean：[BooleanDataSchemaCompiler](../src/compiler/boolean.ts)
   - combine：[CombineDataSchemaCompiler](../src/compiler/combine.ts)
   - integer：[IntegerDataSchemaCompiler](../src/compiler/integer.ts)
+  - null：[NullDataSchemaCompiler](../src/compiler/null.ts)
   - number：[NumberDataSchemaCompiler](../src/compiler/number.ts)
   - object：[ObjectDataSchemaCompiler](../src/compiler/object.ts)
   - ref：[ObjectDataSchemaCompiler](../src/compiler/ref.ts)
@@ -37,6 +38,7 @@
     import { BOOLEAN_T_TYPE } from 'option-master/lib/schema/boolean'
     import { COMBINE_T_TYPE } from 'option-master/lib/schema/combine'
     import { INTEGER_T_TYPE } from 'option-master/lib/schema/integer'
+    import { NULL_T_TYPE } from 'option-master/lib/schema/null'
     import { NUMBER_T_TYPE } from 'option-master/lib/schema/number'
     import { OBJECT_T_TYPE } from 'option-master/lib/schema/object'
     import { REF_T_TYPE } from 'option-master/lib/schema/ref'
@@ -45,6 +47,7 @@
     import { BooleanDataSchemaCompiler } from 'option-master/lib/compiler/boolean'
     import { CombineDataSchemaCompiler } from 'option-master/lib/compiler/combine'
     import { IntegerDataSchemaCompiler } from 'option-master/lib/compiler/integer'
+    import { NullDataSchemaCompiler } from 'option-master/lib/compiler/null'
     import { NumberDataSchemaCompiler } from 'option-master/lib/compiler/number'
     import { ObjectDataSchemaCompiler } from 'option-master/lib/compiler/object'
     import { RefDataSchemaCompiler } from 'option-master/lib/compiler/ref'
@@ -57,6 +60,7 @@
     compilerMaster.registerCompiler(BOOLEAN_T_TYPE, new BooleanDataSchemaCompiler())
     compilerMaster.registerCompiler(COMBINE_T_TYPE, new CombineDataSchemaCompiler(compilerMaster))
     compilerMaster.registerCompiler(INTEGER_T_TYPE, new IntegerDataSchemaCompiler())
+    compilerMaster.registerCompiler(NULL_T_TYPE, new NullDataSchemaCompiler())
     compilerMaster.registerCompiler(NUMBER_T_TYPE, new NumberDataSchemaCompiler())
     compilerMaster.registerCompiler(OBJECT_T_TYPE, new ObjectDataSchemaCompiler(compilerMaster))
     compilerMaster.registerCompiler(STRING_T_TYPE, new StringDataSchemaCompiler())
