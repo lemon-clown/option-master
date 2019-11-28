@@ -48,13 +48,16 @@ export class ArrayDataValidator extends BaseDataValidator<T, V, DS> {
     }
 
     // 检查数据项是否符合 items 的定义
-    const value: any[] = []
-    for (let i = 0; i < data.length; ++i) {
-      const d = data[i]
-      const xValidateResult: DVResult = this.context.validateDataSchema(schema.items, d)
-      result.addHandleResult('items', xValidateResult, '' + i)
-      if (!xValidateResult.hasError) {
-        value.push(xValidateResult.value)
+    let value: any[] = data
+    if (schema.items != null) {
+      value = []
+      for (let i = 0; i < data.length; ++i) {
+        const d = data[i]
+        const xValidateResult: DVResult = this.context.validateDataSchema(schema.items, d)
+        result.addHandleResult('items', xValidateResult, '' + i)
+        if (!xValidateResult.hasError) {
+          value.push(xValidateResult.value)
+        }
       }
     }
 

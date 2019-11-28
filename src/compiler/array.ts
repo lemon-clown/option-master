@@ -31,7 +31,7 @@ export class ArrayDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, D
 
     // 检查 defaultValue 是否为数组
     let defaultValue = undefined
-    if (rawSchema.default != null) {
+    if (rawSchema.default !== undefined) {
       if (!isArray(rawSchema.default)) {
         result.addError({
           constraint: 'default',
@@ -42,23 +42,20 @@ export class ArrayDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, D
       }
     }
 
-    // items 为必选项，若未给定，则编译异常
-    if (rawSchema.items == null) {
-      return result.addError({
-        constraint: 'items',
-        reason: `'items' is required, but got (${ stringify(rawSchema.items) }).`
-      })
+    // items 为可选项
+    let items: DS['items']
+    if (rawSchema.items !== undefined) {
+      // 编译 items
+      const itemsResult = this.context.compileDataSchema(rawSchema.items)
+      result.addHandleResult('items', itemsResult)
+      items = itemsResult.value
     }
-
-    // 编译 items
-    const itemsResult = this.context.compileDataSchema(rawSchema.items)
-    result.addHandleResult('items', itemsResult)
 
     // ArrayDataSchema
     const schema: DS = {
       ...result.value!,
       default: defaultValue,
-      items: itemsResult.value!,
+      items,
       unique: Boolean(uniqueResult.value),
     }
 
