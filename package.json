@@ -25,6 +25,7 @@
     "lint:fix": "eslint src/**/*.ts --fix",
     "answer": "cross-env node -r ts-node/register test/answer.ts",
     "test": "mocha -r ts-node/register test/**/*.test.ts",
+    "test:file": "mocha -r ts-node/register",
     "prepublishOnly": "yarn lint:fix && yarn test && yarn build"
   },
   "dependencies": {

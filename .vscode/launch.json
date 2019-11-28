@@ -40,6 +40,26 @@
       "outputCapture": "std",
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "test (current file)",
+      "program": "${workspaceFolder}/node_modules/.bin/mocha",
+      "args": [
+        "-r",
+        "ts-node/register",
+        "--timeout",
+        "999999",
+        "--colors",
+        "${file}"
+      ],
+      "protocol": "inspector",
+      "sourceMaps": true,
+      "smartStep": true,
+      "outputCapture": "std",
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart"
     }
   ]
 }
