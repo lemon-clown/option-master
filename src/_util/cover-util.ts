@@ -50,8 +50,8 @@ export type CoverOperationFunc<T> = (defaultValue?: T, value?: any) => CoverOper
  export const coverNumber: CoverOperationFunc<number> = (defaultValue, value) => {
   const result: CoverOperationResult<number> = new CoverOperationResult(defaultValue)
   if (value == null) return result
-  if (typeof value !== 'string' && typeof value !== 'number') {
-    return result.addError(`expected a number (or number string), but got (${ stringify(value) }).`)
+  if (typeof value !== 'number') {
+    return result.addError(`expected a number, but got (${ stringify(value) }).`)
   }
 
   // 转为 number
@@ -66,15 +66,15 @@ export type CoverOperationFunc<T> = (defaultValue?: T, value?: any) => CoverOper
 
 /**
  * 传进来的选项覆盖默认值
- * 若传进来的值为 null/undefined 或非数字（且非数字字符串），则返回默认值；
- * 若传进来的值为数字（或数字字符串），但并非整数（或整数字符串），则添加一条错误消息，并仍将此值置为返回结果中的 value
+ * 若传进来的值为 null/undefined 或非数字，则返回默认值；
+ * 若传进来的值为数字，但并非整数，则添加一条错误消息，并仍将此值置为返回结果中的 value
  * 否则将传进来的值转为 number 并返回
  */
 export const coverInteger: CoverOperationFunc<number> = (defaultValue, value) => {
   const result: CoverOperationResult<number> = new CoverOperationResult(defaultValue)
   if (value == null) return result
-  if (typeof value !== 'string' && typeof value !== 'number') {
-    return result.addError(`expected a integer (or integer string), but got (${ stringify(value) }).`)
+  if (typeof value !== 'number') {
+    return result.addError(`expected a integer, but got (${ stringify(value) }).`)
   }
 
   // 转为 number
