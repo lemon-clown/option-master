@@ -121,6 +121,18 @@ export const coverBoolean: CoverOperationFunc<boolean> = (defaultValue, value) =
 
 
 /**
+ * 若传进来的值不为 null/undefined，则视为错误
+ * 若为 undefined，则设置为默认值
+ */
+export const coverNull: CoverOperationFunc<null> = (defaultValue, value) => {
+  const result: CoverOperationResult<null> = new CoverOperationResult(defaultValue)
+  if (value === undefined) return result
+  if (value == null) return result.setValue(value)
+  return result.addError(`(${ stringify(value) }) is not a valid null type`)
+}
+
+
+/**
  * 传进来的选项覆盖默认值
  * 若传进来的值为 null/undefined 或空字符串，则返回默认值
  */
