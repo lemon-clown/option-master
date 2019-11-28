@@ -21,17 +21,17 @@
       },
       {
         "constraint": "properties",
-        "reason": "properties#serve: [serve.port: expected an integer, but got (\"sss\"): (\"sss\") is not a valid integer (or integer string),\nserve.dataFileRootPath: dataFileRootPath depend on [\"apiItemConfigPath\"], but \"apiItemConfigPath\" is absent.]",
+        "reason": "properties#serve: [serve.port: expected an integer, but got (\"sss\"): expected a integer, but got (\"sss\").,\nserve.dataFileRootPath: dataFileRootPath depend on [\"apiItemConfigPath\"], but \"apiItemConfigPath\" is absent.]",
         "property": "serve",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: expected an integer, but got (\"sss\"): (\"sss\") is not a valid integer (or integer string)",
+            "reason": "properties#port: expected an integer, but got (\"sss\"): expected a integer, but got (\"sss\").",
             "property": "port",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected an integer, but got (\"sss\"): (\"sss\") is not a valid integer (or integer string)"
+                "reason": "expected an integer, but got (\"sss\"): expected a integer, but got (\"sss\")."
               }
             ]
           },

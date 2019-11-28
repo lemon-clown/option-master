@@ -18,5 +18,10 @@
     "value": 222,
     "errors": [],
     "warnings": []
+  },
+  {
+    "value": "0xffe",
+    "errors": [],
+    "warnings": []
   }
 ]

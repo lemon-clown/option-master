@@ -128,16 +128,16 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#age: expected an integer, but got (\"s\"): (\"s\") is not a valid integer (or integer string)",
+            "reason": "[1]#age: expected an integer, but got (\"s\"): expected a integer, but got (\"s\").",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#age: expected an integer, but got (\"s\"): (\"s\") is not a valid integer (or integer string)",
+                "reason": "properties#age: expected an integer, but got (\"s\"): expected a integer, but got (\"s\").",
                 "property": "age",
                 "traces": [
                   {
                     "constraint": "type",
-                    "reason": "expected an integer, but got (\"s\"): (\"s\") is not a valid integer (or integer string)"
+                    "reason": "expected an integer, but got (\"s\"): expected a integer, but got (\"s\")."
                   }
                 ]
               }
@@ -156,16 +156,16 @@
         "traces": [
           {
             "constraint": "[1]",
-            "reason": "[1]#age: expected an integer, but got (\"ss\"): (\"ss\") is not a valid integer (or integer string)",
+            "reason": "[1]#age: expected an integer, but got (\"ss\"): expected a integer, but got (\"ss\").",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#age: expected an integer, but got (\"ss\"): (\"ss\") is not a valid integer (or integer string)",
+                "reason": "properties#age: expected an integer, but got (\"ss\"): expected a integer, but got (\"ss\").",
                 "property": "age",
                 "traces": [
                   {
                     "constraint": "type",
-                    "reason": "expected an integer, but got (\"ss\"): (\"ss\") is not a valid integer (or integer string)"
+                    "reason": "expected an integer, but got (\"ss\"): expected a integer, but got (\"ss\")."
                   }
                 ]
               }
