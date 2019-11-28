@@ -1,4 +1,4 @@
-import { isString, stringify } from '../../_util/type-util'
+import { isString, stringify, isArray } from '../../_util/type-util'
 import { coverString } from '../../_util/cover-util'
 import {
   RDSchema,
@@ -197,6 +197,20 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
     if (isString(rawSchema)) {
       return { type: rawSchema }
     }
+
+    // if `type` is array type data, compile to combine
+    if (rawSchema != null && isArray(rawSchema.type)) {
+      const { definitions } = rawSchema as TDSchema
+      return {
+        type: 'combine',
+        definitions,
+        anyOf: rawSchema.type.map(t => ({
+          ...rawSchema,
+          type: t,
+        })),
+      } as any
+    }
+
     return { ...rawSchema }
   }
 
