@@ -24,7 +24,7 @@ export class RefDataValidator extends BaseDataValidator<T, V, DS> {
     result.setValue(undefined)
 
     // 若未设置值或已存在校验错误，则无需进一步校验
-    if (data == null || result.hasError) return result
+    if (data === undefined) return result
 
     const { $ref } = this.schema
     const xSchema = this.context.getDefinition($ref)

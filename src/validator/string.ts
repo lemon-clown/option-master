@@ -28,7 +28,7 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> {
     result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
-    if (data == null) return result
+    if (data === undefined) return result
 
     // 检查是否为字符串
     let value = result.validateType(coverString, data, v => typeof v === 'string')!
