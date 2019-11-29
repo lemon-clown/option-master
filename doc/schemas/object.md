@@ -10,6 +10,7 @@
       propertyNames?: RawStringDataSchema
       dependencies?: { [key: string]: string[] }
       silentIgnore?: boolean
+      requiredProperties?: string[]
     }
     ```
 
@@ -18,6 +19,7 @@
     interface ObjectDataSchema {
       type: 'object'
       required: boolean
+      requiredProperties: string[]
       default?: boolean
       properties?: { [key: string]: DataSchema }
       allowAdditionalProperties: boolean
@@ -39,6 +41,7 @@
      `propertyNames`              | see [propertyNames][]             | -       | No
      `dependencies`               | see [dependencies][]              | -       | No
      `silentIgnore`               | see [silentIgnore][]              | `false` | No
+     `requiredProperties`         | see [requiredProperties][]        | `[]`    | No
 
   ## properties
   * 定义对象中各个属性的数据模式
@@ -95,6 +98,22 @@
 
   * If `false`, when `allowAdditionalProperties` is `true` and it appears neither in `properties` nor matched the `propertyNames` schema, a warning message will be added to the validation result and this property will be ignored.
   * Otherwise, this property is ignored directly when `allowAdditionalProperties` is `true` and appears neither in `properties` nor matched the `propertyNames` schema.
+
+  ## requiredProperties
+  * 指定必须存在的属性，若属性自身（`properties` 中）设置了 `required`，可以覆盖此值
+    但若是在 `propertyName` 中设置了 `required`，无法覆盖此值，因为 `propertyNames` 定义
+    的是属性名的规则，在编译阶段无法使用它进行校验
+
+  * 和 JSON-Schema 中定义的 [required](https://json-schema.org/understanding-json-schema/reference/object.html#required-properties) 类似
+
+  ---
+
+  * Specify properties which must be exist. If the value of the `required` property is set in the property itself (in `properties`),
+    this value can be overridden. However, if the value of the `required` is set in `propertyNames`, this value cannot be
+    overridden because `propertyNames` defines the rule for attribute names, which cannot be verified during compilation
+
+  * Similar to [required](https://json-schema.org/understanding-json-schema/reference/object.html#required-properties) defined in JSON-Schema
+
 
 # demo
 
@@ -166,3 +185,4 @@
 [propertyNames]: #propertyNames
 [dependencies]: #dependencies
 [silentIgnore]: #silentIgnore
+[requiredProperties]: #requiredProperties
