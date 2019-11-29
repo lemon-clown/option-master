@@ -29,7 +29,7 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> {
     if (data === undefined) return result
 
     // 检查是否为对象
-    if (!isObject(data) || Array.isArray(data)) {
+    if (!isObject(data)) {
       return result.addError({
         constraint: 'type',
         reason: `expected an object, but got (${ stringify(data) }).`
