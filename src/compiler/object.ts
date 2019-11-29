@@ -27,9 +27,6 @@ export class ObjectDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, 
     const result: ObjectDataSchemaCompileResult = super.compile(rawSchema)
     rawSchema = result._rawSchema
 
-    // allowAdditionalProperties 的默认值为 false
-    const allowAdditionalPropertiesResult = result.compileProperty<boolean>('allowAdditionalProperties', coverBoolean, false)
-
     // silentIgnore 的默认值为 false
     const silentIgnoreResult = result.compileProperty<boolean>('silentIgnore', coverBoolean, false)
 
@@ -131,6 +128,11 @@ export class ObjectDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, 
         }
       }
     }
+
+    // allowAdditionalProperties 的默认值为 false
+    // 若 propertyNames 不为 null，则默认值为 true
+    const allowAdditionalPropertiesResult = result.compileProperty<boolean>(
+      'allowAdditionalProperties', coverBoolean, propertyNames != null)
 
     // ObjectDataSchema
     const schema: DS = {
