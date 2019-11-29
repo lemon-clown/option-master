@@ -24,7 +24,10 @@
       "type": "string",
       "required": false,
       "pattern": "^(name|age)$"
-    }
+    },
+    "requiredProperties": [
+      "name"
+    ]
   },
   "errors": [],
   "warnings": []

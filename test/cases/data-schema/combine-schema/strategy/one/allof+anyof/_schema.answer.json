@@ -14,7 +14,10 @@
             "type": "string",
             "required": true
           }
-        }
+        },
+        "requiredProperties": [
+          "nickname"
+        ]
       },
       {
         "type": "object",
@@ -27,7 +30,10 @@
             "required": true,
             "minimum": 1
           }
-        }
+        },
+        "requiredProperties": [
+          "age"
+        ]
       }
     ],
     "anyOf": [
@@ -47,7 +53,10 @@
             "type": "string",
             "required": true
           }
-        }
+        },
+        "requiredProperties": [
+          "name"
+        ]
       }
     ]
   },

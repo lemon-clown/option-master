@@ -32,7 +32,10 @@
             "type": "string",
             "required": false
           }
-        }
+        },
+        "requiredProperties": [
+          "logLevel"
+        ]
       },
       "generate": {
         "type": "object",
@@ -81,9 +84,11 @@
               "type": "string",
               "required": false,
               "pattern": "^attr-"
-            }
+            },
+            "requiredProperties": []
           }
-        }
+        },
+        "requiredProperties": []
       },
       "serve": {
         "type": "object",
@@ -137,7 +142,10 @@
           "dataFileRootPath": [
             "apiItemConfigPath"
           ]
-        }
+        },
+        "requiredProperties": [
+          "port"
+        ]
       }
     },
     "dependencies": {
@@ -147,7 +155,8 @@
       "serve": [
         "globalOptions"
       ]
-    }
+    },
+    "requiredProperties": []
   },
   "errors": [],
   "warnings": []

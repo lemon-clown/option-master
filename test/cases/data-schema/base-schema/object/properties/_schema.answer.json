@@ -43,11 +43,19 @@
                 "type": "string",
                 "required": true
               }
-            }
+            },
+            "requiredProperties": [
+              "pub_key",
+              "sec_key"
+            ]
           }
-        }
+        },
+        "requiredProperties": [
+          "ssl"
+        ]
       }
-    }
+    },
+    "requiredProperties": []
   },
   "errors": [],
   "warnings": []

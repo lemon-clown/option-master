@@ -25,7 +25,10 @@
             },
             "unique": false
           }
-        }
+        },
+        "requiredProperties": [
+          "name"
+        ]
       }
     },
     "type": "object",
@@ -38,7 +41,8 @@
         "required": false,
         "$ref": "#/definitions/tree"
       }
-    }
+    },
+    "requiredProperties": []
   },
   "errors": [],
   "warnings": []

@@ -25,7 +25,10 @@
         "type": "string",
         "required": false,
         "pattern": "^data-"
-      }
+      },
+      "requiredProperties": [
+        "port"
+      ]
     },
     "unique": false
   },

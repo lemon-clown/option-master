@@ -20,7 +20,10 @@
       "type": "string",
       "required": false,
       "pattern": "^xx-"
-    }
+    },
+    "requiredProperties": [
+      "name"
+    ]
   },
   "errors": [],
   "warnings": []
