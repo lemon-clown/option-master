@@ -3,7 +3,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a null, but got (0): (0) is not a valid null type"
+        "reason": "expected a null, but got (0)."
       }
     ],
     "warnings": []
@@ -12,7 +12,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a null, but got (\"null\"): (\"null\") is not a valid null type"
+        "reason": "expected a null, but got (\"null\")."
       }
     ],
     "warnings": []
@@ -21,7 +21,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a null, but got ([]): ([]) is not a valid null type"
+        "reason": "expected a null, but got ([])."
       }
     ],
     "warnings": []
@@ -30,7 +30,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a null, but got ({}): ({}) is not a valid null type"
+        "reason": "expected a null, but got ({})."
       }
     ],
     "warnings": []
@@ -39,7 +39,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a null, but got (\"true\"): (\"true\") is not a valid null type"
+        "reason": "expected a null, but got (\"true\")."
       }
     ],
     "warnings": []
@@ -48,7 +48,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a null, but got (false): (false) is not a valid null type"
+        "reason": "expected a null, but got (false)."
       }
     ],
     "warnings": []

@@ -55,17 +55,17 @@
     "errors": [
       {
         "constraint": "items",
-        "reason": "items#0.port: expected an integer, but got (\"2sfe\"): expected a integer, but got (\"2sfe\").",
+        "reason": "items#0.port: expected an integer, but got (\"2sfe\").",
         "property": "0",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: expected an integer, but got (\"2sfe\"): expected a integer, but got (\"2sfe\").",
+            "reason": "properties#port: expected an integer, but got (\"2sfe\").",
             "property": "port",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected an integer, but got (\"2sfe\"): expected a integer, but got (\"2sfe\")."
+                "reason": "expected an integer, but got (\"2sfe\")."
               }
             ]
           }
@@ -73,17 +73,17 @@
       },
       {
         "constraint": "items",
-        "reason": "items#1.port: expected an integer, but got (80.1): (80.1) is not a valid integer (or integer string)",
+        "reason": "items#1.port: expected an integer, but got (80.1).",
         "property": "1",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: expected an integer, but got (80.1): (80.1) is not a valid integer (or integer string)",
+            "reason": "properties#port: expected an integer, but got (80.1).",
             "property": "port",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected an integer, but got (80.1): (80.1) is not a valid integer (or integer string)"
+                "reason": "expected an integer, but got (80.1)."
               }
             ]
           }
@@ -115,17 +115,17 @@
     "errors": [
       {
         "constraint": "items",
-        "reason": "items#0.port: expected an integer, but got (\"80\"): expected a integer, but got (\"80\").",
+        "reason": "items#0.port: expected an integer, but got (\"80\").",
         "property": "0",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: expected an integer, but got (\"80\"): expected a integer, but got (\"80\").",
+            "reason": "properties#port: expected an integer, but got (\"80\").",
             "property": "port",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected an integer, but got (\"80\"): expected a integer, but got (\"80\")."
+                "reason": "expected an integer, but got (\"80\")."
               }
             ]
           }
@@ -186,17 +186,17 @@
     "errors": [
       {
         "constraint": "items",
-        "reason": "items#0.port: expected an integer, but got (\"0x3f3f\"): expected a integer, but got (\"0x3f3f\").",
+        "reason": "items#0.port: expected an integer, but got (\"0x3f3f\").",
         "property": "0",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: expected an integer, but got (\"0x3f3f\"): expected a integer, but got (\"0x3f3f\").",
+            "reason": "properties#port: expected an integer, but got (\"0x3f3f\").",
             "property": "port",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected an integer, but got (\"0x3f3f\"): expected a integer, but got (\"0x3f3f\")."
+                "reason": "expected an integer, but got (\"0x3f3f\")."
               }
             ]
           }

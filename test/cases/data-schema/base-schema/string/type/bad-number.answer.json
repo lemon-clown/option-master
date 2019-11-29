@@ -3,7 +3,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a string, but got (1.232): (1.232) is not a valid string"
+        "reason": "expected a string, but got (1.232)."
       }
     ],
     "warnings": []
@@ -12,7 +12,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a string, but got (-23): (-23) is not a valid string"
+        "reason": "expected a string, but got (-23)."
       }
     ],
     "warnings": []
@@ -21,7 +21,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a string, but got (2): (2) is not a valid string"
+        "reason": "expected a string, but got (2)."
       }
     ],
     "warnings": []

@@ -3,7 +3,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a number, but got (\"d0x23\"): expected a number, but got (\"d0x23\")."
+        "reason": "expected a number, but got (\"d0x23\")."
       }
     ],
     "warnings": []
@@ -12,7 +12,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a number, but got (\"0x23.ff\"): expected a number, but got (\"0x23.ff\")."
+        "reason": "expected a number, but got (\"0x23.ff\")."
       }
     ],
     "warnings": []
@@ -21,7 +21,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a number, but got (true): expected a number, but got (true)."
+        "reason": "expected a number, but got (true)."
       }
     ],
     "warnings": []
@@ -30,7 +30,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a number, but got (false): expected a number, but got (false)."
+        "reason": "expected a number, but got (false)."
       }
     ],
     "warnings": []

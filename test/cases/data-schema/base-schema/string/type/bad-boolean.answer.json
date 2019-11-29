@@ -3,7 +3,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a string, but got (true): (true) is not a valid string"
+        "reason": "expected a string, but got (true)."
       }
     ],
     "warnings": []
@@ -12,7 +12,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected a string, but got (false): (false) is not a valid string"
+        "reason": "expected a string, but got (false)."
       }
     ],
     "warnings": []

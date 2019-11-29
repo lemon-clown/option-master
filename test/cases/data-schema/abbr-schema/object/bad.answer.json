@@ -3,12 +3,12 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#host: expected a string, but got (80): (80) is not a valid string",
+        "reason": "properties#host: expected a string, but got (80).",
         "property": "host",
         "traces": [
           {
             "constraint": "type",
-            "reason": "expected a string, but got (80): (80) is not a valid string"
+            "reason": "expected a string, but got (80)."
           }
         ]
       }
@@ -19,12 +19,12 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#port: expected an integer, but got (2.3): (2.3) is not a valid integer (or integer string)",
+        "reason": "properties#port: expected an integer, but got (2.3).",
         "property": "port",
         "traces": [
           {
             "constraint": "type",
-            "reason": "expected an integer, but got (2.3): (2.3) is not a valid integer (or integer string)"
+            "reason": "expected an integer, but got (2.3)."
           }
         ]
       }
@@ -35,12 +35,12 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#public: expected a boolean, but got (1): (1) is not a valid boolean type (or boolean string)",
+        "reason": "properties#public: expected a boolean, but got (1).",
         "property": "public",
         "traces": [
           {
             "constraint": "type",
-            "reason": "expected a boolean, but got (1): (1) is not a valid boolean type (or boolean string)"
+            "reason": "expected a boolean, but got (1)."
           }
         ]
       }
@@ -51,12 +51,12 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#public: expected a boolean, but got (\"/\"): (\"/\") is not a valid boolean type (or boolean string)",
+        "reason": "properties#public: expected a boolean, but got (\"/\").",
         "property": "public",
         "traces": [
           {
             "constraint": "type",
-            "reason": "expected a boolean, but got (\"/\"): (\"/\") is not a valid boolean type (or boolean string)"
+            "reason": "expected a boolean, but got (\"/\")."
           }
         ]
       }

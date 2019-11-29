@@ -51,21 +51,21 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: expected a string, but got (true): (true) is not a valid string",
+            "reason": "[0]#: expected a string, but got (true).",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected a string, but got (true): (true) is not a valid string"
+                "reason": "expected a string, but got (true)."
               }
             ]
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#: expected a string, but got (true): (true) is not a valid string",
+            "reason": "[1]#: expected a string, but got (true).",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected a string, but got (true): (true) is not a valid string"
+                "reason": "expected a string, but got (true)."
               }
             ]
           },
@@ -122,21 +122,21 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: expected a string, but got (false): (false) is not a valid string",
+            "reason": "[0]#: expected a string, but got (false).",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected a string, but got (false): (false) is not a valid string"
+                "reason": "expected a string, but got (false)."
               }
             ]
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#: expected a string, but got (false): (false) is not a valid string",
+            "reason": "[1]#: expected a string, but got (false).",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected a string, but got (false): (false) is not a valid string"
+                "reason": "expected a string, but got (false)."
               }
             ]
           },
