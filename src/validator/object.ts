@@ -133,6 +133,23 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> {
       }
     }
 
+    // 检查是否满足 requiredProperties
+    if (schema.requiredProperties.length > 0) {
+      const missedProperties: string[] = []
+      for (const propertyName of schema.requiredProperties) {
+        if (value.hasOwnProperty(propertyName)) continue
+        // 如果在 properties 中存在，说明已校验过 required 属性
+        if (schema.properties != null && schema.properties.hasOwnProperty(propertyName)) continue
+        missedProperties.push(propertyName)
+      }
+      if (missedProperties.length > 0) {
+        result.addError({
+          constraint: 'requiredProperties',
+          reason: `missing required properties: ${ stringify(missedProperties) }`
+        })
+      }
+    }
+
     // 若未产生错误，则通过校验，并设置 value
     if (!result.hasError) result.setValue(value)
     return result

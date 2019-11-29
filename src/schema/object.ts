@@ -16,6 +16,10 @@ export type OBJECT_V_TYPE = any[]
  */
 export interface RawObjectDataSchema extends RawDataSchema<OBJECT_T_TYPE, OBJECT_V_TYPE> {
   /**
+   * 必须存在的属性，若属性自身设置了 required，可以覆盖此值
+   */
+  requiredProperties?: string[]
+  /**
    * 对象属性的类型，定义对象可能出现的若干属性的属性名及其类型
    * 参见 https://json-schema.org/understanding-json-schema/reference/object.html#properties
    */
@@ -73,6 +77,12 @@ export interface ObjectDataSchema extends DataSchema<OBJECT_T_TYPE, OBJECT_V_TYP
    * 若为 true，则当数据中出现不合法的额外属性时，不添加警告信息
    */
   silentIgnore: boolean
+  /**
+   * 必须存在的属性，若属性自身（properties 中）设置了 required，可以覆盖此值
+   * 但若是在 propertyName 中设置了 required，无法覆盖此值，因为 propertyName 定义的是属性名的规则，
+   * 在编译阶段无法使用它进行校验
+   */
+  requiredProperties: string[]
   /**
    * 对象属性的类型
    */
