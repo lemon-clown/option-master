@@ -1,7 +1,6 @@
 import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult } from '../_core/validator'
 import { INTEGER_V_TYPE as V, INTEGER_T_TYPE as T, IntegerDataSchema as DS } from '../schema/integer'
-import { coverInteger } from '../_util/cover-util'
-import { stringify } from '../_util/type-util'
+import { stringify, isInteger } from '../_util/type-util'
 
 
 /**
@@ -23,15 +22,11 @@ export class IntegerDataValidator extends BaseDataValidator<T, V, DS> {
   public validate(data: any): IntegerDataValidationResult {
     const { schema } = this
     const result: IntegerDataValidationResult = super.validate(data)
-    data = result.value
+    const value = result.value
     result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
-    if (data === undefined) return result
-
-    // 检查是否为整数
-    const value = result.validateType(coverInteger, data, v => typeof v === 'number')!
-    if (result.hasError) return result
+    if (value === undefined) return result
 
     // 检查最小值（可取到）
     if (schema.minimum != null && schema.minimum > value) {
@@ -75,6 +70,14 @@ export class IntegerDataValidator extends BaseDataValidator<T, V, DS> {
 
     // 通过校验
     return result.setValue(value)
+  }
+
+  /**
+   * override method
+   * @see DataValidator#checkType
+   */
+  public checkType(data: any): data is V {
+    return isInteger(data)
   }
 }
 

@@ -27,6 +27,24 @@ export function isNumberLike(x: any): x is (number | string) {
 
 
 /**
+ * 判断是否为整数类型的数据
+ * @param x
+ */
+export function isInteger(x: any): x is number {
+  return isNumber(x) && Number.isInteger(x)
+}
+
+
+/**
+ * 判断是否为布尔类型的数据
+ * @param x
+ */
+export function isBoolean(x: any): x is boolean {
+  return typeof x === 'boolean'
+}
+
+
+/**
  * 判断是否为数组
  * @param x
  */

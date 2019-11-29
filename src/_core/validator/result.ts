@@ -1,5 +1,5 @@
 import { stringify } from '../../_util/type-util'
-import { DataHandleResult } from '../../_util/handle-result'
+import { DataHandleResult, DataHandleResultException } from '../../_util/handle-result'
 import { CoverOperationFunc } from '../../_util/cover-util'
 import { DataSchema } from '../schema'
 
@@ -20,21 +20,15 @@ export class DataValidationResult<T extends string, V, DS extends DataSchema<T, 
   }
 
   /**
-   * 校验给定的基本类型数据是否符合指定数据类型
-   *
-   * @param coverFunc     覆盖属性的函数
+   * 生成 type 校验失败的异常对象
    * @param data          待校验的数据
+   * @param extraMessage  附加信息
    */
-  public validateType(coverFunc: CoverOperationFunc<V>, data: any, checkFunc: (v: any) => boolean): V | undefined {
+  public typeConstraintException(data: any, extraMessage?: string): DataHandleResultException {
     const schema = this._schema
-    const result = coverFunc(schema.default, data)
-    let a = /^[aeiou]/.test(schema.type) ? 'an' : 'a'
-    if (result.hasError || !checkFunc(result.value)) {
-      this.addError({
-        constraint: 'type',
-        reason: `expected ${ a } ${ schema.type }, but got (${ stringify(data) }): ` + result.errorSummary,
-      })
-    }
-    return result.value
+    const a = /^[aeiou]/.test(schema.type) ? 'an' : 'a'
+    const reason = `expected ${ a } ${ schema.type }, but got (${ stringify(data) })`
+      + (extraMessage != null ? ': ' + extraMessage : '.')
+    return { constraint: 'type', reason }
   }
 }

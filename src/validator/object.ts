@@ -28,14 +28,6 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> {
     // 若未设置值，则无需进一步校验
     if (data === undefined) return result
 
-    // 检查是否为对象
-    if (!isObject(data)) {
-      return result.addError({
-        constraint: 'type',
-        reason: `expected an object, but got (${ stringify(data) }).`
-      })
-    }
-
     const value: any = {}
     for (const propertyName of Object.getOwnPropertyNames(data)) {
       const propertyValue = data[propertyName]
@@ -153,6 +145,14 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> {
     // 若未产生错误，则通过校验，并设置 value
     if (!result.hasError) result.setValue(value)
     return result
+  }
+
+  /**
+   * override method
+   * @see DataValidator#checkType
+   */
+  public checkType(data: any): data is V {
+    return isObject(data)
   }
 }
 

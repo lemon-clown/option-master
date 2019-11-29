@@ -20,11 +20,11 @@ export class RefDataValidator extends BaseDataValidator<T, V, DS> {
    */
   public validate(data: any): RefDataValidationResult {
     const result: RefDataValidationResult = super.validate(data)
-    data = result.value
+    const value = result.value
     result.setValue(undefined)
 
     // 若未设置值或已存在校验错误，则无需进一步校验
-    if (data === undefined) return result
+    if (value === undefined) return result
 
     const { $ref } = this.schema
     const xSchema = this.context.getDefinition($ref)
@@ -35,7 +35,7 @@ export class RefDataValidator extends BaseDataValidator<T, V, DS> {
       })
     }
 
-    const xResult = this.context.validateDataSchema(xSchema, data)
+    const xResult = this.context.validateDataSchema(xSchema, value)
     const warnings = xResult.warnings.filter(w => w.constraint !== 'required' && w.constraint !== 'default')
     result.addWarning(...warnings)
 

@@ -74,6 +74,17 @@ export interface DataValidator<T extends string, V, DS extends DataSchema<T, V>>
    * @param data
    */
   validate(data: any): DataValidationResult<T, V, DS>
+  /**
+   * 类型数据类型检查是否匹配指定的类型
+   * @param data    当前待校验的数据
+   * @param result  当前的校验结果
+   */
+  checkType(data: any, result: DVResult): data is V
+  /**
+   * 预处理数据
+   * @param data
+   */
+  preprocessData(data: any, result: DVResult): V | undefined
 }
 
 

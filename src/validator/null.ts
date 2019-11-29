@@ -1,6 +1,5 @@
 import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult } from '../_core/validator'
 import { NULL_V_TYPE as V, NULL_T_TYPE as T, NullDataSchema as DS } from '../schema/null'
-import { coverNull } from '../_util/cover-util'
 
 
 /**
@@ -21,17 +20,23 @@ export class NullDataValidator extends BaseDataValidator<T, V, DS> {
    */
   public validate(data: any): NullDataValidationResult {
     const result: NullDataValidationResult = super.validate(data)
-    data = result.value
+    const value = result.value
     result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
-    if (data === undefined) return result
-
-    const value = result.validateType(coverNull, data, v => v === null)
+    if (value === undefined) return result
 
     // 若未产生错误，则通过校验，并设置 value
     if (!result.hasError) result.setValue(value)
     return result
+  }
+
+  /**
+   * override method
+   * @see DataValidator#checkType
+   */
+  public checkType(data: any): data is V {
+    return data === null
   }
 }
 
