@@ -7,7 +7,7 @@ export const OBJECT_T_TYPE = 'object'
 export type OBJECT_T_TYPE = typeof OBJECT_T_TYPE
 
 // ObjectDataSchema.value 的类型
-export type OBJECT_V_TYPE = any[]
+export type OBJECT_V_TYPE = object
 
 
 /**

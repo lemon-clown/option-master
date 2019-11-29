@@ -6,7 +6,7 @@ export const COMBINE_T_TYPE = 'combine'
 export type COMBINE_T_TYPE = typeof COMBINE_T_TYPE
 
 // CombineDataSchema.value 的类型
-export type COMBINE_V_TYPE = any[]
+export type COMBINE_V_TYPE = any
 
 
 /**

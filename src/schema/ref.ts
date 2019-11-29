@@ -6,7 +6,7 @@ export const REF_T_TYPE = 'ref'
 export type REF_T_TYPE = typeof REF_T_TYPE
 
 // RefDataSchema.value 的类型
-export type REF_V_TYPE = string
+export type REF_V_TYPE = any
 
 
 /**
