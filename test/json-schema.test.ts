@@ -2,8 +2,8 @@ import fs from 'fs-extra'
 import path from 'path'
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
+import { OptionMaster } from '../src'
 import { DataSchemaAdaptor } from '../src/_core/adaptor/types'
-import { optionMaster } from '../src'
 import { JsonSchemaV7Adaptor } from '../src/_core/adaptor/json-schema/v7'
 
 
@@ -47,10 +47,11 @@ interface TestCaseItemGroup {
 
 /**
  * generate test codes
+ * @param optionMaster
  * @param adaptor
  * @param testCasePaths
  */
-async function generateTests(adaptor: DataSchemaAdaptor, testCasePaths: string[]) {
+async function generateTests(optionMaster: OptionMaster, adaptor: DataSchemaAdaptor, testCasePaths: string[]) {
   const testItem = async (testCasePath: string) => {
     const stat = await fs.statSync(testCasePath)
     if (stat.isDirectory()) {
@@ -72,15 +73,16 @@ async function generateTests(adaptor: DataSchemaAdaptor, testCasePaths: string[]
         describe(tg.description, function () {
           // test DataSchemaAdaptor
           it('schema adaptor', function () {
-            expect(schemaResult.hasError).to.be.false
-            expect(schemaResult.value).not.be.undefined
+            expect(schemaResult.hasError, 'Bad DataSchema:' + schemaResult.errorDetails).to.be.false
+            expect(schemaResult.value, 'Bad DataSchema' + schemaResult.warningDetails).not.be.undefined
           })
 
           // test with use cases of JSON-Schema-Test-Suite
           for (const kase of tg.tests) {
             it(kase.description, function () {
               const validateResult = optionMaster.validate(schema, kase.data)
-              expect(validateResult.hasError).to.be.equal(!kase.valid)
+              expect(!validateResult.hasError, kase.valid ? validateResult.errorDetails : undefined)
+                .to.be.equal(kase.valid)
             })
           }
         })
@@ -99,10 +101,16 @@ async function generateTests(adaptor: DataSchemaAdaptor, testCasePaths: string[]
 
 it('This is a required placeholder to allow before() to work', () => { })
 before(async function test() {
+  const optionMaster = new OptionMaster()
+  optionMaster.registerDefaultSchemas()
+
   // test JsonSchema with v7
   const v7CaseRootDir = path.resolve('test/JSON-Schema-Test-Suite/tests/draft7')
   const v7Adaptor = new JsonSchemaV7Adaptor()
-  await generateTests(v7Adaptor, [
-    'type.json',
+  await generateTests(optionMaster, v7Adaptor, [
+    'boolean_schema.json',
+    // 'required.json',
+    'default.json',
+    // 'type.json',
   ].map(p => path.join(v7CaseRootDir, p)))
 })
