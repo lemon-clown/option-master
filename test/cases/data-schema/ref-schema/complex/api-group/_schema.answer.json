@@ -1,0 +1,283 @@
+{
+  "value": {
+    "definitions": {
+      "HttpVerb": {
+        "type": "string",
+        "required": false,
+        "enum": [
+          "DEL",
+          "DELETE",
+          "GET",
+          "PATCH",
+          "POST",
+          "PUT"
+        ]
+      },
+      "RawApiItem": {
+        "type": "object",
+        "required": false,
+        "allowAdditionalProperties": false,
+        "silentIgnore": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true
+          },
+          "title": {
+            "type": "string",
+            "required": false,
+            "default": ""
+          },
+          "description": {
+            "type": "string",
+            "required": false,
+            "default": ""
+          },
+          "path": {
+            "type": "string",
+            "required": false,
+            "default": ""
+          },
+          "fullPath": {
+            "type": "string",
+            "required": false
+          },
+          "method": {
+            "type": "string",
+            "required": false,
+            "default": "HttpVerb.GET",
+            "enum": [
+              "DEL",
+              "DELETE",
+              "GET",
+              "PATCH",
+              "POST",
+              "PUT"
+            ]
+          },
+          "request": {
+            "type": "object",
+            "required": false,
+            "allowAdditionalProperties": false,
+            "silentIgnore": false,
+            "properties": {
+              "model": {
+                "type": "string",
+                "required": false
+              },
+              "fullModelName": {
+                "type": "string",
+                "required": false
+              },
+              "schema": {
+                "type": "string",
+                "required": false
+              }
+            },
+            "requiredProperties": []
+          },
+          "response": {
+            "type": "object",
+            "required": false,
+            "allowAdditionalProperties": false,
+            "silentIgnore": false,
+            "properties": {
+              "model": {
+                "type": "string",
+                "required": false
+              },
+              "fullModelName": {
+                "type": "string",
+                "required": false
+              },
+              "schema": {
+                "type": "string",
+                "required": false
+              },
+              "headers": {
+                "type": "object",
+                "required": false,
+                "allowAdditionalProperties": true,
+                "silentIgnore": false,
+                "requiredProperties": []
+              }
+            },
+            "requiredProperties": []
+          }
+        },
+        "requiredProperties": [
+          "name"
+        ]
+      },
+      "RawApiItemGroup": {
+        "type": "object",
+        "required": false,
+        "allowAdditionalProperties": false,
+        "silentIgnore": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true
+          },
+          "title": {
+            "type": "string",
+            "required": false
+          },
+          "description": {
+            "type": "string",
+            "required": false
+          },
+          "prefixPath": {
+            "type": "string",
+            "required": false
+          },
+          "defaultMethod": {
+            "type": "string",
+            "required": false,
+            "enum": [
+              "DEL",
+              "DELETE",
+              "GET",
+              "PATCH",
+              "POST",
+              "PUT"
+            ]
+          },
+          "request": {
+            "type": "object",
+            "required": false,
+            "allowAdditionalProperties": false,
+            "silentIgnore": false,
+            "properties": {
+              "modelNamePrefix": {
+                "type": "string",
+                "required": false,
+                "default": ""
+              },
+              "modelNameSuffix": {
+                "type": "string",
+                "required": false,
+                "default": "RequestVo"
+              }
+            },
+            "requiredProperties": []
+          },
+          "response": {
+            "type": "object",
+            "required": false,
+            "allowAdditionalProperties": false,
+            "silentIgnore": false,
+            "properties": {
+              "modelNamePrefix": {
+                "type": "string",
+                "required": false,
+                "default": ""
+              },
+              "modelNameSuffix": {
+                "type": "string",
+                "required": false,
+                "default": "ResponseVo"
+              },
+              "headers": {
+                "type": "object",
+                "required": false,
+                "allowAdditionalProperties": true,
+                "silentIgnore": false,
+                "requiredProperties": []
+              }
+            },
+            "requiredProperties": []
+          },
+          "subGroups": {
+            "type": "combine",
+            "required": false,
+            "strategy": "all",
+            "oneOf": [
+              {
+                "type": "array",
+                "required": false,
+                "items": {
+                  "type": "ref",
+                  "required": false,
+                  "$ref": "#/definitions/RawApiItemGroup"
+                },
+                "unique": false
+              },
+              {
+                "type": "object",
+                "required": false,
+                "allowAdditionalProperties": false,
+                "silentIgnore": false,
+                "regexNameProperties": [
+                  {
+                    "pattern": "^\\w(?:[\\w\\-])+$",
+                    "schema": {
+                      "type": "ref",
+                      "required": false,
+                      "$ref": "#/definitions/RawApiItemGroup"
+                    }
+                  }
+                ],
+                "requiredProperties": []
+              }
+            ]
+          },
+          "items": {
+            "type": "combine",
+            "required": false,
+            "strategy": "all",
+            "oneOf": [
+              {
+                "type": "array",
+                "required": false,
+                "items": {
+                  "type": "ref",
+                  "required": false,
+                  "$ref": "#/definitions/RawApiItem"
+                },
+                "unique": false
+              },
+              {
+                "type": "object",
+                "required": false,
+                "allowAdditionalProperties": false,
+                "silentIgnore": false,
+                "regexNameProperties": [
+                  {
+                    "pattern": "^\\w(?:[\\w\\-])+$",
+                    "schema": {
+                      "type": "ref",
+                      "required": false,
+                      "$ref": "#/definitions/RawApiItem"
+                    }
+                  }
+                ],
+                "requiredProperties": []
+              }
+            ]
+          }
+        },
+        "requiredProperties": [
+          "name"
+        ]
+      }
+    },
+    "type": "object",
+    "required": false,
+    "allowAdditionalProperties": false,
+    "silentIgnore": false,
+    "regexNameProperties": [
+      {
+        "pattern": "^\\w(?:[\\w\\-])+$",
+        "schema": {
+          "type": "ref",
+          "required": false,
+          "$ref": "#/definitions/RawApiItemGroup"
+        }
+      }
+    ],
+    "requiredProperties": []
+  },
+  "errors": [],
+  "warnings": []
+}
