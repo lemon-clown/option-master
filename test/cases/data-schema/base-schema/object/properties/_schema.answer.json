@@ -50,6 +50,15 @@
             ]
           }
         },
+        "regexNameProperties": [
+          {
+            "pattern": "^data(?:\\-[\\w]+)+$",
+            "schema": {
+              "type": "string",
+              "required": false
+            }
+          }
+        ],
         "requiredProperties": [
           "ssl"
         ]

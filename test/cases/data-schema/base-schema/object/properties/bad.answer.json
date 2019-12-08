@@ -26,6 +26,29 @@
     "errors": [
       {
         "constraint": "properties",
+        "reason": "properties#serve.data-age: expected a string, but got (29).",
+        "property": "serve",
+        "traces": [
+          {
+            "constraint": "regexNameProperties",
+            "reason": "regexNameProperties#data-age: expected a string, but got (29).",
+            "property": "data-age",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected a string, but got (29)."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "errors": [
+      {
+        "constraint": "properties",
         "reason": "properties#serve: [serve.port: minimum value expected is 0, but got (-23).,\nserve.ssl.sec_key: required, but got (undefined).]",
         "property": "serve",
         "traces": [
