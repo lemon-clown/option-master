@@ -18,7 +18,11 @@ const rawSchema = {
     age: {
       type: 'integer',
       minimum: 1,
-    }
+    },
+    '^data(?:\\-[\\w]+)+$': {
+      nameType: 'regex',
+      type: 'string',
+    },
   },
   dependencies: {
     email: ['age', 'gender']
@@ -44,9 +48,10 @@ const validate = (data: any): boolean | undefined => {
 }
 
 validate(undefined)                                                               // undefined; and will print errors (`required` is not satisfied)
-validate({ name: 'alice', age: 20 })                                              // { name: 'alice', age: 20 };
+validate({ name: 'alice', age: 20, 'data-gender': 'male', })                      // { name: 'alice', age: 20, 'data-gender': 'male', };
 validate({ name: 'bob', gender: 'male' })                                         // { name: 'bob', gender: 'male' }
 validate({ name: 'joy', age: 33, more: 'something', sex: 'female' })              // { name: 'joy', age: 33, sex: 'female' }
 validate({ name: 'joy', email: 'joy@bob.com', more: 'something', sex: 'female' }) // undefined; and will print errors (`dependencies#email` is not satisfied)
 validate({ name: 'joy', email: 'joy@bob.com', age: 33, gender: 'female' })        // { name: 'joy', email: 'joy@bob.com', age: 33, gender: 'female' }
+validate({ name: 'joy', age: 33, 'data-gender': 1 })                              // undefined; and will print errors (`regexProperties#data-gender` is not a valid string)
 validate(false)                                                                   // undefined; and will print errors (`type` is not satisfied)

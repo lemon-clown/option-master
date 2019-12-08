@@ -5,7 +5,7 @@
       type: 'object'
       required?: boolean
       default?: boolean
-      properties?: { [key: string]: RawDataSchema }
+      properties?: { [key: string]: RawDataSchema & { nameType: 'string' | 'regex' } }
       allowAdditionalProperties?: boolean
       propertyNames?: RawStringDataSchema
       dependencies?: { [key: string]: string[] }
@@ -22,6 +22,7 @@
       requiredProperties: string[]
       default?: boolean
       properties?: { [key: string]: DataSchema }
+      regexNameProperties?: { pattern: RegExp, schema: DataSchema }[]
       allowAdditionalProperties: boolean
       propertyNames?: StringDataSchema
       dependencies?: { [key: string]: string[] }
@@ -37,6 +38,7 @@
      `required`                   | whether the data must be set      | `false` | No
      `default`                    | default value of this DataSchema  | -       | No
      `properties`                 | see [properties][]                | -       | No
+     `regexNameProperties`        | see [regexNameProperties][]       | -       | No
      `allowAdditionalProperties`  | see [allowAdditionalProperties][] | `false` | No
      `propertyNames`              | see [propertyNames][]             | -       | No
      `dependencies`               | see [dependencies][]              | -       | No
@@ -51,6 +53,13 @@
   * The value of `properties` is an object, where each key is the name of a property and each value is a DataSchema used to validate that property
 
   * reference the [json-schema: object#properties](https://json-schema.org/understanding-json-schema/reference/object.html#properties)
+
+  ## regexNameProperties
+  * 对象属性的类型，和 properties 类似，但是名称为正则表达式
+
+  ---
+  * It's similar to [properties][], but the `name` is a regular expression which can match multiple propertyNames
+
 
   ## allowAdditionalProperties
 
@@ -137,7 +146,11 @@
       age: {
         type: 'integer',
         minimum: 1,
-      }
+      },
+      '^data(?:\\-[\\w]+)+$': {
+        nameType: 'regex',
+        type: 'string',
+      },
     },
     dependencies: {
       email: ['age', 'gender']
@@ -162,11 +175,12 @@
   }
 
   validate(undefined)                                                               // undefined; and will print errors (`required` is not satisfied)
-  validate({ name: 'alice', age: 20 })                                              // { name: 'alice', age: 20 };
+  validate({ name: 'alice', age: 20, 'data-gender': 'male', })                      // { name: 'alice', age: 20, 'data-gender': 'male', };
   validate({ name: 'bob', gender: 'male' })                                         // { name: 'bob', gender: 'male' }
   validate({ name: 'joy', age: 33, more: 'something', sex: 'female' })              // { name: 'joy', age: 33, sex: 'female' }
   validate({ name: 'joy', email: 'joy@bob.com', more: 'something', sex: 'female' }) // undefined; and will print errors (`dependencies#email` is not satisfied)
   validate({ name: 'joy', email: 'joy@bob.com', age: 33, gender: 'female' })        // { name: 'joy', email: 'joy@bob.com', age: 33, gender: 'female' }
+  validate({ name: 'joy', age: 33, 'data-gender': 1 })                              // undefined; and will print errors (`regexProperties#data-gender` is not a valid string)
   validate(false)                                                                   // undefined; and will print errors (`type` is not satisfied)
   ```
 
@@ -181,6 +195,7 @@
 [test-cases]: ../../test/cases/data-schema/base-schema/object
 
 [properties]: #properties
+[regexNameProperties]: #regexNameProperties
 [allowAdditionalProperties]: #allowAdditionalProperties
 [propertyNames]: #propertyNames
 [dependencies]: #dependencies
