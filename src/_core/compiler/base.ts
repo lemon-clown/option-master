@@ -36,7 +36,7 @@ export abstract class BaseDataSchemaCompiler<
    * @see DataSchemaCompiler#compile
    */
   public compile(rawSchema: RawDataSchema<T, V>): DataSchemaCompileResult<T, V, RDS, DS> {
-    rawSchema = this.context.normalizeRawSchema(rawSchema) as RawDataSchema<T, V>
+    rawSchema = this.normalizeRawSchema(rawSchema)
     const result: DataSchemaCompileResult<T, V, RDS, DS> = (new DataSchemaCompileResult(rawSchema)) as any
 
     // required 的默认值为 false
@@ -50,5 +50,13 @@ export abstract class BaseDataSchemaCompiler<
     } as DS
 
     return result.setValue(schema)
+  }
+
+  /**
+   * override method
+   * @see DataSchemaCompiler#normalizeRawSchema
+   */
+  public normalizeRawSchema(rawSchema: RawDataSchema<T, V>): RawDataSchema<T, V> {
+    return this.context.normalizeRawSchema(rawSchema) as RawDataSchema<T, V>
   }
 }

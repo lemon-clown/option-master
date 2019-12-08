@@ -113,6 +113,11 @@ export interface DataSchemaCompiler<
    * @param rawSchema
    */
   compile(rawSchema: RawDataSchema<T, V>): DataSchemaCompileResult<T, V, RDS, DS>
+  /**
+   * 将原始数据做格式化
+   * @param rawSchema
+   */
+  normalizeRawSchema(rawSchema: RawDataSchema<T, V>): RawDataSchema<T, V>
 }
 
 
