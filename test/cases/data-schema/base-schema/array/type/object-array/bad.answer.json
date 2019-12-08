@@ -55,17 +55,17 @@
     "errors": [
       {
         "constraint": "items",
-        "reason": "items#0.port: expected an integer, but got (\"2sfe\"): (\"2sfe\") is not a valid integer (or integer string)",
+        "reason": "items#0.port: expected an integer, but got (\"2sfe\").",
         "property": "0",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: expected an integer, but got (\"2sfe\"): (\"2sfe\") is not a valid integer (or integer string)",
+            "reason": "properties#port: expected an integer, but got (\"2sfe\").",
             "property": "port",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected an integer, but got (\"2sfe\"): (\"2sfe\") is not a valid integer (or integer string)"
+                "reason": "expected an integer, but got (\"2sfe\")."
               }
             ]
           }
@@ -73,17 +73,17 @@
       },
       {
         "constraint": "items",
-        "reason": "items#1.port: expected an integer, but got (80.1): (80.1) is not a valid integer (or integer string)",
+        "reason": "items#1.port: expected an integer, but got (80.1).",
         "property": "1",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: expected an integer, but got (80.1): (80.1) is not a valid integer (or integer string)",
+            "reason": "properties#port: expected an integer, but got (80.1).",
             "property": "port",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected an integer, but got (80.1): (80.1) is not a valid integer (or integer string)"
+                "reason": "expected an integer, but got (80.1)."
               }
             ]
           }
@@ -113,6 +113,24 @@
   },
   {
     "errors": [
+      {
+        "constraint": "items",
+        "reason": "items#0.port: expected an integer, but got (\"80\").",
+        "property": "0",
+        "traces": [
+          {
+            "constraint": "properties",
+            "reason": "properties#port: expected an integer, but got (\"80\").",
+            "property": "port",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an integer, but got (\"80\")."
+              }
+            ]
+          }
+        ]
+      },
       {
         "constraint": "items",
         "reason": "items#1: [1.host: expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"127.0\").,\n1.port: required, but got (undefined).]",
@@ -165,17 +183,26 @@
     ]
   },
   {
-    "value": [
+    "errors": [
       {
-        "port": 16191,
-        "host": "127.0.0.1"
-      },
-      {
-        "host": "127.0.0.2",
-        "port": 80
+        "constraint": "items",
+        "reason": "items#0.port: expected an integer, but got (\"0x3f3f\").",
+        "property": "0",
+        "traces": [
+          {
+            "constraint": "properties",
+            "reason": "properties#port: expected an integer, but got (\"0x3f3f\").",
+            "property": "port",
+            "traces": [
+              {
+                "constraint": "type",
+                "reason": "expected an integer, but got (\"0x3f3f\")."
+              }
+            ]
+          }
+        ]
       }
     ],
-    "errors": [],
     "warnings": [
       {
         "constraint": "items",

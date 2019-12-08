@@ -113,7 +113,7 @@ export interface DataHandleResultException {
    */
   reason: string
   /**
-   * 解析/校验 异常的属性名
+   * 编译/校验 异常的属性名
    */
   property?: string
   /**

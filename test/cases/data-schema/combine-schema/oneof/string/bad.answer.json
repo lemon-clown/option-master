@@ -17,11 +17,11 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#: expected an integer, but got (\"ABEOEURO\"): (\"ABEOEURO\") is not a valid integer (or integer string)",
+            "reason": "[1]#: expected an integer, but got (\"ABEOEURO\").",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected an integer, but got (\"ABEOEURO\"): (\"ABEOEURO\") is not a valid integer (or integer string)"
+                "reason": "expected an integer, but got (\"ABEOEURO\")."
               }
             ]
           }
@@ -38,11 +38,11 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: expected a string, but got (0): (0) is not a valid string",
+            "reason": "[0]#: expected a string, but got (0).",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected a string, but got (0): (0) is not a valid string"
+                "reason": "expected a string, but got (0)."
               }
             ]
           },
@@ -69,21 +69,21 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: expected a string, but got (2.23): (2.23) is not a valid string",
+            "reason": "[0]#: expected a string, but got (2.23).",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected a string, but got (2.23): (2.23) is not a valid string"
+                "reason": "expected a string, but got (2.23)."
               }
             ]
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#: expected an integer, but got (2.23): (2.23) is not a valid integer (or integer string)",
+            "reason": "[1]#: expected an integer, but got (2.23).",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected an integer, but got (2.23): (2.23) is not a valid integer (or integer string)"
+                "reason": "expected an integer, but got (2.23)."
               }
             ]
           }
@@ -100,34 +100,25 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: expected a string, but got (true): (true) is not a valid string",
+            "reason": "[0]#: expected a string, but got (true).",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected a string, but got (true): (true) is not a valid string"
+                "reason": "expected a string, but got (true)."
               }
             ]
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#: expected an integer, but got (true): expected a integer (or integer string), but got (true).",
+            "reason": "[1]#: expected an integer, but got (true).",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected an integer, but got (true): expected a integer (or integer string), but got (true)."
+                "reason": "expected an integer, but got (true)."
               }
             ]
           }
         ]
-      }
-    ],
-    "warnings": []
-  },
-  {
-    "errors": [
-      {
-        "constraint": "oneOf",
-        "reason": "expected matched only one of the DataSchemas defined in `oneOf`, but matched 2 DataSchemas"
       }
     ],
     "warnings": []

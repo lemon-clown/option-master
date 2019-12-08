@@ -14,7 +14,10 @@
             "type": "string",
             "required": true
           }
-        }
+        },
+        "requiredProperties": [
+          "name"
+        ]
       },
       {
         "type": "object",
@@ -27,7 +30,10 @@
             "required": true,
             "minimum": 1
           }
-        }
+        },
+        "requiredProperties": [
+          "age"
+        ]
       }
     ]
   },

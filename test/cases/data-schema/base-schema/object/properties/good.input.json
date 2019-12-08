@@ -4,12 +4,14 @@
     {
       "serve": {
         "host": "192.168.48.24",
-        "port": "8020",
+        "port": 8020,
         "prefixUrl": "/dd",
         "ssl": {
           "pub_key": "waw",
           "sec_key": "wow"
-        }
+        },
+        "data-name": "alice",
+        "data-gender": "female"
       }
     },
     {

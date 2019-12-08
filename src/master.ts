@@ -1,26 +1,29 @@
 import { RDSchema, DSchema } from './_core/schema'
-import { DataSchemaParserMaster, DSPResult, DSParserConstructor } from './_core/parser'
+import { DataSchemaCompilerMaster, DSCResult, DSCompilerConstructor } from './_core/compiler'
 import { DataValidatorMaster, DVResult, DVFactoryConstructor } from './_core/validator'
 import { ARRAY_T_TYPE } from './schema/array'
 import { BOOLEAN_T_TYPE } from './schema/boolean'
 import { COMBINE_T_TYPE } from './schema/combine'
 import { INTEGER_T_TYPE } from './schema/integer'
+import { NULL_T_TYPE } from './schema/null'
 import { NUMBER_T_TYPE } from './schema/number'
 import { OBJECT_T_TYPE } from './schema/object'
 import { REF_T_TYPE } from './schema/ref'
 import { STRING_T_TYPE } from './schema/string'
-import { ArrayDataSchemaParser } from './parser/array'
-import { BooleanDataSchemaParser } from './parser/boolean'
-import { CombineDataSchemaParser } from './parser/combine'
-import { IntegerDataSchemaParser } from './parser/integer'
-import { NumberDataSchemaParser } from './parser/number'
-import { ObjectDataSchemaParser } from './parser/object'
-import { RefDataSchemaParser } from './parser/ref'
-import { StringDataSchemaParser } from './parser/string'
+import { ArrayDataSchemaCompiler } from './compiler/array'
+import { BooleanDataSchemaCompiler } from './compiler/boolean'
+import { CombineDataSchemaCompiler } from './compiler/combine'
+import { IntegerDataSchemaCompiler } from './compiler/integer'
+import { NullDataSchemaCompiler } from './compiler/null'
+import { NumberDataSchemaCompiler } from './compiler/number'
+import { ObjectDataSchemaCompiler } from './compiler/object'
+import { RefDataSchemaCompiler } from './compiler/ref'
+import { StringDataSchemaCompiler } from './compiler/string'
 import { ArrayDataValidatorFactory } from './validator/array'
 import { BooleanDataValidatorFactory } from './validator/boolean'
 import { CombineDataValidatorFactory } from './validator/combine'
 import { IntegerDataValidatorFactory } from './validator/integer'
+import { NullDataValidatorFactory } from './validator/null'
 import { NumberDataValidatorFactory } from './validator/number'
 import { ObjectDataValidatorFactory } from './validator/object'
 import { RefDataValidatorFactory } from './validator/ref'
@@ -30,13 +33,13 @@ import { StringDataValidatorFactory } from './validator/string'
 /**
  * Management object for parsing data schema and verifying data
  *
- * 解析数据模式、校验数据的管理对象
+ * 编译数据模式、校验数据的管理对象
  */
 export class OptionMaster {
   /**
-   * 数据模式解析器管理对象实例
+   * 数据模式编译器管理对象实例
    */
-  protected readonly schemaParserMaster: DataSchemaParserMaster
+  protected readonly schemaCompilerMaster: DataSchemaCompilerMaster
 
   /**
    * 数据校验器管理对象实例
@@ -44,35 +47,35 @@ export class OptionMaster {
   protected readonly dataValidatorMaster: DataValidatorMaster
 
   public constructor() {
-    this.schemaParserMaster = new DataSchemaParserMaster()
+    this.schemaCompilerMaster = new DataSchemaCompilerMaster()
     this.dataValidatorMaster = new DataValidatorMaster()
   }
 
   /**
-   * Add DataSchemaParser, if the parser of the specified type already exists, ignore this addition
+   * Add DataSchemaCompiler, if the compiler of the specified type already exists, ignore this addition
    *
-   * 添加 DataSchemaParser，若指定的 type 的解析器已存在，则忽略此次添加
+   * 添加 DataSchemaCompiler，若指定的 type 的编译器已存在，则忽略此次添加
    * @param type
-   * @param SchemaParserConstructor
+   * @param SchemaCompilerConstructor
    */
-  public registerParser(type: string, SchemaParserConstructor: DSParserConstructor): this {
-    const schemaParser = new SchemaParserConstructor(this.schemaParserMaster)
-    this.schemaParserMaster.registerParser(type, schemaParser)
+  public registerCompiler(type: string, SchemaCompilerConstructor: DSCompilerConstructor): this {
+    const schemaCompiler = new SchemaCompilerConstructor(this.schemaCompilerMaster)
+    this.schemaCompilerMaster.registerCompiler(type, schemaCompiler)
     return this
   }
 
   /**
-   * Overwrite the existing DataSchemaParser.
-   * If there is no corresponding DataSchemaParser before the specified type, add it.
+   * Overwrite the existing DataSchemaCompiler.
+   * If there is no corresponding DataSchemaCompiler before the specified type, add it.
    *
-   * 覆盖已有的 DataSchemaParser；
-   * 若指定的 type 之前没有对应的 DataSchemaParser，也做添加操作
+   * 覆盖已有的 DataSchemaCompiler；
+   * 若指定的 type 之前没有对应的 DataSchemaCompiler，也做添加操作
    * @param type
-   * @param SchemaParserConstructor
+   * @param SchemaCompilerConstructor
    */
-  public replaceParser(type: string, SchemaParserConstructor: DSParserConstructor): this {
-    const schemaParser = new SchemaParserConstructor(this.schemaParserMaster)
-    this.schemaParserMaster.replaceParser(type, schemaParser)
+  public replaceCompiler(type: string, SchemaCompilerConstructor: DSCompilerConstructor): this {
+    const schemaCompiler = new SchemaCompilerConstructor(this.schemaCompilerMaster)
+    this.schemaCompilerMaster.replaceCompiler(type, schemaCompiler)
     return this
   }
 
@@ -104,11 +107,11 @@ export class OptionMaster {
   }
 
   /**
-   * 执行解析操作
-   * @param rawDataSchema   待解析的 RawDataSchema
+   * 执行编译操作
+   * @param rawDataSchema   待编译的 RawDataSchema
    */
-  public parse(rawDataSchema: RDSchema): DSPResult {
-    return this.schemaParserMaster.parseTopDataSchema(rawDataSchema)
+  public compile(rawDataSchema: RDSchema): DSCResult {
+    return this.schemaCompilerMaster.compileTopDataSchema(rawDataSchema)
   }
 
   /**
@@ -121,42 +124,46 @@ export class OptionMaster {
   }
 
   /**
-   * Register the preset DataSchema, its parser, and validator into the current OptionMaster instance
+   * Register the preset DataSchema, its compiler, and validator into the current OptionMaster instance
    *
-   * 将预置的 DataSchema 及其解析器、校验器注册进当前 OptionMaster 实例中
+   * 将预置的 DataSchema 及其编译器、校验器注册进当前 OptionMaster 实例中
    */
   public registerDefaultSchemas(): this {
     this
       // array
-      .registerParser(ARRAY_T_TYPE, ArrayDataSchemaParser)
+      .registerCompiler(ARRAY_T_TYPE, ArrayDataSchemaCompiler)
       .registerValidatorFactory(ARRAY_T_TYPE, ArrayDataValidatorFactory)
 
       // boolean
-      .registerParser(BOOLEAN_T_TYPE, BooleanDataSchemaParser)
+      .registerCompiler(BOOLEAN_T_TYPE, BooleanDataSchemaCompiler)
       .registerValidatorFactory(BOOLEAN_T_TYPE, BooleanDataValidatorFactory)
 
       // combine
-      .registerParser(COMBINE_T_TYPE, CombineDataSchemaParser)
+      .registerCompiler(COMBINE_T_TYPE, CombineDataSchemaCompiler)
       .registerValidatorFactory(COMBINE_T_TYPE, CombineDataValidatorFactory)
 
       // integer
-      .registerParser(INTEGER_T_TYPE, IntegerDataSchemaParser)
+      .registerCompiler(INTEGER_T_TYPE, IntegerDataSchemaCompiler)
       .registerValidatorFactory(INTEGER_T_TYPE, IntegerDataValidatorFactory)
 
+      // null
+      .registerCompiler(NULL_T_TYPE, NullDataSchemaCompiler)
+      .registerValidatorFactory(NULL_T_TYPE, NullDataValidatorFactory)
+
       // number
-      .registerParser(NUMBER_T_TYPE, NumberDataSchemaParser)
+      .registerCompiler(NUMBER_T_TYPE, NumberDataSchemaCompiler)
       .registerValidatorFactory(NUMBER_T_TYPE, NumberDataValidatorFactory)
 
       // object
-      .registerParser(OBJECT_T_TYPE, ObjectDataSchemaParser)
+      .registerCompiler(OBJECT_T_TYPE, ObjectDataSchemaCompiler)
       .registerValidatorFactory(OBJECT_T_TYPE, ObjectDataValidatorFactory)
 
       // ref
-      .registerParser(REF_T_TYPE, RefDataSchemaParser)
+      .registerCompiler(REF_T_TYPE, RefDataSchemaCompiler)
       .registerValidatorFactory(REF_T_TYPE, RefDataValidatorFactory)
 
       // string
-      .registerParser(STRING_T_TYPE, StringDataSchemaParser)
+      .registerCompiler(STRING_T_TYPE, StringDataSchemaCompiler)
       .registerValidatorFactory(STRING_T_TYPE, StringDataValidatorFactory)
     return this
   }
@@ -164,7 +171,7 @@ export class OptionMaster {
 
 
 /**
- * 默认的 ParserMaster；
+ * 默认的 CompilerMaster；
  * 支持类型包括：array, boolean, combine, integer, number, object, ref, string
  */
 export const optionMaster = new OptionMaster()

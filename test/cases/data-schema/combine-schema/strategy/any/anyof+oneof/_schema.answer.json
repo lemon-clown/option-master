@@ -18,7 +18,11 @@
             "type": "string",
             "required": true
           }
-        }
+        },
+        "requiredProperties": [
+          "name",
+          "address"
+        ]
       },
       {
         "type": "object",
@@ -37,7 +41,11 @@
             "required": true,
             "minimum": 1
           }
-        }
+        },
+        "requiredProperties": [
+          "grade",
+          "age"
+        ]
       }
     ],
     "oneOf": [
@@ -59,7 +67,11 @@
               "female"
             ]
           }
-        }
+        },
+        "requiredProperties": [
+          "name",
+          "gender"
+        ]
       },
       {
         "type": "object",
@@ -79,7 +91,11 @@
               "female"
             ]
           }
-        }
+        },
+        "requiredProperties": [
+          "nickname",
+          "sex"
+        ]
       }
     ]
   },

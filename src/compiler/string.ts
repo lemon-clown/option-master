@@ -1,4 +1,4 @@
-import { BaseDataSchemaParser, DataSchemaParseResult } from '../_core/parser'
+import { BaseDataSchemaCompiler, DataSchemaCompileResult } from '../_core/compiler'
 import {
   STRING_V_TYPE as V,
   STRING_T_TYPE as T,
@@ -14,32 +14,32 @@ import { isString } from '../_util/type-util'
 
 
 /**
- * StringDataSchema 解析结果的数据类型
+ * StringDataSchema 编译结果的数据类型
  */
-export type StringDataSchemaParserResult = DataSchemaParseResult<T, V, RDS, DS>
+export type StringDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS>
 
 
 /**
- * 数字类型的模式的解析器
+ * 数字类型的模式的编译器
  *
  * enum 将忽略所有非字符串的值
  */
-export class StringDataSchemaParser extends BaseDataSchemaParser<T, V, RDS, DS> {
+export class StringDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, DS> {
   public readonly type: T = T
 
   /**
-   * parse RawSchema to Schema
+   * compile RawSchema to Schema
    * @param rawSchema
    */
-  public parse (rawSchema: RDS): StringDataSchemaParserResult {
-    const result: StringDataSchemaParserResult = super.parse(rawSchema)
+  public compile (rawSchema: RDS): StringDataSchemaCompileResult {
+    const result: StringDataSchemaCompileResult = super.compile(rawSchema)
     rawSchema = result._rawSchema
 
-    const defaultValueResult = result.parseProperty<V>('default', coverString)
-    const patternResult = result.parseProperty<RegExp>('pattern', coverRegex)
-    const enumValueResult = result.parseProperty<string[]>('enum', coverArray<string>(coverString))
-    const minLengthResult = result.parseProperty<number>('minLength', coverInteger)
-    const maxLengthResult = result.parseProperty<number>('maxLength', coverInteger)
+    const defaultValueResult = result.compileProperty<V>('default', coverString)
+    const patternResult = result.compileProperty<RegExp>('pattern', coverRegex)
+    const enumValueResult = result.compileProperty<string[]>('enum', coverArray<string>(coverString))
+    const minLengthResult = result.compileProperty<number>('minLength', coverInteger)
+    const maxLengthResult = result.compileProperty<number>('maxLength', coverInteger)
 
     let format: StringFormat[] | undefined
     if (rawSchema.format != null) {

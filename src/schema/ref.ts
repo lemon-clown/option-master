@@ -6,7 +6,7 @@ export const REF_T_TYPE = 'ref'
 export type REF_T_TYPE = typeof REF_T_TYPE
 
 // RefDataSchema.value 的类型
-export type REF_V_TYPE = string
+export type REF_V_TYPE = any
 
 
 /**
@@ -23,7 +23,7 @@ export interface RawRefDataSchema extends RawDataSchema<REF_T_TYPE, REF_V_TYPE> 
 
 
 /**
- * 引用类型的数据模式，解析 RawRefDataSchema 后得到的结果
+ * 引用类型的数据模式，编译 RawRefDataSchema 后得到的结果
  */
 export interface RefDataSchema extends DataSchema<REF_T_TYPE, REF_V_TYPE> {
   /**

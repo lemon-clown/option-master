@@ -21,17 +21,17 @@
       },
       {
         "constraint": "properties",
-        "reason": "properties#serve: [serve.port: expected an integer, but got (\"sss\"): (\"sss\") is not a valid integer (or integer string),\nserve.dataFileRootPath: dataFileRootPath depend on [\"apiItemConfigPath\"], but \"apiItemConfigPath\" is absent.]",
+        "reason": "properties#serve: [serve.port: expected an integer, but got (\"sss\").,\nserve.dataFileRootPath: dataFileRootPath depend on [\"apiItemConfigPath\"], but \"apiItemConfigPath\" is absent.]",
         "property": "serve",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: expected an integer, but got (\"sss\"): (\"sss\") is not a valid integer (or integer string)",
+            "reason": "properties#port: expected an integer, but got (\"sss\").",
             "property": "port",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected an integer, but got (\"sss\"): (\"sss\") is not a valid integer (or integer string)"
+                "reason": "expected an integer, but got (\"sss\")."
               }
             ]
           },
@@ -90,17 +90,17 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#generate.clean: expected a boolean, but got (\"oh\"): (\"oh\") is not a valid boolean type (or boolean string)",
+        "reason": "properties#generate.clean: expected a boolean, but got (\"oh\").",
         "property": "generate",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#clean: expected a boolean, but got (\"oh\"): (\"oh\") is not a valid boolean type (or boolean string)",
+            "reason": "properties#clean: expected a boolean, but got (\"oh\").",
             "property": "clean",
             "traces": [
               {
                 "constraint": "type",
-                "reason": "expected a boolean, but got (\"oh\"): (\"oh\") is not a valid boolean type (or boolean string)"
+                "reason": "expected a boolean, but got (\"oh\")."
               }
             ]
           }

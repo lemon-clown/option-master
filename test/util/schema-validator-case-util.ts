@@ -3,7 +3,7 @@ import path from 'path'
 import * as chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import { TestCaseMasterProps, TestCaseMaster, TestCase } from './case-util'
-import { DVResult, optionMaster, DSPResult, DSchema, DataHandleResultException } from '../../src'
+import { DVResult, optionMaster, DSCResult, DSchema, DataHandleResultException } from '../../src'
 
 
 chai.use(chaiExclude)
@@ -44,14 +44,14 @@ export type DataValidatorTestCaseAnswerData = any[]
  * 输出数据
  */
 export interface DataValidatorOutputData {
-  value: DSPResult['value']
-  errors: DSPResult['errors']
-  warnings: DSPResult['warnings']
+  value: DSCResult['value']
+  errors: DSCResult['errors']
+  warnings: DSCResult['warnings']
 }
 
 
 /**
- * DataSchema 解析器测试用例辅助类
+ * DataSchema 编译器测试用例辅助类
  */
 export class DataValidatorTestCaseMaster extends TestCaseMaster<DVResult[], DataValidatorOutputData[]> {
   public constructor({
@@ -75,18 +75,18 @@ export class DataValidatorTestCaseMaster extends TestCaseMaster<DVResult[], Data
     }
 
     const rawDataSchema = await fs.readJSON(absoluteSchemaFilePath)
-    const parserResult: DSPResult = optionMaster.parse(rawDataSchema)
+    const CompileResult: DSCResult = optionMaster.compile(rawDataSchema)
 
     // DataSchema is invalid
-    if (parserResult.hasError) {
-      throw `[Error] bad schema: ${ absoluteSchemaFilePath } exists errors: ${ parserResult.errorDetails }`
+    if (CompileResult.hasError) {
+      throw `[Error] bad schema: ${ absoluteSchemaFilePath } exists errors: ${ CompileResult.errorDetails }`
     }
 
-    if (parserResult.hasWarning) {
-      console.log(`[Warning] schema: ${ absoluteSchemaFilePath } exists warnings: ${ parserResult.warningDetails }`)
+    if (CompileResult.hasWarning) {
+      console.log(`[Warning] schema: ${ absoluteSchemaFilePath } exists warnings: ${ CompileResult.warningDetails }`)
     }
 
-    const schema: DSchema = parserResult.value!
+    const schema: DSchema = CompileResult.value!
     const results: DVResult[] = []
     for (const data of cases) {
       const result = optionMaster.validate(schema, data)

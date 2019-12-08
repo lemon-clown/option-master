@@ -13,7 +13,7 @@
 
 * So there are four types:
   - DataSchema: defines the data schema of the configuration file, similar to JSON-SCHEMA, the subsequent goal is to basically support the properties in JSON-SCHEMA
-  - DataSchemaParser: parses the data schema of the developer-defined configuration file into DataSchema
+  - DataSchemaCompiler: compiles the data schema of the developer-defined configuration file into DataSchema
   - DataValidator: Validate the given data with DataSchema to determine if it meets the definition in DataSchema, and do the appropriate normalization
   - HandleResult: The result of parsing/verification, containing three attributes:
     - value: The final result, the value will be set only when no error occurs during the parsing/verification process; the given data may be formatted as needed during the verification process, such as: when an attribute in a given data is missing, set the corresponding default value as defined in DataSchema
@@ -30,12 +30,12 @@
 
 * 因此有四种类型：
   - DataSchema: 定义配置文件的数据模式，类似 JSON-SCHEMA，后续的目标是基本支持 JSON-SCHEMA 中有的属性
-  - DataSchemaParser: 将开发者定义的配置文件的数据模式解析成 DataSchema
+  - DataSchemaCompiler: 将开发者定义的配置文件的数据模式编译成 DataSchema
   - DataValidator: 通过 DataSchema 对给定数据进行校验，判断其是否符合 DataSchema 中的定义；并做适当的规范化处理
-  - HandleResult: 解析/校验的结果，包含三个属性：
-    - value: 最终得到的结果，仅当解析/校验过程中未出现错误时才会设置值；在校验过程中可能会根据需要格式化给定的数据，如：当给定的数据中某个属性缺失时，按照 DataSchema 中的定义设置对应的默认值
-    - errors: 解析过程中产生的错误（文档待补充，可通过查看 [DataHandleResult 源码][DataHandleResult] 来辅助理解）
-    - warnings: 解析过程中产生的警告信息（文档待补充，可通过查看 [DataHandleResult 源码][DataHandleResult] 来辅助理解）
+  - HandleResult: 编译/校验的结果，包含三个属性：
+    - value: 最终得到的结果，仅当编译/校验过程中未出现错误时才会设置值；在校验过程中可能会根据需要格式化给定的数据，如：当给定的数据中某个属性缺失时，按照 DataSchema 中的定义设置对应的默认值
+    - errors: 编译过程中产生的错误（文档待补充，可通过查看 [DataHandleResult 源码][DataHandleResult] 来辅助理解）
+    - warnings: 编译过程中产生的警告信息（文档待补充，可通过查看 [DataHandleResult 源码][DataHandleResult] 来辅助理解）
 
 # usage
 
@@ -57,8 +57,8 @@
     default: 0
   }
 
-  // parse rawSchema
-  const { value: schema } = optionMaster.parse(rawSchema)
+  // compile rawSchema
+  const { value: schema } = optionMaster.compile(rawSchema)
 
   // validate data with schema
   const validate = (data: any): boolean | undefined => {
@@ -110,8 +110,8 @@
   }
 
 
-  // parse rawSchema
-  const { value: schema } = optionMaster.parse(rawSchema)
+  // compile rawSchema
+  const { value: schema } = optionMaster.compile(rawSchema)
 
   // validate data with schema
   const validate = (data: any): boolean | undefined => {
@@ -165,8 +165,8 @@
     },
   }
 
-  // parse rawSchema
-  const { value: schema } = optionMaster.parse(rawSchema)
+  // compile rawSchema
+  const { value: schema } = optionMaster.compile(rawSchema)
 
   // validate data with schema
   const validate = (data: any): boolean | undefined => {
@@ -263,12 +263,13 @@
   - [ArrayDataSchema][]
   - [BooleanDataSchema][]
   - [CombineDataSchema][]
+  - [NullDataSchema][]
   - [NumberDataSchema][]
   - [IntegerDataSchema][]
   - [ObjectDataSchema][]
   - [RefDataSchema][]
   - [StringDataSchema][]
-* [parser][DataSchemaParser]
+* [compiler][DataSchemaCompiler]
 * [validator][DataValidator]
 
 
@@ -276,6 +277,7 @@
 [ArrayDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/array.md
 [BooleanDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/boolean.md
 [CombineDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/combine.md
+[NullDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/null.md
 [NumberDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/number.md
 [IntegerDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/integer.md
 [ObjectDataSchema]: https://github.com/lemon-clown/option-master/blob/master/doc/schemas/object.md
@@ -284,5 +286,5 @@
 
 [DataHandleResult]: https://github.com/lemon-clown/option-master/blob/master/src/_util/handle-result.ts
 [schema]: https://github.com/lemon-clown/option-master/blob/master/doc/schema.md
-[DataSchemaParser]: https://github.com/lemon-clown/option-master/blob/master/doc/parser.md
+[DataSchemaCompiler]: https://github.com/lemon-clown/option-master/blob/master/doc/compiler.md
 [DataValidator]: https://github.com/lemon-clown/option-master/blob/master/doc/validator.md

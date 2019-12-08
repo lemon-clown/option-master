@@ -21,7 +21,7 @@ export class CombineDataValidator extends BaseDataValidator<T, V, DS> {
    * 包装 CombineDataSchema 的实例，使其具备校验给定数据是否为合法组合的能力
    * @param data
    */
-  public validate (data: any): CombineDataValidationResult {
+  public validate(data: any): CombineDataValidationResult {
     const { schema } = this
     const { strategy, allOf, anyOf, oneOf } = schema
     const result: CombineDataValidationResult = super.validate(data)
@@ -29,7 +29,7 @@ export class CombineDataValidator extends BaseDataValidator<T, V, DS> {
     result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
-    if (data == null) return result
+    if (data === undefined) return result
 
     const checkedItems: ('allOf' | 'anyOf' | 'oneOf')[] = []     // 检查的项
     const verifiedItems: ('allOf' | 'anyOf' | 'oneOf')[] = []    // 通过校验的项

@@ -22,40 +22,35 @@ export class ArrayDataValidator extends BaseDataValidator<T, V, DS> {
   public validate(data: any): ArrayDataValidationResult {
     const { schema } = this
     const result: ArrayDataValidationResult = super.validate(data)
-    data = result.value
+    const value = result.value
     result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
-    if (data == null) return result
-
-    // 检查是否为数组
-    if (!isArray(data)) {
-      return result.addError({
-        constraint: 'type',
-        reason: `expected an ${ T }, but got (${ stringify(data) }).`,
-      })
-    }
+    if (value === undefined) return result
 
     // 检查是否唯一
     if (schema.unique) {
-      const valueSet = new Set(data)
-      if (valueSet.size !== data.length) {
+      const valueSet = new Set(value)
+      if (valueSet.size !== value.length) {
         return result.addError({
           constraint: 'unique',
-          reason: `expected a unique array, but got (${ stringify(data) }).`
+          reason: `expected a unique array, but got (${ stringify(value) }).`
         })
       }
     }
 
     // 检查数据项是否符合 items 的定义
-    const value: any[] = []
-    for (let i = 0; i < data.length; ++i) {
-      const d = data[i]
-      const xValidateResult: DVResult = this.context.validateDataSchema(schema.items, d)
-      result.addHandleResult('items', xValidateResult, '' + i)
-      if (!xValidateResult.hasError) {
-        value.push(xValidateResult.value)
+    if (schema.items != null) {
+      const newValues = []
+      for (let i = 0; i < value.length; ++i) {
+        const d = value[i]
+        const xValidateResult: DVResult = this.context.validateDataSchema(schema.items, d)
+        result.addHandleResult('items', xValidateResult, '' + i)
+        if (!xValidateResult.hasError) {
+          newValues.push(xValidateResult.value)
+        }
       }
+      value.splice(0, value.length, ...newValues)
     }
 
     // 如果存在错误，则不能设置值
@@ -63,6 +58,14 @@ export class ArrayDataValidator extends BaseDataValidator<T, V, DS> {
 
     // 通过校验
     return result.setValue(value)
+  }
+
+  /**
+   * override method
+   * @see DataValidator#checkType
+   */
+  public checkType(data: any): data is V {
+    return isArray(data)
   }
 }
 

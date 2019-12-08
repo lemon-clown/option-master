@@ -3,23 +3,23 @@
     "errors": [
       {
         "constraint": "items",
-        "reason": "items#0: expected a string, but got (1): (1) is not a valid string",
+        "reason": "items#0: expected a string, but got (1).",
         "property": "0",
         "traces": [
           {
             "constraint": "type",
-            "reason": "expected a string, but got (1): (1) is not a valid string"
+            "reason": "expected a string, but got (1)."
           }
         ]
       },
       {
         "constraint": "items",
-        "reason": "items#2: expected a string, but got (2): (2) is not a valid string",
+        "reason": "items#2: expected a string, but got (2).",
         "property": "2",
         "traces": [
           {
             "constraint": "type",
-            "reason": "expected a string, but got (2): (2) is not a valid string"
+            "reason": "expected a string, but got (2)."
           }
         ]
       }
@@ -30,45 +30,45 @@
     "errors": [
       {
         "constraint": "items",
-        "reason": "items#0: expected a string, but got (true): (true) is not a valid string",
+        "reason": "items#0: expected a string, but got (true).",
         "property": "0",
         "traces": [
           {
             "constraint": "type",
-            "reason": "expected a string, but got (true): (true) is not a valid string"
+            "reason": "expected a string, but got (true)."
           }
         ]
       },
       {
         "constraint": "items",
-        "reason": "items#1: expected a string, but got (2): (2) is not a valid string",
+        "reason": "items#1: expected a string, but got (2).",
         "property": "1",
         "traces": [
           {
             "constraint": "type",
-            "reason": "expected a string, but got (2): (2) is not a valid string"
+            "reason": "expected a string, but got (2)."
           }
         ]
       },
       {
         "constraint": "items",
-        "reason": "items#2: expected a string, but got (false): (false) is not a valid string",
+        "reason": "items#2: expected a string, but got (false).",
         "property": "2",
         "traces": [
           {
             "constraint": "type",
-            "reason": "expected a string, but got (false): (false) is not a valid string"
+            "reason": "expected a string, but got (false)."
           }
         ]
       },
       {
         "constraint": "items",
-        "reason": "items#3: expected a string, but got (1): (1) is not a valid string",
+        "reason": "items#3: expected a string, but got (1).",
         "property": "3",
         "traces": [
           {
             "constraint": "type",
-            "reason": "expected a string, but got (1): (1) is not a valid string"
+            "reason": "expected a string, but got (1)."
           }
         ]
       }
@@ -79,12 +79,12 @@
     "errors": [
       {
         "constraint": "items",
-        "reason": "items#1: expected a string, but got (false): (false) is not a valid string",
+        "reason": "items#1: expected a string, but got (false).",
         "property": "1",
         "traces": [
           {
             "constraint": "type",
-            "reason": "expected a string, but got (false): (false) is not a valid string"
+            "reason": "expected a string, but got (false)."
           }
         ]
       }
@@ -95,12 +95,12 @@
     "errors": [
       {
         "constraint": "items",
-        "reason": "items#1: expected a string, but got (false): (false) is not a valid string",
+        "reason": "items#1: expected a string, but got (false).",
         "property": "1",
         "traces": [
           {
             "constraint": "type",
-            "reason": "expected a string, but got (false): (false) is not a valid string"
+            "reason": "expected a string, but got (false)."
           }
         ]
       }

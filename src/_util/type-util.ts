@@ -27,6 +27,24 @@ export function isNumberLike(x: any): x is (number | string) {
 
 
 /**
+ * 判断是否为整数类型的数据
+ * @param x
+ */
+export function isInteger(x: any): x is number {
+  return isNumber(x) && Number.isInteger(x)
+}
+
+
+/**
+ * 判断是否为布尔类型的数据
+ * @param x
+ */
+export function isBoolean(x: any): x is boolean {
+  return typeof x === 'boolean'
+}
+
+
+/**
  * 判断是否为数组
  * @param x
  */
@@ -35,11 +53,30 @@ export function isArray(x: any): x is any[] {
 }
 
 /**
- * 判断是否为对象
+ * 判断是否为对象；
+ * array is not an object
  * @param x
  */
 export function isObject(x: any): x is object {
-  return x != null && typeof x === 'object'
+  return x != null && typeof x === 'object' && !Array.isArray(x)
+}
+
+
+/**
+ * 判断是否为空对象
+ * @param x
+ */
+export function isEmptyObject (x: any): x is object {
+  return isObject(x) && Object.getOwnPropertyNames(x).length <= 0
+}
+
+
+/**
+ * 判断是否为非空对象
+ * @param x
+ */
+export function isNotEmptyObject (x: any): x is object {
+  return isObject(x) && Object.getOwnPropertyNames(x).length > 0
 }
 
 

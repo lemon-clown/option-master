@@ -26,15 +26,7 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> {
     result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
-    if (data == null) return result
-
-    // 检查是否为对象
-    if (!isObject(data)) {
-      return result.addError({
-        constraint: 'type',
-        reason: `expected an object, but got (${ stringify(data) }).`
-      })
-    }
+    if (data === undefined) return result
 
     const value: any = {}
     for (const propertyName of Object.getOwnPropertyNames(data)) {
@@ -55,6 +47,30 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> {
           }
           continue
         }
+      }
+
+      // 检查是否满足 regexNameProperties 中的定义
+      if (schema.regexNameProperties != null) {
+        let matched = false
+        for (const regexNameProperty of schema.regexNameProperties) {
+          if (!regexNameProperty.pattern.test(propertyName)) continue
+
+          // 使用指定的 DataSchema 进行检查
+          const xSchema = regexNameProperty.schema
+          const xValidateResult = this.context.validateDataSchema(xSchema, propertyValue)
+          result.addHandleResult('regexNameProperties', xValidateResult, propertyName)
+
+          // 若符合，则更新值
+          if (!xValidateResult.hasError) {
+            value[propertyName] = xValidateResult.value
+          }
+
+          matched = true
+          break
+        }
+
+        // 若在 regexNameProperties 中存在匹配的数据模式，则无需做额外属性的校验
+        if (matched) continue
       }
 
       // 若不允许额外的属性，则直接忽略
@@ -133,9 +149,34 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> {
       }
     }
 
+    // 检查是否满足 requiredProperties
+    if (schema.requiredProperties.length > 0) {
+      const missedProperties: string[] = []
+      for (const propertyName of schema.requiredProperties) {
+        if (value.hasOwnProperty(propertyName)) continue
+        // 如果在 properties 中存在，说明已校验过 required 属性
+        if (schema.properties != null && schema.properties.hasOwnProperty(propertyName)) continue
+        missedProperties.push(propertyName)
+      }
+      if (missedProperties.length > 0) {
+        result.addError({
+          constraint: 'requiredProperties',
+          reason: `missing required properties: ${ stringify(missedProperties) }`
+        })
+      }
+    }
+
     // 若未产生错误，则通过校验，并设置 value
     if (!result.hasError) result.setValue(value)
     return result
+  }
+
+  /**
+   * override method
+   * @see DataValidator#checkType
+   */
+  public checkType(data: any): data is V {
+    return isObject(data)
   }
 }
 

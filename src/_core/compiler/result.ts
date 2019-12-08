@@ -4,7 +4,7 @@ import { RawDataSchema, DataSchema } from '../schema'
 
 
 /**
- * DataSchema 的解析结果
+ * DataSchema 的编译结果
  * 当 errors 为空数组时，schema 应不为 undefined
  *
  * @template T    typeof <X>DataSchema.type
@@ -12,7 +12,7 @@ import { RawDataSchema, DataSchema } from '../schema'
  * @template DS   typeof <X>DataSchema
  * @template RDS  typeof <X>RawDataSchema
  */
-export class DataSchemaParseResult<
+export class DataSchemaCompileResult<
   T extends string,
   V,
   RDS extends RawDataSchema<T, V>,
@@ -22,7 +22,7 @@ export class DataSchemaParseResult<
   public readonly _rawSchema: RDS
 
   /**
-   * @param rawSchema 待解析的 RawDataSchema
+   * @param rawSchema 待编译的 RawDataSchema
    */
   public constructor(rawSchema: RDS) {
     super()
@@ -30,14 +30,14 @@ export class DataSchemaParseResult<
   }
 
   /**
-   * 解析给定 RawDataSchema 中的属性的值
+   * 编译给定 RawDataSchema 中的属性的值
    *
    * @param propertyName  RawDataSchema 中定义的属性名
    * @param coverFunc     覆盖属性的函数
    * @param defaultValue  属性的默认值
    * @template P  typeof rawSchema[propertyName]
    */
-  public parseProperty<P>(
+  public compileProperty<P>(
     propertyName: keyof RDS,
     coverFunc: CoverOperationFunc<P>,
     defaultValue?: P

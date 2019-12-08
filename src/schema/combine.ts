@@ -6,7 +6,7 @@ export const COMBINE_T_TYPE = 'combine'
 export type COMBINE_T_TYPE = typeof COMBINE_T_TYPE
 
 // CombineDataSchema.value 的类型
-export type COMBINE_V_TYPE = any[]
+export type COMBINE_V_TYPE = any
 
 
 /**
@@ -26,6 +26,10 @@ export enum CombineStrategy {
    */
   ONE = 'one',
 }
+
+
+// values of CombineStrategy
+export const combineStrategies: string[] = Object.values(CombineStrategy)
 
 
 /**
@@ -61,7 +65,7 @@ export interface RawCombineDataSchema extends RawDataSchema<COMBINE_T_TYPE, COMB
 
 
 /**
- * 组合类型的数据模式，解析 RawCombineDataSchema 后得到的结果
+ * 组合类型的数据模式，编译 RawCombineDataSchema 后得到的结果
  *
  * allOf, anyOf, oneOf 这三项至少指定一个，
  * 若指定了多个，则按照 'strategy' 中定义的值来处理

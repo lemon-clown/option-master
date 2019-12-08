@@ -18,7 +18,10 @@
               "female"
             ]
           }
-        }
+        },
+        "requiredProperties": [
+          "gender"
+        ]
       },
       {
         "type": "object",
@@ -34,7 +37,10 @@
               "female"
             ]
           }
-        }
+        },
+        "requiredProperties": [
+          "sex"
+        ]
       }
     ]
   },

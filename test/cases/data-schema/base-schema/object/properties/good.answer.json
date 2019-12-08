@@ -8,7 +8,9 @@
         "ssl": {
           "pub_key": "waw",
           "sec_key": "wow"
-        }
+        },
+        "data-name": "alice",
+        "data-gender": "female"
       }
     },
     "errors": [],

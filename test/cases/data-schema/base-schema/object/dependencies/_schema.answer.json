@@ -45,7 +45,8 @@
           "gender": [
             "nick"
           ]
-        }
+        },
+        "requiredProperties": []
       }
     },
     "dependencies": {
@@ -57,7 +58,10 @@
         "name",
         "email"
       ]
-    }
+    },
+    "requiredProperties": [
+      "name"
+    ]
   },
   "errors": [],
   "warnings": []

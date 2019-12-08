@@ -1,5 +1,6 @@
 import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult } from '../_core/validator'
 import { BOOLEAN_V_TYPE as V, BOOLEAN_T_TYPE as T, BooleanDataSchema as DS } from '../schema/boolean'
+import { isBoolean } from '../_util/type-util'
 import { coverBoolean } from '../_util/cover-util'
 
 
@@ -19,19 +20,34 @@ export class BooleanDataValidator extends BaseDataValidator<T, V, DS> {
    * 包装 BooleanDataSchema 的实例，使其具备校验给定数据是否为合法布尔值的能力
    * @param data
    */
-  public validate (data: any): BooleanDataValidationResult {
+  public validate(data: any): BooleanDataValidationResult {
     const result: BooleanDataValidationResult = super.validate(data)
-    data = result.value
+    const value = result.value
     result.setValue(undefined)
 
     // 若未设置值，则无需进一步校验
-    if (data == null) return result
-
-    const value = result.validateType(coverBoolean, data)
+    if (value === undefined) return result
 
     // 若未产生错误，则通过校验，并设置 value
     if (!result.hasError) result.setValue(value)
     return result
+  }
+
+  /**
+   * override method
+   * @see DataValidator#checkType
+   */
+  public checkType(data: any): data is V {
+    return isBoolean(data)
+  }
+
+  /**
+   * override method
+   * @see DataValidator#preprocessData
+   */
+  public preprocessData(data: any): V | undefined {
+    const xResult = coverBoolean(undefined, data)
+    return xResult.value === undefined ? data : xResult.value
   }
 }
 

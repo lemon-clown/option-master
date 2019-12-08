@@ -3,7 +3,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected an integer, but got (true): expected a integer (or integer string), but got (true)."
+        "reason": "expected an integer, but got (true)."
       }
     ],
     "warnings": []
@@ -12,7 +12,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected an integer, but got (false): expected a integer (or integer string), but got (false)."
+        "reason": "expected an integer, but got (false)."
       }
     ],
     "warnings": []
@@ -21,7 +21,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected an integer, but got (\"d0x23\"): (\"d0x23\") is not a valid integer (or integer string)"
+        "reason": "expected an integer, but got (\"d0x23\")."
       }
     ],
     "warnings": []
@@ -30,7 +30,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected an integer, but got (\"0.2302\"): (\"0.2302\") is not a valid integer (or integer string)"
+        "reason": "expected an integer, but got (\"0.2302\")."
       }
     ],
     "warnings": []
@@ -39,7 +39,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected an integer, but got (\"233sfe\"): (\"233sfe\") is not a valid integer (or integer string)"
+        "reason": "expected an integer, but got (\"233sfe\")."
       }
     ],
     "warnings": []
@@ -48,7 +48,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected an integer, but got (2.3232): (2.3232) is not a valid integer (or integer string)"
+        "reason": "expected an integer, but got (2.3232)."
       }
     ],
     "warnings": []
@@ -57,7 +57,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected an integer, but got (-32.22): (-32.22) is not a valid integer (or integer string)"
+        "reason": "expected an integer, but got (-32.22)."
       }
     ],
     "warnings": []
@@ -66,7 +66,7 @@
     "errors": [
       {
         "constraint": "type",
-        "reason": "expected an integer, but got ([]): expected a integer (or integer string), but got ([])."
+        "reason": "expected an integer, but got ([])."
       }
     ],
     "warnings": []

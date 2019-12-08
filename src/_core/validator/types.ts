@@ -26,10 +26,10 @@ export type DVFactoryConstructor = DataValidatorFactoryConstructor<string, any, 
 export interface DataValidatorContext {
   /**
    * - Check if the data matches the given data pattern.
-   * - Parse the data (calculate the final result of the data by the
+   * - Compile the data (calculate the final result of the data by the
    *   value of attributes such as default)
    *
-   * 校验数据是否匹配给定的数据模式 & 解析数据（通过 default 等属性的值以计算数据的最终结果）
+   * 校验数据是否匹配给定的数据模式 & 编译数据（通过 default 等属性的值以计算数据的最终结果）
    * @param schema  预期的数据模式
    * @param data    待校验的数据
    */
@@ -67,13 +67,24 @@ export interface DataValidator<T extends string, V, DS extends DataSchema<T, V>>
    */
   readonly type: T
   /**
-   * Validate the data & parse the data (calculate the final result of the data
+   * Validate the data & compile the data (calculate the final result of the data
    * by the value of attributes such as default)
    *
-   * 校验数据 & 解析数据（通过 default 等属性的值以计算数据的最终结果）
+   * 校验数据 & 编译数据（通过 default 等属性的值以计算数据的最终结果）
    * @param data
    */
   validate(data: any): DataValidationResult<T, V, DS>
+  /**
+   * 类型数据类型检查是否匹配指定的类型
+   * @param data    当前待校验的数据
+   * @param result  当前的校验结果
+   */
+  checkType(data: any, result: DVResult): data is V
+  /**
+   * 预处理数据
+   * @param data
+   */
+  preprocessData(data: any, result: DVResult): V | undefined
 }
 
 

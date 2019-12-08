@@ -7,7 +7,38 @@ export const OBJECT_T_TYPE = 'object'
 export type OBJECT_T_TYPE = typeof OBJECT_T_TYPE
 
 // ObjectDataSchema.value 的类型
-export type OBJECT_V_TYPE = any[]
+export type OBJECT_V_TYPE = object
+
+
+/**
+ * 属性的名称类型
+ */
+export enum RawObjectDataPropertyNameType {
+  /**
+   * 字符串
+   */
+  STRING = 'string',
+  /**
+   * 正则表达式
+   */
+  REGEX = 'regex',
+}
+
+
+// values of RawObjectDataPropertyNameType
+export const rawObjectDataPropertyNameTypes: string[] = Object.values(RawObjectDataPropertyNameType)
+
+
+/**
+ * 原生的对象类型数据模式的 property 类型
+ */
+export interface RawObjectDataPropertyItem extends RDSchema {
+  /**
+   * 属性的名称类型
+   * @default RawObjectDataPropertyNameType.STRING
+   */
+  nameType?: RawObjectDataPropertyNameType
+}
 
 
 /**
@@ -16,14 +47,18 @@ export type OBJECT_V_TYPE = any[]
  */
 export interface RawObjectDataSchema extends RawDataSchema<OBJECT_T_TYPE, OBJECT_V_TYPE> {
   /**
+   * 必须存在的属性，若属性自身设置了 required，可以覆盖此值
+   */
+  requiredProperties?: string[]
+  /**
    * 对象属性的类型，定义对象可能出现的若干属性的属性名及其类型
    * 参见 https://json-schema.org/understanding-json-schema/reference/object.html#properties
    */
-  properties?: { [key: string]: RDSchema }
+  properties?: { [key: string]: RawObjectDataPropertyItem }
   /**
    * 是否允许其它额外的属性，若为 false 且指定了 properties，
    * 则对象中只有 properties 中出现的属性会被采用，其它的属性将被忽略，
-   * 如下的 Schema 中，数据对象不能出现除 `name` 以外的其它属性（解析器/校验器会忽略这些额外的属性）：
+   * 如下的 Schema 中，数据对象不能出现除 `name` 以外的其它属性（编译器/校验器会忽略这些额外的属性）：
    *  {
    *    properties: {
    *      name: { type: 'string' }
@@ -61,7 +96,7 @@ export interface RawObjectDataSchema extends RawDataSchema<OBJECT_T_TYPE, OBJECT
 
 
 /**
- * 对象类型的数据模式，解析 RawObjectDataSchema 后得到的结果
+ * 对象类型的数据模式，编译 RawObjectDataSchema 后得到的结果
  */
 export interface ObjectDataSchema extends DataSchema<OBJECT_T_TYPE, OBJECT_V_TYPE> {
   /**
@@ -74,9 +109,20 @@ export interface ObjectDataSchema extends DataSchema<OBJECT_T_TYPE, OBJECT_V_TYP
    */
   silentIgnore: boolean
   /**
+   * 必须存在的属性，若属性自身（properties 中）设置了 required，可以覆盖此值
+   * 但若是在 propertyName 中设置了 required，无法覆盖此值，因为 propertyName 定义的是属性名的规则，
+   * 在编译阶段无法使用它进行校验
+   */
+  requiredProperties: string[]
+  /**
    * 对象属性的类型
    */
   properties?: { [key: string]: DSchema }
+  /**
+   * 对象属性的类型，和 properties 类似，但是名称为正则表达式
+   * @member pattern  属性名称的正则表达式
+   */
+  regexNameProperties?: { pattern: RegExp, schema: DSchema }[]
   /**
    * 对象属性名的数据类型
    */

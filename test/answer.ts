@@ -1,5 +1,5 @@
 import path from 'path'
-import { DataSchemaParserTestCaseMaster } from './util/schema-parser-case-util'
+import { DataSchemaCompilerTestCaseMaster } from './util/schema-compiler-case-util'
 import { DataValidatorTestCaseMaster } from './util/schema-validator-case-util'
 
 
@@ -9,10 +9,10 @@ import { DataValidatorTestCaseMaster } from './util/schema-validator-case-util'
 async function answer() {
   const caseRootDirectory: string = path.resolve('test/cases')
 
-  // DataSchemaParser cases
-  const parserCaseMaster = new DataSchemaParserTestCaseMaster({ caseRootDirectory })
-  await parserCaseMaster.scan(path.resolve(caseRootDirectory, 'data-schema'))
-  await parserCaseMaster.answer()
+  // DataSchemaCompiler cases
+  const compilerCaseMaster = new DataSchemaCompilerTestCaseMaster({ caseRootDirectory })
+  await compilerCaseMaster.scan(path.resolve(caseRootDirectory, 'data-schema'))
+  await compilerCaseMaster.answer()
 
   // DataValidator cases
   const dataValidatorMaster = new DataValidatorTestCaseMaster({ caseRootDirectory })
