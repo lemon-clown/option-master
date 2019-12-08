@@ -28,6 +28,10 @@ export enum CombineStrategy {
 }
 
 
+// values of CombineStrategy
+export const combineStrategies: string[] = Object.values(CombineStrategy)
+
+
 /**
  * 原生的组合类型数据模式，用户在配置文件中指定的对象类型
  *

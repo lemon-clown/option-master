@@ -1,6 +1,6 @@
 import { RDSchema, DSchema } from '../_core/schema'
 import { BaseDataSchemaCompiler, DataSchemaCompileResult } from '../_core/compiler'
-import { COMBINE_V_TYPE as V, COMBINE_T_TYPE as T, RawCombineDataSchema as RDS, CombineDataSchema as DS, CombineStrategy } from '../schema/combine'
+import { COMBINE_V_TYPE as V, COMBINE_T_TYPE as T, RawCombineDataSchema as RDS, CombineDataSchema as DS, CombineStrategy, combineStrategies } from '../schema/combine'
 import { coverString } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'
 
@@ -31,17 +31,12 @@ export class CombineDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS,
 
     // strategy 的默认值为 all
     const strategyResult = result.compileProperty<CombineStrategy>('strategy', coverString as any, CombineStrategy.ALL)
-    switch (strategyResult.value) {
-      case CombineStrategy.ALL:
-      case CombineStrategy.ANY:
-      case CombineStrategy.ONE:
-        break
-      default:
-        result.addError({
-          constraint: 'strategy',
-          reason: `unknown strategy: ${ stringify(rawSchema.strategy) }`
-        })
-        strategyResult.setValue(CombineStrategy.ALL)
+    if (strategyResult.value == null || !combineStrategies.includes(strategyResult.value)) {
+      result.addError({
+        constraint: 'strategy',
+        reason: `unknown strategy: ${ stringify(rawSchema.strategy) }`
+      })
+      strategyResult.setValue(CombineStrategy.ALL)
     }
 
     /**

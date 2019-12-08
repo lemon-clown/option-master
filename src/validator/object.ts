@@ -49,6 +49,30 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> {
         }
       }
 
+      // 检查是否满足 regexNameProperties 中的定义
+      if (schema.regexNameProperties != null) {
+        let matched = false
+        for (const regexNameProperty of schema.regexNameProperties) {
+          if (!regexNameProperty.pattern.test(propertyName)) continue
+
+          // 使用指定的 DataSchema 进行检查
+          const xSchema = regexNameProperty.schema
+          const xValidateResult = this.context.validateDataSchema(xSchema, propertyValue)
+          result.addHandleResult('regexNameProperties', xValidateResult, propertyName)
+
+          // 若符合，则更新值
+          if (!xValidateResult.hasError) {
+            value[propertyName] = xValidateResult.value
+          }
+
+          matched = true
+          break
+        }
+
+        // 若在 regexNameProperties 中存在匹配的数据模式，则无需做额外属性的校验
+        if (matched) continue
+      }
+
       // 若不允许额外的属性，则直接忽略
       if (!schema.allowAdditionalProperties) {
         if (!schema.silentIgnore) {
