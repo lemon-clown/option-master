@@ -7,6 +7,7 @@ import {
   TDSchema,
   DDSchema,
   DefinitionDataSchemaMaster,
+  DSchema,
 } from '../schema'
 import { DSCompiler, DataSchemaCompilerContext, DSCResult, DDSCResult, TDSCResult } from './types'
 import { DataSchemaCompileResult } from './result'
@@ -229,5 +230,83 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
       required: defaultRawSchema.required,
       ...rawSchema,
     }
+  }
+
+  /**
+   * override method
+   * @see DataSchemaCompilerContext#topSchemaToJSON
+   */
+  public topSchemaToJSON(schema: TDSchema): object {
+    const json: any = this.toJSON(schema)
+    if (schema.definitions != null) {
+      json.definitions = {}
+      for (const propertyName of Object.getOwnPropertyNames(schema.definitions)) {
+        json.definitions[propertyName] = this.definitionSchemaToJSON(schema.definitions[propertyName])
+      }
+    }
+    return json
+  }
+
+  /**
+   * override method
+   * @see DataSchemaCompilerContext#parseTopSchemaJSON
+   */
+  public parseTopSchemaJSON(json: any): TDSchema {
+    const schema: TDSchema = this.parseJSON(json)
+    if (json.definitions != null) {
+      ; (schema as any).definitions = {}
+      for (const propertyName of Object.getOwnPropertyNames(json.definitions)) {
+        schema.definitions![propertyName] = this.parseDefinitionSchemaJSON(json.definitions[propertyName])
+      }
+    }
+    return schema
+  }
+
+  /**
+   * override method
+   * @see DataSchemaCompilerContext#definitionSchemaToJSON
+   */
+  public definitionSchemaToJSON(schema: DDSchema): object {
+    const json = {
+      ...this.toJSON(schema),
+      $id: schema.$id,
+    }
+    return json
+  }
+
+  /**
+   * override method
+   * @see DataSchemaCompilerContext#parseDefinitionSchemaJSON
+   */
+  public parseDefinitionSchemaJSON(json: any): DDSchema {
+    const schema = {
+      ...this.parseJSON(json),
+      $id: json.$id,
+    }
+    return schema
+  }
+
+  /**
+   * override method
+   * @see DataSchemaCompilerContext#toJSON
+   */
+  public toJSON(schema: DSchema): object {
+    const compiler = this.compilerMap.get(schema.type)
+    if (compiler == null) {
+      throw new Error(`cannot find compiler for type(${ schema.type })`)
+    }
+    return compiler.toJSON(schema)
+  }
+
+  /**
+   * override method
+   * @see DataSchemaCompilerContext#parseJSON
+   */
+  public parseJSON(json: any): DSchema {
+    const compiler = this.compilerMap.get(json.type)
+    if (compiler == null) {
+      throw new Error(`cannot find compiler for type(${ json.type })`)
+    }
+    return compiler.parseJSON(json)
   }
 }

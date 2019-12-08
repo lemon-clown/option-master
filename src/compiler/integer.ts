@@ -50,4 +50,36 @@ export class IntegerDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS,
 
     return result.setValue(schema)
   }
+
+  /**
+   * override method
+   * @see DataSchemaCompiler#toJSON
+   */
+  public toJSON(schema: DS): object {
+    const json: any = {
+      ...super.toJSON(schema),
+      minimum: schema.minimum,
+      maximum: schema.maximum,
+      exclusiveMaximum: schema.exclusiveMaximum,
+      exclusiveMinimum: schema.exclusiveMinimum,
+      enum: schema.enum,
+    }
+    return json
+  }
+
+  /**
+   * override method
+   * @see DataSchemaCompiler#parseJSON
+   */
+  public parseJSON(json: any): DS {
+    const schema: DS = {
+      ...super.parseJSON(json),
+      minimum: json.minimum,
+      maximum: json.maximum,
+      exclusiveMaximum: json.exclusiveMaximum,
+      exclusiveMinimum: json.exclusiveMinimum,
+      enum: json.enum,
+    }
+    return schema
+  }
 }

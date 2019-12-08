@@ -86,4 +86,38 @@ export class CombineDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS,
 
     return result.setValue(schema)
   }
+
+  /**
+   * override method
+   * @see DataSchemaCompiler#toJSON
+   */
+  public toJSON(schema: DS): object {
+    const json: any = {
+      ...super.toJSON(schema),
+      strategy: schema.strategy,
+    }
+
+    for (const propertyName of ['allOf', 'anyOf', 'oneOf']) {
+      if (schema[propertyName] == null || schema[propertyName].length <= 0) continue
+      json[propertyName] = (schema[propertyName] as DSchema[]).map(item => this.context.toJSON(item))
+    }
+    return json
+  }
+
+  /**
+   * override method
+   * @see DataSchemaCompiler#parseJSON
+   */
+  public parseJSON(json: any): DS {
+    const schema: DS = {
+      ...super.parseJSON(json),
+      strategy: json.strategy,
+    }
+
+    for (const propertyName of ['allOf', 'anyOf', 'oneOf']) {
+      if (json[propertyName] == null || json[propertyName].length <= 0) continue
+      schema[propertyName] = (json[propertyName] as object[]).map(item => this.context.parseJSON(item))
+    }
+    return schema
+  }
 }

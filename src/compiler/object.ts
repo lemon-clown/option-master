@@ -11,6 +11,7 @@ import {
 import { StringDataSchema, STRING_T_TYPE } from '../schema/string'
 import { stringify, isObject } from '../_util/type-util'
 import { coverBoolean, coverArray, coverString } from '../_util/cover-util'
+import { DSchema } from '../_core/schema'
 
 
 /**
@@ -222,5 +223,81 @@ export class ObjectDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, 
       }
     }
     return rawSchema
+  }
+
+  /**
+   * override method
+   * @see DataSchemaCompiler#toJSON
+   */
+  public toJSON(schema: DS): object {
+    const json: any = {
+      ...super.toJSON(schema),
+      requiredProperties: schema.requiredProperties,
+      allowAdditionalProperties: schema.allowAdditionalProperties,
+      dependencies: schema.dependencies,
+      silentIgnore: schema.silentIgnore,
+    }
+
+    // json-ify properties
+    if (schema.properties != null && Object.getOwnPropertyNames(schema.properties).length > 0) {
+      json.properties = {}
+      for (const propertyName of Object.getOwnPropertyNames(schema.properties)) {
+        json.properties[propertyName] = this.context.toJSON(schema.properties[propertyName])
+      }
+    }
+
+    // json-ify regexNameProperties
+    if (schema.regexNameProperties != null && schema.regexNameProperties.length > 0) {
+      json.regexNameProperties = []
+      for (const property of schema.regexNameProperties) {
+        const { pattern, schema: propertySchema } = property
+        const propertySchemaJson = this.context.parseJSON(propertySchema)
+        json.regexNameProperties.push({ pattern: pattern.source, schema: propertySchemaJson })
+      }
+    }
+
+    if (schema.propertyNames != null) {
+      json.propertyNames = this.context.toJSON(schema.propertyNames)
+    }
+
+    return json
+  }
+
+  /**
+   * override method
+   * @see DataSchemaCompiler#parseJSON
+   */
+  public parseJSON(json: any): DS {
+    const schema: DS = {
+      ...super.parseJSON(json),
+      requiredProperties: json.requiredProperties,
+      allowAdditionalProperties: json.allowAdditionalProperties,
+      dependencies: json.dependencies,
+      silentIgnore: json.silentIgnore
+    }
+
+    // parse properties
+    if (json.properties != null && Object.getOwnPropertyNames(json.properties).length > 0) {
+      // eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
+      schema.properties = {} as Exclude<DS['properties'], undefined>
+      for (const propertyName of Object.getOwnPropertyNames(json.properties)) {
+        schema.properties[propertyName] = this.context.parseJSON(json.properties[propertyName])
+      }
+    }
+
+    // parse regexNameProperties
+    if (json.regexNameProperties != null && json.regexNameProperties.length > 0) {
+      schema.regexNameProperties = []
+      for (const property of json.regexNameProperties) {
+        const { pattern, schema: propertySchemaJson } = property
+        const propertySchema: DSchema = this.context.parseJSON(propertySchemaJson)
+        schema.regexNameProperties.push({ pattern: new RegExp(pattern), schema: propertySchema })
+      }
+    }
+
+    if (json.propertyNames != null) {
+      schema.propertyNames = this.context.parseJSON(json.propertyNames) as StringDataSchema
+    }
+    return schema
   }
 }

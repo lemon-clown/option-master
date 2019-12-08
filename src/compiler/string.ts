@@ -134,4 +134,38 @@ export class StringDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, 
 
     return result.setValue(schema)
   }
+
+  /**
+   * override method
+   * @see DataSchemaCompiler#toJSON
+   */
+  public toJSON(schema: DS): object {
+    const json: any = {
+      ...super.toJSON(schema),
+      minLength: schema.minLength,
+      maxLength: schema.maxLength,
+      pattern: schema.pattern == null ? schema.pattern : schema.pattern.source,
+      format: schema.format,
+      transform: schema.transform,
+      enum: schema.enum,
+    }
+    return json
+  }
+
+  /**
+   * override method
+   * @see DataSchemaCompiler#parseJSON
+   */
+  public parseJSON(json: any): DS {
+    const schema: DS = {
+      ...super.parseJSON(json),
+      minLength: json.minLength,
+      maxLength: json.maxLength,
+      pattern: json.pattern == null ? json.pattern : new RegExp(json.pattern),
+      format: json.format,
+      transform: json.transform,
+      enum: json.enum,
+    }
+    return schema
+  }
 }
