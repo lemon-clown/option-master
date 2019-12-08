@@ -1,5 +1,13 @@
 import { BaseDataSchemaCompiler, DataSchemaCompileResult } from '../_core/compiler'
-import { OBJECT_V_TYPE as V, OBJECT_T_TYPE as T, RawObjectDataSchema as RDS, ObjectDataSchema as DS, ObjectDataSchema, RawObjectDataPropertyNameType, rawObjectDataPropertyNameTypes, RawObjectDataPropertyItem } from '../schema/object'
+import {
+  OBJECT_V_TYPE as V,
+  OBJECT_T_TYPE as T,
+  RawObjectDataSchema as RDS,
+  ObjectDataSchema as DS,
+  ObjectDataSchema,
+  RawObjectDataPropertyNameType,
+  RawObjectDataPropertyItem
+} from '../schema/object'
 import { StringDataSchema, STRING_T_TYPE } from '../schema/string'
 import { stringify, isObject } from '../_util/type-util'
 import { coverBoolean, coverArray, coverString } from '../_util/cover-util'
