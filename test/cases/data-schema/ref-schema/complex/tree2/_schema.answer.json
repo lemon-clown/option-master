@@ -1,5 +1,8 @@
 {
   "value": {
+    "type": "ref",
+    "required": true,
+    "$ref": "#/definitions/tree",
     "definitions": {
       "name": {
         "type": "string",
@@ -13,6 +16,9 @@
       "tree": {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "name"
+        ],
         "allowAdditionalProperties": false,
         "silentIgnore": false,
         "properties": {
@@ -28,22 +34,16 @@
           "children": {
             "type": "array",
             "required": false,
+            "unique": false,
             "items": {
               "type": "ref",
               "required": false,
               "$ref": "#/definitions/tree"
-            },
-            "unique": false
+            }
           }
-        },
-        "requiredProperties": [
-          "name"
-        ]
+        }
       }
-    },
-    "type": "ref",
-    "required": true,
-    "$ref": "#/definitions/tree"
+    }
   },
   "errors": [],
   "warnings": []

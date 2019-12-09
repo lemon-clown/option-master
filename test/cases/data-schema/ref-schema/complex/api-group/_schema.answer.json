@@ -1,5 +1,20 @@
 {
   "value": {
+    "type": "object",
+    "required": false,
+    "requiredProperties": [],
+    "allowAdditionalProperties": false,
+    "silentIgnore": false,
+    "regexNameProperties": [
+      {
+        "pattern": "^\\w(?:[\\w\\-])+$",
+        "schema": {
+          "type": "ref",
+          "required": false,
+          "$ref": "#/definitions/RawApiItemGroup"
+        }
+      }
+    ],
     "definitions": {
       "HttpVerb": {
         "type": "string",
@@ -16,6 +31,9 @@
       "RawApiItem": {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "name"
+        ],
         "allowAdditionalProperties": false,
         "silentIgnore": false,
         "properties": {
@@ -25,18 +43,18 @@
           },
           "title": {
             "type": "string",
-            "required": false,
-            "default": ""
+            "default": "",
+            "required": false
           },
           "description": {
             "type": "string",
-            "required": false,
-            "default": ""
+            "default": "",
+            "required": false
           },
           "path": {
             "type": "string",
-            "required": false,
-            "default": ""
+            "default": "",
+            "required": false
           },
           "fullPath": {
             "type": "string",
@@ -44,8 +62,8 @@
           },
           "method": {
             "type": "string",
-            "required": false,
             "default": "HttpVerb.GET",
+            "required": false,
             "enum": [
               "DEL",
               "DELETE",
@@ -58,6 +76,7 @@
           "request": {
             "type": "object",
             "required": false,
+            "requiredProperties": [],
             "allowAdditionalProperties": false,
             "silentIgnore": false,
             "properties": {
@@ -73,12 +92,12 @@
                 "type": "string",
                 "required": false
               }
-            },
-            "requiredProperties": []
+            }
           },
           "response": {
             "type": "object",
             "required": false,
+            "requiredProperties": [],
             "allowAdditionalProperties": false,
             "silentIgnore": false,
             "properties": {
@@ -97,21 +116,20 @@
               "headers": {
                 "type": "object",
                 "required": false,
+                "requiredProperties": [],
                 "allowAdditionalProperties": true,
-                "silentIgnore": false,
-                "requiredProperties": []
+                "silentIgnore": false
               }
-            },
-            "requiredProperties": []
+            }
           }
-        },
-        "requiredProperties": [
-          "name"
-        ]
+        }
       },
       "RawApiItemGroup": {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "name"
+        ],
         "allowAdditionalProperties": false,
         "silentIgnore": false,
         "properties": {
@@ -146,47 +164,47 @@
           "request": {
             "type": "object",
             "required": false,
+            "requiredProperties": [],
             "allowAdditionalProperties": false,
             "silentIgnore": false,
             "properties": {
               "modelNamePrefix": {
                 "type": "string",
-                "required": false,
-                "default": ""
+                "default": "",
+                "required": false
               },
               "modelNameSuffix": {
                 "type": "string",
-                "required": false,
-                "default": "RequestVo"
+                "default": "RequestVo",
+                "required": false
               }
-            },
-            "requiredProperties": []
+            }
           },
           "response": {
             "type": "object",
             "required": false,
+            "requiredProperties": [],
             "allowAdditionalProperties": false,
             "silentIgnore": false,
             "properties": {
               "modelNamePrefix": {
                 "type": "string",
-                "required": false,
-                "default": ""
+                "default": "",
+                "required": false
               },
               "modelNameSuffix": {
                 "type": "string",
-                "required": false,
-                "default": "ResponseVo"
+                "default": "ResponseVo",
+                "required": false
               },
               "headers": {
                 "type": "object",
                 "required": false,
+                "requiredProperties": [],
                 "allowAdditionalProperties": true,
-                "silentIgnore": false,
-                "requiredProperties": []
+                "silentIgnore": false
               }
-            },
-            "requiredProperties": []
+            }
           },
           "subGroups": {
             "type": "combine",
@@ -196,16 +214,17 @@
               {
                 "type": "array",
                 "required": false,
+                "unique": false,
                 "items": {
                   "type": "ref",
                   "required": false,
                   "$ref": "#/definitions/RawApiItemGroup"
-                },
-                "unique": false
+                }
               },
               {
                 "type": "object",
                 "required": false,
+                "requiredProperties": [],
                 "allowAdditionalProperties": false,
                 "silentIgnore": false,
                 "regexNameProperties": [
@@ -217,8 +236,7 @@
                       "$ref": "#/definitions/RawApiItemGroup"
                     }
                   }
-                ],
-                "requiredProperties": []
+                ]
               }
             ]
           },
@@ -230,16 +248,17 @@
               {
                 "type": "array",
                 "required": false,
+                "unique": false,
                 "items": {
                   "type": "ref",
                   "required": false,
                   "$ref": "#/definitions/RawApiItem"
-                },
-                "unique": false
+                }
               },
               {
                 "type": "object",
                 "required": false,
+                "requiredProperties": [],
                 "allowAdditionalProperties": false,
                 "silentIgnore": false,
                 "regexNameProperties": [
@@ -251,32 +270,13 @@
                       "$ref": "#/definitions/RawApiItem"
                     }
                   }
-                ],
-                "requiredProperties": []
+                ]
               }
             ]
           }
-        },
-        "requiredProperties": [
-          "name"
-        ]
-      }
-    },
-    "type": "object",
-    "required": false,
-    "allowAdditionalProperties": false,
-    "silentIgnore": false,
-    "regexNameProperties": [
-      {
-        "pattern": "^\\w(?:[\\w\\-])+$",
-        "schema": {
-          "type": "ref",
-          "required": false,
-          "$ref": "#/definitions/RawApiItemGroup"
         }
       }
-    ],
-    "requiredProperties": []
+    }
   },
   "errors": [],
   "warnings": []

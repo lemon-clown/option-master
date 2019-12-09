@@ -2,6 +2,7 @@
   "value": {
     "type": "object",
     "required": true,
+    "requiredProperties": [],
     "allowAdditionalProperties": false,
     "silentIgnore": false,
     "properties": {
@@ -17,8 +18,7 @@
         "type": "boolean",
         "required": false
       }
-    },
-    "requiredProperties": []
+    }
   },
   "errors": [],
   "warnings": []

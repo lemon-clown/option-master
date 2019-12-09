@@ -7,6 +7,9 @@
       {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "name"
+        ],
         "allowAdditionalProperties": true,
         "silentIgnore": false,
         "properties": {
@@ -14,14 +17,14 @@
             "type": "string",
             "required": true
           }
-        },
-        "requiredProperties": [
-          "name"
-        ]
+        }
       },
       {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "age"
+        ],
         "allowAdditionalProperties": true,
         "silentIgnore": false,
         "properties": {
@@ -30,16 +33,16 @@
             "required": true,
             "minimum": 1
           }
-        },
-        "requiredProperties": [
-          "age"
-        ]
+        }
       }
     ],
     "anyOf": [
       {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "gender"
+        ],
         "allowAdditionalProperties": true,
         "silentIgnore": true,
         "properties": {
@@ -56,14 +59,14 @@
           "type": "string",
           "required": false,
           "pattern": "^(name|age)$"
-        },
-        "requiredProperties": [
-          "gender"
-        ]
+        }
       },
       {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "sex"
+        ],
         "allowAdditionalProperties": true,
         "silentIgnore": true,
         "properties": {
@@ -80,10 +83,7 @@
           "type": "string",
           "required": false,
           "pattern": "^(name|age)$"
-        },
-        "requiredProperties": [
-          "sex"
-        ]
+        }
       }
     ]
   },

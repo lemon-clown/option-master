@@ -2,6 +2,9 @@
   "value": {
     "type": "object",
     "required": false,
+    "requiredProperties": [
+      "name"
+    ],
     "allowAdditionalProperties": true,
     "silentIgnore": true,
     "properties": {
@@ -24,10 +27,7 @@
       "type": "string",
       "required": false,
       "pattern": "^(name|age)$"
-    },
-    "requiredProperties": [
-      "name"
-    ]
+    }
   },
   "errors": [],
   "warnings": []

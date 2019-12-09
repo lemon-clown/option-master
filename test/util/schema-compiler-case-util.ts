@@ -2,7 +2,7 @@ import fs from 'fs-extra'
 import * as chai from 'chai'
 import chaiExclude from 'chai-exclude'
 import { TestCaseMaster, TestCaseMasterProps, TestCase } from './case-util'
-import { optionMaster, RDSchema, DSCResult, DataHandleResultException } from '../../src'
+import { OptionMaster, RDSchema, DSCResult, DataHandleResultException } from '../../src'
 
 
 chai.use(chaiExclude)
@@ -23,26 +23,29 @@ export interface DataSchemaCompilerOutputData {
  * DataSchema 编译器测试用例辅助类
  */
 export class DataSchemaCompilerTestCaseMaster extends TestCaseMaster<DSCResult, DataSchemaCompilerOutputData> {
-  public constructor({
+  protected readonly optionMaster: OptionMaster
+
+  public constructor(optionMaster: OptionMaster, {
     caseRootDirectory,
     inputFileNameSuffix = 'schema.json',
     answerFileNameSuffix = 'schema.answer.json',
   }: PickPartial<TestCaseMasterProps, 'inputFileNameSuffix' | 'answerFileNameSuffix'>) {
     super({ caseRootDirectory, inputFileNameSuffix, answerFileNameSuffix })
+    this.optionMaster = optionMaster
   }
 
   // override
   public async consume(kase: TestCase): Promise<DSCResult | never> {
     const { inputFilePath: schemaFilePath } = kase
     const rawDataSchema: RDSchema = await fs.readJSON(schemaFilePath)
-    const CompileResult: DSCResult = optionMaster.compile(rawDataSchema)
+    const CompileResult: DSCResult = this.optionMaster.compile(rawDataSchema)
     return CompileResult
   }
 
   // override
   public async check(output: DSCResult, answer: DSCResult): Promise<void> {
     const outputData: DataSchemaCompilerOutputData = this.toJSON(output)
-    const answerData: DataSchemaCompilerOutputData = this.toJSON(answer)
+    const answerData: DataSchemaCompilerOutputData = answer
 
     // check errors
     if (answerData.errors != null && answerData.errors.length > 0) {
@@ -66,8 +69,15 @@ export class DataSchemaCompilerTestCaseMaster extends TestCaseMaster<DSCResult, 
 
     // check data, ignore undefined property
     const outputDataValue = JSON.parse(super.stringify(outputData.value as any))
-    const answerDataValue = JSON.parse(super.stringify(answerData.value as any))
+    const answerDataValue = answerData.value
     expect(outputDataValue).to.deep.equal(answerDataValue)
+
+    // check load
+    if (answer.value != null) {
+      const answerSchema = this.optionMaster.parseJSON(answer.value)
+      const answerJson = JSON.parse(JSON.stringify(this.optionMaster.toJSON(answerSchema)))
+      expect(outputDataValue).to.deep.equal(answerJson)
+    }
   }
 
   // override
@@ -80,7 +90,7 @@ export class DataSchemaCompilerTestCaseMaster extends TestCaseMaster<DSCResult, 
     }
 
     const result: DataSchemaCompilerOutputData = {
-      value: data.value,
+      value: data.value == null ? data.value : this.optionMaster.toJSON(data.value) as any,
       errors: data.errors.map(mapper),
       warnings: data.warnings.map(mapper),
     }

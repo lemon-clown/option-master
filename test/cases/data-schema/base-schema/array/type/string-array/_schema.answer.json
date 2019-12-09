@@ -2,12 +2,12 @@
   "value": {
     "type": "array",
     "required": false,
+    "unique": false,
     "items": {
       "type": "string",
       "required": false,
       "pattern": "^\\d+-\\w+$"
-    },
-    "unique": false
+    }
   },
   "errors": [],
   "warnings": []
