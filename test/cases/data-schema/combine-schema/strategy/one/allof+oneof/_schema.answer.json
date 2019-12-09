@@ -7,6 +7,9 @@
       {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "nickname"
+        ],
         "allowAdditionalProperties": true,
         "silentIgnore": true,
         "properties": {
@@ -14,14 +17,14 @@
             "type": "string",
             "required": true
           }
-        },
-        "requiredProperties": [
-          "nickname"
-        ]
+        }
       },
       {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "age"
+        ],
         "allowAdditionalProperties": true,
         "silentIgnore": true,
         "properties": {
@@ -30,10 +33,7 @@
             "required": true,
             "minimum": 1
           }
-        },
-        "requiredProperties": [
-          "age"
-        ]
+        }
       }
     ],
     "oneOf": [
@@ -51,6 +51,9 @@
       {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "name"
+        ],
         "allowAdditionalProperties": false,
         "silentIgnore": true,
         "properties": {
@@ -58,10 +61,7 @@
             "type": "string",
             "required": true
           }
-        },
-        "requiredProperties": [
-          "name"
-        ]
+        }
       }
     ]
   },

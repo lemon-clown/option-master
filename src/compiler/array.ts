@@ -61,4 +61,33 @@ export class ArrayDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, D
 
     return result.setValue(schema)
   }
+
+  /**
+   * override method
+   * @see DataSchemaCompiler#toJSON
+   */
+  public toJSON(schema: DS): object {
+    const json: any = super.toJSON(schema)
+    json.unique = schema.unique
+    if (schema.items != null) json.items = this.context.toJSON(schema.items)
+    return json
+  }
+
+  /**
+   * override method
+   * @see DataSchemaCompiler#parseJSON
+   */
+  public parseJSON(json: any): DS {
+    const schema: DS = {
+      ...super.parseJSON(json),
+      unique: json.unique,
+    }
+
+    // parse items of ArrayDataSchema
+    if (json.items !== null) {
+      schema.items = this.context.parseJSON(json.items)
+    }
+
+    return schema
+  }
 }

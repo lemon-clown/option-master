@@ -2,36 +2,44 @@
   "value": {
     "type": "object",
     "required": false,
+    "requiredProperties": [],
     "allowAdditionalProperties": false,
     "silentIgnore": false,
     "properties": {
       "serve": {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "ssl"
+        ],
         "allowAdditionalProperties": false,
         "silentIgnore": false,
         "properties": {
           "host": {
             "type": "string",
-            "required": false,
             "default": "127.0.0.1",
+            "required": false,
             "pattern": "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
           },
           "port": {
             "type": "integer",
-            "required": false,
             "default": 80,
+            "required": false,
             "minimum": 0,
             "maximum": 65535
           },
           "prefixUrl": {
             "type": "string",
-            "required": false,
-            "default": "/"
+            "default": "/",
+            "required": false
           },
           "ssl": {
             "type": "object",
             "required": true,
+            "requiredProperties": [
+              "pub_key",
+              "sec_key"
+            ],
             "allowAdditionalProperties": false,
             "silentIgnore": false,
             "properties": {
@@ -43,11 +51,7 @@
                 "type": "string",
                 "required": true
               }
-            },
-            "requiredProperties": [
-              "pub_key",
-              "sec_key"
-            ]
+            }
           }
         },
         "regexNameProperties": [
@@ -58,13 +62,9 @@
               "required": false
             }
           }
-        ],
-        "requiredProperties": [
-          "ssl"
         ]
       }
-    },
-    "requiredProperties": []
+    }
   },
   "errors": [],
   "warnings": []

@@ -2,11 +2,11 @@
   "value": {
     "type": "array",
     "required": false,
+    "unique": true,
     "items": {
       "type": "number",
       "required": false
-    },
-    "unique": true
+    }
   },
   "errors": [],
   "warnings": []

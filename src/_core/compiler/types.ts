@@ -89,6 +89,36 @@ export interface DataSchemaCompilerContext {
    * @param rawSchema       数据模式对象
    */
   inheritRawSchema<T extends RDSchema>(parentRawSchema: RDSchema, rawSchema: T): T
+  /**
+   * 转换成可被 JSON.stringify 的 JSON 对象
+   * @param schema
+   */
+  topSchemaToJSON(schema: TDSchema): object
+  /**
+   * 将 JSON 转成 TopDataSchema
+   * @param json
+   */
+  parseTopSchemaJSON(json: object): TDSchema
+  /**
+   * 转换成可被 JSON.stringify 的 JSON 对象
+   * @param schema
+   */
+  definitionSchemaToJSON(schema: DDSchema): object
+  /**
+   * 将 JSON 转成 DefinitionDataSchema
+   * @param json
+   */
+  parseDefinitionSchemaJSON(json: object): DDSchema
+  /**
+   * 转换成可被 JSON.stringify 的 JSON 对象
+   * @param schema
+   */
+  toJSON(schema: DSchema): object
+  /**
+   * 将 JSON 转成 DataSchema
+   * @param json
+   */
+  parseJSON(json: object): DSchema
 }
 
 
@@ -118,6 +148,16 @@ export interface DataSchemaCompiler<
    * @param rawSchema
    */
   normalizeRawSchema(rawSchema: RawDataSchema<T, V>): RawDataSchema<T, V>
+  /**
+   * 转换成可被 JSON.stringify 的 JSON 对象
+   * @param schema
+   */
+  toJSON(schema: DataSchema<T, V>): object
+  /**
+   * 将 JSON 转成 DataSchema
+   * @param json
+   */
+  parseJSON(json: object): DataSchema<T, V>
 }
 
 

@@ -1,6 +1,7 @@
 import path from 'path'
 import { DataSchemaCompilerTestCaseMaster } from './util/schema-compiler-case-util'
 import { DataValidatorTestCaseMaster } from './util/schema-validator-case-util'
+import { optionMaster } from '../src'
 
 
 /**
@@ -10,7 +11,7 @@ async function answer() {
   const caseRootDirectory: string = path.resolve('test/cases')
 
   // DataSchemaCompiler cases
-  const compilerCaseMaster = new DataSchemaCompilerTestCaseMaster({ caseRootDirectory })
+  const compilerCaseMaster = new DataSchemaCompilerTestCaseMaster(optionMaster, { caseRootDirectory })
   await compilerCaseMaster.scan(path.resolve(caseRootDirectory, 'data-schema'))
   await compilerCaseMaster.answer()
 

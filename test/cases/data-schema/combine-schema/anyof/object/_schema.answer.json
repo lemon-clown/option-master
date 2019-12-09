@@ -7,6 +7,9 @@
       {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "gender"
+        ],
         "allowAdditionalProperties": false,
         "silentIgnore": false,
         "properties": {
@@ -18,14 +21,14 @@
               "female"
             ]
           }
-        },
-        "requiredProperties": [
-          "gender"
-        ]
+        }
       },
       {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "sex"
+        ],
         "allowAdditionalProperties": false,
         "silentIgnore": false,
         "properties": {
@@ -37,10 +40,7 @@
               "female"
             ]
           }
-        },
-        "requiredProperties": [
-          "sex"
-        ]
+        }
       }
     ]
   },

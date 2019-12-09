@@ -57,4 +57,28 @@ export class RefDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, DS>
 
     return result.setValue(schema)
   }
+
+  /**
+   * override method
+   * @see DataSchemaCompiler#toJSON
+   */
+  public toJSON(schema: DS): object {
+    const json: any = {
+      ...super.toJSON(schema),
+      $ref: schema.$ref,
+    }
+    return json
+  }
+
+  /**
+   * override method
+   * @see DataSchemaCompiler#parseJSON
+   */
+  public parseJSON(json: any): DS {
+    const schema: DS = {
+      ...super.parseJSON(json),
+      $ref: json.$ref,
+    }
+    return schema
+  }
 }

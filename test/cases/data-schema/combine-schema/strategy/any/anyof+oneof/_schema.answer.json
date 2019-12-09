@@ -7,6 +7,10 @@
       {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "name",
+          "address"
+        ],
         "allowAdditionalProperties": true,
         "silentIgnore": false,
         "properties": {
@@ -18,15 +22,15 @@
             "type": "string",
             "required": true
           }
-        },
-        "requiredProperties": [
-          "name",
-          "address"
-        ]
+        }
       },
       {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "grade",
+          "age"
+        ],
         "allowAdditionalProperties": true,
         "silentIgnore": false,
         "properties": {
@@ -41,17 +45,17 @@
             "required": true,
             "minimum": 1
           }
-        },
-        "requiredProperties": [
-          "grade",
-          "age"
-        ]
+        }
       }
     ],
     "oneOf": [
       {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "name",
+          "gender"
+        ],
         "allowAdditionalProperties": true,
         "silentIgnore": true,
         "properties": {
@@ -67,15 +71,15 @@
               "female"
             ]
           }
-        },
-        "requiredProperties": [
-          "name",
-          "gender"
-        ]
+        }
       },
       {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "nickname",
+          "sex"
+        ],
         "allowAdditionalProperties": true,
         "silentIgnore": true,
         "properties": {
@@ -91,11 +95,7 @@
               "female"
             ]
           }
-        },
-        "requiredProperties": [
-          "nickname",
-          "sex"
-        ]
+        }
       }
     ]
   },

@@ -124,6 +124,22 @@ export class OptionMaster {
   }
 
   /**
+   * 转换成可被 JSON.stringify 的 JSON 对象
+   * @param schema
+   */
+  public toJSON(schema: DSchema): object {
+    return this.schemaCompilerMaster.topSchemaToJSON(schema)
+  }
+
+  /**
+   * 将 JSON 转成 DataSchema
+   * @param json
+   */
+  public parseJSON(json: object): DSchema {
+    return this.schemaCompilerMaster.parseTopSchemaJSON(json)
+  }
+
+  /**
    * Register the preset DataSchema, its compiler, and validator into the current OptionMaster instance
    *
    * 将预置的 DataSchema 及其编译器、校验器注册进当前 OptionMaster 实例中

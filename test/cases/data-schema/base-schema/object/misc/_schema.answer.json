@@ -2,19 +2,31 @@
   "value": {
     "type": "object",
     "required": false,
+    "requiredProperties": [],
     "allowAdditionalProperties": false,
+    "dependencies": {
+      "generate": [
+        "globalOptions"
+      ],
+      "serve": [
+        "globalOptions"
+      ]
+    },
     "silentIgnore": false,
     "properties": {
       "globalOptions": {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "logLevel"
+        ],
         "allowAdditionalProperties": false,
         "silentIgnore": false,
         "properties": {
           "encoding": {
             "type": "string",
-            "required": false,
-            "default": "utf-8"
+            "default": "utf-8",
+            "required": false
           },
           "logLevel": {
             "type": "string",
@@ -32,74 +44,79 @@
             "type": "string",
             "required": false
           }
-        },
-        "requiredProperties": [
-          "logLevel"
-        ]
+        }
       },
       "generate": {
         "type": "object",
         "required": false,
+        "requiredProperties": [],
         "allowAdditionalProperties": false,
         "silentIgnore": false,
         "properties": {
           "clean": {
             "type": "boolean",
-            "required": false,
-            "default": false
+            "default": false,
+            "required": false
           },
           "ignoreMissingModels": {
             "type": "boolean",
-            "required": false,
-            "default": false
+            "default": false,
+            "required": false
           },
           "tsconfigPath": {
             "type": "string",
-            "required": false,
-            "default": "tsconfig.json"
+            "default": "tsconfig.json",
+            "required": false
           },
           "apiItemConfigPath": {
             "type": "string",
-            "required": false,
-            "default": "api.yml"
+            "default": "api.yml",
+            "required": false
           },
           "schemaArgs": {
             "type": "object",
             "required": false,
+            "requiredProperties": [],
             "allowAdditionalProperties": true,
             "silentIgnore": false,
             "properties": {
               "ref": {
                 "type": "boolean",
-                "required": false,
-                "default": false
+                "default": false,
+                "required": false
               },
               "required": {
                 "type": "boolean",
-                "required": false,
-                "default": false
+                "default": false,
+                "required": false
               }
             },
             "propertyNames": {
               "type": "string",
               "required": false,
               "pattern": "^attr-"
-            },
-            "requiredProperties": []
+            }
           }
-        },
-        "requiredProperties": []
+        }
       },
       "serve": {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "port"
+        ],
         "allowAdditionalProperties": false,
+        "dependencies": {
+          "dataFileRootPath": [
+            "apiItemConfigPath"
+          ]
+        },
         "silentIgnore": false,
         "properties": {
           "host": {
             "type": "string",
-            "required": false,
             "default": "127.0.0.1",
+            "required": false,
             "pattern": "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
           },
           "port": {
@@ -110,13 +127,13 @@
           },
           "prefixUrl": {
             "type": "string",
-            "required": false,
-            "default": "/"
+            "default": "/",
+            "required": false
           },
           "useDataFileFirst": {
             "type": "boolean",
-            "required": false,
-            "default": false
+            "default": false,
+            "required": false
           },
           "dataFileRootPath": {
             "type": "string",
@@ -128,8 +145,8 @@
           },
           "alwaysFakeOptionals": {
             "type": "boolean",
-            "required": false,
-            "default": false
+            "default": false,
+            "required": false
           },
           "optionalsProbability": {
             "type": "number",
@@ -137,26 +154,9 @@
             "minimum": 0,
             "maximum": 1
           }
-        },
-        "dependencies": {
-          "dataFileRootPath": [
-            "apiItemConfigPath"
-          ]
-        },
-        "requiredProperties": [
-          "port"
-        ]
+        }
       }
-    },
-    "dependencies": {
-      "generate": [
-        "globalOptions"
-      ],
-      "serve": [
-        "globalOptions"
-      ]
-    },
-    "requiredProperties": []
+    }
   },
   "errors": [],
   "warnings": []

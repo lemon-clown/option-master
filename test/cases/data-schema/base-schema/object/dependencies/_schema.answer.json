@@ -2,7 +2,20 @@
   "value": {
     "type": "object",
     "required": false,
+    "requiredProperties": [
+      "name"
+    ],
     "allowAdditionalProperties": false,
+    "dependencies": {
+      "more": [
+        "name",
+        "email"
+      ],
+      "password": [
+        "name",
+        "email"
+      ]
+    },
     "silentIgnore": false,
     "properties": {
       "name": {
@@ -23,7 +36,13 @@
       "more": {
         "type": "object",
         "required": false,
+        "requiredProperties": [],
         "allowAdditionalProperties": false,
+        "dependencies": {
+          "gender": [
+            "nick"
+          ]
+        },
         "silentIgnore": false,
         "properties": {
           "nick": {
@@ -40,28 +59,9 @@
               "female"
             ]
           }
-        },
-        "dependencies": {
-          "gender": [
-            "nick"
-          ]
-        },
-        "requiredProperties": []
+        }
       }
-    },
-    "dependencies": {
-      "more": [
-        "name",
-        "email"
-      ],
-      "password": [
-        "name",
-        "email"
-      ]
-    },
-    "requiredProperties": [
-      "name"
-    ]
+    }
   },
   "errors": [],
   "warnings": []

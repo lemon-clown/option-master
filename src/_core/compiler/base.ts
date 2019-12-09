@@ -59,4 +59,22 @@ export abstract class BaseDataSchemaCompiler<
   public normalizeRawSchema(rawSchema: RawDataSchema<T, V>): RawDataSchema<T, V> {
     return this.context.normalizeRawSchema(rawSchema) as RawDataSchema<T, V>
   }
+
+  /**
+   * override method
+   * @see DataSchemaCompiler#toJSON
+   */
+  public toJSON(schema: DataSchema<T, V>): object {
+    const { type, required } = schema
+    return { type, default: schema.default, required }
+  }
+
+  /**
+   * override method
+   * @see DataSchemaCompiler#parseJSON
+   */
+  public parseJSON(json: object): DataSchema<T, V> {
+    const { type, required } = json as any
+    return { type, default: (json as any).default, required }
+  }
 }

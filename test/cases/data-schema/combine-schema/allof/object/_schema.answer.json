@@ -7,6 +7,9 @@
       {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "name"
+        ],
         "allowAdditionalProperties": true,
         "silentIgnore": false,
         "properties": {
@@ -14,14 +17,14 @@
             "type": "string",
             "required": true
           }
-        },
-        "requiredProperties": [
-          "name"
-        ]
+        }
       },
       {
         "type": "object",
         "required": false,
+        "requiredProperties": [
+          "age"
+        ],
         "allowAdditionalProperties": true,
         "silentIgnore": false,
         "properties": {
@@ -30,10 +33,7 @@
             "required": true,
             "minimum": 1
           }
-        },
-        "requiredProperties": [
-          "age"
-        ]
+        }
       }
     ]
   },
