@@ -7,11 +7,11 @@
         "traces": [
           {
             "constraint": "[1]",
-            "reason": "[1]#age: required, but got (undefined).",
+            "reason": "age#required: required, but got (undefined).",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#age: required, but got (undefined).",
+                "reason": "age#required: required, but got (undefined).",
                 "property": "age",
                 "traces": [
                   {
@@ -30,11 +30,11 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#gender: required, but got (undefined).",
+            "reason": "gender#required: required, but got (undefined).",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#gender: required, but got (undefined).",
+                "reason": "gender#required: required, but got (undefined).",
                 "property": "gender",
                 "traces": [
                   {
@@ -47,11 +47,11 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#nickname: required, but got (undefined).",
+            "reason": "nickname#required: required, but got (undefined).",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#nickname: required, but got (undefined).",
+                "reason": "nickname#required: required, but got (undefined).",
                 "property": "nickname",
                 "traces": [
                   {
@@ -79,11 +79,11 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#name: required, but got (undefined).",
+            "reason": "name#required: required, but got (undefined).",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#name: required, but got (undefined).",
+                "reason": "name#required: required, but got (undefined).",
                 "property": "name",
                 "traces": [
                   {
@@ -102,11 +102,11 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#name: required, but got (undefined).",
+            "reason": "name#required: required, but got (undefined).",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#name: required, but got (undefined).",
+                "reason": "name#required: required, but got (undefined).",
                 "property": "name",
                 "traces": [
                   {
@@ -119,11 +119,11 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#nickname: required, but got (undefined).",
+            "reason": "nickname#required: required, but got (undefined).",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#nickname: required, but got (undefined).",
+                "reason": "nickname#required: required, but got (undefined).",
                 "property": "nickname",
                 "traces": [
                   {
@@ -151,11 +151,11 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#name: required, but got (undefined).",
+            "reason": "name#required: required, but got (undefined).",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#name: required, but got (undefined).",
+                "reason": "name#required: required, but got (undefined).",
                 "property": "name",
                 "traces": [
                   {
@@ -174,11 +174,11 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: [name: required, but got (undefined).,\ngender: required, but got (undefined).]",
+            "reason": "[name#required: required, but got (undefined).,\ngender#required: required, but got (undefined).]",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#name: required, but got (undefined).",
+                "reason": "name#required: required, but got (undefined).",
                 "property": "name",
                 "traces": [
                   {
@@ -189,7 +189,7 @@
               },
               {
                 "constraint": "properties",
-                "reason": "properties#gender: required, but got (undefined).",
+                "reason": "gender#required: required, but got (undefined).",
                 "property": "gender",
                 "traces": [
                   {
@@ -202,11 +202,11 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#sex: required, but got (undefined).",
+            "reason": "sex#required: required, but got (undefined).",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#sex: required, but got (undefined).",
+                "reason": "sex#required: required, but got (undefined).",
                 "property": "sex",
                 "traces": [
                   {

@@ -7,7 +7,7 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: expected a string, but got (true).",
+            "reason": "#type: expected a string, but got (true).",
             "traces": [
               {
                 "constraint": "type",
@@ -17,7 +17,7 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#: expected a string, but got (true).",
+            "reason": "#type: expected a string, but got (true).",
             "traces": [
               {
                 "constraint": "type",
@@ -38,7 +38,7 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: expected a string, but got ({}).",
+            "reason": "#type: expected a string, but got ({}).",
             "traces": [
               {
                 "constraint": "type",
@@ -48,7 +48,7 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#: expected a string, but got ({}).",
+            "reason": "#type: expected a string, but got ({}).",
             "traces": [
               {
                 "constraint": "type",
@@ -69,7 +69,7 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: expected a string, but got ([]).",
+            "reason": "#type: expected a string, but got ([]).",
             "traces": [
               {
                 "constraint": "type",
@@ -79,7 +79,7 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#: expected a string, but got ([]).",
+            "reason": "#type: expected a string, but got ([]).",
             "traces": [
               {
                 "constraint": "type",
@@ -100,7 +100,7 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: minLength expected is 5, but got value (\"23\") with length (2).",
+            "reason": "#minLength: minLength expected is 5, but got value (\"23\") with length (2).",
             "traces": [
               {
                 "constraint": "minLength",
@@ -121,7 +121,7 @@
         "traces": [
           {
             "constraint": "[1]",
-            "reason": "[1]#: expected value pattern is (\"^[\\\\d]+$\"), but got (\"ae2e312\").",
+            "reason": "#pattern: expected value pattern is (\"^[\\\\d]+$\"), but got (\"ae2e312\").",
             "traces": [
               {
                 "constraint": "pattern",

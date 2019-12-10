@@ -7,11 +7,11 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#gender: required, but got (undefined).",
+            "reason": "gender#required: required, but got (undefined).",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#gender: required, but got (undefined).",
+                "reason": "gender#required: required, but got (undefined).",
                 "property": "gender",
                 "traces": [
                   {
@@ -24,11 +24,11 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#sex: required, but got (undefined).",
+            "reason": "sex#required: required, but got (undefined).",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#sex: required, but got (undefined).",
+                "reason": "sex#required: required, but got (undefined).",
                 "property": "sex",
                 "traces": [
                   {
@@ -52,7 +52,7 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: expected an object, but got (true).",
+            "reason": "#type: expected an object, but got (true).",
             "traces": [
               {
                 "constraint": "type",
@@ -62,7 +62,7 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#: expected an object, but got (true).",
+            "reason": "#type: expected an object, but got (true).",
             "traces": [
               {
                 "constraint": "type",
@@ -83,11 +83,11 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#gender: expected value should in the [\"male\",\"female\"], but got (\"man\").",
+            "reason": "gender#enum: expected value should in the [\"male\",\"female\"], but got (\"man\").",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#gender: expected value should in the [\"male\",\"female\"], but got (\"man\").",
+                "reason": "gender#enum: expected value should in the [\"male\",\"female\"], but got (\"man\").",
                 "property": "gender",
                 "traces": [
                   {
@@ -100,11 +100,11 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#sex: required, but got (undefined).",
+            "reason": "sex#required: required, but got (undefined).",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#sex: required, but got (undefined).",
+                "reason": "sex#required: required, but got (undefined).",
                 "property": "sex",
                 "traces": [
                   {

@@ -3,12 +3,12 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#serve.host: expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"127.0.0.1.23\").",
+        "reason": "serve.host#pattern: expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"127.0.0.1.23\").",
         "property": "serve",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#host: expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"127.0.0.1.23\").",
+            "reason": "host#pattern: expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"127.0.0.1.23\").",
             "property": "host",
             "traces": [
               {
@@ -26,12 +26,12 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#serve: [serve.port: minimum value expected is 0, but got (-23).,\nserve.ssl.sec_key: required, but got (undefined).]",
+        "reason": "[serve.port#minimum: minimum value expected is 0, but got (-23).,\nserve.ssl.sec_key#required: required, but got (undefined).]",
         "property": "serve",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: minimum value expected is 0, but got (-23).",
+            "reason": "port#minimum: minimum value expected is 0, but got (-23).",
             "property": "port",
             "traces": [
               {
@@ -42,12 +42,12 @@
           },
           {
             "constraint": "properties",
-            "reason": "properties#ssl.sec_key: required, but got (undefined).",
+            "reason": "ssl.sec_key#required: required, but got (undefined).",
             "property": "ssl",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#sec_key: required, but got (undefined).",
+                "reason": "sec_key#required: required, but got (undefined).",
                 "property": "sec_key",
                 "traces": [
                   {
@@ -67,12 +67,12 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#serve: [serve.port2: minimum value expected is 0, but got (-23).,\nserve.ssl: required, but got (undefined).]",
+        "reason": "[serve.port2#minimum: minimum value expected is 0, but got (-23).,\nserve.ssl#required: required, but got (undefined).]",
         "property": "serve",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port2: minimum value expected is 0, but got (-23).",
+            "reason": "port2#minimum: minimum value expected is 0, but got (-23).",
             "property": "port2",
             "traces": [
               {
@@ -83,7 +83,7 @@
           },
           {
             "constraint": "properties",
-            "reason": "properties#ssl: required, but got (undefined).",
+            "reason": "ssl#required: required, but got (undefined).",
             "property": "ssl",
             "traces": [
               {

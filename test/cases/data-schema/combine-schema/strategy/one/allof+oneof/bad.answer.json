@@ -7,11 +7,11 @@
         "traces": [
           {
             "constraint": "[1]",
-            "reason": "[1]#age: required, but got (undefined).",
+            "reason": "age#required: required, but got (undefined).",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#age: required, but got (undefined).",
+                "reason": "age#required: required, but got (undefined).",
                 "property": "age",
                 "traces": [
                   {
@@ -30,7 +30,7 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: expected a string, but got ({\"nickname\":\"alice\"}).",
+            "reason": "#type: expected a string, but got ({\"nickname\":\"alice\"}).",
             "traces": [
               {
                 "constraint": "type",
@@ -40,7 +40,7 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#: expected a string, but got ({\"nickname\":\"alice\"}).",
+            "reason": "#type: expected a string, but got ({\"nickname\":\"alice\"}).",
             "traces": [
               {
                 "constraint": "type",
@@ -50,11 +50,11 @@
           },
           {
             "constraint": "[2]",
-            "reason": "[2]#name: required, but got (undefined).",
+            "reason": "name#required: required, but got (undefined).",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#name: required, but got (undefined).",
+                "reason": "name#required: required, but got (undefined).",
                 "property": "name",
                 "traces": [
                   {
@@ -82,11 +82,11 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#nickname: required, but got (undefined).",
+            "reason": "nickname#required: required, but got (undefined).",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#nickname: required, but got (undefined).",
+                "reason": "nickname#required: required, but got (undefined).",
                 "property": "nickname",
                 "traces": [
                   {
@@ -105,7 +105,7 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: expected a string, but got ({\"age\":22}).",
+            "reason": "#type: expected a string, but got ({\"age\":22}).",
             "traces": [
               {
                 "constraint": "type",
@@ -115,7 +115,7 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#: expected a string, but got ({\"age\":22}).",
+            "reason": "#type: expected a string, but got ({\"age\":22}).",
             "traces": [
               {
                 "constraint": "type",
@@ -125,11 +125,11 @@
           },
           {
             "constraint": "[2]",
-            "reason": "[2]#name: required, but got (undefined).",
+            "reason": "name#required: required, but got (undefined).",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#name: required, but got (undefined).",
+                "reason": "name#required: required, but got (undefined).",
                 "property": "name",
                 "traces": [
                   {
@@ -157,7 +157,7 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: expected an object, but got (true).",
+            "reason": "#type: expected an object, but got (true).",
             "traces": [
               {
                 "constraint": "type",
@@ -167,7 +167,7 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#: expected an object, but got (true).",
+            "reason": "#type: expected an object, but got (true).",
             "traces": [
               {
                 "constraint": "type",
@@ -183,7 +183,7 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: expected a string, but got (true).",
+            "reason": "#type: expected a string, but got (true).",
             "traces": [
               {
                 "constraint": "type",
@@ -193,7 +193,7 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#: expected a string, but got (true).",
+            "reason": "#type: expected a string, but got (true).",
             "traces": [
               {
                 "constraint": "type",
@@ -203,7 +203,7 @@
           },
           {
             "constraint": "[2]",
-            "reason": "[2]#: expected an object, but got (true).",
+            "reason": "#type: expected an object, but got (true).",
             "traces": [
               {
                 "constraint": "type",
@@ -228,7 +228,7 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: expected an object, but got (false).",
+            "reason": "#type: expected an object, but got (false).",
             "traces": [
               {
                 "constraint": "type",
@@ -238,7 +238,7 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#: expected an object, but got (false).",
+            "reason": "#type: expected an object, but got (false).",
             "traces": [
               {
                 "constraint": "type",
@@ -254,7 +254,7 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: expected a string, but got (false).",
+            "reason": "#type: expected a string, but got (false).",
             "traces": [
               {
                 "constraint": "type",
@@ -264,7 +264,7 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#: expected a string, but got (false).",
+            "reason": "#type: expected a string, but got (false).",
             "traces": [
               {
                 "constraint": "type",
@@ -274,7 +274,7 @@
           },
           {
             "constraint": "[2]",
-            "reason": "[2]#: expected an object, but got (false).",
+            "reason": "#type: expected an object, but got (false).",
             "traces": [
               {
                 "constraint": "type",
@@ -308,7 +308,7 @@
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#: expected an object, but got (\"x--1233\").",
+            "reason": "#type: expected an object, but got (\"x--1233\").",
             "traces": [
               {
                 "constraint": "type",
@@ -318,7 +318,7 @@
           },
           {
             "constraint": "[1]",
-            "reason": "[1]#: expected an object, but got (\"x--1233\").",
+            "reason": "#type: expected an object, but got (\"x--1233\").",
             "traces": [
               {
                 "constraint": "type",
@@ -334,7 +334,7 @@
         "traces": [
           {
             "constraint": "[2]",
-            "reason": "[2]#: expected an object, but got (\"x--1233\").",
+            "reason": "#type: expected an object, but got (\"x--1233\").",
             "traces": [
               {
                 "constraint": "type",

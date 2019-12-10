@@ -3,12 +3,12 @@
     "errors": [
       {
         "constraint": "items",
-        "reason": "items#0.port: required, but got (undefined).",
+        "reason": "0.port#required: required, but got (undefined).",
         "property": "0",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: required, but got (undefined).",
+            "reason": "port#required: required, but got (undefined).",
             "property": "port",
             "traces": [
               {
@@ -21,12 +21,12 @@
       },
       {
         "constraint": "items",
-        "reason": "items#2: [2.port: maximum value expected is 65535, but got (3000000).,\n2.host: expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"1270.0.0.1\").]",
+        "reason": "[2.port#maximum: maximum value expected is 65535, but got (3000000).,\n2.host#pattern: expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"1270.0.0.1\").]",
         "property": "2",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: maximum value expected is 65535, but got (3000000).",
+            "reason": "port#maximum: maximum value expected is 65535, but got (3000000).",
             "property": "port",
             "traces": [
               {
@@ -37,7 +37,7 @@
           },
           {
             "constraint": "properties",
-            "reason": "properties#host: expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"1270.0.0.1\").",
+            "reason": "host#pattern: expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"1270.0.0.1\").",
             "property": "host",
             "traces": [
               {
@@ -55,12 +55,12 @@
     "errors": [
       {
         "constraint": "items",
-        "reason": "items#0.port: expected an integer, but got (\"2sfe\").",
+        "reason": "0.port#type: expected an integer, but got (\"2sfe\").",
         "property": "0",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: expected an integer, but got (\"2sfe\").",
+            "reason": "port#type: expected an integer, but got (\"2sfe\").",
             "property": "port",
             "traces": [
               {
@@ -73,12 +73,12 @@
       },
       {
         "constraint": "items",
-        "reason": "items#1.port: expected an integer, but got (80.1).",
+        "reason": "1.port#type: expected an integer, but got (80.1).",
         "property": "1",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: expected an integer, but got (80.1).",
+            "reason": "port#type: expected an integer, but got (80.1).",
             "property": "port",
             "traces": [
               {
@@ -93,7 +93,7 @@
     "warnings": [
       {
         "constraint": "items",
-        "reason": "items#0.public: property(public) is not matched propertyNamesSchema, skipped.",
+        "reason": "0.public#pattern: expected value pattern is (\"^data-\"), but got (\"public\").",
         "property": "0",
         "traces": [
           {
@@ -115,12 +115,12 @@
     "errors": [
       {
         "constraint": "items",
-        "reason": "items#0.port: expected an integer, but got (\"80\").",
+        "reason": "0.port#type: expected an integer, but got (\"80\").",
         "property": "0",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: expected an integer, but got (\"80\").",
+            "reason": "port#type: expected an integer, but got (\"80\").",
             "property": "port",
             "traces": [
               {
@@ -133,12 +133,12 @@
       },
       {
         "constraint": "items",
-        "reason": "items#1: [1.host: expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"127.0\").,\n1.port: required, but got (undefined).]",
+        "reason": "[1.host#pattern: expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"127.0\").,\n1.port#required: required, but got (undefined).]",
         "property": "1",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#host: expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"127.0\").",
+            "reason": "host#pattern: expected value pattern is (\"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"), but got (\"127.0\").",
             "property": "host",
             "traces": [
               {
@@ -149,7 +149,7 @@
           },
           {
             "constraint": "properties",
-            "reason": "properties#port: required, but got (undefined).",
+            "reason": "port#required: required, but got (undefined).",
             "property": "port",
             "traces": [
               {
@@ -164,7 +164,7 @@
     "warnings": [
       {
         "constraint": "items",
-        "reason": "items#2.url: property(url) is not matched propertyNamesSchema, skipped.",
+        "reason": "2.url#pattern: expected value pattern is (\"^data-\"), but got (\"url\").",
         "property": "2",
         "traces": [
           {
@@ -186,12 +186,12 @@
     "errors": [
       {
         "constraint": "items",
-        "reason": "items#0.port: expected an integer, but got (\"0x3f3f\").",
+        "reason": "0.port#type: expected an integer, but got (\"0x3f3f\").",
         "property": "0",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: expected an integer, but got (\"0x3f3f\").",
+            "reason": "port#type: expected an integer, but got (\"0x3f3f\").",
             "property": "port",
             "traces": [
               {
@@ -206,7 +206,7 @@
     "warnings": [
       {
         "constraint": "items",
-        "reason": "items#0.public: property(public) is not matched propertyNamesSchema, skipped.",
+        "reason": "0.public#pattern: expected value pattern is (\"^data-\"), but got (\"public\").",
         "property": "0",
         "traces": [
           {
@@ -224,7 +224,7 @@
       },
       {
         "constraint": "items",
-        "reason": "items#1.url: property(url) is not matched propertyNamesSchema, skipped.",
+        "reason": "1.url#pattern: expected value pattern is (\"^data-\"), but got (\"url\").",
         "property": "1",
         "traces": [
           {

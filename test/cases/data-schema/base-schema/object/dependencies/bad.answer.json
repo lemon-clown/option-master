@@ -13,7 +13,7 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#more.gender: gender depend on [\"nick\"], but \"nick\" is absent.",
+        "reason": "more.gender#dependencies: gender depend on [\"nick\"], but \"nick\" is absent.",
         "property": "more",
         "traces": [
           {
@@ -40,7 +40,7 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#more.gender: gender depend on [\"nick\"], but \"nick\" is absent.",
+        "reason": "more.gender#dependencies: gender depend on [\"nick\"], but \"nick\" is absent.",
         "property": "more",
         "traces": [
           {
