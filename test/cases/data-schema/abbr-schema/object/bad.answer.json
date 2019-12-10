@@ -3,7 +3,7 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#host: expected a string, but got (80).",
+        "reason": "host#type: expected a string, but got (80).",
         "property": "host",
         "traces": [
           {
@@ -19,7 +19,7 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#port: expected an integer, but got (2.3).",
+        "reason": "port#type: expected an integer, but got (2.3).",
         "property": "port",
         "traces": [
           {
@@ -35,7 +35,7 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#public: expected a boolean, but got (1).",
+        "reason": "public#type: expected a boolean, but got (1).",
         "property": "public",
         "traces": [
           {
@@ -51,7 +51,7 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#public: expected a boolean, but got (\"/\").",
+        "reason": "public#type: expected a boolean, but got (\"/\").",
         "property": "public",
         "traces": [
           {

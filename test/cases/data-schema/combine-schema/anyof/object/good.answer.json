@@ -7,11 +7,11 @@
     "warnings": [
       {
         "constraint": "anyOf",
-        "reason": "anyOf#sex: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+        "reason": "sex#properties: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#sex: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+            "reason": "sex#properties: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
             "traces": [
               {
                 "constraint": "properties",
@@ -32,11 +32,11 @@
     "warnings": [
       {
         "constraint": "anyOf",
-        "reason": "anyOf#sex: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+        "reason": "sex#properties: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
         "traces": [
           {
             "constraint": "[0]",
-            "reason": "[0]#sex: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
+            "reason": "sex#properties: property(sex) is not defined (allowAdditionalProperties is false), skipped.",
             "traces": [
               {
                 "constraint": "properties",

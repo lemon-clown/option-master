@@ -125,37 +125,23 @@ export interface DataHandleResultException {
 
 export class DataHandleResult<T> extends HandleResult<T, DataHandleResultException> {
   /**
-   * 异常消息的原因的前缀
-   * @param exception
-   */
-  private getReasonPrefix(exception: DataHandleResultException): string {
-    return exception.constraint + '#'
-  }
-
-  /**
    * 从结果信息对象中提取当前层级的错误原因
    * @param exception 异常信息对象
    * @param p         当前属性对应的路径
    */
-  private getReason(exception: DataHandleResultException, p: string): string {
-    const currentPath = exception.property != null ? (p.length > 0 ? p + '.' + exception.property : exception.property) : p
-
-    // 如果当前节点已经存在非空的 reason，则不继续往下追溯
-    // 但是要去除掉 reason 前缀
-    if (exception.reason.length > 0) {
-      let reason = exception.reason
-      const prefix = this.getReasonPrefix(exception)
-      if (reason.startsWith(prefix)) {
-        reason = reason.slice(prefix.length)
-        return (p.length > 0 ? p + '.' : p) + reason
+  private calcSummary(exceptions: DataHandleResultException[], p: string=''): string[] {
+    if (exceptions.length <= 0) return []
+    const messages: string[] = []
+    for (const exception of exceptions) {
+      const c = exception.property != null ? (p.length > 0 ? p + '.' : p) + exception.property : p
+      if (exception.traces == null || exception.traces.length <= 0) {
+        const message = c + '#' + exception.constraint + ': ' + exception.reason
+        messages.push(message)
+        continue
       }
-      return currentPath + ': ' + exception.reason
+      messages.push(...this.calcSummary(exception.traces, c))
     }
-
-    if (exception.traces == null) return currentPath + ': ' + exception.reason
-    const mapper = (e: DataHandleResultException): string => this.getReason(e, currentPath)
-    if (exception.traces.length === 1) return mapper(exception.traces[0])
-    return currentPath + ': [' + exception.traces.map(mapper).join(',\n') + ']'
+    return messages
   }
 
   /**
@@ -163,10 +149,10 @@ export class DataHandleResult<T> extends HandleResult<T, DataHandleResultExcepti
    * @param exceptions
    */
   private getSummary(exceptions: DataHandleResultException[]): string {
-    if (exceptions.length <= 0) return ''
-    const mapper = (e: DataHandleResultException): string => this.getReasonPrefix(e) + this.getReason(e, '')
-    if (exceptions.length === 1) return mapper(exceptions[0])
-    return '[' + exceptions.map(mapper).join(',\n') + ']'
+    const messages: string[] = this.calcSummary(exceptions)
+    if (messages.length <= 0) return ''
+    if (messages.length === 1) return messages[0]
+    return '[' + messages.join(',\n') + ']'
   }
 
   /**

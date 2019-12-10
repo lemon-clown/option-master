@@ -3,12 +3,12 @@
     "errors": [
       {
         "constraint": "regexNameProperties",
-        "reason": "regexNameProperties#user.items: expected matched only one of the DataSchemas defined in `oneOf`, but matched 0 DataSchemas",
+        "reason": "[user.items.0.name#required: required, but got (undefined).,\nuser.items.1.method#enum: expected value should in the [\"DEL\",\"DELETE\",\"GET\",\"PATCH\",\"POST\",\"PUT\"], but got (\"post\").,\nuser.items#type: expected an object, but got ([]).]",
         "property": "user",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#items: expected matched only one of the DataSchemas defined in `oneOf`, but matched 0 DataSchemas",
+            "reason": "[items.0.name#required: required, but got (undefined).,\nitems.1.method#enum: expected value should in the [\"DEL\",\"DELETE\",\"GET\",\"PATCH\",\"POST\",\"PUT\"], but got (\"post\").,\nitems#type: expected an object, but got ([]).]",
             "property": "items",
             "traces": [
               {
@@ -17,16 +17,16 @@
                 "traces": [
                   {
                     "constraint": "[0]",
-                    "reason": "[0]#: [0.name: required, but got (undefined).,\n1.method: expected value should in the [\"DEL\",\"DELETE\",\"GET\",\"PATCH\",\"POST\",\"PUT\"], but got (\"post\").]",
+                    "reason": "[0.name#required: required, but got (undefined).,\n1.method#enum: expected value should in the [\"DEL\",\"DELETE\",\"GET\",\"PATCH\",\"POST\",\"PUT\"], but got (\"post\").]",
                     "traces": [
                       {
                         "constraint": "items",
-                        "reason": "items#0.name: required, but got (undefined).",
+                        "reason": "0.name#required: required, but got (undefined).",
                         "property": "0",
                         "traces": [
                           {
                             "constraint": "properties",
-                            "reason": "properties#name: required, but got (undefined).",
+                            "reason": "name#required: required, but got (undefined).",
                             "property": "name",
                             "traces": [
                               {
@@ -39,12 +39,12 @@
                       },
                       {
                         "constraint": "items",
-                        "reason": "items#1.method: expected value should in the [\"DEL\",\"DELETE\",\"GET\",\"PATCH\",\"POST\",\"PUT\"], but got (\"post\").",
+                        "reason": "1.method#enum: expected value should in the [\"DEL\",\"DELETE\",\"GET\",\"PATCH\",\"POST\",\"PUT\"], but got (\"post\").",
                         "property": "1",
                         "traces": [
                           {
                             "constraint": "properties",
-                            "reason": "properties#method: expected value should in the [\"DEL\",\"DELETE\",\"GET\",\"PATCH\",\"POST\",\"PUT\"], but got (\"post\").",
+                            "reason": "method#enum: expected value should in the [\"DEL\",\"DELETE\",\"GET\",\"PATCH\",\"POST\",\"PUT\"], but got (\"post\").",
                             "property": "method",
                             "traces": [
                               {
@@ -59,7 +59,7 @@
                   },
                   {
                     "constraint": "[1]",
-                    "reason": "[1]#: expected an object, but got ([]).",
+                    "reason": "#type: expected an object, but got ([]).",
                     "traces": [
                       {
                         "constraint": "type",

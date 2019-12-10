@@ -3,12 +3,12 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#globalOptions.logLevel: required, but got (undefined).",
+        "reason": "globalOptions.logLevel#required: required, but got (undefined).",
         "property": "globalOptions",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#logLevel: required, but got (undefined).",
+            "reason": "logLevel#required: required, but got (undefined).",
             "property": "logLevel",
             "traces": [
               {
@@ -21,12 +21,12 @@
       },
       {
         "constraint": "properties",
-        "reason": "properties#serve: [serve.port: expected an integer, but got (\"sss\").,\nserve.dataFileRootPath: dataFileRootPath depend on [\"apiItemConfigPath\"], but \"apiItemConfigPath\" is absent.]",
+        "reason": "[serve.port#type: expected an integer, but got (\"sss\").,\nserve.dataFileRootPath#dependencies: dataFileRootPath depend on [\"apiItemConfigPath\"], but \"apiItemConfigPath\" is absent.]",
         "property": "serve",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: expected an integer, but got (\"sss\").",
+            "reason": "port#type: expected an integer, but got (\"sss\").",
             "property": "port",
             "traces": [
               {
@@ -51,12 +51,12 @@
     "warnings": [
       {
         "constraint": "properties",
-        "reason": "properties#generate.schemaArgs.ignored-X: property(ignored-X) is not matched propertyNamesSchema, skipped.",
+        "reason": "generate.schemaArgs.ignored-X#pattern: expected value pattern is (\"^attr-\"), but got (\"ignored-X\").",
         "property": "generate",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#schemaArgs.ignored-X: property(ignored-X) is not matched propertyNamesSchema, skipped.",
+            "reason": "schemaArgs.ignored-X#pattern: expected value pattern is (\"^attr-\"), but got (\"ignored-X\").",
             "property": "schemaArgs",
             "traces": [
               {
@@ -90,12 +90,12 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#generate.clean: expected a boolean, but got (\"oh\").",
+        "reason": "generate.clean#type: expected a boolean, but got (\"oh\").",
         "property": "generate",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#clean: expected a boolean, but got (\"oh\").",
+            "reason": "clean#type: expected a boolean, but got (\"oh\").",
             "property": "clean",
             "traces": [
               {
@@ -108,12 +108,12 @@
       },
       {
         "constraint": "properties",
-        "reason": "properties#serve.port: required, but got (undefined).",
+        "reason": "serve.port#required: required, but got (undefined).",
         "property": "serve",
         "traces": [
           {
             "constraint": "properties",
-            "reason": "properties#port: required, but got (undefined).",
+            "reason": "port#required: required, but got (undefined).",
             "property": "port",
             "traces": [
               {

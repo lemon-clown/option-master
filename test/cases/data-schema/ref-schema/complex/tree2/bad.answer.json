@@ -3,37 +3,37 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#children.1.children.0.children.0.name: required, but got (undefined).",
+        "reason": "children.1.children.0.children.0.name#required: required, but got (undefined).",
         "property": "children",
         "traces": [
           {
             "constraint": "items",
-            "reason": "items#1.children.0.children.0.name: required, but got (undefined).",
+            "reason": "1.children.0.children.0.name#required: required, but got (undefined).",
             "property": "1",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#children.0.children.0.name: required, but got (undefined).",
+                "reason": "children.0.children.0.name#required: required, but got (undefined).",
                 "property": "children",
                 "traces": [
                   {
                     "constraint": "items",
-                    "reason": "items#0.children.0.name: required, but got (undefined).",
+                    "reason": "0.children.0.name#required: required, but got (undefined).",
                     "property": "0",
                     "traces": [
                       {
                         "constraint": "properties",
-                        "reason": "properties#children.0.name: required, but got (undefined).",
+                        "reason": "children.0.name#required: required, but got (undefined).",
                         "property": "children",
                         "traces": [
                           {
                             "constraint": "items",
-                            "reason": "items#0.name: required, but got (undefined).",
+                            "reason": "0.name#required: required, but got (undefined).",
                             "property": "0",
                             "traces": [
                               {
                                 "constraint": "properties",
-                                "reason": "properties#name: required, but got (undefined).",
+                                "reason": "name#required: required, but got (undefined).",
                                 "property": "name",
                                 "traces": [
                                   {
@@ -61,17 +61,17 @@
     "errors": [
       {
         "constraint": "properties",
-        "reason": "properties#children.1.name: expected value pattern is (\"^[\\\\w\\\\-]{2,20}\\\\w$\"), but got (\"alice 2\").",
+        "reason": "children.1.name#pattern: expected value pattern is (\"^[\\\\w\\\\-]{2,20}\\\\w$\"), but got (\"alice 2\").",
         "property": "children",
         "traces": [
           {
             "constraint": "items",
-            "reason": "items#1.name: expected value pattern is (\"^[\\\\w\\\\-]{2,20}\\\\w$\"), but got (\"alice 2\").",
+            "reason": "1.name#pattern: expected value pattern is (\"^[\\\\w\\\\-]{2,20}\\\\w$\"), but got (\"alice 2\").",
             "property": "1",
             "traces": [
               {
                 "constraint": "properties",
-                "reason": "properties#name: expected value pattern is (\"^[\\\\w\\\\-]{2,20}\\\\w$\"), but got (\"alice 2\").",
+                "reason": "name#pattern: expected value pattern is (\"^[\\\\w\\\\-]{2,20}\\\\w$\"), but got (\"alice 2\").",
                 "property": "name",
                 "traces": [
                   {
