@@ -1,4 +1,4 @@
-import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult } from '../_core/validator'
+import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DataValidator } from '../_core/validator'
 import { STRING_V_TYPE as V, STRING_T_TYPE as T, StringDataSchema as DS, StringFormat, StringTransformType } from '../schema/string'
 import { stringify, isString } from '../_util/type-util'
 import { toKebabCase, toCamelCase, toLittleCamelCase } from '../_util/string-util'
@@ -13,7 +13,7 @@ export type StringDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 字符串类型的校验器
  */
-export class StringDataValidator extends BaseDataValidator<T, V, DS> {
+export class StringDataValidator extends BaseDataValidator<T, V, DS> implements DataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**

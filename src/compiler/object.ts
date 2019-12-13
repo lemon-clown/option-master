@@ -1,4 +1,4 @@
-import { BaseDataSchemaCompiler, DataSchemaCompileResult } from '../_core/compiler'
+import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
 import {
   OBJECT_V_TYPE as V,
   OBJECT_T_TYPE as T,
@@ -25,7 +25,10 @@ export type ObjectDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, D
  *
  * enum 将忽略所有非对象的值
  */
-export class ObjectDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, DS> {
+export class ObjectDataSchemaCompiler
+  extends BaseDataSchemaCompiler<T, V, RDS, DS>
+  implements DataSchemaCompiler<T, V, RDS, DS> {
+
   public readonly type: T = T
 
   /**

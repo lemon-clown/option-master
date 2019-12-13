@@ -1,4 +1,4 @@
-import { BaseDataSchemaCompiler, DataSchemaCompileResult } from '../_core/compiler'
+import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
 import { BOOLEAN_V_TYPE as V, BOOLEAN_T_TYPE as T, RawBooleanDataSchema as RDS, BooleanDataSchema as DS } from '../schema/boolean'
 import { coverBoolean } from '../_util/cover-util'
 
@@ -12,7 +12,10 @@ export type BooleanDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, 
 /**
  * 布尔类型的模式的编译器
  */
-export class BooleanDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, DS> {
+export class BooleanDataSchemaCompiler
+  extends BaseDataSchemaCompiler<T, V, RDS, DS>
+  implements DataSchemaCompiler<T, V, RDS, DS> {
+
   public readonly type: T = T
 
   /**

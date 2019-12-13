@@ -1,4 +1,4 @@
-import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult } from '../_core/validator'
+import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DataValidator } from '../_core/validator'
 import { OBJECT_V_TYPE as V, OBJECT_T_TYPE as T, ObjectDataSchema as DS } from '../schema/object'
 import { stringify, isObject } from '../_util/type-util'
 
@@ -12,7 +12,7 @@ export type ObjectDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 对象类型的校验器
  */
-export class ObjectDataValidator extends BaseDataValidator<T, V, DS> {
+export class ObjectDataValidator extends BaseDataValidator<T, V, DS> implements DataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**

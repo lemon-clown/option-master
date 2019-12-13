@@ -1,4 +1,4 @@
-import { BaseDataSchemaCompiler, DataSchemaCompileResult } from '../_core/compiler'
+import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
 import {
   STRING_V_TYPE as V,
   STRING_T_TYPE as T,
@@ -24,7 +24,10 @@ export type StringDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, D
  *
  * enum 将忽略所有非字符串的值
  */
-export class StringDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, DS> {
+export class StringDataSchemaCompiler
+  extends BaseDataSchemaCompiler<T, V, RDS, DS>
+  implements DataSchemaCompiler<T, V, RDS, DS> {
+
   public readonly type: T = T
 
   /**
