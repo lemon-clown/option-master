@@ -215,9 +215,8 @@
             },
             {
               "type": "object",
-              "properties": {
+              "patternProperties": {
                 "^\\w(?:[\\w\\-])+$": {
-                  "nameType": "regex",
                   "type": "ref",
                   "$ref": "#/definitions/RawApiItemGroup"
                 }
@@ -239,9 +238,8 @@
             },
             {
               "type": "object",
-              "properties": {
+              "patternProperties": {
                 "^\\w(?:[\\w\\-])+$": {
-                  "nameType": "regex",
                   "type": "ref",
                   "$ref": "#/definitions/RawApiItem"
                 }
@@ -254,9 +252,8 @@
     }
   },
   "type": "object",
-  "properties": {
+  "patternProperties": {
     "^\\w(?:[\\w\\-])+$": {
-      "nameType": "regex",
       "type": "ref",
       "$ref": "#/definitions/RawApiItemGroup"
     }
