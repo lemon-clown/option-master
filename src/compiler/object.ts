@@ -1,3 +1,4 @@
+import { DSchema, RDSchema } from '../_core/schema'
 import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
 import {
   OBJECT_V_TYPE as V,
@@ -5,13 +6,10 @@ import {
   RawObjectDataSchema as RDS,
   ObjectDataSchema as DS,
   ObjectDataSchema,
-  RawObjectDataPropertyNameType,
-  RawObjectDataPropertyItem
 } from '../schema/object'
 import { StringDataSchema, STRING_T_TYPE } from '../schema/string'
 import { stringify, isObject } from '../_util/type-util'
 import { coverBoolean, coverArray, coverString } from '../_util/cover-util'
-import { DSchema } from '../_core/schema'
 
 
 /**
@@ -69,13 +67,11 @@ export class ObjectDataSchemaCompiler
 
     // 编译 properties
     let properties: ObjectDataSchema['properties'] = undefined
-    let patternProperties: ObjectDataSchema['patternProperties'] = undefined
     if (rawSchema.properties != null) {
       if (ensureObject('properties')) {
         properties = {}
-        patternProperties = []
         for (const propertyName of Object.getOwnPropertyNames(rawSchema.properties)) {
-          let { nameType, ...propertyValueSchema } = rawSchema.properties[propertyName]
+          let { ...propertyValueSchema } = rawSchema.properties[propertyName]
 
           // 如果属性在 requiredProperties 中定义了，则其 required 默认值为 true
           const requiredIndex = requiredProperties.indexOf(propertyName)
@@ -91,17 +87,44 @@ export class ObjectDataSchemaCompiler
           // 如果存在错误，则忽略此属性
           if (propertyCompileResult.hasError) continue
 
-
-          // check nameType
-          const nameTypeResult = coverString(RawObjectDataPropertyNameType.STRING, nameType)
-          if (nameTypeResult.hasError) {
-            result.addError({
-              constraint: 'properties',
-              reason: `nameType is invalid of (${ propertyName }): ${ nameTypeResult.errorSummary }`
-            })
-          } else {
-            nameType = nameTypeResult.value as RawObjectDataPropertyNameType
+          // 检查该属性是否 required
+          // 若是，则将其添加进 requiredProperties 中
+          // 否则，则将其从 requiredProperties 中移除
+          const propertySchema = propertyCompileResult.value!
+          if (requiredIndex < 0 && propertySchema.required) {
+            requiredProperties.push(propertyName)
+          } else if (requiredIndex >= 0 && !propertySchema.required) {
+            requiredProperties.splice(requiredIndex, 1)
           }
+          properties[propertyName] = propertyCompileResult.value!
+        }
+
+        // 如果没有有效值，则置为 undefined
+        if (Object.getOwnPropertyNames(properties).length <= 0) properties = undefined
+      }
+    }
+
+    // 编译 patternProperties
+    let patternProperties: ObjectDataSchema['patternProperties'] = undefined
+    if (rawSchema.patternProperties != null) {
+      if (ensureObject('patternProperties')) {
+        patternProperties = []
+        for (const propertyName of Object.getOwnPropertyNames(rawSchema.patternProperties)) {
+          let { ...propertyValueSchema } = rawSchema.patternProperties[propertyName]
+
+          // 如果属性在 requiredProperties 中定义了，则其 required 默认值为 true
+          const requiredIndex = requiredProperties.indexOf(propertyName)
+          if (requiredIndex >= 0) {
+            propertyValueSchema = {
+              required: true,
+              ...propertyValueSchema
+            }
+          }
+          const propertyCompileResult = this.context.compileDataSchema(propertyValueSchema)
+          result.addHandleResult('patternProperties', propertyCompileResult)
+
+          // 如果存在错误，则忽略此属性
+          if (propertyCompileResult.hasError) continue
 
           // 检查该属性是否 required
           // 若是，则将其添加进 requiredProperties 中
@@ -113,41 +136,26 @@ export class ObjectDataSchemaCompiler
             requiredProperties.splice(requiredIndex, 1)
           }
 
-          switch (nameType) {
-            // 字符串类型的属性名
-            case RawObjectDataPropertyNameType.STRING:
-              properties[propertyName] = propertyCompileResult.value!
-              break
-            // 正则表达式类型的属性名
-            case RawObjectDataPropertyNameType.REGEX:
-              let pattern: RegExp | undefined
-              try {
-                pattern = new RegExp(propertyName)
-              } catch (e) {
-                result.addError({
-                  constraint: 'properties',
-                  reason: `propertyName (${ propertyName }) is not a valid regex. ${ e.stack || e.message }`
-                })
-              } finally {
-                if (pattern != null) {
-                  patternProperties.push({
-                    pattern,
-                    schema: propertyCompileResult.value!
-                  })
-                }
-              }
-              break
-            default:
-              result.addError({
-                constraint: 'properties',
-                reason: `nameType of (${ propertyName }) is unknown: nameType(${ nameType })`
+          let pattern: RegExp | undefined
+          try {
+            pattern = new RegExp(propertyName)
+          } catch (e) {
+            result.addError({
+              constraint: 'patternProperties',
+              reason: `propertyName (${ propertyName }) is not a valid regex. ${ e.stack || e.message }`
+            })
+          } finally {
+            if (pattern != null) {
+              patternProperties.push({
+                pattern,
+                schema: propertyCompileResult.value!
               })
+            }
           }
         }
 
         // 如果没有有效值，则置为 undefined
-        if (Object.getOwnPropertyNames(properties).length <= 0) properties = undefined
-        if (patternProperties.length <= 0) patternProperties = undefined
+        if (Object.getOwnPropertyNames(patternProperties).length <= 0) patternProperties = undefined
       }
     }
 
@@ -218,10 +226,9 @@ export class ObjectDataSchemaCompiler
     rawSchema = super.normalizeRawSchema(rawSchema)
     if (rawSchema.properties != null && isObject(rawSchema.properties)) {
       for (const propertyName of Object.getOwnPropertyNames(rawSchema.properties)) {
-        const rawPropertySchema: RawObjectDataPropertyItem = rawSchema.properties[propertyName]
+        const rawPropertySchema: RDSchema = rawSchema.properties[propertyName]
         rawSchema.properties[propertyName] = {
           ...super.normalizeRawSchema(rawPropertySchema as RDS),
-          nameType: rawPropertySchema.nameType,
         }
       }
     }

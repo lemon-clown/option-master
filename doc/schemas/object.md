@@ -5,7 +5,8 @@
       type: 'object'
       required?: boolean
       default?: boolean
-      properties?: { [key: string]: RawDataSchema & { nameType: 'string' | 'regex' } }
+      properties?: { [key: string]: RawDataSchema }
+      patternProperties?: { [pattern: string]: RawDataSchema }
       allowAdditionalProperties?: boolean
       propertyNames?: RawStringDataSchema
       dependencies?: { [key: string]: string[] }
@@ -22,7 +23,7 @@
       requiredProperties: string[]
       default?: boolean
       properties?: { [key: string]: DataSchema }
-      patternProperties?: { pattern: RegExp, schema: DataSchema }[]
+      patternProperties?: { [pattern: string]: DataSchema }
       allowAdditionalProperties: boolean
       propertyNames?: StringDataSchema
       dependencies?: { [key: string]: string[] }
@@ -38,7 +39,7 @@
      `required`                   | whether the data must be set      | `false` | No
      `default`                    | default value of this DataSchema  | -       | No
      `properties`                 | see [properties][]                | -       | No
-     `patternProperties`        | see [patternProperties][]       | -       | No
+     `patternProperties`          | see [patternProperties][]         | -       | No
      `allowAdditionalProperties`  | see [allowAdditionalProperties][] | `false` | No
      `propertyNames`              | see [propertyNames][]             | -       | No
      `dependencies`               | see [dependencies][]              | -       | No
@@ -147,8 +148,9 @@
         type: 'integer',
         minimum: 1,
       },
+    },
+    patternProperties: {
       '^data(?:\\-[\\w]+)+$': {
-        nameType: 'regex',
         type: 'string',
       },
     },
