@@ -52,11 +52,12 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> implements 
       // 检查是否满足 patternProperties 中的定义
       if (schema.patternProperties != null) {
         let matched = false
-        for (const regexNameProperty of schema.patternProperties) {
-          if (!regexNameProperty.pattern.test(propertyName)) continue
+        for (const patternNamePropertyName of Object.getOwnPropertyNames(schema.patternProperties)) {
+          const patternProperty = schema.patternProperties[patternNamePropertyName]
+          if (!patternProperty.pattern.test(propertyName)) continue
 
           // 使用指定的 DataSchema 进行检查
-          const xSchema = regexNameProperty.schema
+          const xSchema = patternProperty.schema
           const xValidateResult = this.context.validateDataSchema(xSchema, propertyValue)
           result.addHandleResult('patternProperties', xValidateResult, propertyName)
 

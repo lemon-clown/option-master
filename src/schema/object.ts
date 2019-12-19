@@ -11,37 +11,6 @@ export type OBJECT_V_TYPE = object
 
 
 /**
- * 属性的名称类型
- */
-export enum RawObjectDataPropertyNameType {
-  /**
-   * 字符串
-   */
-  STRING = 'string',
-  /**
-   * 正则表达式
-   */
-  REGEX = 'regex',
-}
-
-
-// values of RawObjectDataPropertyNameType
-export const rawObjectDataPropertyNameTypes: string[] = Object.values(RawObjectDataPropertyNameType)
-
-
-/**
- * 原生的对象类型数据模式的 property 类型
- */
-export interface RawObjectDataPropertyItem extends RDSchema {
-  /**
-   * 属性的名称类型
-   * @default RawObjectDataPropertyNameType.STRING
-   */
-  nameType?: RawObjectDataPropertyNameType
-}
-
-
-/**
  * 原生的对象类型数据模式，用户在配置文件中指定的对象类型
  * 参见 https://json-schema.org/understanding-json-schema/reference/object.html
  */
@@ -54,7 +23,12 @@ export interface RawObjectDataSchema extends RawDataSchema<OBJECT_T_TYPE, OBJECT
    * 对象属性的类型，定义对象可能出现的若干属性的属性名及其类型
    * 参见 https://json-schema.org/understanding-json-schema/reference/object.html#properties
    */
-  properties?: { [key: string]: RawObjectDataPropertyItem }
+  properties?: { [key: string]: RDSchema }
+  /**
+   * 对象属性的类型，和 properties 类似，但是名称为正则表达式
+   * @member pattern  属性名称的正则表达式
+   */
+  patternProperties?: { [pattern: string]: RDSchema }
   /**
    * 是否允许其它额外的属性，若为 false 且指定了 properties，
    * 则对象中只有 properties 中出现的属性会被采用，其它的属性将被忽略，
