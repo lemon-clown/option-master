@@ -1,4 +1,4 @@
-import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult } from '../_core/validator'
+import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DataValidator } from '../_core/validator'
 import { BOOLEAN_V_TYPE as V, BOOLEAN_T_TYPE as T, BooleanDataSchema as DS } from '../schema/boolean'
 import { isBoolean } from '../_util/type-util'
 import { coverBoolean } from '../_util/cover-util'
@@ -13,7 +13,7 @@ export type BooleanDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 布尔值类型的校验器
  */
-export class BooleanDataValidator extends BaseDataValidator<T, V, DS> {
+export class BooleanDataValidator extends BaseDataValidator<T, V, DS> implements DataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**

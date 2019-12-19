@@ -1,4 +1,4 @@
-import { BaseDataSchemaCompiler, DataSchemaCompileResult } from '../_core/compiler'
+import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
 import { ARRAY_V_TYPE as V, ARRAY_T_TYPE as T, RawArrayDataSchema as RDS, ArrayDataSchema as DS } from '../schema/array'
 import { coverBoolean } from '../_util/cover-util'
 import { isArray, stringify } from '../_util/type-util'
@@ -15,7 +15,10 @@ export type ArrayDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS
  *
  * enum 将忽略所有非数组的值
  */
-export class ArrayDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, DS> {
+export class ArrayDataSchemaCompiler
+  extends BaseDataSchemaCompiler<T, V, RDS, DS>
+  implements DataSchemaCompiler<T, V, RDS, DS> {
+
   public readonly type: T = T
 
   /**

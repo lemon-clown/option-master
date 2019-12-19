@@ -1,4 +1,4 @@
-import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult } from '../_core/validator'
+import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DataValidator } from '../_core/validator'
 import { OBJECT_V_TYPE as V, OBJECT_T_TYPE as T, ObjectDataSchema as DS } from '../schema/object'
 import { stringify, isObject } from '../_util/type-util'
 
@@ -12,7 +12,7 @@ export type ObjectDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 对象类型的校验器
  */
-export class ObjectDataValidator extends BaseDataValidator<T, V, DS> {
+export class ObjectDataValidator extends BaseDataValidator<T, V, DS> implements DataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**
@@ -49,16 +49,16 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> {
         }
       }
 
-      // 检查是否满足 regexNameProperties 中的定义
-      if (schema.regexNameProperties != null) {
+      // 检查是否满足 patternProperties 中的定义
+      if (schema.patternProperties != null) {
         let matched = false
-        for (const regexNameProperty of schema.regexNameProperties) {
+        for (const regexNameProperty of schema.patternProperties) {
           if (!regexNameProperty.pattern.test(propertyName)) continue
 
           // 使用指定的 DataSchema 进行检查
           const xSchema = regexNameProperty.schema
           const xValidateResult = this.context.validateDataSchema(xSchema, propertyValue)
-          result.addHandleResult('regexNameProperties', xValidateResult, propertyName)
+          result.addHandleResult('patternProperties', xValidateResult, propertyName)
 
           // 若符合，则更新值
           if (!xValidateResult.hasError) {
@@ -69,7 +69,7 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> {
           break
         }
 
-        // 若在 regexNameProperties 中存在匹配的数据模式，则无需做额外属性的校验
+        // 若在 patternProperties 中存在匹配的数据模式，则无需做额外属性的校验
         if (matched) continue
       }
 

@@ -1,4 +1,4 @@
-import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DVResult } from '../_core/validator'
+import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DVResult, DataValidator } from '../_core/validator'
 import { ARRAY_V_TYPE as V, ARRAY_T_TYPE as T, ArrayDataSchema as DS } from '../schema/array'
 import { isArray, stringify } from '../_util/type-util'
 
@@ -12,7 +12,7 @@ export type ArrayDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 数组类型的校验器
  */
-export class ArrayDataValidator extends BaseDataValidator<T, V, DS> {
+export class ArrayDataValidator extends BaseDataValidator<T, V, DS> implements DataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**

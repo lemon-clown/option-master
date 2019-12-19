@@ -1,4 +1,4 @@
-import { BaseDataSchemaCompiler, DataSchemaCompileResult } from '../_core/compiler'
+import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
 import { NULL_V_TYPE as V, NULL_T_TYPE as T, RawNullDataSchema as RDS, NullDataSchema as DS } from '../schema/null'
 import { coverNull } from '../_util/cover-util'
 
@@ -12,7 +12,10 @@ export type NullDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS>
 /**
  * 布尔类型的模式的编译器
  */
-export class NullDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, DS> {
+export class NullDataSchemaCompiler
+  extends BaseDataSchemaCompiler<T, V, RDS, DS>
+  implements DataSchemaCompiler<T, V, RDS, DS> {
+
   public readonly type: T = T
 
   /**

@@ -5,7 +5,7 @@
     "requiredProperties": [],
     "allowAdditionalProperties": false,
     "silentIgnore": false,
-    "regexNameProperties": [
+    "patternProperties": [
       {
         "pattern": "^\\w(?:[\\w\\-])+$",
         "schema": {
@@ -227,7 +227,7 @@
                 "requiredProperties": [],
                 "allowAdditionalProperties": false,
                 "silentIgnore": false,
-                "regexNameProperties": [
+                "patternProperties": [
                   {
                     "pattern": "^\\w(?:[\\w\\-])+$",
                     "schema": {
@@ -261,7 +261,7 @@
                 "requiredProperties": [],
                 "allowAdditionalProperties": false,
                 "silentIgnore": false,
-                "regexNameProperties": [
+                "patternProperties": [
                   {
                     "pattern": "^\\w(?:[\\w\\-])+$",
                     "schema": {

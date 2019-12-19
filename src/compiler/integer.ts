@@ -1,4 +1,4 @@
-import { BaseDataSchemaCompiler, DataSchemaCompileResult } from '../_core/compiler'
+import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
 import { INTEGER_V_TYPE as V, INTEGER_T_TYPE as T, RawIntegerDataSchema as RDS, IntegerDataSchema as DS } from '../schema/integer'
 import { coverInteger, coverArray } from '../_util/cover-util'
 
@@ -16,7 +16,10 @@ export type IntegerDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, 
  * maximum 和 exclusiveMinimum 若非整数，则做下取整
  * enum 将忽略所有非整数（或整数字符串）的值
  */
-export class IntegerDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, DS> {
+export class IntegerDataSchemaCompiler
+  extends BaseDataSchemaCompiler<T, V, RDS, DS>
+  implements DataSchemaCompiler<T, V, RDS, DS> {
+
   public readonly type: T = T
 
   /**

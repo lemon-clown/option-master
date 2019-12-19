@@ -1,5 +1,5 @@
 import { RDSchema, DSchema } from '../_core/schema'
-import { BaseDataSchemaCompiler, DataSchemaCompileResult } from '../_core/compiler'
+import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
 import { COMBINE_V_TYPE as V, COMBINE_T_TYPE as T, RawCombineDataSchema as RDS, CombineDataSchema as DS, CombineStrategy, combineStrategies } from '../schema/combine'
 import { coverString } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'
@@ -16,7 +16,10 @@ export type CombineDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, 
  *
  * enum 将忽略所有非组合（或组合字符串）的值
  */
-export class CombineDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, DS> {
+export class CombineDataSchemaCompiler
+  extends BaseDataSchemaCompiler<T, V, RDS, DS>
+  implements DataSchemaCompiler<T, V, RDS, DS> {
+
   public readonly type: T = T
 
   /**

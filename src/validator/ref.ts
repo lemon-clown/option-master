@@ -1,4 +1,4 @@
-import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult } from '../_core/validator'
+import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DataValidator } from '../_core/validator'
 import { REF_V_TYPE as V, REF_T_TYPE as T, RefDataSchema as DS } from '../schema/ref'
 
 
@@ -11,7 +11,7 @@ export type RefDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 布尔值类型的校验器
  */
-export class RefDataValidator extends BaseDataValidator<T, V, DS> {
+export class RefDataValidator extends BaseDataValidator<T, V, DS> implements DataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**

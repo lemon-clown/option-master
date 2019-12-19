@@ -122,7 +122,7 @@ export interface ObjectDataSchema extends DataSchema<OBJECT_T_TYPE, OBJECT_V_TYP
    * 对象属性的类型，和 properties 类似，但是名称为正则表达式
    * @member pattern  属性名称的正则表达式
    */
-  regexNameProperties?: { pattern: RegExp, schema: DSchema }[]
+  patternProperties?: { pattern: RegExp, schema: DSchema }[]
   /**
    * 对象属性名的数据类型
    */

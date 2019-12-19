@@ -2,7 +2,7 @@
   {
     "errors": [
       {
-        "constraint": "regexNameProperties",
+        "constraint": "patternProperties",
         "reason": "[user.items.0.name#required: required, but got (undefined).,\nuser.items.1.method#enum: expected value should in the [\"DEL\",\"DELETE\",\"GET\",\"PATCH\",\"POST\",\"PUT\"], but got (\"post\").,\nuser.items#type: expected an object, but got ([]).]",
         "property": "user",
         "traces": [

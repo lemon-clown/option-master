@@ -30,7 +30,7 @@
         "property": "serve",
         "traces": [
           {
-            "constraint": "regexNameProperties",
+            "constraint": "patternProperties",
             "reason": "data-age#type: expected a string, but got (29).",
             "property": "data-age",
             "traces": [

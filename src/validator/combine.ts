@@ -1,4 +1,4 @@
-import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DVResult } from '../_core/validator'
+import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DVResult, DataValidator } from '../_core/validator'
 import { COMBINE_V_TYPE as V, COMBINE_T_TYPE as T, CombineDataSchema as DS, CombineStrategy } from '../schema/combine'
 import { stringify } from '../_util/type-util'
 
@@ -14,7 +14,7 @@ export type CombineDataValidationResult = DataValidationResult<T, V, DS>
  *
  * anyOf 取第一个校验通过的 Schema 的 value
  */
-export class CombineDataValidator extends BaseDataValidator<T, V, DS> {
+export class CombineDataValidator extends BaseDataValidator<T, V, DS> implements DataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**

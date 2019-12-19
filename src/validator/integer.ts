@@ -1,4 +1,4 @@
-import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult } from '../_core/validator'
+import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DataValidator } from '../_core/validator'
 import { INTEGER_V_TYPE as V, INTEGER_T_TYPE as T, IntegerDataSchema as DS } from '../schema/integer'
 import { stringify, isInteger } from '../_util/type-util'
 
@@ -12,7 +12,7 @@ export type IntegerDataValidationResult = DataValidationResult<T, V, DS>
 /**
  * 整数类型的校验器
  */
-export class IntegerDataValidator extends BaseDataValidator<T, V, DS> {
+export class IntegerDataValidator extends BaseDataValidator<T, V, DS> implements DataValidator<T, V, DS> {
   public readonly type: T = T
 
   /**

@@ -22,7 +22,7 @@
       requiredProperties: string[]
       default?: boolean
       properties?: { [key: string]: DataSchema }
-      regexNameProperties?: { pattern: RegExp, schema: DataSchema }[]
+      patternProperties?: { pattern: RegExp, schema: DataSchema }[]
       allowAdditionalProperties: boolean
       propertyNames?: StringDataSchema
       dependencies?: { [key: string]: string[] }
@@ -38,7 +38,7 @@
      `required`                   | whether the data must be set      | `false` | No
      `default`                    | default value of this DataSchema  | -       | No
      `properties`                 | see [properties][]                | -       | No
-     `regexNameProperties`        | see [regexNameProperties][]       | -       | No
+     `patternProperties`        | see [patternProperties][]       | -       | No
      `allowAdditionalProperties`  | see [allowAdditionalProperties][] | `false` | No
      `propertyNames`              | see [propertyNames][]             | -       | No
      `dependencies`               | see [dependencies][]              | -       | No
@@ -54,7 +54,7 @@
 
   * reference the [json-schema: object#properties](https://json-schema.org/understanding-json-schema/reference/object.html#properties)
 
-  ## regexNameProperties
+  ## patternProperties
   * 对象属性的类型，和 properties 类似，但是名称为正则表达式
 
   ---
@@ -195,7 +195,7 @@
 [test-cases]: ../../test/cases/data-schema/base-schema/object
 
 [properties]: #properties
-[regexNameProperties]: #regexNameProperties
+[patternProperties]: #patternProperties
 [allowAdditionalProperties]: #allowAdditionalProperties
 [propertyNames]: #propertyNames
 [dependencies]: #dependencies

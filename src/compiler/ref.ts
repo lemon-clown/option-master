@@ -1,4 +1,4 @@
-import { BaseDataSchemaCompiler, DataSchemaCompileResult } from '../_core/compiler'
+import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
 import { REF_V_TYPE as V, REF_T_TYPE as T, RawRefDataSchema as RDS, RefDataSchema as DS } from '../schema/ref'
 import { coverString } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'
@@ -13,7 +13,10 @@ export type RefDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, DS>
 /**
  * 引用类型的模式的编译器
  */
-export class RefDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, DS> {
+export class RefDataSchemaCompiler
+  extends BaseDataSchemaCompiler<T, V, RDS, DS>
+  implements DataSchemaCompiler<T, V, RDS, DS> {
+
   public readonly type: T = T
 
   /**

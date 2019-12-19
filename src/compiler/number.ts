@@ -1,4 +1,4 @@
-import { BaseDataSchemaCompiler, DataSchemaCompileResult } from '../_core/compiler'
+import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
 import { NUMBER_V_TYPE as V, NUMBER_T_TYPE as T, RawNumberDataSchema as RDS, NumberDataSchema as DS } from '../schema/number'
 import { coverNumber, coverArray } from '../_util/cover-util'
 
@@ -14,7 +14,10 @@ export type NumberDataSchemaCompileResult = DataSchemaCompileResult<T, V, RDS, D
  *
  * enum 将忽略所有非数字（或数字字符串）的值
  */
-export class NumberDataSchemaCompiler extends BaseDataSchemaCompiler<T, V, RDS, DS> {
+export class NumberDataSchemaCompiler
+  extends BaseDataSchemaCompiler<T, V, RDS, DS>
+  implements DataSchemaCompiler<T, V, RDS, DS> {
+
   public readonly type: T = T
 
   /**
