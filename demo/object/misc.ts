@@ -19,8 +19,9 @@ const rawSchema = {
       type: 'integer',
       minimum: 1,
     },
+  },
+  patternProperties: {
     '^data(?:\\-[\\w]+)+$': {
-      nameType: 'regex',
       type: 'string',
     },
   },
