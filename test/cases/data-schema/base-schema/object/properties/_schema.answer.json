@@ -54,7 +54,7 @@
             }
           }
         },
-        "regexNameProperties": [
+        "patternProperties": [
           {
             "pattern": "^data(?:\\-[\\w]+)+$",
             "schema": {

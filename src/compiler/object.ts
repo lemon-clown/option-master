@@ -69,11 +69,11 @@ export class ObjectDataSchemaCompiler
 
     // 编译 properties
     let properties: ObjectDataSchema['properties'] = undefined
-    let regexNameProperties: ObjectDataSchema['regexNameProperties'] = undefined
+    let patternProperties: ObjectDataSchema['patternProperties'] = undefined
     if (rawSchema.properties != null) {
       if (ensureObject('properties')) {
         properties = {}
-        regexNameProperties = []
+        patternProperties = []
         for (const propertyName of Object.getOwnPropertyNames(rawSchema.properties)) {
           let { nameType, ...propertyValueSchema } = rawSchema.properties[propertyName]
 
@@ -130,7 +130,7 @@ export class ObjectDataSchemaCompiler
                 })
               } finally {
                 if (pattern != null) {
-                  regexNameProperties.push({
+                  patternProperties.push({
                     pattern,
                     schema: propertyCompileResult.value!
                   })
@@ -147,7 +147,7 @@ export class ObjectDataSchemaCompiler
 
         // 如果没有有效值，则置为 undefined
         if (Object.getOwnPropertyNames(properties).length <= 0) properties = undefined
-        if (regexNameProperties.length <= 0) regexNameProperties = undefined
+        if (patternProperties.length <= 0) patternProperties = undefined
       }
     }
 
@@ -201,7 +201,7 @@ export class ObjectDataSchemaCompiler
       allowAdditionalProperties: Boolean(allowAdditionalPropertiesResult.value),
       silentIgnore: Boolean(silentIgnoreResult.value),
       properties,
-      regexNameProperties,
+      patternProperties,
       propertyNames,
       dependencies,
       requiredProperties,
@@ -249,13 +249,13 @@ export class ObjectDataSchemaCompiler
       }
     }
 
-    // json-ify regexNameProperties
-    if (schema.regexNameProperties != null && schema.regexNameProperties.length > 0) {
-      json.regexNameProperties = []
-      for (const property of schema.regexNameProperties) {
+    // json-ify patternProperties
+    if (schema.patternProperties != null && schema.patternProperties.length > 0) {
+      json.patternProperties = []
+      for (const property of schema.patternProperties) {
         const { pattern, schema: propertySchema } = property
         const propertySchemaJson = this.context.parseJSON(propertySchema)
-        json.regexNameProperties.push({ pattern: pattern.source, schema: propertySchemaJson })
+        json.patternProperties.push({ pattern: pattern.source, schema: propertySchemaJson })
       }
     }
 
@@ -288,13 +288,13 @@ export class ObjectDataSchemaCompiler
       }
     }
 
-    // parse regexNameProperties
-    if (json.regexNameProperties != null && json.regexNameProperties.length > 0) {
-      schema.regexNameProperties = []
-      for (const property of json.regexNameProperties) {
+    // parse patternProperties
+    if (json.patternProperties != null && json.patternProperties.length > 0) {
+      schema.patternProperties = []
+      for (const property of json.patternProperties) {
         const { pattern, schema: propertySchemaJson } = property
         const propertySchema: DSchema = this.context.parseJSON(propertySchemaJson)
-        schema.regexNameProperties.push({ pattern: new RegExp(pattern), schema: propertySchema })
+        schema.patternProperties.push({ pattern: new RegExp(pattern), schema: propertySchema })
       }
     }
 
