@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
 import * as chai from 'chai'
 import chaiExclude from 'chai-exclude'
-import { TestCaseMaster, TestCaseMasterProps, TestCase } from './case-util'
+import { FileTestCaseMaster, FileTestCaseMasterProps, FileTestCase } from '@lemon-clown/mocha-test-master'
 import { OptionMaster, RDSchema, DSCResult, DataHandleResultException } from '../../src'
 
 
@@ -22,20 +22,20 @@ export interface DataSchemaCompilerOutputData {
 /**
  * DataSchema 编译器测试用例辅助类
  */
-export class DataSchemaCompilerTestCaseMaster extends TestCaseMaster<DSCResult, DataSchemaCompilerOutputData> {
+export class DataSchemaCompilerTestCaseMaster extends FileTestCaseMaster<DSCResult, DataSchemaCompilerOutputData> {
   protected readonly optionMaster: OptionMaster
 
   public constructor(optionMaster: OptionMaster, {
     caseRootDirectory,
     inputFileNameSuffix = 'schema.json',
     answerFileNameSuffix = 'schema.answer.json',
-  }: PickPartial<TestCaseMasterProps, 'inputFileNameSuffix' | 'answerFileNameSuffix'>) {
+  }: PickPartial<FileTestCaseMasterProps, 'inputFileNameSuffix' | 'answerFileNameSuffix'>) {
     super({ caseRootDirectory, inputFileNameSuffix, answerFileNameSuffix })
     this.optionMaster = optionMaster
   }
 
   // override
-  public async consume(kase: TestCase): Promise<DSCResult | never> {
+  public async consume(kase: FileTestCase): Promise<DSCResult | never> {
     const { inputFilePath: schemaFilePath } = kase
     const rawDataSchema: RDSchema = await fs.readJSON(schemaFilePath)
     const CompileResult: DSCResult = this.optionMaster.compile(rawDataSchema)
