@@ -64,23 +64,40 @@
     - `email`:
 
 ## transform
-  * 指定字符串的转换函数，现在支持的有：
-    - `lowercase`: 转成小写
-    - `uppercase`: 转成大写
+  * Specify The conversion function for string, now supported:
     - `trim`: 去除头尾空白字符
-    - `camel-case`: 驼峰式（首字母大写）
-    - `little-camel-case`: 驼峰式（首字母小写）
+    - `lower-case`: 转成小写
+      ```typescript
+      toLowerCase('TEST STRING') // => "test string"
+      ```
+    - `upper-case`: 转成大写
+      ```typescript
+      toUpperCase('test string') // => "TEST STRING"
+      ```
+    - `capital-case`: 转成首字母大写
+      ```typescript
+      toCapitalCase('test string') // => "Test String"
+      ```
+    - `camel-case`: 驼峰式（首字母小写）
+      ```typescript
+      toCameCase('test string') // => "testString"
+      ```
+    - `pascal-case`: 驼峰式（首字母大写）
+      ```typescript
+      toPascalCase('test string') // => "TestString"
+      ```
     - `kebab-case`: 小写串式
-
-  ----
-
-  * Specify The conversion function for string, now supported are:
-      - `lowercase`: convert to lowercase
-      - `uppercase`: converted to uppercase
-      - `trim`: remove the head and tail blank words
-      - `camel-case`: camel style (initial capitalization)
-      - `little-camel-case`: camel style (first letter lowercase)
-      - `kebab-case`: lowercase kebab string
+      ```typescript
+      toKebabCase('test string') // => "test-string"
+      ```
+    - `snake-case`: 小写下划线连接式
+      ```typescript
+      toSnakeCase('test string') // => "test_string"
+      ```
+    - `constant-case`: 大写下划线连接式
+      ```typescript
+      toConstantCase('test string') // => "TEST_STRING"
+      ```
 
 # demo
 
