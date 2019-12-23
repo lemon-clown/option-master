@@ -28,9 +28,6 @@
     "test:file": "mocha -r ts-node/register",
     "prepublishOnly": "yarn lint:fix && yarn test && yarn build"
   },
-  "dependencies": {
-    "camelcase": "^5.3.1"
-  },
   "peerDependencies": {
     "change-case": "^4.1.1"
   },
