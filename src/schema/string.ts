@@ -36,29 +36,41 @@ export const StringFormatSet = new Set<string>(Object.values(StringFormat))
  */
 export enum StringTransformType {
   /**
-   * 全部转成小写
-   */
-  LOWERCASE = 'lowercase',
-  /**
-   * 全部转成大写
-   */
-  UPPERCASE = 'uppercase',
-  /**
    * 清除头尾的空白字符
    */
   TRIM = 'trim',
   /**
-   * 驼峰式
+   * 全部转成小写
+   */
+  LOWER_CASE = 'lower-case',
+  /**
+   * 全部转成大写
+   */
+  UPPER_CASE = 'upper-case',
+  /**
+   * 首字母大写
+   */
+  CAPITAL_CASE = 'capital-case',
+  /**
+   * 小写驼峰式(首字母小写)
    */
   CAMEL_CASE = 'camel-case',
   /**
-   * 小写驼峰式
+   * 大写驼峰式（首字母大写）
    */
-  LITTLE_CAMEL_CASE = 'little-camel-case',
+  PASCAL_CASE = 'pascal-case',
   /**
    * 小写串式
    */
-  KEBAB_CASE = 'kebab-case'
+  KEBAB_CASE = 'kebab-case',
+  /**
+   * 小写下划线连接式
+   */
+  SNAKE_CASE = 'snake-case',
+  /**
+   * 大写下划线连接式
+   */
+  CONSTANT_CASE = 'constant-case',
 }
 
 

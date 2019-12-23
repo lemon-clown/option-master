@@ -1,7 +1,11 @@
 import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DataValidator } from '../_core/validator'
 import { STRING_V_TYPE as V, STRING_T_TYPE as T, StringDataSchema as DS, StringFormat, StringTransformType } from '../schema/string'
 import { stringify, isString } from '../_util/type-util'
-import { toKebabCase, toCamelCase, toLittleCamelCase } from '../_util/string-util'
+import {
+  toLowerCase, toUpperCase, toCapitalCase,
+  toCamelCase, toPascalCase, toKebabCase,
+  toSnakeCase, toConstantCase,
+} from '../_util/string-util'
 
 
 /**
@@ -33,23 +37,32 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
     if (schema.transform != null && schema.transform.length > 0) {
       for (const transformType of schema.transform) {
         switch (transformType as StringTransformType) {
-          case StringTransformType.LOWERCASE:
-            value = value.toLowerCase()
-            break
-          case StringTransformType.UPPERCASE:
-            value = value.toUpperCase()
-            break
           case StringTransformType.TRIM:
             value = value.trim()
+            break
+          case StringTransformType.LOWER_CASE:
+            value = toLowerCase(value)
+            break
+          case StringTransformType.UPPER_CASE:
+            value = toUpperCase(value)
+            break
+          case StringTransformType.CAPITAL_CASE:
+            value = toCapitalCase(value)
             break
           case StringTransformType.CAMEL_CASE:
             value = toCamelCase(value)
             break
-          case StringTransformType.LITTLE_CAMEL_CASE:
-            value = toLittleCamelCase(value)
+          case StringTransformType.PASCAL_CASE:
+            value = toPascalCase(value)
             break
           case StringTransformType.KEBAB_CASE:
             value = toKebabCase(value)
+            break
+          case StringTransformType.SNAKE_CASE:
+            value = toSnakeCase(value)
+            break
+          case StringTransformType.CONSTANT_CASE:
+            value = toConstantCase(value)
             break
         }
       }
