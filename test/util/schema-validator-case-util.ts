@@ -2,7 +2,7 @@ import fs from 'fs-extra'
 import path from 'path'
 import * as chai from 'chai'
 import chaiExclude from 'chai-exclude'
-import { TestCaseMasterProps, TestCaseMaster, TestCase } from './case-util'
+import { FileTestCaseMasterProps, FileTestCaseMaster, FileTestCase } from '@lemon-clown/mocha-test-master'
 import { DVResult, optionMaster, DSCResult, DSchema, DataHandleResultException } from '../../src'
 
 
@@ -53,17 +53,17 @@ export interface DataValidatorOutputData {
 /**
  * DataSchema 编译器测试用例辅助类
  */
-export class DataValidatorTestCaseMaster extends TestCaseMaster<DVResult[], DataValidatorOutputData[]> {
+export class DataValidatorTestCaseMaster extends FileTestCaseMaster<DVResult[], DataValidatorOutputData[]> {
   public constructor({
     caseRootDirectory,
     inputFileNameSuffix = 'input.json',
     answerFileNameSuffix = 'answer.json',
-  }: PickPartial<TestCaseMasterProps, 'inputFileNameSuffix' | 'answerFileNameSuffix'>) {
+  }: PickPartial<FileTestCaseMasterProps, 'inputFileNameSuffix' | 'answerFileNameSuffix'>) {
     super({ caseRootDirectory, inputFileNameSuffix, answerFileNameSuffix })
   }
 
   // override
-  public async consume(kase: TestCase): Promise<DVResult[] | never> {
+  public async consume(kase: FileTestCase): Promise<DVResult[] | never> {
     const { dir, inputFilePath } = kase
     const inputData: DataValidatorTestCaseInputData = await fs.readJSON(inputFilePath)
     const { schema: schemaFilePath, cases } = inputData

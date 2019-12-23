@@ -3,7 +3,7 @@
     "type": "string",
     "required": true,
     "transform": [
-      "lowercase"
+      "lower-case"
     ]
   },
   "errors": [],

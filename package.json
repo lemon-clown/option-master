@@ -28,10 +28,11 @@
     "test:file": "mocha -r ts-node/register",
     "prepublishOnly": "yarn lint:fix && yarn test && yarn build"
   },
-  "dependencies": {
-    "camelcase": "^5.3.1"
+  "peerDependencies": {
+    "change-case": "^4.1.1"
   },
   "devDependencies": {
+    "@lemon-clown/mocha-test-master": "^0.0.1",
     "@types/chai": "^4.2.4",
     "@types/fs-extra": "^8.0.1",
     "@types/mocha": "^5.2.7",
@@ -40,6 +41,7 @@
     "@typescript-eslint/parser": "^1.13.0",
     "chai": "^4.2.0",
     "chai-exclude": "^2.0.2",
+    "change-case": "^4.1.1",
     "cross-env": "^6.0.3",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^6.0.0",
