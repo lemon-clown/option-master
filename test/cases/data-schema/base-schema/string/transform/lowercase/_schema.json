@@ -1,5 +1,5 @@
 {
   "type": "string",
-  "transform": "lowercase",
+  "transform": "lower-case",
   "required": true
 }
