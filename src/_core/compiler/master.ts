@@ -102,7 +102,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
    * override method
    * @see DataSchemaCompilerContext#compileDefinitionDataSchema
    */
-  public compileDefinitionDataSchema(name: string, rawSchema: RDDSchema): DDSCResult {
+  public * compileDefinitionDataSchema(name: string, rawSchema: RDDSchema): Generator<string, DDSCResult> {
     rawSchema = this.normalizeRawSchema(rawSchema)
     const result: DDSCResult = new DataSchemaCompileResult(rawSchema)
 
@@ -113,6 +113,10 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
     const $path = this.definitionSchemaMaster.nameToPath(name)
     this.definitionSchemaMaster.addRawSchema($path, rawSchema, $idResult.value)
 
+    // Wait for Schemas to be registered to prevent problems with order dependencies
+    yield $path
+
+    // continue to parse DataSchema
     const dataSchemaResult = this.compileDataSchema(rawSchema)
     result.merge(dataSchemaResult)
     if (!dataSchemaResult.hasError) {
@@ -140,9 +144,21 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
       let definitions: TDSchema['definitions'] = undefined
       if (rawSchema.definitions != null) {
         definitions = {}
+
+        // pre-register the mapping of $refId and DataSchemas
+        const compileDefinitionTasks = {}
         for (const name of Object.getOwnPropertyNames(rawSchema.definitions)) {
           const rawDefinitionSchema = rawSchema.definitions[name]
-          const definitionSchemaResult = this.compileDefinitionDataSchema(name, rawDefinitionSchema)
+          const compileDefinitionTask = this.compileDefinitionDataSchema(name, rawDefinitionSchema)
+          compileDefinitionTask.next()
+          compileDefinitionTasks[name] = compileDefinitionTask
+        }
+
+        // continue to parse DataSchema
+        for (const name of Object.getOwnPropertyNames(rawSchema.definitions)) {
+          const compileDefinitionTask = compileDefinitionTasks[name]
+          const { value: definitionSchemaResult } = compileDefinitionTask.next()
+
           // merge errors and warnings
           if (definitionSchemaResult.hasError || definitionSchemaResult.hasWarning) {
             result.addHandleResult('definitions', definitionSchemaResult, name)
