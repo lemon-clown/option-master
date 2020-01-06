@@ -97,22 +97,64 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
       let valid = false
       for (const format of schema.format) {
         const test = () => {
-          if (format === StringFormat.IPV4) {
-            // see https://stackoverflow.com/a/25969006
-            const regex = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
-            return regex.test(value!)
+          // check if the full-date is legal
+          const testFullDate = (year: number, month: number, day: number): boolean => {
+            if (day <= 28) return true
+            if (month !== 2) {
+              if (day <= 30) return true
+              return [1, 3, 5, 7, 8, 10, 12].indexOf(month) >= 0
+            }
+            if (day > 29) return false
+
+            // check leap year for date YYYY-02-29
+            return (year & 3) ? false : (year % 100 == 0 ? year % 400 === 0 : true)
           }
-          if (format === StringFormat.IPV6) {
-            // see https://stackoverflow.com/a/17871737
-            const regex = /^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))$/
-            return regex.test(value!)
+
+          switch (format) {
+            case StringFormat.IPV4: {
+              // see https://stackoverflow.com/a/25969006
+              const regex = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
+              return regex.test(value!)
+            }
+            case StringFormat.IPV6: {
+              // see https://stackoverflow.com/a/17871737
+              const regex = /^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))$/
+              return regex.test(value!)
+            }
+            case StringFormat.EMAIL: {
+              // see https://stackoverflow.com/a/1373724
+              const regex = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
+              return regex.test(value!)
+            }
+            case StringFormat.DATE: {
+              // YYYY-MM-DD
+              const regex = /^(\d{4})\-(0[1-9]|1[0-2])\-([0-2][1-9]|3[0-1])$/
+              const match = regex.exec(value!)
+              if (match == null) return false
+              const year = Number.parseInt(match[1])
+              const month = Number.parseInt(match[2])
+              const day = Number.parseInt(match[3])
+              return testFullDate(year, month, day)
+            }
+            case StringFormat.TIME: {
+              // HH:mm:ssZ / HH:mm:ss.SZ / HH:mm:ss+HH:mm / HH:mm:ss.S+HH:mm
+              // 需要考虑 闰秒 的存在
+              const regex = /^([0-1][0-9]|[2][0-3]):([0-5][0-9]):([0-5][0-9]|60)(?:\.\d+)?(?:[zZ]|[+\-]([0-1][0-9]|[2][0-3]):([0-5][0-9])|)$/
+              const match = regex.exec(value!)
+              if (match == null) return false
+              return true
+            }
+            case StringFormat.DATE_TIME: {
+              const regex = /^(\d{4})\-(0[1-9]|1[0-2])\-([0-2][1-9]|3[0-1])[tT]([0-1][0-9]|[2][0-3]):([0-5][0-9]):([0-5][0-9]|60)(?:\.\d+)?(?:[zZ]|[+\-]([0-1][0-9]|[2][0-3]):([0-5][0-9])|)$/
+              const match = regex.exec(value!)
+              if (match == null) return false
+              const year = Number.parseInt(match[1])
+              const month = Number.parseInt(match[2])
+              const day = Number.parseInt(match[3])
+              return testFullDate(year, month, day)
+            }
+            default: return false
           }
-          if (format === StringFormat.EMAIL) {
-            // see https://stackoverflow.com/a/1373724
-            const regex = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
-            return regex.test(value!)
-          }
-          return false
         }
 
         // 校验通过

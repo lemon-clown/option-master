@@ -25,6 +25,24 @@ export enum StringFormat {
    * 邮件格式
    */
   EMAIL = 'email',
+  /**
+   * 日期格式 (full-date)，形如 `YYYY-MM-DD`
+   * @see https://tools.ietf.org/html/rfc3339#section-5.6
+   * @see https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.7.3.1
+   */
+  DATE = 'date',
+  /**
+   * 时间格式 (full-time)，形如 `HH:mm:ssZ / HH:mm:ss.SZ / HH:mm:ss+HH:mm / HH:mm:ss.S+HH:mm`
+   * @see https://tools.ietf.org/html/rfc3339#section-5.6
+   * @see https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.7.3.1
+   */
+  TIME = 'time',
+  /**
+   * 时间日期格式，形如 `<date>T<time>`
+   * @see https://tools.ietf.org/html/rfc3339#section-5.6
+   * @see https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.7.3.1
+   */
+  DATE_TIME = 'date-time',
 }
 
 // StringFormat 集合
