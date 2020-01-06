@@ -26,7 +26,7 @@ export class BooleanDataSchemaCompiler
     const result: BooleanDataSchemaCompileResult = super.compile(rawSchema)
     rawSchema = result._rawSchema
 
-    const defaultValueResult = result.compileProperty<V>('default', coverBoolean)
+    const defaultValueResult = result.compileConstraint<V>('default', coverBoolean)
 
     // BooleanDataSchema
     const schema: DS = {

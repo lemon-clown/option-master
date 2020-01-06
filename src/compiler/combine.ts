@@ -33,7 +33,7 @@ export class CombineDataSchemaCompiler
     const defaultValue = rawSchema.default
 
     // strategy 的默认值为 all
-    const strategyResult = result.compileProperty<CombineStrategy>('strategy', coverString as any, CombineStrategy.ALL)
+    const strategyResult = result.compileConstraint<CombineStrategy>('strategy', coverString as any, CombineStrategy.ALL)
     if (strategyResult.value == null || !combineStrategies.includes(strategyResult.value)) {
       result.addError({
         constraint: 'strategy',

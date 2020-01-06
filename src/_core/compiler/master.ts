@@ -107,7 +107,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
     const result: DDSCResult = new DataSchemaCompileResult(rawSchema)
 
     // compile $id
-    const $idResult = result.compileProperty('$id', coverString, undefined)
+    const $idResult = result.compileConstraint('$id', coverString, undefined)
 
     // pre-add schema (parsing)
     const $path = this.definitionSchemaMaster.nameToPath(name)

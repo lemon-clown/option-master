@@ -30,7 +30,7 @@ export class ArrayDataSchemaCompiler
     rawSchema = result._rawSchema
 
     // unique 的默认值为 false
-    const uniqueResult = result.compileProperty<boolean>('unique', coverBoolean, false)
+    const uniqueResult = result.compileConstraint<boolean>('unique', coverBoolean, false)
 
     // 检查 defaultValue 是否为数组
     let defaultValue = undefined

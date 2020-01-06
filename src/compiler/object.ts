@@ -38,14 +38,14 @@ export class ObjectDataSchemaCompiler
     rawSchema = result._rawSchema
 
     // silentIgnore 的默认值为 false
-    const silentIgnoreResult = result.compileProperty<boolean>('silentIgnore', coverBoolean, false)
+    const silentIgnoreResult = result.compileConstraint<boolean>('silentIgnore', coverBoolean, false)
 
     // 校验属性是否为对象
-    const ensureObject = (propertyName: keyof RDS) => {
-      if (!isObject(rawSchema[propertyName])) {
+    const ensureObject = (constraintName: keyof RDS) => {
+      if (!isObject(rawSchema[constraintName])) {
         result.addError({
-          constraint: propertyName as string,
-          reason: `${ propertyName } must be an object, but got (${ stringify(rawSchema[propertyName]) }).`
+          constraint: constraintName as string,
+          reason: `${ constraintName } must be an object, but got (${ stringify(rawSchema[constraintName]) }).`
         })
         return false
       }
@@ -61,7 +61,7 @@ export class ObjectDataSchemaCompiler
     }
 
     // requiredProperties
-    const { value: requiredProperties = [] } = result.compileProperty<string[]>(
+    const { value: requiredProperties = [] } = result.compileConstraint<string[]>(
       'requiredProperties', coverArray<string>(coverString)
     )
 
@@ -199,7 +199,7 @@ export class ObjectDataSchemaCompiler
 
     // allowAdditionalProperties 的默认值为 false
     // 若 propertyNames 不为 null，则默认值为 true
-    const allowAdditionalPropertiesResult = result.compileProperty<boolean>(
+    const allowAdditionalPropertiesResult = result.compileConstraint<boolean>(
       'allowAdditionalProperties', coverBoolean, propertyNames != null)
 
     // ObjectDataSchema

@@ -30,12 +30,12 @@ export class IntegerDataSchemaCompiler
     const result: IntegerDataSchemaCompileResult = super.compile(rawSchema)
     rawSchema = result._rawSchema
 
-    const defaultValueResult = result.compileProperty<V>('default', coverInteger)
-    const minimumResult = result.compileProperty<number>('minimum', coverInteger)
-    const maximumResult = result.compileProperty<number>('maximum', coverInteger)
-    const exclusiveMinimumResult = result.compileProperty<number>('exclusiveMinimum', coverInteger)
-    const exclusiveMaximumResult = result.compileProperty<number>('exclusiveMaximum', coverInteger)
-    const enumValueResult = result.compileProperty<number[]>('enum', coverArray<number>(coverInteger))
+    const defaultValueResult = result.compileConstraint<V>('default', coverInteger)
+    const minimumResult = result.compileConstraint<number>('minimum', coverInteger)
+    const maximumResult = result.compileConstraint<number>('maximum', coverInteger)
+    const exclusiveMinimumResult = result.compileConstraint<number>('exclusiveMinimum', coverInteger)
+    const exclusiveMaximumResult = result.compileConstraint<number>('exclusiveMaximum', coverInteger)
+    const enumValueResult = result.compileConstraint<number[]>('enum', coverArray<number>(coverInteger))
 
     const ceil = (x?: number) => x == null ? x : Math.ceil(x)
     const floor = (x?: number) => x == null ? x : Math.floor(x)

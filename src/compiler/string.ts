@@ -38,11 +38,11 @@ export class StringDataSchemaCompiler
     const result: StringDataSchemaCompileResult = super.compile(rawSchema)
     rawSchema = result._rawSchema
 
-    const defaultValueResult = result.compileProperty<V>('default', coverString)
-    const patternResult = result.compileProperty<RegExp>('pattern', coverRegex)
-    const enumValueResult = result.compileProperty<string[]>('enum', coverArray<string>(coverString))
-    const minLengthResult = result.compileProperty<number>('minLength', coverInteger)
-    const maxLengthResult = result.compileProperty<number>('maxLength', coverInteger)
+    const defaultValueResult = result.compileConstraint<V>('default', coverString)
+    const patternResult = result.compileConstraint<RegExp>('pattern', coverRegex)
+    const enumValueResult = result.compileConstraint<string[]>('enum', coverArray<string>(coverString))
+    const minLengthResult = result.compileConstraint<number>('minLength', coverInteger)
+    const maxLengthResult = result.compileConstraint<number>('maxLength', coverInteger)
 
     let format: StringFormat[] | undefined
     if (rawSchema.format != null) {
