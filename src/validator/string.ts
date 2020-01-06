@@ -164,9 +164,12 @@ export class StringDataValidator extends BaseDataValidator<T, V, DS> implements 
         }
       }
       if (!valid) {
+        const reason = schema.format.length > 1
+          ? `not matched any format in ${ stringify(schema.format) }`
+          : `not matched \`${ schema.format }\``
         return result.addError({
           constraint: 'format',
-          reason: `not matched any of ${ stringify(schema.format) }`,
+          reason,
         })
       }
     }
