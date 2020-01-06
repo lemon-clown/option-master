@@ -3,7 +3,7 @@
     "errors": [
       {
         "constraint": "format",
-        "reason": "not matched any of [\"ipv4\"]"
+        "reason": "not matched `ipv4`"
       }
     ],
     "warnings": []
@@ -12,7 +12,7 @@
     "errors": [
       {
         "constraint": "format",
-        "reason": "not matched any of [\"ipv4\"]"
+        "reason": "not matched `ipv4`"
       }
     ],
     "warnings": []
@@ -21,7 +21,7 @@
     "errors": [
       {
         "constraint": "format",
-        "reason": "not matched any of [\"ipv4\"]"
+        "reason": "not matched `ipv4`"
       }
     ],
     "warnings": []
@@ -30,7 +30,7 @@
     "errors": [
       {
         "constraint": "format",
-        "reason": "not matched any of [\"ipv4\"]"
+        "reason": "not matched `ipv4`"
       }
     ],
     "warnings": []
@@ -39,7 +39,7 @@
     "errors": [
       {
         "constraint": "format",
-        "reason": "not matched any of [\"ipv4\"]"
+        "reason": "not matched `ipv4`"
       }
     ],
     "warnings": []
