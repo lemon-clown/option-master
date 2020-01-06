@@ -289,7 +289,6 @@ export class ObjectDataSchemaCompiler
 
     // parse properties
     if (json.properties != null && Object.getOwnPropertyNames(json.properties).length > 0) {
-      // eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
       schema.properties = {} as Exclude<DS['properties'], undefined>
       for (const propertyName of Object.getOwnPropertyNames(json.properties)) {
         schema.properties[propertyName] = this.context.parseJSON(json.properties[propertyName])

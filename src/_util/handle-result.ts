@@ -129,7 +129,7 @@ export class DataHandleResult<T> extends HandleResult<T, DataHandleResultExcepti
    * @param exception 异常信息对象
    * @param p         当前属性对应的路径
    */
-  private calcSummary(exceptions: DataHandleResultException[], p: string=''): string[] {
+  private calcSummary(exceptions: DataHandleResultException[], p=''): string[] {
     if (exceptions.length <= 0) return []
     const messages: string[] = []
     for (const exception of exceptions) {
@@ -220,7 +220,7 @@ export class DataHandleResult<T> extends HandleResult<T, DataHandleResultExcepti
     constraint: string,
     result: DataHandleResult<V>,
     property?: string,
-    errReason: string = ''
+    errReason = ''
   ): this {
     if (result.hasError) {
       const e = {
