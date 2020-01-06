@@ -82,7 +82,7 @@ export class ObjectDataSchemaCompiler
             }
           }
           const propertyCompileResult = this.context.compileDataSchema(propertyValueSchema)
-          result.addHandleResult('properties', propertyCompileResult)
+          result.addHandleResult('properties', propertyCompileResult, propertyName)
 
           // 如果存在错误，则忽略此属性
           if (propertyCompileResult.hasError) continue
@@ -121,7 +121,7 @@ export class ObjectDataSchemaCompiler
             }
           }
           const propertyCompileResult = this.context.compileDataSchema(propertyValueSchema)
-          result.addHandleResult('patternProperties', propertyCompileResult)
+          result.addHandleResult('patternProperties', propertyCompileResult, propertyName)
 
           // 如果存在错误，则忽略此属性
           if (propertyCompileResult.hasError) continue
@@ -142,7 +142,8 @@ export class ObjectDataSchemaCompiler
           } catch (e) {
             result.addError({
               constraint: 'patternProperties',
-              reason: `propertyName (${ propertyName }) is not a valid regex. ${ e.stack || e.message }`
+              property: propertyName,
+              reason: `propertyName (${ propertyName }) is not a valid regex. ${ e.stack || e.message }`,
             })
           } finally {
             if (pattern != null) {

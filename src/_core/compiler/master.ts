@@ -145,7 +145,7 @@ export class DataSchemaCompilerMaster implements DataSchemaCompilerContext {
           const definitionSchemaResult = this.compileDefinitionDataSchema(name, rawDefinitionSchema)
           // merge errors and warnings
           if (definitionSchemaResult.hasError || definitionSchemaResult.hasWarning) {
-            result.addHandleResult('definitions', definitionSchemaResult)
+            result.addHandleResult('definitions', definitionSchemaResult, name)
           }
           // collect definition
           if (!definitionSchemaResult.hasError) {
