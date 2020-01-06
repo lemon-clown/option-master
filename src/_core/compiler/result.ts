@@ -32,21 +32,21 @@ export class DataSchemaCompileResult<
   /**
    * 编译给定 RawDataSchema 中的属性的值
    *
-   * @param propertyName  RawDataSchema 中定义的属性名
-   * @param coverFunc     覆盖属性的函数
-   * @param defaultValue  属性的默认值
+   * @param constraintName  RawDataSchema 中定义的约束项的名称
+   * @param coverFunc       覆盖属性的函数
+   * @param defaultValue    属性的默认值
    * @template P  typeof rawSchema[propertyName]
    */
-  public compileProperty<P>(
-    propertyName: keyof RDS,
+  public compileConstraint<P>(
+    constraintName: keyof RDS,
     coverFunc: CoverOperationFunc<P>,
     defaultValue?: P
   ): CoverOperationResult<P> {
     const rawSchema = this._rawSchema
-    const result = coverFunc(defaultValue, rawSchema[propertyName])
+    const result = coverFunc(defaultValue, rawSchema[constraintName])
     if (result.hasError) {
       this.addError({
-        constraint: propertyName as string,
+        constraint: constraintName as string,
         reason: result.errorSummary,
       })
     }

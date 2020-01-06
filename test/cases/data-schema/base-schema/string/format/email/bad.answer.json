@@ -3,7 +3,7 @@
     "errors": [
       {
         "constraint": "format",
-        "reason": "not matched any of [\"email\"]"
+        "reason": "not matched `email`"
       }
     ],
     "warnings": []
@@ -12,7 +12,7 @@
     "errors": [
       {
         "constraint": "format",
-        "reason": "not matched any of [\"email\"]"
+        "reason": "not matched `email`"
       }
     ],
     "warnings": []
@@ -21,7 +21,7 @@
     "errors": [
       {
         "constraint": "format",
-        "reason": "not matched any of [\"email\"]"
+        "reason": "not matched `email`"
       }
     ],
     "warnings": []
@@ -30,7 +30,7 @@
     "errors": [
       {
         "constraint": "format",
-        "reason": "not matched any of [\"email\"]"
+        "reason": "not matched `email`"
       }
     ],
     "warnings": []

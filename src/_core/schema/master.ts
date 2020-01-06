@@ -148,7 +148,7 @@ export class TopDataSchemaMaster {
 
     // get by path (`#/definitions/<name>`)
     if (idOrPath.startsWith(this.pathPrefix)) {
-      let $name = idOrPath.substr(this.pathPrefix.length)
+      const $name = idOrPath.substr(this.pathPrefix.length)
       definitionSchema = this.schema.definitions[$name]
       if (definitionSchema != null) return definitionSchema
     }

@@ -1,6 +1,5 @@
 import { stringify } from '../../_util/type-util'
 import { DataHandleResult, DataHandleResultException } from '../../_util/handle-result'
-import { CoverOperationFunc } from '../../_util/cover-util'
 import { DataSchema } from '../schema'
 
 

@@ -40,7 +40,7 @@ export abstract class BaseDataSchemaCompiler<
     const result: DataSchemaCompileResult<T, V, RDS, DS> = (new DataSchemaCompileResult(rawSchema)) as any
 
     // required 的默认值为 false
-    const requiredResult = result.compileProperty<boolean>('required', coverBoolean, false)
+    const requiredResult = result.compileConstraint<boolean>('required', coverBoolean, false)
 
     // eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
     const schema: DS = {

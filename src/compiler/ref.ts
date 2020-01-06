@@ -28,7 +28,7 @@ export class RefDataSchemaCompiler
     rawSchema = result._rawSchema
 
     // check $ref
-    const $refResult = result.compileProperty<string>('$ref', coverString)
+    const $refResult = result.compileConstraint<string>('$ref', coverString)
     if ($refResult.hasError || $refResult.value == null) {
       return result.addError({
         constraint: '$ref',

@@ -29,12 +29,12 @@ export class NumberDataSchemaCompiler
     rawSchema = result._rawSchema
 
     // required 的默认值为 false
-    const defaultValueResult = result.compileProperty<V>('default', coverNumber)
-    const minimumResult = result.compileProperty<number>('minimum', coverNumber)
-    const maximumResult = result.compileProperty<number>('maximum', coverNumber)
-    const exclusiveMinimumResult = result.compileProperty<number>('exclusiveMinimum', coverNumber)
-    const exclusiveMaximumResult = result.compileProperty<number>('exclusiveMaximum', coverNumber)
-    const enumValueResult = result.compileProperty<number[]>('enum', coverArray<number>(coverNumber))
+    const defaultValueResult = result.compileConstraint<V>('default', coverNumber)
+    const minimumResult = result.compileConstraint<number>('minimum', coverNumber)
+    const maximumResult = result.compileConstraint<number>('maximum', coverNumber)
+    const exclusiveMinimumResult = result.compileConstraint<number>('exclusiveMinimum', coverNumber)
+    const exclusiveMaximumResult = result.compileConstraint<number>('exclusiveMaximum', coverNumber)
+    const enumValueResult = result.compileConstraint<number[]>('enum', coverArray<number>(coverNumber))
 
     // NumberDataSchema
     const schema: DS = {

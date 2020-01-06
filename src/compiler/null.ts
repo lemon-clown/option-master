@@ -26,7 +26,7 @@ export class NullDataSchemaCompiler
     const result: NullDataSchemaCompileResult = super.compile(rawSchema)
     rawSchema = result._rawSchema
 
-    const defaultValueResult = result.compileProperty<V>('default', coverNull)
+    const defaultValueResult = result.compileConstraint<V>('default', coverNull)
 
     // NullDataSchema
     const schema: DS = {

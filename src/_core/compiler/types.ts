@@ -48,7 +48,7 @@ export interface DataSchemaCompilerContext {
    * @param name
    * @param rawSchema
    */
-  compileDefinitionDataSchema(name: string, rawSchema: RDDSchema): DDSCResult
+  compileDefinitionDataSchema(name: string, rawSchema: RDDSchema): Generator<string, DDSCResult>
   /**
    * Parsing the top-level DataSchema, which has unique attributes
    * such as definitions and is a unit of the configuration file

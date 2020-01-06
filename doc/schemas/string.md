@@ -5,6 +5,9 @@
       IPV4 = 'ipv4',
       IPV6 = 'ipv6',
       EMAIL = 'email',
+      DATE = 'date',
+      TIME = 'time',
+      DATE_TIME = 'date-time',
     }
 
     interface RawStringDataSchema {
@@ -51,9 +54,12 @@
 
   * 指定字符串的类型，和 `StringDataSchema` 中其它属性按照“与”逻辑进行校验
   * 若指定了多个，则表示“或”的关系，如 { format: ['ipv4', 'ipv6' ] } 表示既可为 ipv4 地址也可为 ipv6 地址，现在支持的有：
-    - `ipv4`
-    - `ipv6`
-    - `email`
+    - `ipv4`:
+    - `ipv6`:
+    - `email`:
+    - `date`: `YYYY-MM-DD`
+    - `time`: `HH:mm:ssZ / HH:mm:ss.SZ / HH:mm:ss+HH:mm / HH:mm:ss.S+HH:mm`
+    - `date-time`: `<date>T<time>`
 
   ---
 
@@ -62,6 +68,9 @@
     - `ipv4`:
     - `ipv6`:
     - `email`:
+    - `date`: `YYYY-MM-DD`
+    - `time`: `HH:mm:ssZ / HH:mm:ss.SZ / HH:mm:ss+HH:mm / HH:mm:ss.S+HH:mm`
+    - `date-time`: `<date>T<time>`
 
 ## transform
   * Specify The conversion function for string, now supported:
