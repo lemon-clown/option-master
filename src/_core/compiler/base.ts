@@ -42,11 +42,11 @@ export abstract class BaseDataSchemaCompiler<
     // required 的默认值为 false
     const requiredResult = result.compileConstraint<boolean>('required', coverBoolean, false)
 
-    // eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
     const schema: DS = {
       type: rawSchema.type,
       required: Boolean(requiredResult.value),
       default: rawSchema.default,
+      description: rawSchema.description,
     } as DS
 
     return result.setValue(schema)
@@ -65,8 +65,8 @@ export abstract class BaseDataSchemaCompiler<
    * @see DataSchemaCompiler#toJSON
    */
   public toJSON(schema: DataSchema<T, V>): object {
-    const { type, required } = schema
-    return { type, default: schema.default, required }
+    const { type, required, description } = schema
+    return { type, default: schema.default, required, description }
   }
 
   /**
@@ -74,7 +74,7 @@ export abstract class BaseDataSchemaCompiler<
    * @see DataSchemaCompiler#parseJSON
    */
   public parseJSON(json: object): DataSchema<T, V> {
-    const { type, required } = json as any
-    return { type, default: (json as any).default, required }
+    const { type, required, description } = json as any
+    return { type, default: (json as any).default, required, description }
   }
 }

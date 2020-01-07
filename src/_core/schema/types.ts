@@ -30,6 +30,11 @@ export interface RawDataSchema<T extends string, V> {
    * @default false
    */
   required?: boolean
+  /**
+   * 描述信息
+   * 描述信息
+   */
+  description?: string
 }
 
 
@@ -49,6 +54,10 @@ export interface DataSchema<T extends string, V> {
    * 默认值
    */
   readonly default?: V
+  /**
+   * 描述信息
+   */
+  readonly description?: string
 }
 
 
