@@ -64,7 +64,16 @@
           }
         ]
       }
-    }
+    },
+    "patternProperties": [
+      {
+        "pattern": "^data(?:\\-[\\w]+)+$",
+        "schema": {
+          "type": "string",
+          "required": false
+        }
+      }
+    ]
   },
   "errors": [],
   "warnings": []
