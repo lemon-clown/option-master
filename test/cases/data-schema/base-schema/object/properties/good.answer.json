@@ -11,7 +11,8 @@
         },
         "data-name": "alice",
         "data-gender": "female"
-      }
+      },
+      "data-oo": "okay"
     },
     "errors": [],
     "warnings": []
