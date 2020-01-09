@@ -6,7 +6,7 @@
       required?: boolean
       default?: boolean
       properties?: { [key: string]: RawDataSchema }
-      patternProperties?: { [pattern: string]: RawDataSchema }
+      patternProperties?: { [pattern: string]: RawDataSchema } | { pattern: string, schema: RawDataSchema }[]
       allowAdditionalProperties?: boolean
       propertyNames?: RawStringDataSchema
       dependencies?: { [key: string]: string[] }
@@ -23,7 +23,7 @@
       requiredProperties: string[]
       default?: boolean
       properties?: { [key: string]: DataSchema }
-      patternProperties?: { [pattern: string]: DataSchema }
+      patternProperties?: { pattern: RegExp, schema: DSchema }[]
       allowAdditionalProperties: boolean
       propertyNames?: StringDataSchema
       dependencies?: { [key: string]: string[] }
