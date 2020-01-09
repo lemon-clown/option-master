@@ -28,7 +28,7 @@ export interface RawObjectDataSchema extends RawDataSchema<OBJECT_T_TYPE, OBJECT
    * 对象属性的类型，和 properties 类似，但是名称为正则表达式
    * @member pattern  属性名称的正则表达式
    */
-  patternProperties?: { [pattern: string]: RDSchema }
+  patternProperties?: { [pattern: string]: RDSchema } | { pattern: string, schema: RDSchema }[]
   /**
    * 是否允许其它额外的属性，若为 false 且指定了 properties，
    * 则对象中只有 properties 中出现的属性会被采用，其它的属性将被忽略，

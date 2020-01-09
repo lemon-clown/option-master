@@ -8,7 +8,7 @@ import {
   ObjectDataSchema,
 } from '../schema/object'
 import { StringDataSchema, STRING_T_TYPE } from '../schema/string'
-import { stringify, isObject } from '../_util/type-util'
+import { stringify, isObject, isArray } from '../_util/type-util'
 import { coverBoolean, coverArray, coverString } from '../_util/cover-util'
 
 
@@ -107,13 +107,22 @@ export class ObjectDataSchemaCompiler
     // 编译 patternProperties
     let patternProperties: ObjectDataSchema['patternProperties'] = undefined
     if (rawSchema.patternProperties != null) {
-      if (ensureObject('patternProperties')) {
+        let rawPatternProperties: { pattern: string, schema: RDSchema }[] | undefined
+        if (isArray(rawSchema.patternProperties)) {
+          rawPatternProperties = rawSchema.patternProperties
+        }
+        else if (ensureObject('patternProperties')) {
+          rawPatternProperties = Object.getOwnPropertyNames(rawSchema.patternProperties)
+            .map(p => ({ pattern: p, schema: rawSchema.patternProperties![p] }))
+        }
+
+      if (rawPatternProperties != null) {
         patternProperties = []
-        for (const propertyName of Object.getOwnPropertyNames(rawSchema.patternProperties)) {
-          let { ...propertyValueSchema } = rawSchema.patternProperties[propertyName]
+        for (const { pattern: propertyPattern, schema: rawPatternSchema } of rawPatternProperties) {
+          let propertyValueSchema = { ...rawPatternSchema }
 
           // 如果属性在 requiredProperties 中定义了，则其 required 默认值为 true
-          const requiredIndex = requiredProperties.indexOf(propertyName)
+          const requiredIndex = requiredProperties.indexOf(propertyPattern)
           if (requiredIndex >= 0) {
             propertyValueSchema = {
               required: true,
@@ -121,7 +130,7 @@ export class ObjectDataSchemaCompiler
             }
           }
           const propertyCompileResult = this.context.compileDataSchema(propertyValueSchema)
-          result.addHandleResult('patternProperties', propertyCompileResult, propertyName)
+          result.addHandleResult('patternProperties', propertyCompileResult, propertyPattern)
 
           // 如果存在错误，则忽略此属性
           if (propertyCompileResult.hasError) continue
@@ -131,19 +140,19 @@ export class ObjectDataSchemaCompiler
           // 否则，则将其从 requiredProperties 中移除
           const propertySchema = propertyCompileResult.value!
           if (requiredIndex < 0 && propertySchema.required) {
-            requiredProperties.push(propertyName)
+            requiredProperties.push(propertyPattern)
           } else if (requiredIndex >= 0 && !propertySchema.required) {
             requiredProperties.splice(requiredIndex, 1)
           }
 
           let pattern: RegExp | undefined
           try {
-            pattern = new RegExp(propertyName)
+            pattern = new RegExp(propertyPattern)
           } catch (e) {
             result.addError({
               constraint: 'patternProperties',
-              property: propertyName,
-              reason: `propertyName (${ propertyName }) is not a valid regex. ${ e.stack || e.message }`,
+              property: propertyPattern,
+              reason: `propertyName (${ propertyPattern }) is not a valid regex. ${ e.stack || e.message }`,
             })
           } finally {
             if (pattern != null) {
