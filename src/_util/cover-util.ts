@@ -1,35 +1,12 @@
 import { convertToNumber, isString, isArray, stringify } from './type-util'
-import { HandleResult } from './handle-result'
+import { StringExceptionHandleResult } from './handle-result'
 
 
 /**
  * CoverOperationResult 实现类
  */
-export class CoverOperationResult<T> extends HandleResult<T, string> {
-  /**
-   * 消息汇总
-   * @param exceptions
-   */
-  private getSummary(exceptions: string[]): string {
-    if (exceptions.length <= 0) return ''
-    if (exceptions.length == 1) return exceptions[0]
-    return '[' + exceptions.join(',\n') + ']'
-  }
-
-  /**
-   * 错误信息汇总
-   */
-  public get errorSummary(): string {
-    return this.getSummary(this._errors)
-  }
-
-  /**
-   * 警告消息汇总
-   */
-  public get warningSummary(): string {
-    return this.getSummary(this._warnings)
-  }
-}
+export type CoverOperationResult<T> = StringExceptionHandleResult<T>
+export const CoverOperationResult = StringExceptionHandleResult
 
 
 /**

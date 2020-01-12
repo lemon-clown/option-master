@@ -101,6 +101,36 @@ export abstract class HandleResult<T, E> {
 
 
 /**
+ * 异常信息对象为字符串的处理结果
+ */
+export class StringExceptionHandleResult<T> extends HandleResult<T, string> {
+  /**
+   * 错误信息汇总
+   */
+  public get errorSummary(): string {
+    return this.getSummary(this._errors)
+  }
+
+  /**
+   * 警告消息汇总
+   */
+  public get warningSummary(): string {
+    return this.getSummary(this._warnings)
+  }
+
+  /**
+   * 消息汇总
+   * @param exceptions
+   */
+  protected getSummary(exceptions: string[]): string {
+    if (exceptions.length <= 0) return ''
+    if (exceptions.length == 1) return exceptions[0]
+    return '[' + exceptions.join(',\n') + ']'
+  }
+}
+
+
+/**
  * 处理结果
  */
 export interface DataHandleResultException {
