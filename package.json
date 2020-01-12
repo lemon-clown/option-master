@@ -17,6 +17,9 @@
   "description": "option utils",
   "main": "lib/index.js",
   "license": "MIT",
+  "engines": {
+    "node": ">= 10.16.1"
+  },
   "scripts": {
     "clean": "rimraf test/**/*.output.json test/**/*.outputs.json",
     "start": "tsc -b tsconfig.json --watch",
