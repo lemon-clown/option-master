@@ -1,7 +1,7 @@
 import { stringify } from '../../_util/type-util'
-import { DSchema, TopDataSchemaMaster, TDSchema } from '../schema'
-import { DVFactory, DVResult, DataValidatorContext, TDVResult } from './types'
+import { DSchema, TDSchema, TopDataSchemaMaster } from '../schema'
 import { DataValidationResult } from './result'
+import { DVFactory, DVResult, DataValidatorContext, TDVResult } from './types'
 
 
 /**

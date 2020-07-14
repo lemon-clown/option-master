@@ -2,12 +2,12 @@ export { BaseDataSchemaCompiler } from './base'
 export { DataSchemaCompilerMaster } from './master'
 export { DataSchemaCompileResult } from './result'
 export {
-  DSCResult,
   DDSCResult,
-  TDSCResult,
+  DSCResult,
   DSCompiler,
   DSCompilerConstructor,
-  DataSchemaCompilerContext,
   DataSchemaCompiler,
   DataSchemaCompilerConstructor,
+  DataSchemaCompilerContext,
+  TDSCResult,
 } from './types'

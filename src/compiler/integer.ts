@@ -1,6 +1,15 @@
-import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
-import { INTEGER_V_TYPE as V, INTEGER_T_TYPE as T, RawIntegerDataSchema as RDS, IntegerDataSchema as DS } from '../schema/integer'
-import { coverInteger, coverArray } from '../_util/cover-util'
+import {
+  BaseDataSchemaCompiler,
+  DataSchemaCompileResult,
+  DataSchemaCompiler,
+} from '../_core/compiler'
+import { coverArray, coverInteger } from '../_util/cover-util'
+import {
+  INTEGER_T_TYPE as T,
+  INTEGER_V_TYPE as V,
+  IntegerDataSchema as DS,
+  RawIntegerDataSchema as RDS,
+} from '../schema/integer'
 
 
 /**
@@ -28,6 +37,7 @@ export class IntegerDataSchemaCompiler
    */
   public compile (rawSchema: RDS): IntegerDataSchemaCompileResult {
     const result: IntegerDataSchemaCompileResult = super.compile(rawSchema)
+    // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
 
     const defaultValueResult = result.compileConstraint<V>('default', coverInteger)
@@ -58,7 +68,7 @@ export class IntegerDataSchemaCompiler
    * override method
    * @see DataSchemaCompiler#toJSON
    */
-  public toJSON(schema: DS): object {
+  public toJSON(schema: DS): Record<string, unknown> {
     const json: any = {
       ...super.toJSON(schema),
       minimum: schema.minimum,

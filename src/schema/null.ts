@@ -1,7 +1,6 @@
 import { DataSchema, RawDataSchema } from '../_core/schema'
 
 
-
 // NullDataSchema.type 的类型
 export const NULL_T_TYPE = 'null'
 export type NULL_T_TYPE = typeof NULL_T_TYPE

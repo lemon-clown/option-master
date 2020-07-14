@@ -1,6 +1,15 @@
-import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
-import { BOOLEAN_V_TYPE as V, BOOLEAN_T_TYPE as T, RawBooleanDataSchema as RDS, BooleanDataSchema as DS } from '../schema/boolean'
+import {
+  BaseDataSchemaCompiler,
+  DataSchemaCompileResult,
+  DataSchemaCompiler,
+} from '../_core/compiler'
 import { coverBoolean } from '../_util/cover-util'
+import {
+  BOOLEAN_T_TYPE as T,
+  BOOLEAN_V_TYPE as V,
+  BooleanDataSchema as DS,
+  RawBooleanDataSchema as RDS,
+} from '../schema/boolean'
 
 
 /**
@@ -24,6 +33,7 @@ export class BooleanDataSchemaCompiler
    */
   public compile (rawSchema: RDS): BooleanDataSchemaCompileResult {
     const result: BooleanDataSchemaCompileResult = super.compile(rawSchema)
+    // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
 
     const defaultValueResult = result.compileConstraint<V>('default', coverBoolean)

@@ -1,15 +1,19 @@
-import { DSchema, RDSchema } from '../_core/schema'
-import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
 import {
-  OBJECT_V_TYPE as V,
+  BaseDataSchemaCompiler,
+  DataSchemaCompileResult,
+  DataSchemaCompiler,
+} from '../_core/compiler'
+import { DSchema, RDSchema } from '../_core/schema'
+import { coverArray, coverBoolean, coverString } from '../_util/cover-util'
+import { isArray, isObject, stringify } from '../_util/type-util'
+import {
   OBJECT_T_TYPE as T,
-  RawObjectDataSchema as RDS,
-  ObjectDataSchema as DS,
+  OBJECT_V_TYPE as V,
   ObjectDataSchema,
+  ObjectDataSchema as DS,
+  RawObjectDataSchema as RDS,
 } from '../schema/object'
-import { StringDataSchema, STRING_T_TYPE } from '../schema/string'
-import { stringify, isObject, isArray } from '../_util/type-util'
-import { coverBoolean, coverArray, coverString } from '../_util/cover-util'
+import { STRING_T_TYPE, StringDataSchema } from '../schema/string'
 
 
 /**
@@ -35,6 +39,7 @@ export class ObjectDataSchemaCompiler
    */
   public compile (rawSchema: RDS): ObjectDataSchemaCompileResult {
     const result: ObjectDataSchemaCompileResult = super.compile(rawSchema)
+    // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
 
     // silentIgnore 的默认值为 false
@@ -233,10 +238,12 @@ export class ObjectDataSchemaCompiler
    * @see DataSchemaCompiler#normalizeRawSchema
    */
   public normalizeRawSchema(rawSchema: RDS): RDS {
+    // eslint-disable-next-line no-param-reassign
     rawSchema = super.normalizeRawSchema(rawSchema)
     if (rawSchema.properties != null && isObject(rawSchema.properties)) {
       for (const propertyName of Object.getOwnPropertyNames(rawSchema.properties)) {
         const rawPropertySchema: RDSchema = rawSchema.properties[propertyName]
+        // eslint-disable-next-line no-param-reassign
         rawSchema.properties[propertyName] = {
           ...super.normalizeRawSchema(rawPropertySchema as RDS),
         }
@@ -249,7 +256,7 @@ export class ObjectDataSchemaCompiler
    * override method
    * @see DataSchemaCompiler#toJSON
    */
-  public toJSON(schema: DS): object {
+  public toJSON(schema: DS): Record<string, unknown> {
     const json: any = {
       ...super.toJSON(schema),
       requiredProperties: schema.requiredProperties,

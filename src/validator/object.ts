@@ -1,6 +1,15 @@
-import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DataValidator } from '../_core/validator'
-import { OBJECT_V_TYPE as V, OBJECT_T_TYPE as T, ObjectDataSchema as DS } from '../schema/object'
-import { stringify, isObject } from '../_util/type-util'
+import {
+  BaseDataValidator,
+  BaseDataValidatorFactory,
+  DataValidationResult,
+  DataValidator,
+} from '../_core/validator'
+import { isObject, stringify } from '../_util/type-util'
+import {
+  OBJECT_T_TYPE as T,
+  OBJECT_V_TYPE as V,
+  ObjectDataSchema as DS,
+} from '../schema/object'
 
 
 /**
@@ -22,6 +31,7 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> implements 
   public validate(data: any): ObjectDataValidationResult {
     const { schema } = this
     const result: ObjectDataValidationResult = super.validate(data)
+    // eslint-disable-next-line no-param-reassign
     data = result.value
     result.setValue(undefined)
 

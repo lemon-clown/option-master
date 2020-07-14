@@ -1,8 +1,19 @@
-import { RDSchema, DSchema } from '../_core/schema'
-import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
-import { COMBINE_V_TYPE as V, COMBINE_T_TYPE as T, RawCombineDataSchema as RDS, CombineDataSchema as DS, CombineStrategy, combineStrategies } from '../schema/combine'
+import {
+  BaseDataSchemaCompiler,
+  DataSchemaCompileResult,
+  DataSchemaCompiler,
+} from '../_core/compiler'
+import { DSchema, RDSchema } from '../_core/schema'
 import { coverString } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'
+import {
+  COMBINE_T_TYPE as T,
+  COMBINE_V_TYPE as V,
+  CombineDataSchema as DS,
+  CombineStrategy,
+  RawCombineDataSchema as RDS,
+  combineStrategies,
+} from '../schema/combine'
 
 
 /**
@@ -28,6 +39,7 @@ export class CombineDataSchemaCompiler
    */
   public compile (rawSchema: RDS): CombineDataSchemaCompileResult {
     const result: CombineDataSchemaCompileResult = super.compile(rawSchema)
+    // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
 
     const defaultValue = rawSchema.default
@@ -94,7 +106,7 @@ export class CombineDataSchemaCompiler
    * override method
    * @see DataSchemaCompiler#toJSON
    */
-  public toJSON(schema: DS): object {
+  public toJSON(schema: DS): Record<string, unknown> {
     const json: any = {
       ...super.toJSON(schema),
       strategy: schema.strategy,
@@ -119,7 +131,8 @@ export class CombineDataSchemaCompiler
 
     for (const propertyName of ['allOf', 'anyOf', 'oneOf']) {
       if (json[propertyName] == null || json[propertyName].length <= 0) continue
-      schema[propertyName] = (json[propertyName] as object[]).map(item => this.context.parseJSON(item))
+      schema[propertyName] = json[propertyName]
+        .map((item: Record<string, unknown>) => this.context.parseJSON(item))
     }
     return schema
   }

@@ -1,16 +1,22 @@
-import { isString, stringify, isArray } from '../../_util/type-util'
 import { coverString } from '../../_util/cover-util'
+import { isArray, isString, stringify } from '../../_util/type-util'
 import {
-  RDSchema,
+  DDSchema,
+  DSchema,
+  DefinitionDataSchemaMaster,
   RDDSchema,
+  RDSchema,
   RTDSchema,
   TDSchema,
-  DDSchema,
-  DefinitionDataSchemaMaster,
-  DSchema,
 } from '../schema'
-import { DSCompiler, DataSchemaCompilerContext, DSCResult, DDSCResult, TDSCResult } from './types'
 import { DataSchemaCompileResult } from './result'
+import {
+  DDSCResult,
+  DSCResult,
+  DSCompiler,
+  DataSchemaCompilerContext,
+  TDSCResult,
+} from './types'
 
 
 /**

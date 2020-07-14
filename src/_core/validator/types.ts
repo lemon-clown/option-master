@@ -1,4 +1,4 @@
-import { DataSchema, DSchema, TDSchema } from '../schema'
+import { DSchema, DataSchema, TDSchema } from '../schema'
 import { DataValidationResult } from './result'
 
 

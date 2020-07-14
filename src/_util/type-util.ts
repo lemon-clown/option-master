@@ -57,7 +57,7 @@ export function isArray(x: any): x is any[] {
  * array is not an object
  * @param x
  */
-export function isObject(x: any): x is object {
+export function isObject(x: any): x is Record<string, unknown> {
   return x != null && typeof x === 'object' && !Array.isArray(x)
 }
 
@@ -66,7 +66,7 @@ export function isObject(x: any): x is object {
  * 判断是否为空对象
  * @param x
  */
-export function isEmptyObject (x: any): x is object {
+export function isEmptyObject(x: any): x is Record<string, unknown> {
   return isObject(x) && Object.getOwnPropertyNames(x).length <= 0
 }
 
@@ -75,7 +75,7 @@ export function isEmptyObject (x: any): x is object {
  * 判断是否为非空对象
  * @param x
  */
-export function isNotEmptyObject (x: any): x is object {
+export function isNotEmptyObject(x: any): x is Record<string, unknown> {
   return isObject(x) && Object.getOwnPropertyNames(x).length > 0
 }
 
@@ -93,7 +93,7 @@ export function convertToNumber(x: string | number): number {
  * 将对象内容转成字符串
  * @param x
  */
-export function stringify (x: any) {
+export function stringify(x: any) {
   if (x == null) return '' + x
   return JSON.stringify(x)
 }

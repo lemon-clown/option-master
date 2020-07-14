@@ -18,7 +18,7 @@
   "main": "lib/index.js",
   "license": "MIT",
   "engines": {
-    "node": ">= 10.16.1"
+    "node": ">= 12.16.0"
   },
   "scripts": {
     "clean": "rimraf test/**/*.output.json test/**/*.outputs.json",
@@ -29,32 +29,74 @@
     "answer": "cross-env node -r ts-node/register test/answer.ts",
     "test": "mocha -r ts-node/register test/**/*.test.ts",
     "test:file": "mocha -r ts-node/register",
-    "prepublishOnly": "yarn lint:fix && yarn test && yarn build"
+    "prepublishOnly": "yarn lint:fix && yarn test && yarn build",
+    "sort-imports": "barusu-sort-imports . --log-level=verbose"
   },
-  "peerDependencies": {
-    "change-case": "^4.1.1"
+  "dependencies": {
+    "change-case": "^4.1.1",
+    "lower-case": "^2.0.1",
+    "upper-case": "^2.0.1"
   },
   "devDependencies": {
-    "@lemon-clown/mocha-test-master": "^0.0.1",
-    "@types/chai": "^4.2.4",
-    "@types/fs-extra": "^8.0.1",
-    "@types/mocha": "^5.2.7",
-    "@types/node": "^12.12.5",
-    "@typescript-eslint/eslint-plugin": "^2.14.0",
-    "@typescript-eslint/parser": "^2.14.0",
+    "@barusu/eslint-config": "^0.0.19",
+    "@barusu/rollup-config": "^0.0.19",
+    "@barusu/tool-sort-imports": "^0.0.19",
+    "@barusu/util-mocha": "^0.0.19",
+    "@types/chai": "^4.2.11",
+    "@types/fs-extra": "^8.1.0",
+    "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",
     "chai-exclude": "^2.0.2",
-    "change-case": "^4.1.1",
-    "cross-env": "^6.0.3",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.9.0",
-    "eslint-plugin-import": "^2.19.1",
-    "eslint-plugin-prettier": "^3.1.2",
+    "cross-env": "^7.0.2",
     "fs-extra": "^8.1.0",
-    "mocha": "^6.2.2",
-    "prettier": "^1.18.2",
-    "rimraf": "^3.0.0",
-    "ts-node": "^8.3.0",
-    "typescript": "^3.6.4"
+    "mocha": "^7.1.1",
+    "rimraf": "^3.0.2",
+    "rollup": "2.16.1",
+    "ts-node": "^8.8.2",
+    "typescript": "^3.8.2"
+  },
+  "@barusu/tool-sort-imports": {
+    "pattern": [
+      "src/**/*.{ts,tsx}",
+      "test/**/*.{ts,tsx}"
+    ],
+    "moduleRanks": [
+      {
+        "regex": "^(react|vue|angular)(?:[/\\-][\\w\\-./]*)?$",
+        "rank": 1.1
+      },
+      {
+        "regex": "^mocha|chai(?:[/][\\w\\-./]*)?$",
+        "rank": 1.2
+      },
+      {
+        "regex": "^[a-zA-Z\\d][\\w\\-.]*",
+        "rank": 1.3
+      },
+      {
+        "regex": "^@[a-zA-Z\\d][\\w\\-.]*\\/[a-zA-Z\\d][\\w\\-.]*",
+        "rank": 1.4
+      },
+      {
+        "regex": "^@\\/",
+        "rank": 2.1
+      },
+      {
+        "regex": "^(?:\\/|[a-zA-Z]:)",
+        "rank": 3.1
+      },
+      {
+        "regex": "^[.]{2}[\\/\\\\][^\\n]*",
+        "rank": 3.2
+      },
+      {
+        "regex": "^[.][\\/\\\\][^\\n]*",
+        "rank": 3.3
+      }
+    ],
+    "indent": "  ",
+    "quote": "'",
+    "semicolon": false,
+    "maxColumn": 80
   }
 }

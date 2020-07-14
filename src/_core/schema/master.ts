@@ -1,4 +1,4 @@
-import { DDSchema, TDSchema, RDDSchema } from './types'
+import { DDSchema, RDDSchema, TDSchema } from './types'
 
 
 /**

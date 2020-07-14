@@ -1,6 +1,9 @@
+import {
+  CoverOperationFunc,
+  CoverOperationResult,
+} from '../../_util/cover-util'
 import { DataHandleResult } from '../../_util/handle-result'
-import { CoverOperationFunc, CoverOperationResult } from '../../_util/cover-util'
-import { RawDataSchema, DataSchema } from '../schema'
+import { DataSchema, RawDataSchema } from '../schema'
 
 
 /**

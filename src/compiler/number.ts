@@ -1,6 +1,15 @@
-import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
-import { NUMBER_V_TYPE as V, NUMBER_T_TYPE as T, RawNumberDataSchema as RDS, NumberDataSchema as DS } from '../schema/number'
-import { coverNumber, coverArray } from '../_util/cover-util'
+import {
+  BaseDataSchemaCompiler,
+  DataSchemaCompileResult,
+  DataSchemaCompiler,
+} from '../_core/compiler'
+import { coverArray, coverNumber } from '../_util/cover-util'
+import {
+  NUMBER_T_TYPE as T,
+  NUMBER_V_TYPE as V,
+  NumberDataSchema as DS,
+  RawNumberDataSchema as RDS,
+} from '../schema/number'
 
 
 /**
@@ -26,6 +35,7 @@ export class NumberDataSchemaCompiler
    */
   public compile (rawSchema: RDS): NumberDataSchemaCompileResult {
     const result: NumberDataSchemaCompileResult = super.compile(rawSchema)
+    // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
 
     // required 的默认值为 false
@@ -54,7 +64,7 @@ export class NumberDataSchemaCompiler
    * override method
    * @see DataSchemaCompiler#toJSON
    */
-  public toJSON(schema: DS): object {
+  public toJSON(schema: DS): Record<string, unknown> {
     const json: any = {
       ...super.toJSON(schema),
       minimum: schema.minimum,

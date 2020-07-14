@@ -1,7 +1,9 @@
 import path from 'path'
-import { DataSchemaCompilerTestCaseMaster } from './util/schema-compiler-case-util'
-import { DataValidatorTestCaseMaster } from './util/schema-validator-case-util'
 import { optionMaster } from '../src'
+import {
+  DataSchemaCompilerTestCaseMaster,
+} from './util/schema-compiler-case-util'
+import { DataValidatorTestCaseMaster } from './util/schema-validator-case-util'
 
 
 /**

@@ -1,5 +1,5 @@
-import { convertToNumber, isString, isArray, stringify } from './type-util'
 import { StringExceptionHandleResult } from './handle-result'
+import { convertToNumber, isArray, isString, stringify } from './type-util'
 
 
 /**
@@ -24,7 +24,7 @@ export type CoverOperationFunc<T> = (defaultValue?: T, value?: any) => CoverOper
  * 若传进来的值为 undefined，则返回默认值；
  * 否则将传进来的值转为 number 并返回；返回返回含错误信息的 Result 对象
  */
- export const coverNumber: CoverOperationFunc<number> = (defaultValue, value) => {
+export const coverNumber: CoverOperationFunc<number> = (defaultValue, value) => {
   const result: CoverOperationResult<number> = new CoverOperationResult(defaultValue)
   if (value === undefined) return result
   if (typeof value !== 'number') {
@@ -83,6 +83,7 @@ export const coverBoolean: CoverOperationFunc<boolean> = (defaultValue, value) =
 
   // 检查是否字符串
   if (isString(value)) {
+    // eslint-disable-next-line no-param-reassign
     value = value.toLocaleLowerCase()
   }
 
@@ -149,7 +150,7 @@ export const coverRegex: CoverOperationFunc<RegExp> = (defaultValue, value) => {
  * 覆盖数组的数据选项
  * @param elemCoverFunc   针对每个元素做覆盖操作的函数
  */
-export function coverArray<T> (elemCoverFunc: CoverOperationFunc<T>): CoverOperationFunc<T[]> {
+export function coverArray<T>(elemCoverFunc: CoverOperationFunc<T>): CoverOperationFunc<T[]> {
   return (defaultValue?: T[], value?: any): CoverOperationResult<T[]> => {
     const result: CoverOperationResult<T[]> = new CoverOperationResult(defaultValue)
     if (value === undefined) return result

@@ -1,7 +1,16 @@
-import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
-import { ARRAY_V_TYPE as V, ARRAY_T_TYPE as T, RawArrayDataSchema as RDS, ArrayDataSchema as DS } from '../schema/array'
+import {
+  BaseDataSchemaCompiler,
+  DataSchemaCompileResult,
+  DataSchemaCompiler,
+} from '../_core/compiler'
 import { coverBoolean } from '../_util/cover-util'
 import { isArray, stringify } from '../_util/type-util'
+import {
+  ARRAY_T_TYPE as T,
+  ARRAY_V_TYPE as V,
+  ArrayDataSchema as DS,
+  RawArrayDataSchema as RDS,
+} from '../schema/array'
 
 
 /**
@@ -27,6 +36,7 @@ export class ArrayDataSchemaCompiler
    */
   public compile (rawSchema: RDS): ArrayDataSchemaCompileResult {
     const result: ArrayDataSchemaCompileResult = super.compile(rawSchema)
+    // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
 
     // unique 的默认值为 false
@@ -69,7 +79,7 @@ export class ArrayDataSchemaCompiler
    * override method
    * @see DataSchemaCompiler#toJSON
    */
-  public toJSON(schema: DS): object {
+  public toJSON(schema: DS): Record<string, unknown> {
     const json: any = super.toJSON(schema)
     json.unique = schema.unique
     if (schema.items != null) json.items = this.context.toJSON(schema.items)

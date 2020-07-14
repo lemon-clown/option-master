@@ -1,7 +1,7 @@
+import { expect } from 'chai'
+import { describe, it } from 'mocha'
 import fs from 'fs-extra'
 import path from 'path'
-import { describe, it } from 'mocha'
-import { expect } from 'chai'
 import { toKebabCase } from '../src/_util/string-util'
 
 

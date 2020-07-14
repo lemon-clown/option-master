@@ -1,7 +1,9 @@
+import { before, it } from 'mocha'
 import path from 'path'
-import { it, before } from 'mocha'
-import { DataSchemaCompilerTestCaseMaster } from './util/schema-compiler-case-util'
 import { optionMaster } from '../src'
+import {
+  DataSchemaCompilerTestCaseMaster,
+} from './util/schema-compiler-case-util'
 
 
 it('This is a required placeholder to allow before() to work', () => { })

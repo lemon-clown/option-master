@@ -1,4 +1,4 @@
-import { DataSchema, RawDataSchema, RDSchema, DSchema } from '../_core/schema'
+import { DSchema, DataSchema, RDSchema, RawDataSchema } from '../_core/schema'
 import { RawStringDataSchema, StringDataSchema } from './string'
 
 
@@ -7,7 +7,7 @@ export const OBJECT_T_TYPE = 'object'
 export type OBJECT_T_TYPE = typeof OBJECT_T_TYPE
 
 // ObjectDataSchema.value 的类型
-export type OBJECT_V_TYPE = object
+export type OBJECT_V_TYPE = Record<string, unknown>
 
 
 /**
