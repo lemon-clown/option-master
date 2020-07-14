@@ -1,16 +1,25 @@
-import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
 import {
-  STRING_V_TYPE as V,
-  STRING_T_TYPE as T,
+  BaseDataSchemaCompiler,
+  DataSchemaCompileResult,
+  DataSchemaCompiler,
+} from '../_core/compiler'
+import {
+  coverArray,
+  coverInteger,
+  coverRegex,
+  coverString,
+} from '../_util/cover-util'
+import { isString } from '../_util/type-util'
+import {
   RawStringDataSchema as RDS,
+  STRING_T_TYPE as T,
+  STRING_V_TYPE as V,
   StringDataSchema as DS,
   StringFormat,
   StringFormatSet,
   StringTransformType,
-  StringTransformTypeSet
+  StringTransformTypeSet,
 } from '../schema/string'
-import { coverString, coverArray, coverRegex, coverInteger } from '../_util/cover-util'
-import { isString } from '../_util/type-util'
 
 
 /**

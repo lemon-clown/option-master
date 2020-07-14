@@ -1,7 +1,7 @@
 import { coverBoolean } from '../../_util/cover-util'
-import { RawDataSchema, DataSchema } from '../schema'
-import { DataSchemaCompilerContext, DataSchemaCompiler } from './types'
+import { DataSchema, RawDataSchema } from '../schema'
 import { DataSchemaCompileResult } from './result'
+import { DataSchemaCompiler, DataSchemaCompilerContext } from './types'
 
 
 /**

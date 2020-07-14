@@ -1,7 +1,12 @@
 import { stringify } from '../../_util/type-util'
 import { DataSchema } from '../schema'
 import { DataValidationResult } from './result'
-import { DataValidatorFactory, DataValidatorContext, DataValidator, DVResult } from './types'
+import {
+  DVResult,
+  DataValidator,
+  DataValidatorContext,
+  DataValidatorFactory,
+} from './types'
 
 
 /**

@@ -1,6 +1,17 @@
-import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DVResult, DataValidator } from '../_core/validator'
-import { COMBINE_V_TYPE as V, COMBINE_T_TYPE as T, CombineDataSchema as DS, CombineStrategy } from '../schema/combine'
+import {
+  BaseDataValidator,
+  BaseDataValidatorFactory,
+  DVResult,
+  DataValidationResult,
+  DataValidator,
+} from '../_core/validator'
 import { stringify } from '../_util/type-util'
+import {
+  COMBINE_T_TYPE as T,
+  COMBINE_V_TYPE as V,
+  CombineDataSchema as DS,
+  CombineStrategy,
+} from '../schema/combine'
 
 
 /**

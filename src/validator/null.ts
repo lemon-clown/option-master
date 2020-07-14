@@ -1,5 +1,14 @@
-import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DataValidator } from '../_core/validator'
-import { NULL_V_TYPE as V, NULL_T_TYPE as T, NullDataSchema as DS } from '../schema/null'
+import {
+  BaseDataValidator,
+  BaseDataValidatorFactory,
+  DataValidationResult,
+  DataValidator,
+} from '../_core/validator'
+import {
+  NULL_T_TYPE as T,
+  NULL_V_TYPE as V,
+  NullDataSchema as DS,
+} from '../schema/null'
 
 
 /**

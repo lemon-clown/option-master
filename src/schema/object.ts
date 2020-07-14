@@ -1,4 +1,4 @@
-import { DataSchema, RawDataSchema, RDSchema, DSchema } from '../_core/schema'
+import { DSchema, DataSchema, RDSchema, RawDataSchema } from '../_core/schema'
 import { RawStringDataSchema, StringDataSchema } from './string'
 
 

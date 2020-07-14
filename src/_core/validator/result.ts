@@ -1,5 +1,8 @@
+import {
+  DataHandleResult,
+  DataHandleResultException,
+} from '../../_util/handle-result'
 import { stringify } from '../../_util/type-util'
-import { DataHandleResult, DataHandleResultException } from '../../_util/handle-result'
 import { DataSchema } from '../schema'
 
 

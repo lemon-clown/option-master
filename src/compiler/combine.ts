@@ -1,8 +1,19 @@
-import { RDSchema, DSchema } from '../_core/schema'
-import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
-import { COMBINE_V_TYPE as V, COMBINE_T_TYPE as T, RawCombineDataSchema as RDS, CombineDataSchema as DS, CombineStrategy, combineStrategies } from '../schema/combine'
+import {
+  BaseDataSchemaCompiler,
+  DataSchemaCompileResult,
+  DataSchemaCompiler,
+} from '../_core/compiler'
+import { DSchema, RDSchema } from '../_core/schema'
 import { coverString } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'
+import {
+  COMBINE_T_TYPE as T,
+  COMBINE_V_TYPE as V,
+  CombineDataSchema as DS,
+  CombineStrategy,
+  RawCombineDataSchema as RDS,
+  combineStrategies,
+} from '../schema/combine'
 
 
 /**

@@ -1,9 +1,19 @@
-import fs from 'fs-extra'
-import path from 'path'
 import * as chai from 'chai'
 import chaiExclude from 'chai-exclude'
-import { FileTestCaseMasterProps, FileTestCaseMaster, FileTestCase } from '@barusu/util-mocha'
-import { DVResult, optionMaster, DSCResult, DSchema, DataHandleResultException } from '../../src'
+import fs from 'fs-extra'
+import path from 'path'
+import {
+  FileTestCase,
+  FileTestCaseMaster,
+  FileTestCaseMasterProps,
+} from '@barusu/util-mocha'
+import {
+  DSCResult,
+  DSchema,
+  DVResult,
+  DataHandleResultException,
+  optionMaster,
+} from '../../src'
 
 
 chai.use(chaiExclude)

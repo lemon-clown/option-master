@@ -1,5 +1,14 @@
-import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DataValidator } from '../_core/validator'
-import { REF_V_TYPE as V, REF_T_TYPE as T, RefDataSchema as DS } from '../schema/ref'
+import {
+  BaseDataValidator,
+  BaseDataValidatorFactory,
+  DataValidationResult,
+  DataValidator,
+} from '../_core/validator'
+import {
+  REF_T_TYPE as T,
+  REF_V_TYPE as V,
+  RefDataSchema as DS,
+} from '../schema/ref'
 
 
 /**

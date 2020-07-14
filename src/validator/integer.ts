@@ -1,6 +1,15 @@
-import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DataValidator } from '../_core/validator'
-import { INTEGER_V_TYPE as V, INTEGER_T_TYPE as T, IntegerDataSchema as DS } from '../schema/integer'
-import { stringify, isInteger } from '../_util/type-util'
+import {
+  BaseDataValidator,
+  BaseDataValidatorFactory,
+  DataValidationResult,
+  DataValidator,
+} from '../_core/validator'
+import { isInteger, stringify } from '../_util/type-util'
+import {
+  INTEGER_T_TYPE as T,
+  INTEGER_V_TYPE as V,
+  IntegerDataSchema as DS,
+} from '../schema/integer'
 
 
 /**

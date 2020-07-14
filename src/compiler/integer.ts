@@ -1,6 +1,15 @@
-import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
-import { INTEGER_V_TYPE as V, INTEGER_T_TYPE as T, RawIntegerDataSchema as RDS, IntegerDataSchema as DS } from '../schema/integer'
-import { coverInteger, coverArray } from '../_util/cover-util'
+import {
+  BaseDataSchemaCompiler,
+  DataSchemaCompileResult,
+  DataSchemaCompiler,
+} from '../_core/compiler'
+import { coverArray, coverInteger } from '../_util/cover-util'
+import {
+  INTEGER_T_TYPE as T,
+  INTEGER_V_TYPE as V,
+  IntegerDataSchema as DS,
+  RawIntegerDataSchema as RDS,
+} from '../schema/integer'
 
 
 /**

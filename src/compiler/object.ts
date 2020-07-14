@@ -1,15 +1,19 @@
-import { DSchema, RDSchema } from '../_core/schema'
-import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
 import {
-  OBJECT_V_TYPE as V,
+  BaseDataSchemaCompiler,
+  DataSchemaCompileResult,
+  DataSchemaCompiler,
+} from '../_core/compiler'
+import { DSchema, RDSchema } from '../_core/schema'
+import { coverArray, coverBoolean, coverString } from '../_util/cover-util'
+import { isArray, isObject, stringify } from '../_util/type-util'
+import {
   OBJECT_T_TYPE as T,
-  RawObjectDataSchema as RDS,
-  ObjectDataSchema as DS,
+  OBJECT_V_TYPE as V,
   ObjectDataSchema,
+  ObjectDataSchema as DS,
+  RawObjectDataSchema as RDS,
 } from '../schema/object'
-import { StringDataSchema, STRING_T_TYPE } from '../schema/string'
-import { stringify, isObject, isArray } from '../_util/type-util'
-import { coverBoolean, coverArray, coverString } from '../_util/cover-util'
+import { STRING_T_TYPE, StringDataSchema } from '../schema/string'
 
 
 /**

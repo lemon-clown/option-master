@@ -1,6 +1,16 @@
-import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DVResult, DataValidator } from '../_core/validator'
-import { ARRAY_V_TYPE as V, ARRAY_T_TYPE as T, ArrayDataSchema as DS } from '../schema/array'
+import {
+  BaseDataValidator,
+  BaseDataValidatorFactory,
+  DVResult,
+  DataValidationResult,
+  DataValidator,
+} from '../_core/validator'
 import { isArray, stringify } from '../_util/type-util'
+import {
+  ARRAY_T_TYPE as T,
+  ARRAY_V_TYPE as V,
+  ArrayDataSchema as DS,
+} from '../schema/array'
 
 
 /**

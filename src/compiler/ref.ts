@@ -1,7 +1,16 @@
-import { BaseDataSchemaCompiler, DataSchemaCompileResult, DataSchemaCompiler } from '../_core/compiler'
-import { REF_V_TYPE as V, REF_T_TYPE as T, RawRefDataSchema as RDS, RefDataSchema as DS } from '../schema/ref'
+import {
+  BaseDataSchemaCompiler,
+  DataSchemaCompileResult,
+  DataSchemaCompiler,
+} from '../_core/compiler'
 import { coverString } from '../_util/cover-util'
 import { stringify } from '../_util/type-util'
+import {
+  REF_T_TYPE as T,
+  REF_V_TYPE as V,
+  RawRefDataSchema as RDS,
+  RefDataSchema as DS,
+} from '../schema/ref'
 
 
 /**

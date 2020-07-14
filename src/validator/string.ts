@@ -1,11 +1,27 @@
-import { BaseDataValidator, BaseDataValidatorFactory, DataValidationResult, DataValidator } from '../_core/validator'
-import { STRING_V_TYPE as V, STRING_T_TYPE as T, StringDataSchema as DS, StringFormat, StringTransformType } from '../schema/string'
-import { stringify, isString } from '../_util/type-util'
 import {
-  toLowerCase, toUpperCase, toCapitalCase,
-  toCamelCase, toPascalCase, toKebabCase,
-  toSnakeCase, toConstantCase,
+  BaseDataValidator,
+  BaseDataValidatorFactory,
+  DataValidationResult,
+  DataValidator,
+} from '../_core/validator'
+import {
+  toCamelCase,
+  toCapitalCase,
+  toConstantCase,
+  toKebabCase,
+  toLowerCase,
+  toPascalCase,
+  toSnakeCase,
+  toUpperCase,
 } from '../_util/string-util'
+import { isString, stringify } from '../_util/type-util'
+import {
+  STRING_T_TYPE as T,
+  STRING_V_TYPE as V,
+  StringDataSchema as DS,
+  StringFormat,
+  StringTransformType,
+} from '../schema/string'
 
 
 /**

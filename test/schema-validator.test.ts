@@ -1,5 +1,5 @@
+import { before, it } from 'mocha'
 import path from 'path'
-import { it, before } from 'mocha'
 import { DataValidatorTestCaseMaster } from './util/schema-validator-case-util'
 
 

@@ -1,11 +1,11 @@
 import {
-  RawDataSchema,
-  DataSchema,
-  RDSchema,
-  DSchema,
-  RDDSchema,
   DDSchema,
+  DSchema,
+  DataSchema,
+  RDDSchema,
+  RDSchema,
   RTDSchema,
+  RawDataSchema,
   TDSchema,
 } from '../schema'
 import { DataSchemaCompileResult } from './result'

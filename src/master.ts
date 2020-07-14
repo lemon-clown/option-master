@@ -1,15 +1,14 @@
-import { RDSchema, DSchema } from './_core/schema'
-import { DataSchemaCompilerMaster, DSCResult, DSCompilerConstructor } from './_core/compiler'
-import { DataValidatorMaster, DVResult, DVFactoryConstructor } from './_core/validator'
-import { ARRAY_T_TYPE } from './schema/array'
-import { BOOLEAN_T_TYPE } from './schema/boolean'
-import { COMBINE_T_TYPE } from './schema/combine'
-import { INTEGER_T_TYPE } from './schema/integer'
-import { NULL_T_TYPE } from './schema/null'
-import { NUMBER_T_TYPE } from './schema/number'
-import { OBJECT_T_TYPE } from './schema/object'
-import { REF_T_TYPE } from './schema/ref'
-import { STRING_T_TYPE } from './schema/string'
+import {
+  DSCResult,
+  DSCompilerConstructor,
+  DataSchemaCompilerMaster,
+} from './_core/compiler'
+import { DSchema, RDSchema } from './_core/schema'
+import {
+  DVFactoryConstructor,
+  DVResult,
+  DataValidatorMaster,
+} from './_core/validator'
 import { ArrayDataSchemaCompiler } from './compiler/array'
 import { BooleanDataSchemaCompiler } from './compiler/boolean'
 import { CombineDataSchemaCompiler } from './compiler/combine'
@@ -19,6 +18,15 @@ import { NumberDataSchemaCompiler } from './compiler/number'
 import { ObjectDataSchemaCompiler } from './compiler/object'
 import { RefDataSchemaCompiler } from './compiler/ref'
 import { StringDataSchemaCompiler } from './compiler/string'
+import { ARRAY_T_TYPE } from './schema/array'
+import { BOOLEAN_T_TYPE } from './schema/boolean'
+import { COMBINE_T_TYPE } from './schema/combine'
+import { INTEGER_T_TYPE } from './schema/integer'
+import { NULL_T_TYPE } from './schema/null'
+import { NUMBER_T_TYPE } from './schema/number'
+import { OBJECT_T_TYPE } from './schema/object'
+import { REF_T_TYPE } from './schema/ref'
+import { STRING_T_TYPE } from './schema/string'
 import { ArrayDataValidatorFactory } from './validator/array'
 import { BooleanDataValidatorFactory } from './validator/boolean'
 import { CombineDataValidatorFactory } from './validator/combine'
@@ -192,4 +200,3 @@ export class OptionMaster {
  */
 export const optionMaster = new OptionMaster()
 optionMaster.registerDefaultSchemas()
-
