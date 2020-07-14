@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
 import * as chai from 'chai'
 import chaiExclude from 'chai-exclude'
-import { FileTestCaseMaster, FileTestCaseMasterProps, FileTestCase } from '@lemon-clown/mocha-test-master'
+import { FileTestCaseMaster, FileTestCaseMasterProps, FileTestCase } from '@barusu/util-mocha'
 import { OptionMaster, RDSchema, DSCResult, DataHandleResultException } from '../../src'
 
 
