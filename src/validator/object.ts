@@ -31,6 +31,7 @@ export class ObjectDataValidator extends BaseDataValidator<T, V, DS> implements 
   public validate(data: any): ObjectDataValidationResult {
     const { schema } = this
     const result: ObjectDataValidationResult = super.validate(data)
+    // eslint-disable-next-line no-param-reassign
     data = result.value
     result.setValue(undefined)
 

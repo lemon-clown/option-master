@@ -37,6 +37,7 @@ export class IntegerDataSchemaCompiler
    */
   public compile (rawSchema: RDS): IntegerDataSchemaCompileResult {
     const result: IntegerDataSchemaCompileResult = super.compile(rawSchema)
+    // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
 
     const defaultValueResult = result.compileConstraint<V>('default', coverInteger)
@@ -67,7 +68,7 @@ export class IntegerDataSchemaCompiler
    * override method
    * @see DataSchemaCompiler#toJSON
    */
-  public toJSON(schema: DS): object {
+  public toJSON(schema: DS): Record<string, unknown> {
     const json: any = {
       ...super.toJSON(schema),
       minimum: schema.minimum,

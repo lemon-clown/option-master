@@ -34,6 +34,7 @@ export class RefDataSchemaCompiler
    */
   public compile (rawSchema: RDS): RefDataSchemaCompileResult {
     const result: RefDataSchemaCompileResult = super.compile(rawSchema)
+    // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
 
     // check $ref
@@ -57,6 +58,7 @@ export class RefDataSchemaCompiler
     // set the default value of the optional property to the property value
     // corresponding to the referenced DataSchema
     const rawDefinitionSchema = this.context.getRawDefinition($ref)!
+    // eslint-disable-next-line no-param-reassign
     rawSchema = this.context.inheritRawSchema(rawDefinitionSchema, rawSchema)
     const basicResult: RefDataSchemaCompileResult = super.compile(rawSchema)
 
@@ -74,7 +76,7 @@ export class RefDataSchemaCompiler
    * override method
    * @see DataSchemaCompiler#toJSON
    */
-  public toJSON(schema: DS): object {
+  public toJSON(schema: DS): Record<string, unknown> {
     const json: any = {
       ...super.toJSON(schema),
       $ref: schema.$ref,

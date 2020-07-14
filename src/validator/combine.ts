@@ -36,6 +36,7 @@ export class CombineDataValidator extends BaseDataValidator<T, V, DS> implements
     const { schema } = this
     const { strategy, allOf, anyOf, oneOf } = schema
     const result: CombineDataValidationResult = super.validate(data)
+    // eslint-disable-next-line no-param-reassign
     data = result.value
     result.setValue(undefined)
 

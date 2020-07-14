@@ -35,6 +35,7 @@ export class NumberDataSchemaCompiler
    */
   public compile (rawSchema: RDS): NumberDataSchemaCompileResult {
     const result: NumberDataSchemaCompileResult = super.compile(rawSchema)
+    // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
 
     // required 的默认值为 false
@@ -63,7 +64,7 @@ export class NumberDataSchemaCompiler
    * override method
    * @see DataSchemaCompiler#toJSON
    */
-  public toJSON(schema: DS): object {
+  public toJSON(schema: DS): Record<string, unknown> {
     const json: any = {
       ...super.toJSON(schema),
       minimum: schema.minimum,

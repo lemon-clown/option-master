@@ -83,6 +83,7 @@ export const coverBoolean: CoverOperationFunc<boolean> = (defaultValue, value) =
 
   // 检查是否字符串
   if (isString(value)) {
+    // eslint-disable-next-line no-param-reassign
     value = value.toLocaleLowerCase()
   }
 

@@ -39,6 +39,7 @@ export class CombineDataSchemaCompiler
    */
   public compile (rawSchema: RDS): CombineDataSchemaCompileResult {
     const result: CombineDataSchemaCompileResult = super.compile(rawSchema)
+    // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
 
     const defaultValue = rawSchema.default
@@ -105,7 +106,7 @@ export class CombineDataSchemaCompiler
    * override method
    * @see DataSchemaCompiler#toJSON
    */
-  public toJSON(schema: DS): object {
+  public toJSON(schema: DS): Record<string, unknown> {
     const json: any = {
       ...super.toJSON(schema),
       strategy: schema.strategy,
@@ -130,7 +131,8 @@ export class CombineDataSchemaCompiler
 
     for (const propertyName of ['allOf', 'anyOf', 'oneOf']) {
       if (json[propertyName] == null || json[propertyName].length <= 0) continue
-      schema[propertyName] = (json[propertyName] as object[]).map(item => this.context.parseJSON(item))
+      schema[propertyName] = json[propertyName]
+        .map((item: Record<string, unknown>) => this.context.parseJSON(item))
     }
     return schema
   }

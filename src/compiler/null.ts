@@ -33,6 +33,7 @@ export class NullDataSchemaCompiler
    */
   public compile (rawSchema: RDS): NullDataSchemaCompileResult {
     const result: NullDataSchemaCompileResult = super.compile(rawSchema)
+    // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
 
     const defaultValueResult = result.compileConstraint<V>('default', coverNull)

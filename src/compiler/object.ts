@@ -39,6 +39,7 @@ export class ObjectDataSchemaCompiler
    */
   public compile (rawSchema: RDS): ObjectDataSchemaCompileResult {
     const result: ObjectDataSchemaCompileResult = super.compile(rawSchema)
+    // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
 
     // silentIgnore 的默认值为 false
@@ -237,10 +238,12 @@ export class ObjectDataSchemaCompiler
    * @see DataSchemaCompiler#normalizeRawSchema
    */
   public normalizeRawSchema(rawSchema: RDS): RDS {
+    // eslint-disable-next-line no-param-reassign
     rawSchema = super.normalizeRawSchema(rawSchema)
     if (rawSchema.properties != null && isObject(rawSchema.properties)) {
       for (const propertyName of Object.getOwnPropertyNames(rawSchema.properties)) {
         const rawPropertySchema: RDSchema = rawSchema.properties[propertyName]
+        // eslint-disable-next-line no-param-reassign
         rawSchema.properties[propertyName] = {
           ...super.normalizeRawSchema(rawPropertySchema as RDS),
         }
@@ -253,7 +256,7 @@ export class ObjectDataSchemaCompiler
    * override method
    * @see DataSchemaCompiler#toJSON
    */
-  public toJSON(schema: DS): object {
+  public toJSON(schema: DS): Record<string, unknown> {
     const json: any = {
       ...super.toJSON(schema),
       requiredProperties: schema.requiredProperties,

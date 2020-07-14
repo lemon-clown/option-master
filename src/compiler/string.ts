@@ -45,6 +45,7 @@ export class StringDataSchemaCompiler
    */
   public compile (rawSchema: RDS): StringDataSchemaCompileResult {
     const result: StringDataSchemaCompileResult = super.compile(rawSchema)
+    // eslint-disable-next-line no-param-reassign
     rawSchema = result._rawSchema
 
     const defaultValueResult = result.compileConstraint<V>('default', coverString)
@@ -151,7 +152,7 @@ export class StringDataSchemaCompiler
    * override method
    * @see DataSchemaCompiler#toJSON
    */
-  public toJSON(schema: DS): object {
+  public toJSON(schema: DS): Record<string, unknown> {
     const json: any = {
       ...super.toJSON(schema),
       minLength: schema.minLength,
